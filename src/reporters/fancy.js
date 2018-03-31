@@ -1,28 +1,36 @@
 import chalk from 'chalk'
-import ORA from 'ora'
 import figures from 'figures'
+import _ from 'lodash'
 
 const NS_SEPERATOR = chalk.blue(figures(' › '))
 
-const ORA_FN = {
-  start: 'start',
-  success: 'succeed',
-  error: 'fail',
-  warn: 'warn',
-  info: 'info'
+const ICONS = {
+  start: figures('●'),
+  info: figures('ℹ'),
+  success: figures('✔'),
+  error: figures('✖'),
+  fatal: figures('✖'),
+  warn: figures('⚠'),
+  debug: figures('…'),
+  trace: figures('…'),
+  default: figures('❯'),
+  ready: figures('♥')
 }
+
+const pad = str => _.padEnd(str, 9)
 
 export default class FancyReporter {
   constructor (stream, options = {}) {
     this.stream = stream || process.stderr
+  }
 
-    this.ora = new ORA(this.stream, Object.assign({
-      hideCursor: false
-    }, options.ora))
+  formatBadge (type, color = 'blue') {
+    return chalk['bg' + _.startCase(color)].black(` ${type.toUpperCase()} `) + ' '
   }
 
   formatTag (type, color = 'blue') {
-    return chalk.bgKeyword(color).black(` ${type.toUpperCase()} `)
+    const icon = ICONS[type] || ICONS.default
+    return chalk[color](pad(`${icon} ${type.toLowerCase()}`)) + ' '
   }
 
   clear () {
@@ -33,26 +41,24 @@ export default class FancyReporter {
     let message = logObj.message
 
     if (logObj.scope) {
-      message = logObj.scope.replace(/:/g, '>') + '>' + message
+      message =
+        (logObj.scope.replace(/:/g, '>') + '>').split('>').join(NS_SEPERATOR) +
+        message
     }
-
-    message = message.replace(/>/g, NS_SEPERATOR)
 
     if (logObj.clear) {
       this.clear()
     }
 
-    const oraFn = ORA_FN[logObj.type]
-
-    if (oraFn && logObj.badge !== true) {
-      this.ora[oraFn](message)
+    if (logObj.badge) {
+      this.stream.write('\n\n' + this.formatBadge(logObj.type, logObj.color) + message + '\n\n')
     } else {
-      this.stream.write('\n\n' + this.formatTag(logObj.type, logObj.color) + ' ' + message + '\n\n')
+      this.stream.write(this.formatTag(logObj.type, logObj.color) + message + '\n')
     }
 
     if (logObj.additional) {
       const lines = logObj.additional.split('\n').map(s => '   ' + s).join('\n')
-      this.stream.write(chalk.grey(lines) + '\n\n')
+      this.stream.write(chalk.grey(lines) + '\n')
     }
   }
 }

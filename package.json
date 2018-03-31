@@ -30,7 +30,7 @@
   "homepage": "https://github.com/nuxt/consola#readme",
   "dependencies": {
     "figures": "^2.0.0",
-    "ora": "^2.0.0",
+    "lodash": "^4.17.5",
     "std-env": "^1.1.0"
   },
   "devDependencies": {

@@ -8,7 +8,6 @@ Elegant Console Logger
 - Fancy output with Fallback for CI environments
 - A global mockable stdout/stderr wrapper
 - Pluggable reporters
-- [ORA](https://github.com/sindresorhus/ora) integration
 - Consistance CLI experience
 - Scoped Loggers
 
