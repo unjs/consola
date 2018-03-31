@@ -11,6 +11,10 @@ export default {
     level: 1,
     color: 'yellow'
   },
+  log: {
+    level: 2,
+    color: 'white'
+  },
   info: {
     level: 2,
     color: 'blue'
