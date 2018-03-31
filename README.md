@@ -108,7 +108,7 @@ const consola = new Consola({
     types: []
 })
 
-consola.registerReporter(BasicReporter)
+consola.add(BasicReporter)
 ```
 
 ## API
