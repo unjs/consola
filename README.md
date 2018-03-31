@@ -165,6 +165,14 @@ consola.clear().add({
 })
 ```
 
+### With jsdom
+
+```js
+{
+  virtualConsole: new jsdom.VirtualConsole().sendTo(consola)
+}
+```
+
 ## License
 
 MIT
