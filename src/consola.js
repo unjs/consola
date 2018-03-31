@@ -19,6 +19,10 @@ export default class Consola {
 
   _createLogFn (defaults) {
     return opts => {
+      if (!opts) {
+        return this
+      }
+
       const logObj = Object.assign({
         date: new Date()
       }, defaults)
