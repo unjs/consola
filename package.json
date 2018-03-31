@@ -13,6 +13,11 @@
     "type": "git",
     "url": "git+https://github.com/nuxt/consola.git"
   },
+  "files": [
+    "dist",
+    "src",
+    "index.js"
+  ],
   "keywords": [
     "console",
     "logger",
