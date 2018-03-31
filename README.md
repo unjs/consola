@@ -155,6 +155,16 @@ Extended fields:
 - `badge`
 - `additional`
 
+## Integrations
+
+### With jest
+
+```js
+consola.clear().add({
+  log: jest.fn()
+})
+```
+
 ## License
 
 MIT
