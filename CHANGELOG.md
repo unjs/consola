@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/nuxt/consola/compare/v1.0.0...v1.1.0) (2018-03-31)
+
+
+### Features
+
+* rewrite FancyReporter without ora ([73c1ddc](https://github.com/nuxt/consola/commit/73c1ddc))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/nuxt/consola/compare/v0.1.0...v1.0.0) (2018-03-31)
 
