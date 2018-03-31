@@ -1,0 +1,49 @@
+{
+  "name": "consola",
+  "version": "0.0.1",
+  "description": "Elegant Console Logger",
+  "main": "index.js",
+  "scripts": {
+    "build": "bili",
+    "test": "true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nuxt/consola.git"
+  },
+  "keywords": [
+    "console",
+    "logger",
+    "reporter",
+    "elegant",
+    "cli",
+    "universal",
+    "unified",
+    "winston"
+  ],
+  "author": "Pooya Parsa <pooya@pi0.ir>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nuxt/consola/issues"
+  },
+  "homepage": "https://github.com/nuxt/consola#readme",
+  "dependencies": {
+    "figures": "^2.0.0",
+    "ora": "^2.0.0",
+    "std-env": "^1.1.0"
+  },
+  "devDependencies": {
+    "bili": "^3.0.14",
+    "eslint": "^4.17.0",
+    "eslint-config-standard": "11.0.0",
+    "eslint-plugin-import": "latest",
+    "eslint-plugin-jest": "latest",
+    "eslint-plugin-node": "6.0.1",
+    "eslint-plugin-promise": "latest",
+    "eslint-plugin-standard": "latest",
+    "eslint-plugin-vue": "latest",
+    "esm": "^3.0.14",
+    "standard-version": "^4.3.0",
+    "winston": "^3.0.0-rc3"
+  }
+}
