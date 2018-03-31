@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "bili",
-    "test": "true"
+    "test": "true",
+    "release": "standard-version && yarn build && git push --follow-tags && npm publish"
   },
   "repository": {
     "type": "git",
