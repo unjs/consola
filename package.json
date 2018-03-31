@@ -6,6 +6,7 @@
   "scripts": {
     "build": "bili",
     "test": "true",
+    "prepublish": "yarn build",
     "release": "standard-version && yarn build && git push --follow-tags && npm publish"
   },
   "repository": {
