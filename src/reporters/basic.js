@@ -17,5 +17,9 @@ export default class BasicReporter {
     l.push(logObj.message)
 
     this.stream.write(l.join(' ') + '\n')
+
+    if (logObj.additional) {
+      this.stream.write(logObj.additional + '\n')
+    }
   }
 }
