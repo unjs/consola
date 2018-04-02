@@ -136,6 +136,11 @@ Create a wrapper interface with all types available and `defaults` applied to al
 
 Shortcut to `withDefaults({ scope })`.
 
+- `level`
+
+The level to display logs at. Any logs at or above this level will be displayed.  
+List of available levels [here](./src/types.js)
+
 ## logObject
 
 logObject is a free-to-extend object which will be passed into reporters.
