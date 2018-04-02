@@ -8,7 +8,7 @@ Elegant Console Logger
 - Fancy output with Fallback for CI environments
 - A global mockable stdout/stderr wrapper
 - Pluggable reporters
-- Consistance CLI experience
+- Consistent CLI experience
 - Scoped Loggers
 
 ## Installation
@@ -19,7 +19,7 @@ Using yarn:
 yarn add consola
 ```
 
-Usin npm:
+Using npm:
 
 ```bash
 npm i consola
@@ -70,7 +70,7 @@ logger.info('Log from test scope') // [Test] Log from test scope
 
 You can choose between one of the built-in reporters or bring your own.
 
-By default `FancyReporter` is registered for modern terminals or `BasicReporer` will be used if running in limited environments such as CIs.
+By default `FancyReporter` is registered for modern terminals or `BasicReporter` will be used if running in limited environments such as CIs.
 
 Available reporters:
 
@@ -94,14 +94,14 @@ A list of all available default types is [here](./src/types.js).
 
 ## Creating a new instance
 
-Consola has a global instance and it is recommanded to use it everywehre. 
+Consola has a global instance and it is recommended to use it everywhere.
 In case that you need more control, you can create a new instance too.
 
 ```js
 const { Consola, BasicReporter } = require('consola')
 
 
-const consola = new Consola({ 
+const consola = new Consola({
     level: 30,
     reporters: [],
     types: []
@@ -130,7 +130,7 @@ Remove all current reporters (Useful for writing tests).
 
 - `withDefaults(defaults)`
 
-Creat a wrapper interface with all types available and `defaults` applied to all logs.
+Create a wrapper interface with all types available and `defaults` applied to all logs.
 
 - `withScope(scope)`
 
