@@ -1,4 +1,4 @@
-const consola = require('..')
+const consola = require('../src/cjs')
 const winston = require('winston')
 
 const wLogger = winston.createLogger({

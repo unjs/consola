@@ -1,4 +1,4 @@
-const consola = require('..')
+const consola = require('../src/cjs')
 
 consola.clear().add(new consola.JSONReporter())
 

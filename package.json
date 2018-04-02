@@ -2,7 +2,8 @@
   "name": "consola",
   "version": "1.1.4",
   "description": "Elegant Console Logger",
-  "main": "index.js",
+  "main": "./dist/consola.cjs.js",
+  "module": "./src/index.js",
   "scripts": {
     "build": "bili",
     "test": "true",

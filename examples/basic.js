@@ -1,4 +1,4 @@
-const consola = require('..')
+const consola = require('../src/cjs')
 
 consola.start('Starting build')
 
