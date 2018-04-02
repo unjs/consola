@@ -56,7 +56,7 @@ consola.error(new Error('Foo'))
 <br>
 </div>
 
-## Scopeed Loggers
+## Scoped Loggers
 
 You can group logs using an scope:
 
