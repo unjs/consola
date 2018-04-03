@@ -1,24 +1,17 @@
 import env from 'std-env'
 import Consola from './consola'
-import FancyReporter from './reporters/fancy'
-import BasicReporter from './reporters/basic'
-import JSONReporter from './reporters/json'
-import WinstonReporter from './reporters/winston'
+import Reporters from './reporters'
 
 const _consola = new Consola({
   level: env.debug ? 4 : 3
 })
 
 if (env.minimalCLI) {
-  _consola.add(new BasicReporter())
+  _consola.add(new Reporters.BasicReporter())
 } else {
-  _consola.add(new FancyReporter())
+  _consola.add(new Reporters.FancyReporter())
 }
 
-_consola.Consola = Consola
-_consola.FancyReporter = FancyReporter
-_consola.BasicReporter = BasicReporter
-_consola.JSONReporter = JSONReporter
-_consola.WinstonReporter = WinstonReporter
+Object.assign(_consola, { Consola }, Reporters)
 
 export default _consola
