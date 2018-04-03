@@ -2,7 +2,7 @@ import chalk from 'chalk'
 import figures from 'figures'
 import startCase from 'lodash/startCase'
 
-const NS_SEPERATOR = chalk.blue(figures(' › '))
+const NS_SEPARATOR = chalk.blue(figures(' › '))
 
 const ICONS = {
   start: figures('●'),
@@ -40,7 +40,7 @@ export default class FancyReporter {
 
     if (logObj.scope) {
       message =
-        (logObj.scope.replace(/:/g, '>') + '>').split('>').join(NS_SEPERATOR) +
+        (logObj.scope.replace(/:/g, '>') + '>').split('>').join(NS_SEPARATOR) +
         message
     }
 
