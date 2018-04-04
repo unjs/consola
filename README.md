@@ -2,13 +2,13 @@
 
 Elegant Console Logger
 
-## Why?
+## Why Consola?
 
 - Easy to use
-- Fancy output with Fallback for CI environments
-- A global mockable stdout/stderr wrapper
+- Fancy output with Fallback for Continuous Integration (CI) environments
+- Global mockable stdout/stderr wrapper
 - Pluggable reporters
-- Consistent CLI experience
+- Consistent Command Line Interface (CLI) experience
 - Scoped Loggers
 
 ## Installation
