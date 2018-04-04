@@ -143,7 +143,7 @@ List of available levels [here](./src/types.js)
 
 ## logObject
 
-logObject is a free-to-extend object which will be passed into reporters.
+logObject is a free-to-extend object which will be passed to reporters.
 
 Here are standard possible fields:
 
