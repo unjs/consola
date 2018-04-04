@@ -58,7 +58,7 @@ consola.error(new Error('Foo'))
 
 ## Scoped Loggers
 
-You can group logs using an scope:
+Group logs using an scope:
 
 ```js
 const logger = consola.withScope('test')
@@ -68,7 +68,7 @@ logger.info('Log from test scope') // [Test] Log from test scope
 
 ## Reporters
 
-You can choose between one of the built-in reporters or bring your own.
+Choose between one of the built-in reporters or bring own reporter.
 
 By default `FancyReporter` is registered for modern terminals or `BasicReporter` will be used if running in limited environments such as CIs.
 
@@ -83,19 +83,19 @@ Please see [Examples](./examples) for usage info.
 
 ### Creating your own reporter
 
-A reporter is nothing more than a Class or Object that should expose `log(logObj)` method.
-See implementations to get idea how to write your own.
+A reporter (Class or Object) exposes `log(logObj)` method.
+To write a reporter, check implementations to get an idea.
 
 ## Types
 
-You can think of types like _extended logging levels_ in Consola's world.
+Types can be treated as _extended logging levels_ in Consola's world.
 
 A list of all available default types is [here](./src/types.js).
 
 ## Creating a new instance
 
-Consola has a global instance and it is recommended to use it everywhere.
-In case that you need more control, you can create a new instance too.
+Consola has a global instance and is recommended to use everywhere.
+In case more control is needed, create a new instance.
 
 ```js
 const { Consola, BasicReporter } = require('consola')
@@ -114,7 +114,7 @@ consola.add(BasicReporter)
 
 - `consola.<type>([logObj|message|error])`
 
-Log to all reporters. If a plain string or error is given it will be automatically translated to a logObject.
+Log to all reporters. If a plain string or error is given, then the message will be automatically translated to a logObject.
 
 - `add(reporter)`
 
@@ -138,7 +138,7 @@ Shortcut to `withDefaults({ scope })`.
 
 - `level`
 
-The level to display logs at. Any logs at or above this level will be displayed.  
+The level to display logs. Any logs at or above this level will be displayed.  
 List of available levels [here](./src/types.js)
 
 ## logObject
