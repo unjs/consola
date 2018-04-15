@@ -45,7 +45,7 @@
     "bili": "^3.0.14",
     "eslint": "^4.17.0",
     "eslint-config-standard": "11.0.0",
-    "eslint-plugin-import": "latest",
+    "eslint-plugin-import": "^2.11.0",
     "eslint-plugin-jest": "latest",
     "eslint-plugin-node": "6.0.1",
     "eslint-plugin-promise": "latest",
