@@ -2,16 +2,23 @@ import env from 'std-env'
 import Consola from './consola'
 import Reporters from './reporters'
 
-const _consola = new Consola({
-  level: env.debug ? 4 : 3
-})
+// Attach consola to the global to prevent
+// duplicated instances when used with different packages/versions
 
-if (env.minimalCLI) {
-  _consola.add(new Reporters.BasicReporter())
-} else {
-  _consola.add(new Reporters.FancyReporter())
+let consola = global && global.consola
+
+if (!consola) {
+  consola = new Consola({
+    level: env.debug ? 4 : 3
+  })
+
+  if (env.minimalCLI) {
+    consola.add(new Reporters.BasicReporter())
+  } else {
+    consola.add(new Reporters.FancyReporter())
+  }
+
+  Object.assign(consola, { Consola }, Reporters)
 }
 
-Object.assign(_consola, { Consola }, Reporters)
-
-export default _consola
+export default consola
