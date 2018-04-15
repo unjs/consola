@@ -4,6 +4,8 @@ consola.start('Starting build')
 
 consola.warn('Something is going to happen soon')
 
+consola.log('Bla', 'Bla', 'Bla', 'Bla')
+
 setTimeout(() => {
   consola.success('Build succeed in 10 seconds')
   consola.info('Some extra info is here')

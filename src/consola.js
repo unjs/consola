@@ -18,7 +18,7 @@ export default class Consola {
   }
 
   _createLogFn (defaults) {
-    return opts => {
+    return (opts, ...args) => {
       if (!opts) {
         return this
       }
@@ -27,14 +27,17 @@ export default class Consola {
         date: new Date()
       }, defaults)
 
+      const argsStr = Array.from(args).map(String).join(' ')
+
       if (typeof opts === 'string') {
         // String
         logObj.message = opts
+        logObj.additional = argsStr
       } else if (opts.stack) {
         // Error
         const [message, ...stack] = opts.stack.split('\n')
         logObj.message = message
-        logObj.additional = stack.map(s => s.trim()).join('\n')
+        logObj.additional = (argsStr.length ? argsStr + '\n' : '') + stack.map(s => s.trim()).join('\n')
       } else {
         // Object
         Object.assign(logObj, opts)
