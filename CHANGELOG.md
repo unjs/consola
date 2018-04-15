@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/nuxt/consola/compare/v1.2.0...v1.3.0) (2018-04-15)
+
+
+### Bug Fixes
+
+* **reporters/fancy:** extra space for additional ([efeab44](https://github.com/nuxt/consola/commit/efeab44))
+* prevent duplicate consola instances when different versions used by packages ([0bce262](https://github.com/nuxt/consola/commit/0bce262))
+
+
+### Features
+
+* support extra log arguments ([8b6d3d2](https://github.com/nuxt/consola/commit/8b6d3d2))
+
+
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/nuxt/consola/compare/v1.1.4...v1.2.0) (2018-04-02)
 
