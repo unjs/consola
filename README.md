@@ -158,6 +158,7 @@ Extended fields:
 - `clear`
 - `badge`
 - `additional`
+- `additionalStyle` (By default: `grey`)
 
 ## Integrations
 
