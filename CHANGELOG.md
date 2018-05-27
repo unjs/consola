@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.4.0"></a>
+# [1.4.0](https://github.com/nuxt/consola/compare/v1.3.0...v1.4.0) (2018-05-27)
+
+
+### Features
+
+* support custom additional style ([#18](https://github.com/nuxt/consola/issues/18)) ([7a750bf](https://github.com/nuxt/consola/commit/7a750bf))
+* **fancy:** support icon field ([0123bed](https://github.com/nuxt/consola/commit/0123bed))
+
+
+
 <a name="1.3.0"></a>
 # [1.3.0](https://github.com/nuxt/consola/compare/v1.2.0...v1.3.0) (2018-04-15)
 
