@@ -47,7 +47,7 @@ export default class FancyReporter {
       this.clear()
     }
 
-    const icon = logObj.icon || ICONS[type] || ICONS.default
+    const icon = logObj.icon || ICONS[logObj.type] || ICONS.default
 
     if (logObj.badge) {
       this.stream.write('\n\n' + this.formatBadge(logObj.type, logObj.color, icon) + message + '\n\n')
