@@ -22,12 +22,11 @@ export default class FancyReporter {
     this.stream = stream || process.stderr
   }
 
-  formatBadge (type, color = 'blue') {
+  formatBadge (type, color = 'blue', icon) {
     return chalk['bg' + startCase(color)].black(` ${type.toUpperCase()} `) + ' '
   }
 
-  formatTag (type, color = 'blue') {
-    const icon = ICONS[type] || ICONS.default
+  formatTag (type, color = 'blue', icon) {
     return chalk[color](`${icon} ${type.toLowerCase()}`) + ' '
   }
 
@@ -48,10 +47,12 @@ export default class FancyReporter {
       this.clear()
     }
 
+    const icon = logObj.icon || ICONS[type] || ICONS.default
+
     if (logObj.badge) {
-      this.stream.write('\n\n' + this.formatBadge(logObj.type, logObj.color) + message + '\n\n')
+      this.stream.write('\n\n' + this.formatBadge(logObj.type, logObj.color, icon) + message + '\n\n')
     } else {
-      this.stream.write(this.formatTag(logObj.type, logObj.color) + message + '\n')
+      this.stream.write(this.formatTag(logObj.type, logObj.color, icon) + message + '\n')
     }
 
     if (logObj.additional) {

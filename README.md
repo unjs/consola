@@ -159,6 +159,7 @@ Extended fields:
 - `badge`
 - `additional`
 - `additionalStyle` (By default: `grey`)
+- `icon` (Default depends on log type)
 
 ## Integrations
 
