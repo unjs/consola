@@ -4,7 +4,7 @@ export default class Consola {
   constructor (options = {}) {
     this.reporters = options.reporters || []
     this.types = Object.assign({}, types, options.types)
-    this.level = options.level || 30
+    this.level = options.level != null ? options.level : 3
 
     Object.assign(this, this.withDefaults())
   }
