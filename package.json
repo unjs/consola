@@ -1,6 +1,6 @@
 {
   "name": "consola",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "Elegant Console Logger",
   "main": "./dist/consola.cjs.js",
   "module": "./src/index.js",
