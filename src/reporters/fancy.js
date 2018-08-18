@@ -31,7 +31,7 @@ export default class FancyReporter {
   }
 
   clear () {
-    this.stream.write('\x1b[2J\x1b[0f')
+    this.stream.write(process.platform === 'win32' ? '\x1B[2J\x1B[0f' : '\x1B[2J\x1B[3J\x1B[H')
   }
 
   log (logObj) {
