@@ -38,7 +38,7 @@
   "dependencies": {
     "chalk": "^2.3.2",
     "figures": "^2.0.0",
-    "lodash": "^4.17.5",
+    "lodash.startcase": "^4.4.0",
     "std-env": "^1.1.0"
   },
   "devDependencies": {
