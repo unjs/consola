@@ -1,6 +1,6 @@
 import chalk from 'chalk'
 import figures from 'figures'
-import startCase from 'lodash/startCase'
+import startCase from 'lodash.startCase'
 
 const NS_SEPARATOR = chalk.blue(figures(' › '))
 
