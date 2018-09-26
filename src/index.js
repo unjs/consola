@@ -19,6 +19,8 @@ if (!consola) {
   }
 
   Object.assign(consola, { Consola }, Reporters)
+
+  global.consola = consola
 }
 
 export default consola

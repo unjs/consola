@@ -25,7 +25,9 @@ export default class Consola {
 
       const logObj = Object.assign({
         date: new Date()
-      }, defaults)
+      }, defaults, {
+        scope: this.scope
+      })
 
       const argsStr = Array.from(args).map(String).join(' ')
 
