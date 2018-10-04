@@ -8,7 +8,8 @@
   "module": "./src/index.js",
   "scripts": {
     "build": "bili",
-    "test": "true",
+    "lint": "eslint --ext .js,.mjs src test examples",
+    "test": "jest test/",
     "prepublish": "yarn build",
     "release": "standard-version && yarn build && git push --follow-tags && npm publish"
   },
@@ -46,6 +47,7 @@
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^4.7.1",
     "esm": "^3.0.84",
+    "jest": "^23.6.0",
     "standard-version": "^4.4.0",
     "winston": "^3.1.0"
   }
