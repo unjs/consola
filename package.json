@@ -2,6 +2,8 @@
   "name": "consola",
   "version": "1.4.3",
   "description": "Elegant Console Logger",
+  "license": "MIT",
+  "repository": "nuxt/consola",
   "main": "./dist/consola.cjs.js",
   "module": "./src/index.js",
   "scripts": {
@@ -10,14 +12,9 @@
     "prepublish": "yarn build",
     "release": "standard-version && yarn build && git push --follow-tags && npm publish"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nuxt/consola.git"
-  },
   "files": [
     "dist",
-    "src",
-    "index.js"
+    "src"
   ],
   "keywords": [
     "console",
@@ -29,30 +26,27 @@
     "unified",
     "winston"
   ],
-  "author": "Pooya Parsa <pooya@pi0.ir>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/nuxt/consola/issues"
-  },
-  "homepage": "https://github.com/nuxt/consola#readme",
+  "contributes": [
+    "Pooya Parsa <pooya@pi0.ir>"
+  ],
   "dependencies": {
-    "chalk": "^2.3.2",
+    "chalk": "^2.4.1",
     "figures": "^2.0.0",
-    "lodash": "^4.17.5",
-    "std-env": "^1.1.0"
+    "lodash": "^4.17.11",
+    "std-env": "^2.0.2"
   },
   "devDependencies": {
-    "bili": "^3.0.14",
-    "eslint": "^4.17.0",
-    "eslint-config-standard": "11.0.0",
-    "eslint-plugin-import": "^2.11.0",
-    "eslint-plugin-jest": "latest",
-    "eslint-plugin-node": "6.0.1",
-    "eslint-plugin-promise": "latest",
-    "eslint-plugin-standard": "latest",
-    "eslint-plugin-vue": "latest",
-    "esm": "^3.0.14",
-    "standard-version": "^4.3.0",
-    "winston": "^3.0.0-rc3"
+    "bili": "^3.1.2",
+    "eslint": "^5.6.1",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jest": "^21.24.1",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-vue": "^4.7.1",
+    "esm": "^3.0.84",
+    "standard-version": "^4.4.0",
+    "winston": "^3.1.0"
   }
 }
