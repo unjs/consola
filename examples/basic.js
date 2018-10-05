@@ -4,7 +4,7 @@ consola.start('Starting build')
 
 consola.warn('Something is going to happen soon')
 
-consola.withDefaults({additionalStyle: 'underline'}).log('Bla', 'Bla', 'Bla', 'Bla')
+consola.withDefaults({ additionalStyle: 'underline' }).log('Bla', 'Bla', 'Bla', 'Bla')
 
 setTimeout(() => {
   consola.success('Build succeed in 10 seconds')
