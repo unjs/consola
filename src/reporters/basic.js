@@ -21,5 +21,9 @@ export default class BasicReporter {
     if (logObj.additional) {
       this.stream.write(logObj.additional + '\n')
     }
+
+    if (logObj.stack) {
+      this.stream.write(logObj.stack + '\n')
+    }
   }
 }

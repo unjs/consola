@@ -59,5 +59,11 @@ export default class FancyReporter {
       const lines = logObj.additional.split('\n').map(s => '  ' + s).join('\n')
       this.stream.write(chalk[logObj.additionalStyle || 'grey'](lines) + '\n')
     }
+
+    if (logObj.stack) {
+      const stack = Array.isArray(logObj.stack) ? logObj.stack : logObj.stack.split('\n')
+      const lines = stack.map(s => '  ' + s.trim()).join('\n')
+      this.stream.write(chalk[logObj.additionalStyle || 'grey'](lines) + '\n')
+    }
   }
 }

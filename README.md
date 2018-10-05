@@ -138,7 +138,7 @@ Shortcut to `withDefaults({ scope })`.
 
 - `level`
 
-The level to display logs. Any logs at or above this level will be displayed.  
+The level to display logs. Any logs at or above this level will be displayed.
 List of available levels [here](./src/types.js)
 
 ## logObject
@@ -158,6 +158,7 @@ Extended fields:
 - `clear`
 - `badge`
 - `additional`
+- `stack`
 - `additionalStyle` (By default: `grey`)
 - `icon` (Default depends on log type)
 
