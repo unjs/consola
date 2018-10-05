@@ -110,11 +110,15 @@ const consola = new Consola({
 consola.add(new BasicReporter)
 ```
 
-## API
+## Methods
 
-- `consola.<type>([logObj|message|error])`
+- `consola.<type>(logObj)`
+- `consola.<type>(message, logObj)`
+- `consola.<type>(message...)`
 
-Log to all reporters. If a plain string or error is given, then the message will be automatically translated to a logObject.
+Log to all reporters. Arguments can be either of type `String` (message) or a `logObj`.
+
+`logObj` is compatible with `Error` objects. So it is safe to pass an error instead of `logObj`.
 
 - `add(reporter)`
 
@@ -128,13 +132,19 @@ Remove a registered reporter.
 
 Remove all current reporters (Useful for writing tests).
 
-- `withDefaults(defaults)`
+- `defaults(defaults)`
 
-Create a wrapper interface with all types available and `defaults` applied to all logs.
+Shortcut to `create({ defaults })`.
 
-- `withScope(scope)`
+- `scope(scope)`
 
-Shortcut to `withDefaults({ scope })`.
+Shortcut to `defaults({ scope })`.
+
+## Fields
+
+- `reporters`
+
+An array of active reporters
 
 - `level`
 
