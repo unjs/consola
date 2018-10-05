@@ -8,19 +8,19 @@ export default class Consola {
 
     // Prevate fields
     // Used for constructur and create
-    this.types = options.types || defaultTypes
-    this.defaults = options.defaults || {}
+    this._types = options.types || options._types || defaultTypes
+    this._defaults = options.defaults || options._defaults || {}
 
     // Method aliases
     this.withDefaults = this.defaults
     this.withScope = this.scope
 
     // Create logger functions for current instance
-    for (const type in this.types) {
+    for (const type in this._types) {
       this[type] = this._createLogFn(Object.assign(
         { type },
-        this.types[type],
-        this.defaults
+        this._types[type],
+        this._defaults
       ))
     }
   }
