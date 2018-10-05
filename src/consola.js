@@ -1,38 +1,64 @@
-import types from './types'
+import defaultTypes from './types'
 
 export default class Consola {
   constructor (options = {}) {
+    // Public fields
     this.reporters = options.reporters || []
-    this.types = Object.assign({}, types, options.types)
     this.level = options.level != null ? options.level : 3
 
-    Object.assign(this, this.withDefaults())
-  }
+    // Prevate fields
+    // Used for constructur and create
+    this.types = options.types || defaultTypes
+    this.defaults = options.defaults || {}
 
-  withDefaults (defaults) {
-    const logger = {}
+    // Method aliases
+    this.withDefaults = this.defaults
+    this.withScope = this.scope
+
+    // Create logger functions for current instance
     for (const type in this.types) {
-      logger[type] = this._createLogFn(Object.assign(
+      this[type] = this._createLogFn(Object.assign(
         { type },
         this.types[type],
-        defaults
+        this.defaults
       ))
     }
-    return logger
   }
 
-  withScope (scope) {
-    return this.withDefaults({ scope })
+  create (options) {
+    return new Consola(Object.assign({}, this, options))
+  }
+
+  defaults (defaults) {
+    return this.create({ defaults })
+  }
+
+  scope (scope) {
+    return this.defaults({ scope })
+  }
+
+  add (reporter) {
+    this.reporters.push(reporter)
+    return this
+  }
+
+  clear () {
+    this.reporters.splice(0)
+    return this
+  }
+
+  remove (reporter) {
+    const i = this.reporters.indexOf(reporter)
+    if (i >= 0) {
+      return this.reporters.splice(i, 1)
+    }
+    return this
   }
 
   _createLogFn (defaults) {
     function log (arg1, arg2, ...args) {
       // Construct a new log object
-      const logObj = Object.assign(
-        { date: new Date() },
-        defaults,
-        { scope: this.scope }
-      )
+      const logObj = Object.assign({ date: new Date() }, defaults)
 
       // Consume function arguments
       if (typeof arg1 === 'string') {
@@ -72,24 +98,6 @@ export default class Consola {
     }
     for (const reporter of this.reporters) {
       reporter.log(logObj)
-    }
-    return this
-  }
-
-  add (reporter) {
-    this.reporters.push(reporter)
-    return this
-  }
-
-  clear () {
-    this.reporters.splice(0)
-    return this
-  }
-
-  remove (reporter) {
-    const i = this.reporters.indexOf(reporter)
-    if (i >= 0) {
-      return this.reporters.splice(i, 1)
     }
     return this
   }
