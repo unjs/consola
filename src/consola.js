@@ -1,4 +1,5 @@
 import defaultTypes from './types'
+import { assignToLogObj } from './utils'
 
 export default class Consola {
   constructor (options = {}) {
@@ -67,15 +68,13 @@ export default class Consola {
           logObj.message = [arg1, arg2].concat(args).join(' ')
         } else {
           // [str] [obj?]
-          if (typeof arg2 === 'object') {
-            Object.assign(logObj, arg2)
-          }
+          assignToLogObj(logObj, arg2)
           logObj.message = arg1
         }
       } else {
         // [obj]
         if (typeof arg1 === 'object') {
-          Object.assign(logObj, arg1)
+          assignToLogObj(logObj, arg1)
         }
       }
 
