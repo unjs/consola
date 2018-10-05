@@ -83,11 +83,6 @@ export default class Consola {
       return this._log(logObj)
     }
 
-    // Improve log function name
-    const name = defaults.type
-    log.name = name
-    log.prototype.name = name
-
     // Bind function to instance if Consola
     return log.bind(this)
   }
