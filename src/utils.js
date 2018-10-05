@@ -11,3 +11,15 @@ export function assignToLogObj (logObj, obj) {
     }
   }
 }
+
+export function formatStack (stack, { prefix = '  ', suffix = '' } = {}) {
+  let lines = stack
+    .split('\n')
+    .map(l => l.trim().replace(/^at /, ''))
+
+  if (lines[0].indexOf('Error: ') === 0) {
+    lines = lines.splice(1)
+  }
+
+  return prefix + lines.join(suffix + '\n' + prefix) + suffix
+}

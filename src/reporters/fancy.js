@@ -1,6 +1,7 @@
 import chalk from 'chalk'
 import figures from 'figures'
 import startCase from 'lodash/startCase'
+import { formatStack } from '../utils'
 
 const NS_SEPARATOR = chalk.blue(figures(' › '))
 
@@ -61,9 +62,11 @@ export default class FancyReporter {
     }
 
     if (logObj.stack) {
-      const stack = Array.isArray(logObj.stack) ? logObj.stack : logObj.stack.split('\n')
-      const lines = stack.map(s => '  ' + s.trim()).join('\n')
-      this.stream.write(chalk[logObj.additionalStyle || 'grey'](lines) + '\n')
+      const stack = formatStack(logObj.stack, {
+        suffix: ' ↲'
+      })
+
+      this.stream.write(chalk[logObj.additionalStyle || 'grey'](stack) + '\n')
     }
   }
 }

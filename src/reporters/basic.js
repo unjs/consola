@@ -1,3 +1,5 @@
+import { formatStack } from '../utils'
+
 export default class BasicReporter {
   constructor (stream) {
     this.stream = stream || process.stdout
@@ -23,7 +25,11 @@ export default class BasicReporter {
     }
 
     if (logObj.stack) {
-      this.stream.write(logObj.stack + '\n')
+      const stack = formatStack(logObj.stack, {
+        prefix: '> '
+      })
+
+      this.stream.write(stack + '\n')
     }
   }
 }
