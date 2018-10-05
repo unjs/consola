@@ -1,6 +1,5 @@
 import chalk from 'chalk'
 import figures from 'figures'
-import startCase from 'lodash/startCase'
 import { formatStack } from '../utils'
 
 const NS_SEPARATOR = chalk.blue(figures(' › '))
@@ -18,17 +17,31 @@ const ICONS = {
   ready: figures('♥')
 }
 
+function chalkColor (name) {
+  if (name[0] === '#') {
+    return chalk.hex(name)
+  }
+  return chalk[name] || chalk.keyword(name)
+}
+
+function chalkBgColor (name) {
+  if (name[0] === '#') {
+    return chalk.bgHex(name)
+  }
+  return chalk['bg' + name[0] + name.slice(1)] || chalk.bgKeyword(name)
+}
+
 export default class FancyReporter {
   constructor (stream, options = {}) {
     this.stream = stream || process.stderr
   }
 
   formatBadge (type, color = 'blue', icon) {
-    return chalk['bg' + startCase(color)].black(` ${type.toUpperCase()} `) + ' '
+    return chalkBgColor(color).black(` ${type.toUpperCase()} `) + ' '
   }
 
   formatTag (type, color = 'blue', icon) {
-    return chalk[color](`${icon} ${type.toLowerCase()}`) + ' '
+    return chalkColor(color)(`${icon} ${type.toUpperCase()}`) + ' '
   }
 
   clear () {

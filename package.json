@@ -33,7 +33,6 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "figures": "^2.0.0",
-    "lodash": "^4.17.11",
     "std-env": "^2.0.2"
   },
   "devDependencies": {
@@ -48,6 +47,7 @@
     "eslint-plugin-vue": "^4.7.1",
     "esm": "^3.0.84",
     "jest": "^23.6.0",
+    "lodash": "^4.17.11",
     "standard-version": "^4.4.0",
     "winston": "^3.1.0"
   }
