@@ -12,43 +12,58 @@ export default class Consola {
   withDefaults (defaults) {
     const logger = {}
     for (const type in this.types) {
-      logger[type] = this._createLogFn(Object.assign({ type }, this.types[type], defaults))
+      logger[type] = this._createLogFn(Object.assign(
+        { type },
+        this.types[type],
+        defaults
+      ))
     }
     return logger
   }
 
+  withScope (scope) {
+    return this.withDefaults({ scope })
+  }
+
   _createLogFn (defaults) {
-    return (opts, ...args) => {
-      if (!opts) {
-        return this
-      }
+    function log (arg1, arg2, ...args) {
+      // Construct a new log object
+      const logObj = Object.assign(
+        { date: new Date() },
+        defaults,
+        { scope: this.scope }
+      )
 
-      const logObj = Object.assign({
-        date: new Date()
-      }, defaults, {
-        scope: this.scope
-      })
-
-      const argsStr = Array.from(args).map(String).join(' ')
-
-      if (typeof opts === 'string') {
-        // String
-        logObj.message = opts
-        logObj.additional = argsStr
-      } else if (opts.stack) {
-        // Error
-        const [message, ...stack] = opts.stack.split('\n')
-        logObj.message = message
-        logObj.additional = (argsStr.length ? argsStr + '\n' : '') + stack.map(s => s.trim()).join('\n')
+      // Consume function arguments
+      if (typeof arg1 === 'string') {
+        if (typeof arg2 === 'string') {
+          // [str] [str] [str*]
+          logObj.message = [arg1, arg2].concat(args).join(' ')
+        } else {
+          // [str] [obj?]
+          if (typeof arg2 === 'object') {
+            Object.assign(logObj, arg2)
+          }
+          logObj.message = arg1
+        }
       } else {
-        // Object
-        Object.assign(logObj, opts)
+        // [obj]
+        if (typeof arg1 === 'object') {
+          Object.assign(logObj, arg1)
+        }
       }
 
-      this._log(logObj)
-
-      return this
+      // Log
+      return this._log(logObj)
     }
+
+    // Improve log function name
+    const name = defaults.type
+    log.name = name
+    log.prototype.name = name
+
+    // Bind function to instance if Consola
+    return log.bind(this)
   }
 
   _log (logObj) {
@@ -77,9 +92,5 @@ export default class Consola {
       return this.reporters.splice(i, 1)
     }
     return this
-  }
-
-  withScope (scope) {
-    return this.withDefaults({ scope })
   }
 }
