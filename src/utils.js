@@ -4,6 +4,9 @@ const VALID_LOGOBJ_KEYS = [
 ]
 
 export function assignToLogObj (logObj, obj) {
+  if (typeof obj !== 'object') {
+    return
+  }
   for (const key of VALID_LOGOBJ_KEYS) {
     const val = obj[key]
     if (typeof val !== 'undefined') {

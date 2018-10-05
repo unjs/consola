@@ -73,9 +73,7 @@ export default class Consola {
         }
       } else {
         // [obj]
-        if (typeof arg1 === 'object') {
-          assignToLogObj(logObj, arg1)
-        }
+        assignToLogObj(logObj, arg1)
       }
 
       // Log
