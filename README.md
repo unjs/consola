@@ -49,31 +49,20 @@ consola.error(new Error('Foo'))
 </div>
 
 <pre>
-[18:40:19] [DEBUG] A message with consola.debug()
-[18:40:19] [ERROR] A message with consola.error()
-[18:40:19] [FATAL] A message with consola.fatal()
-[18:40:19] [INFO] A message with consola.info()
-[18:40:19] [LOG] A message with consola.log()
-[18:40:19] [READY] A message with consola.ready()
-[18:40:19] [START] A message with consola.start()
-[18:40:19] [SUCCESS] A message with consola.success()
-[18:40:19] [TRACE] A message with consola.trace()
-[18:40:19] [WARN] A message with consola.warn()
-[18:40:19] [INFO] Consola can format JSON values too
+[20:15:57] [DEBUG] A message with consola.debug()
+[20:15:57] [ERROR] A message with consola.error()
+[20:15:57] [FATAL] A message with consola.fatal()
+[20:15:57] [INFO] A message with consola.info()
+[20:15:57] [LOG] A message with consola.log()
+[20:15:57] [INFO] A JSON Log:
 {
   "name": "Cat",
   "color": "#454545"
 }
 [18:40:19] [ERROR] Something bad happened!
-> Object.<anonymous> (/Users/pooya/Code/nuxt/consola/demo.js:30:17)
+> Object.<anonymous> (consola/demo.js:30:17)
 > Module._compile (module.js:652:30)
 > Object.Module._extensions..js (module.js:663:10)
-> Module.load (module.js:565:32)
-> tryModuleLoad (module.js:505:12)
-> Function.Module._load (module.js:497:3)
-> Function.Module.runMain (module.js:693:10)
-> startup (bootstrap_node.js:191:16)
-> bootstrap_node.js:612:3
 </pre>
 <div align="center">
   <p>Minimal Reporter (CI)</p>
@@ -114,12 +103,16 @@ const { Consola, BasicReporter } = require('consola')
 
 
 const consola = new Consola({
-    level: 30,
-    reporters: [],
-    types: []
+    // level: 4,
+    // types: [],
+    reporters: [
+      new BasicReporter
+    ],
+    defaults: {
+      additionalStyle: 'white'
+    }
 })
 
-consola.add(new BasicReporter)
 ```
 
 ## Methods
