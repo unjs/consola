@@ -28,7 +28,7 @@
   "contributes": [
     "Pooya Parsa <pooya@pi0.ir>",
     "Clark Du (@clarkdo)",
-    "@pimlie <pimlie@hotmail.com>",
+    "@pimlie <pimlie@hotmail.com>"
   ],
   "dependencies": {
     "chalk": "^2.4.1",
