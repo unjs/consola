@@ -32,3 +32,5 @@ Object.assign(consola, {
   JSONReporter,
   WinstonReporter
 })
+
+export default consola
