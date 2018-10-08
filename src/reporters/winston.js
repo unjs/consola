@@ -19,11 +19,14 @@ export default class WinstonReporter {
   }
 
   log (logObj) {
+    const args = [].concat(logObj.args)
+    const arg0 = args.shift()
+
     this.logger.log({
       level: levels[logObj.level] || 'info',
       label: logObj.tag,
-      message: logObj.message,
-      args: logObj.args,
+      message: arg0,
+      args: args,
       timestamp: logObj.date.getTime() / 1000
     })
   }
