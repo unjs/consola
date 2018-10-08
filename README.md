@@ -35,6 +35,7 @@ npm i consola
 const consola = require('consola')
 
 // See types section for all available types
+
 consola.start('Starting build')
 consola.success('Built!')
 consola.info('Reporter: Some info')
@@ -69,6 +70,61 @@ consola.error(new Error('Foo'))
   <br>
 </div>
 
+## Methods
+
+### `consola.<type>(logObject)`
+### `consola.<type>(args...)`
+
+Log to all reporters.
+
+### `addReporter(reporter)`
+
+Register a custom reporter instance.
+
+### `removeReporter(reporter?)`
+
+Remove a registered reporter.
+
+If no arguments are passed all reporters will be removed.
+
+### `create(options)`
+
+Create a new `Consola` instance and inherit all parent options for defaults.
+
+## Fields
+
+### `reporters`
+
+An array of active reporters.
+
+### `level`
+
+The level to display logs. Any logs at or above this level will be displayed.
+List of available levels [here](./src/types.js)
+
+You can set log level using `CONSOLA_LEVEL` environment variable.
+
+## logObject
+
+logObject is a free-to-extend object which will be passed to reporters.
+
+Here are standard possible fields:
+
+Common fields:
+
+- `additional`
+- `additionalColor`
+- `args`
+- `date`
+- `message`
+- `tag`
+
+Extended fields:
+
+- `badge`
+- `clear`
+- `icon`
+
 ## Reporters
 
 Choose between one of the built-in reporters or bring own reporter.
@@ -99,76 +155,18 @@ Consola has a global instance and is recommended to use everywhere.
 In case more control is needed, create a new instance.
 
 ```js
-const { Consola, BasicReporter } = require('consola')
+import consola from 'consola'
 
-
-const consola = new Consola({
+const logger = consola.create({
     // level: 4,
-    // types: [],
     reporters: [
-      new BasicReporter
+      new consola.JSONReporter()
     ],
     defaults: {
       additionalColor: 'white'
     }
 })
-
 ```
-
-## Methods
-
-- `consola.<type>(logObj)`
-- `consola.<type>(args...)`
-
-Log to all reporters.
-
-- `addReporter(reporter)`
-
-Register a custom reporter instance.
-
-- `removeReporter(reporter?)`
-
-Remove a registered reporter.
-
-If no arguments are passed all reporters will be removed.
-
-- `create(options)`
-
-Create a new `Consola` instance and inherit all parent options for defaults.
-
-## Fields
-
-- `reporters`
-
-An array of active reporters.
-
-- `level`
-
-The level to display logs. Any logs at or above this level will be displayed.
-List of available levels [here](./src/types.js)
-
-You can set log level using `CONSOLA_LEVEL` environment variable.
-
-## logObject
-
-logObject is a free-to-extend object which will be passed to reporters.
-
-Here are standard possible fields:
-
-Common fields:
-
-- `additional`
-- `additionalColor`
-- `args`
-- `date`
-- `message`
-- `tag`
-
-Extended fields:
-
-- `badge`
-- `clear`
-- `icon`
 
 ## Integrations
 
