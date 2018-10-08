@@ -13,7 +13,8 @@
     "release": "standard-version && yarn build && git push --follow-tags && npm publish"
   },
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "keywords": [
     "console",
