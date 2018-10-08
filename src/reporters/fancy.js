@@ -45,13 +45,11 @@ export default class FancyReporter extends BasicReporter {
     }
 
     // Print type
-    if (fields.type !== 'log') {
-      if (logObj.badge) {
-        this.write(chalkBgColor(logObj.color).black(` ${fields.type.toUpperCase()} `))
-      } else {
-        const icon = logObj.icon || ICONS[fields.type] || ICONS.default
-        this.write(chalkColor(logObj.color)(`${icon} ${fields.type.toUpperCase()} `))
-      }
+    if (logObj.badge) {
+      this.write('\n' + chalkBgColor(logObj.color).black(` ${fields.type.toUpperCase()} `) + ' ')
+    } else if (fields.type !== 'log') {
+      const icon = logObj.icon || ICONS[fields.type] || ICONS.default
+      this.write(chalkColor(logObj.color)(`${icon} ${fields.type.toUpperCase()} `))
     }
 
     // Print tag
@@ -62,6 +60,11 @@ export default class FancyReporter extends BasicReporter {
     // Print message
     if (fields.message.length) {
       this.write(fields.message)
+    }
+
+    // Badge additional line
+    if (logObj.badge) {
+      this.write('\n')
     }
 
     // Print additional args
