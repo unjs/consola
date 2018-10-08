@@ -1,5 +1,6 @@
 import defaultTypes from './types'
 import { isLogObj } from './utils'
+import { version } from '../package.json'
 
 export default class Consola {
   constructor (options = {}) {
@@ -125,3 +126,8 @@ export default class Consola {
     return this.removeReporter()
   }
 }
+
+Object.defineProperty(Consola.prototype, '__VERSION__', {
+  value: version,
+  writable: false
+})
