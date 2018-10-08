@@ -164,6 +164,8 @@ Here are standard possible fields:
 
 Common fields:
 
+- `additional`
+- `additionalStyle`
 - `args`
 - `date`
 - `message`
@@ -174,12 +176,6 @@ Extended fields:
 - `badge`
 - `clear`
 - `icon`
-
-Depricated fields:
-
-- `additional`
-- `additionalStyle`
-- `scope`
 
 ## Integrations
 

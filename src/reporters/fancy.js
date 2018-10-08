@@ -69,7 +69,7 @@ export default class FancyReporter extends BasicReporter {
 
     // Print additional args
     if (fields.args.length) {
-      this.write('\n' + chalkColor('grey')(fields.args.join(' ')))
+      this.write('\n' + chalkColor(logObj.additionalStyle || 'grey')(fields.args.join(' ')))
     }
 
     // Newline

@@ -60,12 +60,13 @@ export default class Consola {
         logObj.args = Array.from(arguments)
       }
 
-      // Legacy support
+      // Addtional message
       if (logObj.additional) {
-        this._depricated('logObj.additional', 'args')
         logObj.args.push.apply(logObj.args, logObj.additional.split('\n'))
         delete logObj.additional
       }
+
+      // Legacy support
       if (logObj.scope) {
         this._depricated('logObj.scope', 'tag')
         logObj.tag = logObj.scope
