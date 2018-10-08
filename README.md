@@ -109,7 +109,7 @@ const consola = new Consola({
       new BasicReporter
     ],
     defaults: {
-      additionalStyle: 'white'
+      additionalColor: 'white'
     }
 })
 
@@ -158,7 +158,7 @@ Here are standard possible fields:
 Common fields:
 
 - `additional`
-- `additionalStyle`
+- `additionalColor`
 - `args`
 - `date`
 - `message`

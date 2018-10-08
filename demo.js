@@ -31,7 +31,7 @@ for (const reporter of reporters) {
     consola.success({
       message: 'This is a fancy badge',
       additional: 'With some additional info',
-      additionalStyle: 'brown',
+      additionalColor: 'brown',
       badge: true
     })
   }
