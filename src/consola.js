@@ -68,7 +68,7 @@ export default class Consola {
 
       // Legacy support
       if (logObj.scope) {
-        this._depricated('logObj.scope', 'tag')
+        this._deprecated('logObj.scope', 'tag')
         logObj.tag = logObj.scope
         delete logObj.scope
       }
@@ -91,39 +91,39 @@ export default class Consola {
     return this
   }
 
-  _depricated (what, alter) {
+  _deprecated (what, alter) {
     this.warn({
-      message: `${what} is depricated. Use ${alter}.`
+      message: `${what} is deprecated. Use ${alter}.`
     })
   }
 
-  // DEPRICATED
+  // DEPRECATED
   withDefaults (defaults) {
-    this._depricated('consola.withDefaults()', 'consola.create({ defaults })')
+    this._deprecated('consola.withDefaults()', 'consola.create({ defaults })')
     return this.create({ defaults })
   }
 
-  // DEPRICATED
+  // DEPRECATED
   withScope (scope) {
-    this._depricated('consola.withScope', 'consola.create({ defaults: { tag: scope } })')
+    this._deprecated('consola.withScope', 'consola.create({ defaults: { tag: scope } })')
     return this.create({ defaults: { tag: scope } })
   }
 
-  // DEPRICATED
+  // DEPRECATED
   add (reporter) {
-    this._depricated('consola.add', 'consola.addReporter')
+    this._deprecated('consola.add', 'consola.addReporter')
     return this.addReporter(reporter)
   }
 
-  // DEPRICATED
+  // DEPRECATED
   remove (reporter) {
-    this._depricated('consola.remove', 'consola.removeReporter')
+    this._deprecated('consola.remove', 'consola.removeReporter')
     return this.removeReporter(reporter)
   }
 
-  // DEPRICATED
+  // DEPRECATED
   clear (reporter) {
-    this._depricated('consola.remove', 'consola.removeReporter')
+    this._deprecated('consola.remove', 'consola.removeReporter')
     return this.removeReporter()
   }
 }
