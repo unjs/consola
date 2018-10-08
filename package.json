@@ -26,7 +26,8 @@
     "winston"
   ],
   "contributes": [
-    "Pooya Parsa <pooya@pi0.ir>"
+    "Pooya Parsa <pooya@pi0.ir>",
+    "Clark Du (@clarkdo)"
   ],
   "dependencies": {
     "chalk": "^2.4.1",

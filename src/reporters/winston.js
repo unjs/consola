@@ -3,7 +3,19 @@
 
 export default class WinstonReporter {
   constructor (logger) {
-    this.logger = logger
+    if (logger && logger.log) {
+      this.logger = logger
+    } else {
+      const winston = require('winston')
+
+      this.logger = winston.createLogger(Object.assign({
+        level: 'info',
+        format: winston.format.simple(),
+        transports: [
+          new winston.transports.Console()
+        ]
+      }, logger))
+    }
   }
 
   log (logObj) {
@@ -11,6 +23,7 @@ export default class WinstonReporter {
       level: levels[logObj.level] || 'info',
       label: logObj.tag,
       message: logObj.message,
+      args: logObj.args,
       timestamp: logObj.date.getTime() / 1000
     })
   }

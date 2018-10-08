@@ -9,7 +9,9 @@ let consola = global && global.consola
 
 if (!consola) {
   consola = new Consola({
-    level: env.debug ? 4 : 3
+    level:
+      (typeof process !== 'undefined' && parseInt(process.env['CONSOLA_LEVEL'])) ||
+      (env.debug ? 4 : 3)
   })
 
   if (env.minimalCLI) {

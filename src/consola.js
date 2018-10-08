@@ -1,86 +1,81 @@
 import defaultTypes from './types'
-import { assignToLogObj } from './utils'
+import { isLogObj } from './utils'
 
 export default class Consola {
   constructor (options = {}) {
-    // Public fields
     this.reporters = options.reporters || []
     this.level = options.level != null ? options.level : 3
-
-    // Prevate fields
-    // Used for constructur and create
-    this._types = options.types || options._types || defaultTypes
-    this._defaults = options.defaults || options._defaults || {}
-
-    // Method aliases
-    this.withDefaults = this.defaults
-    this.withScope = this.scope
+    this.types = options.types || defaultTypes
+    this.defaults = options.defaults || {}
 
     // Create logger functions for current instance
-    for (const type in this._types) {
+    for (const type in this.types) {
       this[type] = this._createLogFn(Object.assign(
         { type },
-        this._types[type],
-        this._defaults
+        this.types[type],
+        this.defaults
       ))
     }
   }
 
   create (options) {
-    return new Consola(Object.assign({}, this, options))
+    return new Consola(Object.assign({
+      reporters: this.reporters,
+      level: this.level,
+      types: this.types,
+      defaults: this.defaults
+    }, options))
   }
 
-  defaults (defaults) {
-    return this.create({ defaults })
-  }
-
-  scope (scope) {
-    return this.defaults({ scope })
-  }
-
-  add (reporter) {
+  addReporter (reporter) {
     this.reporters.push(reporter)
     return this
   }
 
-  clear () {
-    this.reporters.splice(0)
-    return this
-  }
-
-  remove (reporter) {
-    const i = this.reporters.indexOf(reporter)
-    if (i >= 0) {
-      return this.reporters.splice(i, 1)
+  removeReporter (reporter) {
+    if (reporter) {
+      const i = this.reporters.indexOf(reporter)
+      if (i >= 0) {
+        return this.reporters.splice(i, 1)
+      }
+    } else {
+      this.reporters.splice(0)
     }
     return this
   }
 
   _createLogFn (defaults) {
-    function log (arg1, arg2, ...args) {
+    function log () {
       // Construct a new log object
-      const logObj = Object.assign({ date: new Date() }, defaults)
+      const logObj = Object.assign({
+        date: new Date(),
+        args: []
+      }, defaults)
 
-      // Consume function arguments
-      if (typeof arg1 === 'string') {
-        if (typeof arg2 === 'string') {
-          // [str] [str] [str*]
-          logObj.message = [arg1, arg2].concat(args).join(' ')
-        } else {
-          // [str] [obj?]
-          assignToLogObj(logObj, arg2)
-          logObj.message = arg1
-        }
+      // Consume arguments
+      if (arguments.length === 1 && isLogObj(arguments[0])) {
+        Object.assign(logObj, arguments[0])
       } else {
-        // [obj]
-        assignToLogObj(logObj, arg1)
+        logObj.args = Array.from(arguments)
+      }
+
+      // Legacy support
+      if (logObj.additional) {
+        this._depricated('logObj.additional', 'args')
+        logObj.args.push.apply(logObj.args, logObj.additional.split('\n'))
+        delete logObj.additional
+      }
+      if (logObj.scope) {
+        this._depricated('logObj.scope', 'tag')
+        logObj.tag = logObj.scope
+        delete logObj.scope
       }
 
       // Log
       return this._log(logObj)
     }
 
-    // Bind function to instance if Consola
+    // Bind function to instance of Consola
     return log.bind(this)
   }
 
@@ -92,5 +87,41 @@ export default class Consola {
       reporter.log(logObj)
     }
     return this
+  }
+
+  _depricated (what, alter) {
+    this.warn({
+      message: `${what} is depricated. Please use ${alter},`
+    })
+  }
+
+  // DEPRICATED
+  withDefaults (defaults) {
+    this._depricated('consola.withDefaults()', 'consola.create({ defaults })')
+    return this.create({ defaults })
+  }
+
+  // DEPRICATED
+  withScope (scope) {
+    this._depricated('consola.withScope', 'consola.create({ defaults: { tag: scope } })')
+    return this.create({ defaults: { tag: scope } })
+  }
+
+  // DEPRICATED
+  add (reporter) {
+    this._depricated('consola.add', 'consola.addReporter')
+    return this.addReporter(reporter)
+  }
+
+  // DEPRICATED
+  remove (reporter) {
+    this._depricated('consola.remove', 'consola.removeReporter')
+    return this.removeReporter(reporter)
+  }
+
+  // DEPRICATED
+  clear (reporter) {
+    this._depricated('consola.remove', 'consola.removeReporter')
+    return this.removeReporter()
   }
 }

@@ -1,15 +1,19 @@
-# Consola
+# 🎮  Consola
 
-Elegant Console Logger
+[![Standard JS][standard-js-src]][standard-js-href]
+[![npm version][npm-version-src]][npm-version-href]
+[![npm downloads][npm-downloads-src]][npm-downloads-href]
+
+> Elegant Console Logger
 
 ## Why Consola?
 
 - Easy to use
-- Fancy output with Fallback for Continuous Integration (CI) environments
+- Fancy output with fallback for continuous integration (CI) environments
 - Global mockable stdout/stderr wrapper
 - Pluggable reporters
-- Consistent Command Line Interface (CLI) experience
-- Scoped Loggers
+- Consistent command line interface (CLI) experience
+- Tag support
 
 ## Installation
 
@@ -25,7 +29,7 @@ Using npm:
 npm i consola
 ```
 
-## Getting started
+## Getting Started
 
 ```js
 const consola = require('consola')
@@ -39,32 +43,42 @@ consola.error(new Error('Foo'))
 
 <div align="center">
 <br>
-<img src="./assets/screen1.png" width="600px">
+<img src="./assets/fancy.png" width="600px">
 <p>Fancy Reporter</p>
 <br>
 </div>
 
 <pre>
-[2:17:17 PM] Starting build
-[2:17:17 PM] [TEST] Log from test scope
-[2:17:18 PM] Built!
-[2:17:18 PM] Some info
-[2:17:18 PM] Error: Foo
+[18:40:19] [DEBUG] A message with consola.debug()
+[18:40:19] [ERROR] A message with consola.error()
+[18:40:19] [FATAL] A message with consola.fatal()
+[18:40:19] [INFO] A message with consola.info()
+[18:40:19] [LOG] A message with consola.log()
+[18:40:19] [READY] A message with consola.ready()
+[18:40:19] [START] A message with consola.start()
+[18:40:19] [SUCCESS] A message with consola.success()
+[18:40:19] [TRACE] A message with consola.trace()
+[18:40:19] [WARN] A message with consola.warn()
+[18:40:19] [INFO] Consola can format JSON values too
+{
+  "name": "Cat",
+  "color": "#454545"
+}
+[18:40:19] [ERROR] Something bad happened!
+> Object.<anonymous> (/Users/pooya/Code/nuxt/consola/demo.js:30:17)
+> Module._compile (module.js:652:30)
+> Object.Module._extensions..js (module.js:663:10)
+> Module.load (module.js:565:32)
+> tryModuleLoad (module.js:505:12)
+> Function.Module._load (module.js:497:3)
+> Function.Module.runMain (module.js:693:10)
+> startup (bootstrap_node.js:191:16)
+> bootstrap_node.js:612:3
 </pre>
 <div align="center">
-<p>Minimal Reporter (CI)</p>
-<br>
+  <p>Minimal Reporter (CI)</p>
+  <br>
 </div>
-
-## Scoped Loggers
-
-Group logs using an scope:
-
-```js
-const logger = consola.withScope('test')
-
-logger.info('Log from test scope') // [Test] Log from test scope
-```
 
 ## Reporters
 
@@ -78,8 +92,6 @@ Available reporters:
 - [FancyReporter](./src/reporters/fancy.js)
 - [JSONReporter](./src/reporters/json.js)
 - [WinstonReporter](./src/reporters/winston.js)
-
-Please see [Examples](./examples) for usage info.
 
 ### Creating your own reporter
 
@@ -113,43 +125,36 @@ consola.add(new BasicReporter)
 ## Methods
 
 - `consola.<type>(logObj)`
-- `consola.<type>(message, logObj)`
-- `consola.<type>(message...)`
+- `consola.<type>(args...)`
 
-Log to all reporters. Arguments can be either of type `String` (message) or a `logObj`.
+Log to all reporters.
 
-`logObj` is compatible with `Error` objects. So it is safe to pass an error instead of `logObj`.
-
-- `add(reporter)`
+- `addReporter(reporter)`
 
 Register a custom reporter instance.
 
-- `remove(reporter)`
+- `removeReporter(reporter?)`
 
 Remove a registered reporter.
 
-- `clear()`
+If no arguments are passed all reporters will be removed.
 
-Remove all current reporters (Useful for writing tests).
+- `create(options)`
 
-- `defaults(defaults)`
-
-Shortcut to `create({ defaults })`.
-
-- `scope(scope)`
-
-Shortcut to `defaults({ scope })`.
+Create a new `Consola` instance and inherit all parent options for defaults.
 
 ## Fields
 
 - `reporters`
 
-An array of active reporters
+An array of active reporters.
 
 - `level`
 
 The level to display logs. Any logs at or above this level will be displayed.
 List of available levels [here](./src/types.js)
+
+You can set log level using `CONSOLA_LEVEL` environment variable.
 
 ## logObject
 
@@ -159,25 +164,29 @@ Here are standard possible fields:
 
 Common fields:
 
-- `message`
+- `args`
 - `date`
-- `scope`
+- `message`
+- `tag`
 
 Extended fields:
 
-- `clear`
 - `badge`
+- `clear`
+- `icon`
+
+Depricated fields:
+
 - `additional`
-- `stack`
-- `additionalStyle` (By default: `grey`)
-- `icon` (Default depends on log type)
+- `additionalStyle`
+- `scope`
 
 ## Integrations
 
 ### With jest
 
 ```js
-consola.clear().add({
+consola.removeReporter().addReporter({
   log: jest.fn()
 })
 ```
@@ -192,4 +201,12 @@ consola.clear().add({
 
 ## License
 
-MIT
+MIT - Made with 💖 By Nuxt.js team!
+
+<!-- Refs -->
+[standard-js-src]: https://flat.badgen.net/badge/code%20style/standard/green
+[standard-js-href]: https://standardjs.com
+[npm-version-src]: https://flat.badgen.net/npm/v/consola/latest
+[npm-version-href]: https://npmjs.com/package/consola
+[npm-downloads-src]: https://flat.badgen.net/npm/dt/consola
+[npm-downloads-href]: https://npmjs.com/package/consola
