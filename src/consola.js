@@ -93,7 +93,7 @@ export default class Consola {
 
   _depricated (what, alter) {
     this.warn({
-      message: `${what} is depricated. Please use ${alter},`
+      message: `${what} is depricated. Use ${alter}.`
     })
   }
 
