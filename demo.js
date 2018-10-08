@@ -22,10 +22,18 @@ for (const reporter of reporters) {
     consola[type](`A message with consola.${type}()`)
   }
 
-  consola.info('Consola can format JSON values too', {
+  consola.info('A JSON Log:', {
     name: 'Cat',
     color: '#454545'
   })
+
+  if (reporter === 'FancyReporter') {
+    consola.success({
+      message: 'This is a fancy badge',
+      additional: 'With some additional info',
+      badge: true
+    })
+  }
 
   consola.error(new Error('Something bad happened!'))
 }
