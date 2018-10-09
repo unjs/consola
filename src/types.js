@@ -1,15 +1,18 @@
 export default {
   fatal: {
     level: 0,
-    color: 'red'
+    color: 'red',
+    isError: true
   },
   error: {
     level: 0,
-    color: 'red'
+    color: 'red',
+    isError: true
   },
   warn: {
     level: 1,
-    color: 'yellow'
+    color: 'yellow',
+    isError: true
   },
   log: {
     level: 2,
