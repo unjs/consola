@@ -1,4 +1,4 @@
-export default {
+export const Types = {
   fatal: {
     level: 0,
     color: 'red'

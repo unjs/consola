@@ -1,5 +1,5 @@
 import util from 'util'
-import { isPlainObject } from '../utils'
+import { isPlainObject, parseStack } from '../utils'
 
 export default class BasicReporter {
   constructor (options) {
@@ -16,23 +16,8 @@ export default class BasicReporter {
     this.options.stream.write(data)
   }
 
-  parseStack (stack) {
-    let lines = stack
-      .split('\n')
-      .map(l => l
-        .trim()
-        .replace(/^at /, '')
-      )
-
-    if (lines[0].indexOf('Error: ') === 0) {
-      lines = lines.splice(1)
-    }
-
-    return lines
-  }
-
   formatStack (stack) {
-    return '> ' + this.parseStack(stack).join('\n> ')
+    return '> ' + parseStack(stack).join('\n> ')
   }
 
   format (arg) {

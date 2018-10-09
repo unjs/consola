@@ -1,12 +1,12 @@
-import defaultTypes from './types'
+import { Types } from './types'
 import { isLogObj } from './utils'
 import { version } from '../package.json'
 
-export default class Consola {
+export class Consola {
   constructor (options = {}) {
     this.reporters = options.reporters || []
     this.level = options.level != null ? options.level : 3
-    this.types = options.types || defaultTypes
+    this.types = options.types || Types
     this.defaults = options.defaults || {}
 
     // Create logger functions for current instance

@@ -4,17 +4,20 @@
   "description": "Elegant Console Logger",
   "license": "MIT",
   "repository": "nuxt/consola",
-  "main": "index.js",
+  "main": "main/node.js",
+  "browser": "dist/consola.js",
   "scripts": {
-    "build": "bili",
+    "build": "yarn build:cjs && yarn build:browser",
+    "build:cjs": "bili -t node --format cjs src/index.js",
+    "build:browser": "bili --format umd main/consola.browser.js",
     "lint": "eslint .",
     "test": "yarn lint && yarn build && jest test",
     "prepublish": "yarn build",
     "release": "standard-version && yarn build && git push --follow-tags && npm publish"
   },
   "files": [
-    "index.js",
     "dist",
+    "main",
     "src"
   ],
   "keywords": [

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const Consola = require('./src/cjs')
+const Consola = require('../lib/esm')
 
 const reporters = [
   'FancyReporter',
