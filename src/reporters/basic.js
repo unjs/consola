@@ -9,14 +9,17 @@ export default class BasicReporter {
       alignment: 'left',
       showType: false
     }, options)
+
+    this.write = this.write.bind(this)
+    this.writeError = this.writeError.bind(this)
   }
 
-  write (data, isError = false) {
-    if (isError) {
-      this.options.errStream.write(data)
-    } else {
-      this.options.stream.write(data)
-    }
+  write (data) {
+    this.options.stream.write(data)
+  }
+
+  writeError (data) {
+    this.options.errStream.write(data)
   }
 
   formatStack (stack) {
@@ -75,32 +78,32 @@ export default class BasicReporter {
 
   log (logObj) {
     const fields = this.getFields(logObj)
-    const { isError } = logObj
+    const write = logObj.isError ? this.writeError : this.write
 
     // Print date
-    this.write((`[${align(this.options.alignment, fields.date, 8)}] `), isError)
+    write((`[${align(this.options.alignment, fields.date, 8)}] `))
 
     // Print type
     if (fields.type.length) {
-      this.write((`[${align(this.options.alignment, fields.type.toUpperCase(), 7)}] `), isError)
+      write((`[${align(this.options.alignment, fields.type.toUpperCase(), 7)}] `))
     }
 
     // Print tag
     if (fields.tag.length) {
-      this.write(`[${fields.tag}] `, isError)
+      write(`[${fields.tag}] `)
     }
 
     // Print message
     if (fields.message.length) {
-      this.write(fields.message, isError)
+      write(fields.message)
     }
 
     // Print additional args
     if (fields.args.length) {
-      this.write('\n' + (fields.args.join(' ')), isError)
+      write('\n' + (fields.args.join(' ')))
     }
 
     // Newline
-    this.write('\n', isError)
+    write('\n')
   }
 }

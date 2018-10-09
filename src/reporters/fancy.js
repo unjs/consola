@@ -38,52 +38,52 @@ export default class FancyReporter extends BasicReporter {
   }
 
   clear (isError) {
-    this.write(process.platform === 'win32' ? '\x1B[2J\x1B[0f' : '\x1B[2J\x1B[3J\x1B[H', isError)
+    this.write(process.platform === 'win32' ? '\x1B[2J\x1B[0f' : '\x1B[2J\x1B[3J\x1B[H')
   }
 
   log (logObj) {
     const fields = this.getFields(logObj)
-    const { isError } = logObj
+    const write = logObj.isError ? this.writeError : this.write
 
     // Clear console
     if (logObj.clear) {
-      this.clear(isError)
+      this.clear()
     }
 
     // Print type
     const type = align(this.options.alignment, fields.type.toUpperCase(), 7)
     if (logObj.badge) {
-      this.write('\n' + chalkBgColor(logObj.color).black(` ${type} `) + ' ', isError)
+      write('\n' + chalkBgColor(logObj.color).black(` ${type} `) + ' ')
     } else if (fields.type !== 'log') {
       const icon = logObj.icon || ICONS[fields.type] || ICONS.default
       if (this.showType) {
-        this.write(chalkColor(logObj.color)(`${icon} ${type} `), isError)
+        write(chalkColor(logObj.color)(`${icon} ${type} `))
       } else {
-        this.write(chalkColor(logObj.color)(`${icon} `), isError)
+        write(chalkColor(logObj.color)(`${icon} `))
       }
     }
 
     // Print tag
     if (fields.tag.length) {
-      this.write((fields.tag.replace(/:/g, '>') + '>').split('>').join(NS_SEPARATOR), isError)
+      write((fields.tag.replace(/:/g, '>') + '>').split('>').join(NS_SEPARATOR))
     }
 
     // Print message
     if (fields.message.length) {
-      this.write(chalkColor(logObj.color)(fields.message), isError)
+      write(chalkColor(logObj.color)(fields.message))
     }
 
     // Badge additional line
     if (logObj.badge) {
-      this.write('\n', isError)
+      write('\n')
     }
 
     // Print additional args
     if (fields.args.length) {
-      this.write('\n' + chalkColor(logObj.additionalColor || 'grey')(fields.args.join(' ')), isError)
+      write('\n' + chalkColor(logObj.additionalColor || 'grey')(fields.args.join(' ')))
     }
 
     // Newline
-    this.write(logObj.badge ? '\n\n' : '\n', isError)
+    write(logObj.badge ? '\n\n' : '\n')
   }
 }
