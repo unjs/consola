@@ -1,6 +1,7 @@
 import figures from 'figures'
 import chalk from 'chalk'
 import BasicReporter from './basic'
+import { parseStack } from '../utils'
 
 function chalkColor (name) {
   if (name[0] === '#') {
@@ -33,7 +34,7 @@ const ICONS = {
 
 export default class FancyReporter extends BasicReporter {
   formatStack (stack) {
-    return '  ' + this.parseStack(stack).join('↲\n  ')
+    return '  ' + parseStack(stack).join('↲\n  ')
   }
 
   log (logObj) {
