@@ -1,8 +1,8 @@
-import { Types } from './types'
+import Types from './types'
 import { isLogObj } from './utils'
 import { version } from '../package.json'
 
-export class Consola {
+export default class Consola {
   constructor (options = {}) {
     this.reporters = options.reporters || []
     this.level = options.level != null ? options.level : 3

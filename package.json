@@ -6,10 +6,11 @@
   "repository": "nuxt/consola",
   "main": "main/consola.js",
   "browser": "dist/consola.js",
+  "side-effects": false,
   "scripts": {
     "build": "yarn build:cjs && yarn build:browser",
     "build:cjs": "bili -t node --format cjs src/index.js",
-    "build:browser": "bili --format umd main/consola.browser.js",
+    "build:browser": "bili --format umd src/browser.js",
     "lint": "eslint .",
     "test": "yarn lint && yarn build && jest test",
     "prepublish": "yarn build",
@@ -17,8 +18,8 @@
   },
   "files": [
     "dist",
-    "main",
-    "src"
+    "src",
+    "index.js"
   ],
   "keywords": [
     "console",
