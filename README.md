@@ -72,32 +72,32 @@ consola.error(new Error('Foo'))
 
 ## Methods
 
-### `consola.<type>(logObject)`
-### `consola.<type>(args...)`
+#### `consola.<type>(logObject)`
+#### `consola.<type>(args...)`
 
 Log to all reporters.
 
-### `addReporter(reporter)`
+#### `addReporter(reporter)`
 
 Register a custom reporter instance.
 
-### `removeReporter(reporter?)`
+#### `removeReporter(reporter?)`
 
 Remove a registered reporter.
 
 If no arguments are passed all reporters will be removed.
 
-### `create(options)`
+#### `create(options)`
 
 Create a new `Consola` instance and inherit all parent options for defaults.
 
 ## Fields
 
-### `reporters`
+#### `reporters`
 
 An array of active reporters.
 
-### `level`
+#### `level`
 
 The level to display logs. Any logs at or above this level will be displayed.
 List of available levels [here](./src/types.js)
