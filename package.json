@@ -4,9 +4,8 @@
   "description": "Elegant Console Logger",
   "license": "MIT",
   "repository": "nuxt/consola",
-  "main": "main/consola.js",
+  "main": "index.js",
   "browser": "dist/consola.js",
-  "side-effects": false,
   "scripts": {
     "build": "yarn build:cjs && yarn build:browser",
     "build:cjs": "bili -t node --format cjs src/index.js",
