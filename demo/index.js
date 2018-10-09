@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
-const Consola = require('../lib/esm')
+const esm = require('esm')(module)
+
+const Consola = esm('../src')
 
 const reporters = [
   'FancyReporter',
@@ -9,12 +11,9 @@ const reporters = [
   'WinstonReporter'
 ]
 
-Consola.level = 5
-
 for (const reporter of reporters) {
-  Consola.log(reporter, '-----------------------')
-
-  const consola = Consola.create({
+  const consola = new Consola.Consola({
+    level: 5,
     reporters: [new Consola[reporter]()]
   })
 
