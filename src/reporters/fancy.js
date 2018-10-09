@@ -37,6 +37,10 @@ export default class FancyReporter extends BasicReporter {
     return '  ' + parseStack(stack).join('↲\n  ')
   }
 
+  clear () {
+    this.options.stream.write(process.platform === 'win32' ? '\x1B[2J\x1B[0f' : '\x1B[2J\x1B[3J\x1B[H')
+  }
+
   log (logObj) {
     const fields = this.getFields(logObj)
 
