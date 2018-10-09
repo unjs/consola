@@ -1,10 +1,11 @@
 import util from 'util'
-import { isPlainObject, parseStack } from '../utils'
+import { isPlainObject, parseStack, align } from '../utils'
 
 export default class BasicReporter {
   constructor (options) {
     this.options = Object.assign({
-      stream: process.stdout
+      stream: process.stdout,
+      tagAlignment: 'left'
     }, options)
   }
 
@@ -71,12 +72,12 @@ export default class BasicReporter {
 
     // Print date
     if (fields.type.length) {
-      this.write((`[${fields.date}] `))
+      this.write((`[${align(this.options.tagAlignment, fields.date, 8)}] `))
     }
 
     // Print type
     if (fields.type.length) {
-      this.write((`[${fields.type.toUpperCase()}] `))
+      this.write((`[${align(this.options.tagAlignment, fields.type.toUpperCase(), 7)}] `))
     }
 
     // Print tag

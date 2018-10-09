@@ -1,7 +1,7 @@
 import figures from 'figures'
 import chalk from 'chalk'
 import BasicReporter from './basic'
-import { parseStack } from '../utils'
+import { parseStack, align } from '../utils'
 
 function chalkColor (name) {
   if (name[0] === '#') {
@@ -50,11 +50,12 @@ export default class FancyReporter extends BasicReporter {
     }
 
     // Print type
+    const type = align(this.options.tagAlignment, fields.type.toUpperCase(), 7)
     if (logObj.badge) {
-      this.write('\n' + chalkBgColor(logObj.color).black(` ${fields.type.toUpperCase()} `) + ' ')
+      this.write('\n' + chalkBgColor(logObj.color).black(` ${type} `) + ' ')
     } else if (fields.type !== 'log') {
       const icon = logObj.icon || ICONS[fields.type] || ICONS.default
-      this.write(chalkColor(logObj.color)(`${icon} ${fields.type.toUpperCase()} `))
+      this.write(chalkColor(logObj.color)(`${icon} ${type} `))
     }
 
     // Print tag
