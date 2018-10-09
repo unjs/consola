@@ -5,7 +5,8 @@ export default class BasicReporter {
   constructor (options) {
     this.options = Object.assign({
       stream: process.stdout,
-      tagAlignment: 'left'
+      alignment: 'left',
+      showType: false
     }, options)
   }
 
@@ -71,13 +72,11 @@ export default class BasicReporter {
     const fields = this.getFields(logObj)
 
     // Print date
-    if (fields.type.length) {
-      this.write((`[${align(this.options.tagAlignment, fields.date, 8)}] `))
-    }
+    this.write((`[${align(this.options.alignment, fields.date, 8)}] `))
 
     // Print type
     if (fields.type.length) {
-      this.write((`[${align(this.options.tagAlignment, fields.type.toUpperCase(), 7)}] `))
+      this.write((`[${align(this.options.alignment, fields.type.toUpperCase(), 7)}] `))
     }
 
     // Print tag

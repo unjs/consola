@@ -50,12 +50,16 @@ export default class FancyReporter extends BasicReporter {
     }
 
     // Print type
-    const type = align(this.options.tagAlignment, fields.type.toUpperCase(), 7)
+    const type = align(this.options.alignment, fields.type.toUpperCase(), 7)
     if (logObj.badge) {
       this.write('\n' + chalkBgColor(logObj.color).black(` ${type} `) + ' ')
     } else if (fields.type !== 'log') {
       const icon = logObj.icon || ICONS[fields.type] || ICONS.default
-      this.write(chalkColor(logObj.color)(`${icon} ${type} `))
+      if (this.showType) {
+        this.write(chalkColor(logObj.color)(`${icon} ${type} `))
+      } else {
+        this.write(chalkColor(logObj.color)(`${icon} `))
+      }
     }
 
     // Print tag
@@ -65,7 +69,7 @@ export default class FancyReporter extends BasicReporter {
 
     // Print message
     if (fields.message.length) {
-      this.write(fields.message)
+      this.write(chalkColor(logObj.color)(fields.message))
     }
 
     // Badge additional line
