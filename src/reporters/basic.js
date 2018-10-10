@@ -6,8 +6,7 @@ export default class BasicReporter {
     this.options = Object.assign({
       stream: process.stdout,
       errStream: process.stderr,
-      alignment: 'left',
-      showType: false
+      alignment: 'left'
     }, options)
 
     this.write = this.write.bind(this)

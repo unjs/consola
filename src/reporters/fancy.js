@@ -33,6 +33,12 @@ const ICONS = {
 }
 
 export default class FancyReporter extends BasicReporter {
+  constructor (options) {
+    super(Object.assign({
+      showType: true
+    }, options))
+  }
+
   formatStack (stack) {
     return '  ' + parseStack(stack).join('↲\n  ')
   }
@@ -56,7 +62,7 @@ export default class FancyReporter extends BasicReporter {
       write('\n' + chalkBgColor(logObj.color).black(` ${type} `) + ' ')
     } else if (fields.type !== 'log') {
       const icon = logObj.icon || ICONS[fields.type] || ICONS.default
-      if (this.showType) {
+      if (this.options.showType) {
         write(chalkColor(logObj.color)(`${icon} ${type} `))
       } else {
         write(chalkColor(logObj.color)(`${icon} `))
