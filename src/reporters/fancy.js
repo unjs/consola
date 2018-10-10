@@ -98,11 +98,12 @@ export default class FancyReporter extends BasicReporter {
       this._colorCache[bgColorKey] = chalkBgColor(logObj.color).black('|').split('|')
     }
 
-    const argv = []
-    // textColor=%1 additionalColor=%2, bgColor=%3 reset=%4
-    argv.push(this._colorCache[logObj.color][0])
-    argv.push(this._colorCache[logObj.additionalColor || 'grey'][0])
-    Array.prototype.push.apply(argv, this._colorCache[bgColorKey])
+    const argv = [
+      this._colorCache[logObj.color][0],
+      this._colorCache[logObj.additionalColor || 'grey'][0],
+      this._colorCache[bgColorKey][0],
+      this._colorCache[bgColorKey][1]
+    ]
 
     const icon = fields.type === 'log' ? '' : logObj.icon || ICONS[fields.type] || ICONS.default
 
