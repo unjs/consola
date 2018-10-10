@@ -10,6 +10,8 @@
     "build": "yarn build:cjs && yarn build:browser",
     "build:cjs": "bili -t node --format cjs src/index.js --replace.__NPM_VERSION__ $npm_package_version",
     "build:browser": "bili --format umd src/browser.js --replace.__NPM_VERSION__ $npm_package_version",
+    "node": "node demo",
+    "browser": "serve",
     "lint": "eslint .",
     "test": "yarn lint && yarn build && jest test",
     "prepublish": "yarn build",
