@@ -72,8 +72,7 @@ export default class Consola {
         delete logObj.scope
       }
 
-      // Log
-      return this._log(logObj)
+      this._log(logObj)
     }
 
     // Bind function to instance of Consola
@@ -87,7 +86,6 @@ export default class Consola {
     for (const reporter of this.reporters) {
       reporter.log(logObj)
     }
-    return this
   }
 
   _deprecated (what, alter) {
