@@ -1,6 +1,5 @@
-import Types from './types'
-import { isLogObj } from './utils'
-import { version } from '../package.json'
+import Types from './types.js'
+import { isLogObj } from './utils.js'
 
 export default class Consola {
   constructor (options = {}) {
@@ -129,6 +128,6 @@ export default class Consola {
 }
 
 Object.defineProperty(Consola.prototype, '__VERSION__', {
-  value: version,
+  value: '__NPM_VERSION__',
   writable: false
 })
