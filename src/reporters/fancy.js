@@ -99,7 +99,7 @@ export default class FancyReporter extends BasicReporter {
     }
 
     const argv = []
-    // textColor=%1,%2 additionalColor=%3,%4 and bgColor=%5,%6
+    // textColor=%1 additionalColor=%2, bgColor=%3 reset=%4
     argv.push(this._colorCache[logObj.color][0])
     argv.push(this._colorCache[logObj.additionalColor || 'grey'][0])
     Array.prototype.push.apply(argv, this._colorCache[bgColorKey])
