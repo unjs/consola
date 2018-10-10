@@ -38,6 +38,7 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "figures": "^2.0.0",
+    "printj": "^1.2.0",
     "std-env": "^2.0.2"
   },
   "devDependencies": {

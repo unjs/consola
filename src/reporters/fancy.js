@@ -1,25 +1,10 @@
 import figures from 'figures'
-import chalk from 'chalk'
 import BasicReporter from './basic'
-import { parseStack, align } from '../utils'
+import { parseStack, align, chalkColor, chalkBgColor } from '../utils'
 
-function chalkColor (name) {
-  if (name[0] === '#') {
-    return chalk.hex(name)
-  }
-  return chalk[name] || chalk.keyword(name)
-}
+export const NS_SEPARATOR = chalkColor('blue')(figures(' › '))
 
-function chalkBgColor (name) {
-  if (name[0] === '#') {
-    return chalk.bgHex(name)
-  }
-  return chalk['bg' + name[0] + name.slice(1)] || chalk.bgKeyword(name)
-}
-
-const NS_SEPARATOR = chalk.blue(figures(' › '))
-
-const ICONS = {
+export const ICONS = {
   start: figures('●'),
   info: figures('ℹ'),
   success: figures('✔'),

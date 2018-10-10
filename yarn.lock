@@ -5542,6 +5542,11 @@ pretty-ms@^3.1.0:
   dependencies:
     parse-ms "^1.0.0"
 
+printj@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/printj/-/printj-1.2.0.tgz#852fca7283cdb82f3fd08d007bde701a224cc397"
+  integrity sha512-wQ6jPc72jVXX/qpP2/oDIPQ+ZJqvZGAZPm47LnBwzWTBssK1a/c9p09e/Pd1Nx4ACm+Ru86AT99nuiyOFT2zOQ==
+
 private@^0.1.6, private@^0.1.8:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/private/-/private-0.1.8.tgz#2381edb3689f7a53d653190060fcf822d2f368ff"
