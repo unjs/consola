@@ -39,28 +39,28 @@ export default class FancyReporter extends BasicReporter {
         /* eslint-disable no-multi-spaces */
         default: '' +
           '%1$s' +       // use text color
-          '%12$*-13$s' + // print icon with right padded space if exists
-          '%2$s' +       // end text color
-          '%9$s' +       // print tag
+          '%10$*-11$s' + // print icon with right padded space if exists
+          '%4$s' +       // end text color
+          '%7$s' +       // print tag
           '%1$s' +       // use text color (tags separator reset to white)
-          '%10$s' +      // print log message
-          '%2$s' +       // end text color
-          '%3$s' +       // use additional text color
-          '%11$s' +      // print additional arguments
+          '%8$s' +      // print log message
+          '%4$s' +       // end text color
+          '%2$s' +       // use additional text color
+          '%9$s' +      // print additional arguments
           '%4$s' +       // end additional text color
           '\n',
         badge: '\n' +
-          '%5$s' +       // use background color
-          ' %8$s ' +     // log type with spacing
-          '%6$s' +       // end background color
+          '%3$s' +       // use background color
+          ' %6$s ' +     // log type with spacing
+          '%4$s' +       // end background color
           ' ' +
           '%1$s' +       // use text color
-          '%9$s' +       // print tag
-          '%10$s' +      // print log message
-          '%2$s' +       // end text color
+          '%7$s' +       // print tag
+          '%8$s' +      // print log message
+          '%4$s' +       // end text color
           '\n' +
-          '%3$s' +       // use additional text color
-          '%11$s' +      // print additional arguments
+          '%2$s' +       // use additional text color
+          '%9$s' +      // print additional arguments
           '%4$s' +       // end additional text color
           '\n\n'
         /* eslint-enable no-multi-spaces */
@@ -100,8 +100,8 @@ export default class FancyReporter extends BasicReporter {
 
     const argv = []
     // textColor=%1,%2 additionalColor=%3,%4 and bgColor=%5,%6
-    Array.prototype.push.apply(argv, this._colorCache[logObj.color])
-    Array.prototype.push.apply(argv, this._colorCache[logObj.additionalColor || 'grey'])
+    argv.push(this._colorCache[logObj.color][0])
+    argv.push(this._colorCache[logObj.additionalColor || 'grey'][0])
     Array.prototype.push.apply(argv, this._colorCache[bgColorKey])
 
     const icon = fields.type === 'log' ? '' : logObj.icon || ICONS[fields.type] || ICONS.default

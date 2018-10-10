@@ -168,18 +168,16 @@ The following variables are supported:
 
 ##### `FancyReporter`
 - `%1$s`: Start text color
-- `%2$s`: End text color
-- `%3$s`: Start additional text color
-- `%4$s`: End additional text color
-- `%5$s`: Start background color
-- `%6$s`: End background color
-- `%7$s`: Date string as formatted by `timeFormat`
-- `%8$s`: Log type, e.g. SUCCESS
-- `%9$s`: Tag
-- `%10$s`: Log message
-- `%11$s`: Additional fields
-- `%12$s`: Figure icon
-- `%13$s`: Length of figure icon string + 1 if icon exists, used for conditional space after icon
+- `%2$s`: Start additional text color
+- `%3$s`: Start background color
+- `%4$s`: End all (background) colors
+- `%5$s`: Date string as formatted by `timeFormat`
+- `%6$s`: Log type, e.g. SUCCESS
+- `%7$s`: Tag
+- `%8$s`: Log message
+- `%9$s`: Additional fields
+- `%10$s`: Figure icon
+- `%11$s`: Length of figure icon string + 1 if icon exists, used for conditional space after icon
 
 ```js
 consola = new Consola({
@@ -189,15 +187,15 @@ consola = new Consola({
     }),
     new FancyReporter({
       formats: {
-        default: '[%7$s] [%8$-7s] %9$s%10$s%11$s\n', // same format as BasicReporter
+        default: '[%5$s] [%6$-7s] %7$s%8$s%9$s\n', // same format as BasicReporter
         badge: '\n' +
           '    /================================================\\\n' +
-          '    |%5$s' + '%12$s'.repeat(48) + '%6$s|\n' +
-          '    |%5$s%12$s' + ' '.repeat(46) + '%12$s%6$s|\n' +
-          '    |%5$s%12$s %8$-44s %12$s%6$s|\n' +
-          '    |%5$s%12$s %10$-44s %12$s%6$s|\n' +
-          '    |%5$s%12$s' + ' '.repeat(46) + '%12$s%6$s|\n' +
-          '    |%5$s' + '%12$s'.repeat(48) + '%6$s|\n' +
+          '    |%3$s' + '%10$s'.repeat(48) + '%4$s|\n' +
+          '    |%3$s%10$s' + ' '.repeat(46) + '%10$s%4$s|\n' +
+          '    |%3$s%10$s %6$-44s %10$s%4$s|\n' +
+          '    |%3$s%10$s %8$-44s %10$s%4$s|\n' +
+          '    |%3$s%10$s' + ' '.repeat(46) + '%10$s%4$s|\n' +
+          '    |%3$s' + '%10$s'.repeat(48) + '%4$s|\n' +
           '    \\================================================/\n\n'
       }
     })
