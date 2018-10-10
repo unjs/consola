@@ -1,5 +1,3 @@
-import chalk from 'chalk'
-
 export function isPlainObject (obj) {
   return Object.prototype.toString.call(obj) === '[object Object]'
 }
@@ -65,18 +63,4 @@ export function align (alignment, str, len, space = ' ') {
     case 'center': return centerALign(str, len, space)
     default: return str
   }
-}
-
-export function chalkColor (name) {
-  if (name[0] === '#') {
-    return chalk.hex(name)
-  }
-  return chalk[name] || chalk.keyword(name)
-}
-
-export function chalkBgColor (name) {
-  if (name[0] === '#') {
-    return chalk.bgHex(name)
-  }
-  return chalk['bg' + name[0] + name.slice(1)] || chalk.bgKeyword(name)
 }

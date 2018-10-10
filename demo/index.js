@@ -6,14 +6,12 @@ const Consola = esm('../src')
 
 const reporters = [
   'FancyReporter',
-  'ShmancyReporter',
   'BasicReporter',
   'JSONReporter',
   'WinstonReporter'
 ]
 
 for (const reporter of reporters) {
-  const s = process.hrtime()
   const consola = new Consola.Consola({
     level: 5,
     reporters: [new Consola[reporter]({
@@ -21,7 +19,7 @@ for (const reporter of reporters) {
     })]
   })
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 1; i++) {
     for (let type of Object.keys(consola.types).sort()) {
       consola[type](`A message with consola.${type}()`)
     }
@@ -31,7 +29,7 @@ for (const reporter of reporters) {
       color: '#454545'
     })
 
-    if (reporter === 'FancyReporter' || reporter === 'SmancyReporter') {
+    if (reporter === 'FancyReporter') {
       consola.success({
         message: 'This is a fancy badge',
         additional: 'With some additional info',
@@ -46,9 +44,14 @@ for (const reporter of reporters) {
     for (let type of Object.keys(consola.types).sort()) {
       tagged[type](`A tagged message with consola.${type}()`)
     }
+
+    if (reporter === 'FancyReporter') {
+      tagged.success({
+        message: 'This is a fancy badge',
+        additional: 'With some additional info',
+        additionalColor: 'brown',
+        badge: true
+      })
+    }
   }
-
-  const t = process.hrtime(s)
-
-  console.error(`${reporter} took ${Math.round((t[0] * 1e9 + t[1]) / 1e4) / 1e2}ms`) // eslint-disable-line no-console
 }

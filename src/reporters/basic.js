@@ -1,13 +1,30 @@
 import util from 'util'
-import { isPlainObject, parseStack, align } from '../utils'
+import { vsprintf } from 'printj'
+import dayjs from 'dayjs'
+import { isPlainObject, parseStack } from '../utils'
+
+const NS_SEPARATOR = ' - '
 
 export default class BasicReporter {
   constructor (options) {
     this.options = Object.assign({
       stream: process.stdout,
       errStream: process.stderr,
-      alignment: 'left',
-      showType: false
+      showType: false,
+      timeFormat: 'HH:mm:ss',
+      formats: {
+        /* eslint-disable no-multi-spaces */
+        default: '' +
+          '[%1$s]' +   // print date in brackets
+          ' ' +
+          '[%2$-7s]' + // print right padded type in brackets
+          ' ' +
+          '%3$s' +     // print tag
+          '%4$s' +     // print log message
+          '%5$s' +     // print additional arguments
+          '\n'
+        /* eslint-disable no-multi-spaces */
+      }
     }, options)
 
     this.write = this.write.bind(this)
@@ -43,7 +60,7 @@ export default class BasicReporter {
     let message = logObj.message || ''
     let type = logObj.type || ''
     let tag = logObj.tag || ''
-    let date = logObj.date.toLocaleTimeString()
+    let date = dayjs(logObj.date).format(this.options.timeFormat)
 
     // Format args
     const args = logObj.args.map(arg => {
@@ -76,34 +93,26 @@ export default class BasicReporter {
     }
   }
 
+  prepareWrite (logObj, fields) {
+    const format = this.options.formats.default
+
+    const argv = [
+      fields.date,
+      fields.type.toUpperCase(),
+      !fields.tag.length ? '' : (fields.tag.replace(/:/g, '>') + '>').split('>').join(NS_SEPARATOR),
+      fields.message,
+      !fields.args.length ? '' : '\n' + fields.args.join(' ')
+    ]
+
+    return { format, argv }
+  }
+
   log (logObj) {
     const fields = this.getFields(logObj)
     const write = logObj.isError ? this.writeError : this.write
 
-    // Print date
-    write((`[${align(this.options.alignment, fields.date, 8)}] `))
+    const { format, argv } = this.prepareWrite(logObj, fields)
 
-    // Print type
-    if (fields.type.length) {
-      write((`[${align(this.options.alignment, fields.type.toUpperCase(), 7)}] `))
-    }
-
-    // Print tag
-    if (fields.tag.length) {
-      write(`[${fields.tag}] `)
-    }
-
-    // Print message
-    if (fields.message.length) {
-      write(fields.message)
-    }
-
-    // Print additional args
-    if (fields.args.length) {
-      write('\n' + (fields.args.join(' ')))
-    }
-
-    // Newline
-    write('\n')
+    write(vsprintf(format, argv))
   }
 }
