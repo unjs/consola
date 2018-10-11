@@ -7,6 +7,7 @@
     Open developer tools to see the magic!
     <script type="module">
       import consola from '../src/browser.js'
+      consola.level = 5
 
       for (let type of Object.keys(consola.types).sort()) {
           consola[type](`A message with consola.${type}()`)
