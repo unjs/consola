@@ -4,7 +4,7 @@ import { isLogObj } from './utils.js'
 export default class Consola {
   constructor (options = {}) {
     this.reporters = options.reporters || []
-    this.level = options.level != null ? options.level : 3
+    this._level = options.level != null ? options.level : 3
     this.types = options.types || Types
     this.defaults = options.defaults || {}
     this.async = typeof options.async !== 'undefined' ? options.async : null
@@ -18,6 +18,28 @@ export default class Consola {
         this.defaults
       ))
     }
+  }
+
+  get level () {
+    return this._level
+  }
+
+  set level (newLevel) {
+    let minLevel
+    let maxLevel
+
+    for (let typeName in this.types) {
+      const type = this.types[typeName]
+
+      if (minLevel === undefined || type.level < minLevel) {
+        minLevel = type.level
+      }
+      if (maxLevel === undefined || type.level > maxLevel) {
+        maxLevel = type.level
+      }
+    }
+
+    this._level = Math.min(maxLevel, Math.max(minLevel, newLevel))
   }
 
   create (options) {
