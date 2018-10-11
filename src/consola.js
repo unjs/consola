@@ -7,6 +7,8 @@ export default class Consola {
     this.level = options.level != null ? options.level : 3
     this.types = options.types || Types
     this.defaults = options.defaults || {}
+    this.async = typeof options.async !== 'undefined' ? options.async : null
+    this.extended = options.extended || false
 
     // Create logger functions for current instance
     for (const type in this.types) {
@@ -45,7 +47,7 @@ export default class Consola {
   }
 
   _createLogFn (defaults) {
-    function log () {
+    function fnLog () {
       // Construct a new log object
       const logObj = Object.assign({
         date: new Date(),
@@ -72,19 +74,69 @@ export default class Consola {
         delete logObj.scope
       }
 
+      return logObj
+    }
+
+    function fnSync () {
+      const logObj = fnLog.apply(undefined, arguments)
       this._log(logObj)
     }
 
+    function fnAsync (...args) {
+      const logObj = fnLog.apply(undefined, arguments)
+      return this._log(logObj)
+    }
+
     // Bind function to instance of Consola
-    return log.bind(this)
+    const logSync = fnSync.bind(this)
+    let logAsync
+
+    let log = logSync
+    if (this.async || this.extended) {
+      logAsync = fnAsync.bind(this)
+
+      if (this.async) {
+        log = logAsync
+      }
+    }
+
+    if (this.extended) {
+      log.sync = logSync
+      log.async = logAsync
+
+      log.write = (data) => {
+        for (const reporter of this.reporters) {
+          reporter.write(data)
+        }
+      }
+
+      for (const reporter of this.reporters) {
+        const shortName = reporter.constructor.name.replace(/Reporter/i, '').toLowerCase()
+        log.write[shortName] = (data) => {
+          reporter.write(data)
+        }
+      }
+    }
+
+    return log
   }
 
   _log (logObj) {
     if (logObj.level > this.level) {
       return
     }
+
+    const promises = []
     for (const reporter of this.reporters) {
-      reporter.log(logObj)
+      const promise = reporter.log(logObj, this.async)
+
+      if (this.async && promise) {
+        promises.push(promise)
+      }
+    }
+
+    if (this.async) {
+      return Promise.all(promises)
     }
   }
 

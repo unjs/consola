@@ -1,3 +1,4 @@
+import { writeSync } from 'fs'
 import util from 'util'
 import { vsprintf } from 'printj'
 import dayjs from 'dayjs'
@@ -30,12 +31,41 @@ export default class BasicReporter {
     this.writeError = this.writeError.bind(this)
   }
 
-  write (data) {
-    this.options.stream.write(data)
+  write (data, stream) {
+    stream = stream || this.options.stream
+    stream.write(data)
   }
 
   writeError (data) {
-    this.options.errStream.write(data)
+    this.write(data, this.options.errStream)
+  }
+
+  writeSync (data, stream) {
+    stream = stream || this.options.stream
+    writeSync(this.options.stream.fd, data)
+  }
+
+  writeErrorSync (data) {
+    this.writeSync(data, this.options.errStream)
+  }
+
+  writeAsync (data, stream) {
+    stream = stream || this.options.stream
+    return new Promise((resolve) => {
+      const flushed = stream.write(data)
+
+      if (flushed === true) {
+        resolve()
+      } else {
+        stream.once('drain', () => {
+          resolve()
+        })
+      }
+    })
+  }
+
+  writeErrorAsync (data) {
+    return this.writeAsync(data, this.options.errStream)
   }
 
   formatStack (stack) {
@@ -92,6 +122,19 @@ export default class BasicReporter {
     }
   }
 
+  getWriteMethod (isError, async) {
+    return 'write' + (isError ? 'Error' : '') +
+      (
+        async === true
+          ? 'Async'
+          : (
+            async === false
+              ? 'Sync'
+              : ''
+          )
+      )
+  }
+
   prepareWrite (logObj, fields) {
     const format = this.options.formats.default
 
@@ -106,12 +149,12 @@ export default class BasicReporter {
     return { format, argv }
   }
 
-  log (logObj) {
+  log (logObj, async) {
     const fields = this.getFields(logObj)
-    const write = logObj.isError ? this.writeError : this.write
+    const writeMethod = this.getWriteMethod(logObj.isError, async)
 
     const { format, argv } = this.prepareWrite(logObj, fields)
 
-    write(vsprintf(format, argv))
+    return this[writeMethod](vsprintf(format, argv))
   }
 }

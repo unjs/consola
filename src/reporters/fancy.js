@@ -69,7 +69,6 @@ export default class FancyReporter extends BasicReporter {
     }, options))
 
     this._colorCache = {}
-      showType: true
   }
 
   formatStack (stack) {
@@ -86,12 +85,12 @@ export default class FancyReporter extends BasicReporter {
       this.clear()
     }
 
-  const format = this.options.formats[logObj.badge ? 'badge' : 'default']
+    const format = this.options.formats[logObj.badge ? 'badge' : 'default']
 
-  const colors = ['grey', logObj.color, logObj.additionalColor]
-  colors.forEach((color) => {
-    if (color && color.length && !this._colorCache[color]) {
-      this._colorCache[color] = chalkColor(color)('|').split('|')
+    const colors = ['grey', logObj.color, logObj.additionalColor]
+    colors.forEach((color) => {
+      if (color && color.length && !this._colorCache[color]) {
+        this._colorCache[color] = chalkColor(color)('|').split('|')
       }
     })
 
