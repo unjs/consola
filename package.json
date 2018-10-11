@@ -8,8 +8,10 @@
   "browser": "dist/consola.js",
   "scripts": {
     "build": "yarn build:cjs && yarn build:browser",
-    "build:cjs": "bili -t node --format cjs src/index.js",
-    "build:browser": "bili --format umd src/browser.js",
+    "build:cjs": "bili -t node --format cjs src/index.js --replace.__NPM_VERSION__ $npm_package_version",
+    "build:browser": "bili --format umd src/browser.js --replace.__NPM_VERSION__ $npm_package_version",
+    "node": "node demo",
+    "browser": "serve",
     "lint": "eslint .",
     "test": "yarn lint && yarn build && jest test",
     "prepublish": "yarn build",
@@ -60,6 +62,7 @@
     "esm": "^3.0.84",
     "jest": "^23.6.0",
     "lodash": "^4.17.11",
+    "serve": "^10.0.2",
     "standard-version": "^4.4.0",
     "winston": "^3.1.0"
   }

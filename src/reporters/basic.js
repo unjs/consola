@@ -10,7 +10,6 @@ export default class BasicReporter {
     this.options = Object.assign({
       stream: process.stdout,
       errStream: process.stderr,
-      showType: false,
       timeFormat: 'HH:mm:ss',
       formats: {
         /* eslint-disable no-multi-spaces */

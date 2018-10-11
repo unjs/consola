@@ -1,5 +1,5 @@
-import Consola from './consola'
-import BrowserReporter from './reporters/browser'
+import Consola from './consola.js'
+import BrowserReporter from './reporters/browser.js'
 
 if (!window.consola) {
   // Create new consola instance

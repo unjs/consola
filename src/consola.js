@@ -1,6 +1,5 @@
-import Types from './types'
-import { isLogObj } from './utils'
-import { version } from '../package.json'
+import Types from './types.js'
+import { isLogObj } from './utils.js'
 
 export default class Consola {
   constructor (options = {}) {
@@ -73,8 +72,7 @@ export default class Consola {
         delete logObj.scope
       }
 
-      // Log
-      return this._log(logObj)
+      this._log(logObj)
     }
 
     // Bind function to instance of Consola
@@ -88,7 +86,6 @@ export default class Consola {
     for (const reporter of this.reporters) {
       reporter.log(logObj)
     }
-    return this
   }
 
   _deprecated (what, alter) {
@@ -129,6 +126,6 @@ export default class Consola {
 }
 
 Object.defineProperty(Consola.prototype, '__VERSION__', {
-  value: version,
+  value: '__NPM_VERSION__',
   writable: false
 })
