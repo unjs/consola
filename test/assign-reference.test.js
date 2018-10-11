@@ -30,11 +30,11 @@ describe('assignGlobalConsola', () => {
 
     expect(consola3).not.toBe(consola1)
     expect(consola3.symbol).toBe(symbol1)
-    
+
     expect(global.consola).toBe(consola1)
     expect(global.consola).not.toBe(consola2)
     expect(global.consola).not.toBe(consola3)
-    
+
     expect(global.consola.symbol).toBe(consola1.symbol)
     expect(global.consola.symbol).toBe(consola2.symbol)
     expect(global.consola.symbol).not.toBe(consola3.symbol)
