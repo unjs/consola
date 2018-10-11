@@ -70,6 +70,10 @@ export default class Consola {
 
   _createLogFn (defaults) {
     function fnLog () {
+      if (defaults.level > this.level) {
+        return false
+      }
+
       // Construct a new log object
       const logObj = Object.assign({
         date: new Date(),
@@ -100,13 +104,19 @@ export default class Consola {
     }
 
     function fnSync () {
-      const logObj = fnLog.apply(undefined, arguments)
-      this._log(logObj)
+      const logObj = fnLog.apply(this, arguments)
+      if (logObj !== false) {
+        this._log(logObj)
+      }
     }
 
     function fnAsync (...args) {
-      const logObj = fnLog.apply(undefined, arguments)
-      return this._log(logObj)
+      const logObj = fnLog.apply(this, arguments)
+      if (logObj === false) {
+        return Promise.resolve()
+      } else {
+        return this._log(logObj)
+      }
     }
 
     // Bind function to instance of Consola
@@ -144,10 +154,6 @@ export default class Consola {
   }
 
   _log (logObj) {
-    if (logObj.level > this.level) {
-      return
-    }
-
     const promises = []
     for (const reporter of this.reporters) {
       const promise = reporter.log(logObj, this.async)
