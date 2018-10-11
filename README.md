@@ -177,7 +177,7 @@ The following variables are supported:
 - `%8$s`: Log message
 - `%9$s`: Additional fields
 - `%10$s`: Figure icon
-- `%11$s`: Length of figure icon string + 1 if icon exists, used for conditional space after icon
+- `%11$d`: Length of figure icon string + 1 if icon exists, used for conditional space after icon
 
 ```js
 consola = new Consola({
