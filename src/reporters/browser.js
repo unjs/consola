@@ -5,20 +5,16 @@ export default class BrowserReporter {
 
   log (logObj) {
     const replaceColors = {
+      undefined: 'grey',
       yellow: 'goldenrod',
       white: 'grey'
     }
-
-    let styleDefault = 'color: silver; background-color: inherit;'
-    let styleAdditional = 'color: ' + (logObj.additionalColor ? logObj.additionalColor : 'black') + '; background-color: inherit;'
-    let style
-    let badgeStyle
-
     const color = replaceColors[logObj.color] ? replaceColors[logObj.color] : logObj.color
-    if (color) {
-      badgeStyle = 'color: white; background-color: ' + color + ';'
-      style = 'color: ' + color + '; background-color: inherit;'
-    }
+
+    const styleDefault = 'color: silver; background-color: inherit;'
+    const styleAdditional = 'color: ' + (logObj.additionalColor ? logObj.additionalColor : 'black') + '; background-color: inherit;'
+    const badgeStyle = 'color: white; background-color: ' + color + ';'
+    const style = 'color: ' + color + '; background-color: inherit;'
 
     let type = logObj.type
     if (!console[type]) { // eslint-disable-line no-console
