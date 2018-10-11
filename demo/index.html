@@ -11,6 +11,13 @@
       for (let type of Object.keys(consola.types).sort()) {
           consola[type](`A message with consola.${type}()`)
       }
+
+      consola.success({
+        message: 'This is a fancy badge',
+        additional: 'With some additional info',
+        additionalColor: 'brown',
+        badge: true
+      })
     </script>
   </body>
 </html>

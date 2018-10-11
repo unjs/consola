@@ -11,7 +11,7 @@ describe('consola', () => {
     }
   })
 
-  test('cannot set nog existing level', () => {
+  test('cannot set not existing level', () => {
     const consola = new Consola()
 
     consola.level = -99

@@ -4,7 +4,52 @@ export default class BrowserReporter {
   }
 
   log (logObj) {
-    // TODO: Improve me
-    console.log(logObj) // eslint-disable-line no-console
+    const replaceColors = {
+      yellow: 'goldenrod',
+      white: 'grey'
+    }
+
+    let styleDefault = 'color: silver; background-color: inherit;'
+    let styleAdditional = 'color: ' + (logObj.additionalColor ? logObj.additionalColor : 'black') + '; background-color: inherit;'
+    let style
+    let badgeStyle
+
+    const color = replaceColors[logObj.color] ? replaceColors[logObj.color] : logObj.color
+    if (color) {
+      badgeStyle = 'color: white; background-color: ' + color + ';'
+      style = 'color: ' + color + '; background-color: inherit;'
+    }
+
+    let type = logObj.type
+    if (!console[type]) { // eslint-disable-line no-console
+      type = logObj.isError ? 'error' : 'log'
+    }
+
+    const date = (new Date(logObj.date)).toLocaleTimeString()
+
+    // center type name
+    let maxTypeLength = 7
+    let typeName = logObj.type
+    while (typeName.length <= maxTypeLength - 2) {
+      typeName = ' ' + typeName + ' '
+    }
+    if (typeName.length < maxTypeLength) {
+      typeName += ' '
+    }
+
+    const args = [
+      '%c',
+      typeName,
+      '%c',
+      '(' + date + ')%c',
+      logObj.message ? logObj.message : (
+        // If no message is provided, assume args[0] as message
+        logObj.args.length ? logObj.args.shift() : ''
+      ),
+      '%c' + (logObj.args.length ? '\n' + logObj.args.join() : '')
+    ]
+
+    /* eslint-disable-next-line no-console */
+    console[type](args.join(' '), badgeStyle, styleDefault, style, styleAdditional)
   }
 }
