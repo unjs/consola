@@ -25,8 +25,7 @@ export default class BrowserReporter {
       white: 'grey'
     }
 
-    // 
-   const symbols = {
+    const symbols = {
       start: '\u25cf',
       info: '\u2139',
       success: '\u2713',
@@ -73,6 +72,8 @@ export default class BrowserReporter {
 
     if (symbols[logObj.type]) {
       args.unshift('%c' + symbols[logObj.type])
+
+      /* eslint-disable-next-line no-console */
       console[type](args.join(' '), styleDefault, badgeStyle, styleDiscrete, styleDefault, styleAdditional)
     } else {
       /* eslint-disable-next-line no-console */
