@@ -2,23 +2,43 @@ import { assignGlobalConsola } from '../src'
 
 describe('assignGlobalConsola', () => {
   test('global reference intact', () => {
+    const s = Symbol('test')
     class TestClass {
       constructor (param) {
         this.param = param
       }
+
+      get symbol () {
+        return this[s]
+      }
+
+      set symbol (newVal) {
+        this[s] = newVal
+      }
     }
 
+    const symbol1 = 'my-symbol1'
     const consola1 = new TestClass('my-consola1')
+    consola1.symbol = symbol1
     global.consola = consola1
     const json1 = JSON.stringify(consola1)
 
+    const symbol2 = 'my-symbol2'
     const consola2 = new TestClass('my-consola2')
+    consola2.symbol = symbol2
     const consola3 = assignGlobalConsola(consola2)
 
     expect(consola3).not.toBe(consola1)
+    expect(consola3.symbol).toBe(symbol1)
+    
     expect(global.consola).toBe(consola1)
     expect(global.consola).not.toBe(consola2)
     expect(global.consola).not.toBe(consola3)
+    
+    expect(global.consola.symbol).toBe(consola1.symbol)
+    expect(global.consola.symbol).toBe(consola2.symbol)
+    expect(global.consola.symbol).not.toBe(consola3.symbol)
+
     expect(JSON.stringify(consola1)).toEqual(JSON.stringify(consola2))
     expect(JSON.stringify(consola3)).toEqual(json1)
   })
