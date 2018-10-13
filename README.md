@@ -58,7 +58,7 @@ consola.error(new Error('Foo'))
 
 ## Scoped Loggers
 
-Group logs using an scope:
+Group logs using a scope:
 
 ```js
 const logger = consola.withScope('test')
