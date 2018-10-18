@@ -122,22 +122,16 @@ You can set log level using `CONSOLA_LEVEL` environment variable.
 
 logObject is a free-to-extend object which will be passed to reporters.
 
-Here are standard possible fields:
-
-Common fields:
+Standard fields:
 
 - `additional`
 - `additionalColor`
 - `args`
+- `badge`
 - `date`
+- `icon`
 - `message`
 - `tag`
-
-Extended fields:
-
-- `badge`
-- `clear`
-- `icon`
 
 ## Reporters
 
