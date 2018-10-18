@@ -87,9 +87,23 @@ Remove a registered reporter.
 
 If no arguments are passed all reporters will be removed.
 
+#### `setReporters(reporter|reporter[])`
+
+- Type: `Object` or `Array`
+
+Replace all reporters.
+
 #### `create(options)`
 
 Create a new `Consola` instance and inherit all parent options for defaults.
+
+#### `withDefaults(defaults)`
+
+Create a new `Consola` instance with provided defaults. (Shortcut to `create({ defaults })`)
+
+#### `withTag(tag)`
+
+Create a new `Consola` instance with that tag. (Shortcut to `withDefaults({ tag })`)
 
 ## Fields
 
@@ -233,7 +247,7 @@ const logger = consola.create({
 ### With jest
 
 ```js
-consola.removeReporter().addReporter({
+consola.setReporters({
   log: jest.fn()
 })
 ```

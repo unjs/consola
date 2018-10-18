@@ -64,6 +64,20 @@ export default class Consola {
     return this
   }
 
+  setReporters (reporters) {
+    this._reporters = Array.isArray(reporters)
+      ? reporters
+      : [reporters]
+  }
+
+  withDefaults (defaults) {
+    return this.create({ defaults })
+  }
+
+  withTag (tag) {
+    return this.withDefaults({ tag })
+  }
+
   _createLogFn (defaults) {
     function fnLog () {
       if (defaults.level > this._level) {
@@ -171,15 +185,9 @@ export default class Consola {
   }
 
   // DEPRECATED
-  withDefaults (defaults) {
-    this._deprecated('consola.withDefaults()', 'consola.create({ defaults })')
-    return this.create({ defaults })
-  }
-
-  // DEPRECATED
   withScope (scope) {
-    this._deprecated('consola.withScope', 'consola.create({ defaults: { tag: scope } })')
-    return this.create({ defaults: { tag: scope } })
+    this._deprecated('consola.withScope', 'consola.withTag')
+    return this.withTag(scope)
   }
 
   // DEPRECATED
