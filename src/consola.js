@@ -11,7 +11,7 @@ export default class Consola {
 
     // Create logger functions for current instance
     for (const type in this._types) {
-      this[type] = this._createLogFn(Object.assign(
+      this[type] = this._wrapLogFn(Object.assign(
         { type },
         this._types[type],
         this._defaults
@@ -79,40 +79,43 @@ export default class Consola {
     return this.withDefaults({ tag })
   }
 
-  _createLogFn (defaults) {
+  _wrapLogFn (defaults) {
     function logFn () {
-      if (defaults.level > this._level) {
-        return this._async ? Promise.resolve(false) : false
-      }
+      return this._logFn(defaults, arguments)
+    }
+    return logFn.bind(this)
+  }
 
-      // Construct a new log object
-      const logObj = Object.assign({
-        date: new Date(),
-        args: []
-      }, defaults)
-
-      // Consume arguments
-      if (arguments.length === 1 && isLogObj(arguments[0])) {
-        Object.assign(logObj, arguments[0])
-      } else {
-        logObj.args = Array.from(arguments)
-      }
-
-      // Addtional message
-      if (logObj.additional) {
-        logObj.args.push.apply(logObj.args, logObj.additional.split('\n'))
-        delete logObj.additional
-      }
-
-      // Log
-      if (this._async) {
-        return this._logAsync(logObj)
-      } else {
-        this._log(logObj)
-      }
+  _logFn (defaults, args) {
+    if (defaults.level > this._level) {
+      return this._async ? Promise.resolve(false) : false
     }
 
-    return logFn.bind(this)
+    // Construct a new log object
+    const logObj = Object.assign({
+      date: new Date(),
+      args: []
+    }, defaults)
+
+    // Consume arguments
+    if (args.length === 1 && isLogObj(args[0])) {
+      Object.assign(logObj, arguments[0])
+    } else {
+      logObj.args = Array.from(args)
+    }
+
+    // Addtional message
+    if (logObj.additional) {
+      logObj.args.push.apply(logObj.args, logObj.additional.split('\n'))
+      delete logObj.additional
+    }
+
+    // Log
+    if (this._async) {
+      return this._logAsync(logObj)
+    } else {
+      this._log(logObj)
+    }
   }
 
   _log (logObj) {
