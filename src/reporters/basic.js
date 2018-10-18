@@ -123,16 +123,11 @@ export default class BasicReporter {
   }
 
   getWriteMethod (isError, async) {
-    return 'write' + (isError ? 'Error' : '') +
-      (
-        async === true
-          ? 'Async'
-          : (
-            async === false
-              ? 'Sync'
-              : ''
-          )
-      )
+    if (isError) {
+      return async ? this.writeErrorAsync : this.writeError
+    } else {
+      return async ? this.write : this.writeAsync
+    }
   }
 
   prepareWrite (logObj, fields) {
@@ -155,6 +150,6 @@ export default class BasicReporter {
 
     const { format, argv } = this.prepareWrite(logObj, fields)
 
-    return this[writeMethod](vsprintf(format, argv))
+    return writeMethod(vsprintf(format, argv))
   }
 }
