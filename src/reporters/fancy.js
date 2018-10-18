@@ -1,7 +1,7 @@
 import figures from 'figures'
 import BasicReporter from './basic'
 import { parseStack } from '../utils'
-import { chalkColor, chalkBgColor } from '../utils/chalk'
+import { chalkColor } from '../utils/chalk'
 
 const NS_SEPARATOR = chalkColor('blue')(figures(' › '))
 

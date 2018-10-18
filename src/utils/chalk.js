@@ -32,10 +32,6 @@ export function chalkBgColor (name) {
     color = chalk['bg' + name[0].toUpperCase() + name.slice(1)] || chalk.bgKeyword(name)
   }
 
-  if (!color) {
-    console.error(name, 'bg' + name[0].toUpperCase() + name.slice(1))
-  }
-
   _bgColorCache[name] = color
   return color
 }

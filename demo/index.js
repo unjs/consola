@@ -19,7 +19,7 @@ for (const reporter of reporters) {
     })]
   })
 
-  for (let type of Object.keys(consola.types).sort()) {
+  for (let type of Object.keys(consola._types).sort()) {
     consola[type](`A message with consola.${type}()`)
   }
 
@@ -40,7 +40,7 @@ for (const reporter of reporters) {
   consola.error(new Error('Something bad happened!'))
 
   const tagged = consola.create({ defaults: { tag: 'tagged' } })
-  for (let type of Object.keys(consola.types).sort()) {
+  for (let type of Object.keys(consola._types).sort()) {
     tagged[type](`A tagged message with consola.${type}()`)
   }
 

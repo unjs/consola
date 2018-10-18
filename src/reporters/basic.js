@@ -107,13 +107,13 @@ export default class BasicReporter {
     }
   }
 
-  log (logObj, mode) {
+  log (logObj, { async = false } = {}) {
     const { format, argv } = this.processLogObj(logObj)
     const data = formatArgs(format, argv)
 
     return this.write(data, {
       isError: logObj.isError,
-      mode
+      mode: async ? 'async' : 'default'
     })
   }
 }

@@ -8,7 +8,6 @@ export default class Consola {
     this._level = options.level != null ? options.level : 3
     this._defaults = options.defaults || {}
     this._async = typeof options.async !== 'undefined' ? options.async : null
-    this._extended = options.extended || false
 
     // Create logger functions for current instance
     for (const type in this._types) {
@@ -26,15 +25,17 @@ export default class Consola {
 
   set level (newLevel) {
     // Ensure that newLevel does not exceeds type level boundaries
-    let min = this._types[0].level
-    let max = min
-    for (const type of this._types) {
+    let min = 0
+    let max = 0
+    for (const typeName in this._types) {
+      const type = this._types[typeName]
       if (type.level > max) {
         max = type.level
       } else if (type.level < min) {
         min = type.level
       }
     }
+    // Set level
     this._level = Math.min(max, Math.max(min, newLevel))
   }
 
@@ -79,9 +80,9 @@ export default class Consola {
   }
 
   _createLogFn (defaults) {
-    function fnLog () {
+    function logFn () {
       if (defaults.level > this._level) {
-        return false
+        return this._async ? Promise.resolve(false) : false
       }
 
       // Construct a new log object
@@ -103,72 +104,27 @@ export default class Consola {
         delete logObj.additional
       }
 
-      return logObj
-    }
-
-    function fnSync () {
-      const logObj = fnLog.apply(this, arguments)
-      if (logObj !== false) {
+      // Log
+      if (this._async) {
+        return this._logAsync(logObj)
+      } else {
         this._log(logObj)
       }
     }
 
-    function fnAsync (...args) {
-      const logObj = fnLog.apply(this, arguments)
-      if (logObj === false) {
-        return Promise.resolve()
-      } else {
-        return this._log(logObj)
-      }
-    }
-
-    // Bind function to instance of Consola
-    const logSync = fnSync.bind(this)
-    let logAsync
-
-    let log = logSync
-    if (this._async || this._extended) {
-      logAsync = fnAsync.bind(this)
-
-      if (this._async) {
-        log = logAsync
-      }
-    }
-
-    if (this._extended) {
-      log.sync = logSync
-      log.async = logAsync
-
-      log.write = (data) => {
-        for (const reporter of this._reporters) {
-          reporter.write(data)
-        }
-      }
-
-      for (const reporter of this._reporters) {
-        const shortName = reporter.constructor.name.replace(/Reporter/i, '').toLowerCase()
-        log.write[shortName] = (data) => {
-          reporter.write(data)
-        }
-      }
-    }
-
-    return log
+    return logFn.bind(this)
   }
 
   _log (logObj) {
-    const promises = []
     for (const reporter of this._reporters) {
-      const promise = reporter.log(logObj, this._async)
-
-      if (this._async && promise) {
-        promises.push(promise)
-      }
+      reporter.log(logObj, { async: false })
     }
+  }
 
-    if (this._async) {
-      return Promise.all(promises)
-    }
+  _logAsync (logObj) {
+    return Promise.all(
+      this._reporters.map(reporter => reporter.log(logObj, { async: true }))
+    )
   }
 }
 
