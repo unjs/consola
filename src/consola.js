@@ -1,98 +1,72 @@
 import Types from './types.js'
 import { isLogObj } from './utils/index.js'
 
-const LEVEL_PROP = Symbol('level')
-const TYPES_PROP = Symbol('types')
-const MIN_LEVEL_PROP = Symbol('minLevel')
-const MAX_LEVEL_PROP = Symbol('maxLevel')
-
 export default class Consola {
   constructor (options = {}) {
-    this.reporters = options.reporters || []
-    this.types = options.types || Types
-    this.level = options.level != null ? options.level : 3
-
-    this.defaults = options.defaults || {}
-    this.async = typeof options.async !== 'undefined' ? options.async : null
-    this.extended = options.extended || false
+    this._reporters = options.reporters || []
+    this._types = options.types || Types
+    this._level = options.level != null ? options.level : 3
+    this._defaults = options.defaults || {}
+    this._async = typeof options.async !== 'undefined' ? options.async : null
+    this._extended = options.extended || false
 
     // Create logger functions for current instance
-    for (const type in this.types) {
+    for (const type in this._types) {
       this[type] = this._createLogFn(Object.assign(
         { type },
-        this.types[type],
-        this.defaults
+        this._types[type],
+        this._defaults
       ))
     }
   }
 
   get level () {
-    return this[LEVEL_PROP]
+    return this._level
   }
 
   set level (newLevel) {
-    this[LEVEL_PROP] = Math.min(this[MAX_LEVEL_PROP], Math.max(this[MIN_LEVEL_PROP], newLevel))
-  }
-
-  get minLevel () {
-    return this[MIN_LEVEL_PROP]
-  }
-
-  get maxLevel () {
-    return this[MAX_LEVEL_PROP]
-  }
-
-  get types () {
-    return this[TYPES_PROP]
-  }
-
-  set types (newTypes) {
-    this[MIN_LEVEL_PROP] = 99
-    this[MAX_LEVEL_PROP] = -99
-
-    for (let typeName in newTypes) {
-      const type = newTypes[typeName]
-
-      if (type.level < this[MIN_LEVEL_PROP]) {
-        this[MIN_LEVEL_PROP] = type.level
-      }
-      if (type.level > this[MAX_LEVEL_PROP]) {
-        this[MAX_LEVEL_PROP] = type.level
+    // Ensure that newLevel does not exceeds type level boundaries
+    let min = this._types[0].level
+    let max = min
+    for (const type of this._types) {
+      if (type.level > max) {
+        max = type.level
+      } else if (type.level < min) {
+        min = type.level
       }
     }
-
-    this[TYPES_PROP] = newTypes
+    this._level = Math.min(max, Math.max(min, newLevel))
   }
 
   create (options) {
     return new Consola(Object.assign({
-      reporters: this.reporters,
-      level: this.level,
-      types: this.types,
-      defaults: this.defaults
+      reporters: this._reporters,
+      level: this._level,
+      types: this._types,
+      defaults: this._defaults
     }, options))
   }
 
   addReporter (reporter) {
-    this.reporters.push(reporter)
+    this._reporters.push(reporter)
     return this
   }
 
   removeReporter (reporter) {
     if (reporter) {
-      const i = this.reporters.indexOf(reporter)
+      const i = this._reporters.indexOf(reporter)
       if (i >= 0) {
-        return this.reporters.splice(i, 1)
+        return this._reporters.splice(i, 1)
       }
     } else {
-      this.reporters.splice(0)
+      this._reporters.splice(0)
     }
     return this
   }
 
   _createLogFn (defaults) {
     function fnLog () {
-      if (defaults.level > this.level) {
+      if (defaults.level > this._level) {
         return false
       }
 
@@ -146,25 +120,25 @@ export default class Consola {
     let logAsync
 
     let log = logSync
-    if (this.async || this.extended) {
+    if (this._async || this._extended) {
       logAsync = fnAsync.bind(this)
 
-      if (this.async) {
+      if (this._async) {
         log = logAsync
       }
     }
 
-    if (this.extended) {
+    if (this._extended) {
       log.sync = logSync
       log.async = logAsync
 
       log.write = (data) => {
-        for (const reporter of this.reporters) {
+        for (const reporter of this._reporters) {
           reporter.write(data)
         }
       }
 
-      for (const reporter of this.reporters) {
+      for (const reporter of this._reporters) {
         const shortName = reporter.constructor.name.replace(/Reporter/i, '').toLowerCase()
         log.write[shortName] = (data) => {
           reporter.write(data)
@@ -177,15 +151,15 @@ export default class Consola {
 
   _log (logObj) {
     const promises = []
-    for (const reporter of this.reporters) {
-      const promise = reporter.log(logObj, this.async)
+    for (const reporter of this._reporters) {
+      const promise = reporter.log(logObj, this._async)
 
-      if (this.async && promise) {
+      if (this._async && promise) {
         promises.push(promise)
       }
     }
 
-    if (this.async) {
+    if (this._async) {
       return Promise.all(promises)
     }
   }
