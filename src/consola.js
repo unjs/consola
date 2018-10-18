@@ -103,13 +103,6 @@ export default class Consola {
         delete logObj.additional
       }
 
-      // Legacy support
-      if (logObj.scope) {
-        this._deprecated('logObj.scope', 'tag')
-        logObj.tag = logObj.scope
-        delete logObj.scope
-      }
-
       return logObj
     }
 
@@ -176,36 +169,6 @@ export default class Consola {
     if (this._async) {
       return Promise.all(promises)
     }
-  }
-
-  _deprecated (what, alter) {
-    this.warn({
-      message: `${what} is deprecated. Use ${alter}.`
-    })
-  }
-
-  // DEPRECATED
-  withScope (scope) {
-    this._deprecated('consola.withScope', 'consola.withTag')
-    return this.withTag(scope)
-  }
-
-  // DEPRECATED
-  add (reporter) {
-    this._deprecated('consola.add', 'consola.addReporter')
-    return this.addReporter(reporter)
-  }
-
-  // DEPRECATED
-  remove (reporter) {
-    this._deprecated('consola.remove', 'consola.removeReporter')
-    return this.removeReporter(reporter)
-  }
-
-  // DEPRECATED
-  clear (reporter) {
-    this._deprecated('consola.remove', 'consola.removeReporter')
-    return this.removeReporter()
   }
 }
 
