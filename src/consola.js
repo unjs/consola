@@ -1,10 +1,10 @@
 import Types from './types.js'
 import { isLogObj } from './utils/index.js'
 
-const levelProp = Symbol('level')
-const typesProp = Symbol('types')
-const minLevelProp = Symbol('minLevel')
-const maxLevelProp = Symbol('maxLevel')
+const LEVEL_PROP = Symbol('level')
+const TYPES_PROP = Symbol('types')
+const MIN_LEVEL_PROP = Symbol('minLevel')
+const MAX_LEVEL_PROP = Symbol('maxLevel')
 
 export default class Consola {
   constructor (options = {}) {
@@ -27,41 +27,41 @@ export default class Consola {
   }
 
   get level () {
-    return this[levelProp]
+    return this[LEVEL_PROP]
   }
 
   set level (newLevel) {
-    this[levelProp] = Math.min(this[maxLevelProp], Math.max(this[minLevelProp], newLevel))
+    this[LEVEL_PROP] = Math.min(this[MAX_LEVEL_PROP], Math.max(this[MIN_LEVEL_PROP], newLevel))
   }
 
   get minLevel () {
-    return this[minLevelProp]
+    return this[MIN_LEVEL_PROP]
   }
 
   get maxLevel () {
-    return this[maxLevelProp]
+    return this[MAX_LEVEL_PROP]
   }
 
   get types () {
-    return this[typesProp]
+    return this[TYPES_PROP]
   }
 
   set types (newTypes) {
-    this[minLevelProp] = 99
-    this[maxLevelProp] = -99
+    this[MIN_LEVEL_PROP] = 99
+    this[MAX_LEVEL_PROP] = -99
 
     for (let typeName in newTypes) {
       const type = newTypes[typeName]
 
-      if (type.level < this[minLevelProp]) {
-        this[minLevelProp] = type.level
+      if (type.level < this[MIN_LEVEL_PROP]) {
+        this[MIN_LEVEL_PROP] = type.level
       }
-      if (type.level > this[maxLevelProp]) {
-        this[maxLevelProp] = type.level
+      if (type.level > this[MAX_LEVEL_PROP]) {
+        this[MAX_LEVEL_PROP] = type.level
       }
     }
 
-    this[typesProp] = newTypes
+    this[TYPES_PROP] = newTypes
   }
 
   create (options) {
