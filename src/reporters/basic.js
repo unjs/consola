@@ -13,19 +13,11 @@ export default class BasicReporter {
       errStream: process.stderr,
       timeFormat: 'HH:mm:ss',
       formats: {
-        /* eslint-disable no-multi-spaces */
-        default: '' +
-          '[%1$s]' +   // print date in brackets
-          ' ' +
-          '[%2$-7s]' + // print right padded type in brackets
-          ' ' +
-          '%3$s' +     // print tag
-          '%4$s' +     // print log message
-          '%5$s' +     // print additional arguments
-          '\n'
-        /* eslint-disable no-multi-spaces */
-      }
-    }, options)
+        // [date] [right padded type] {tag} {log} {message}
+        default: '[%1$s][%2$-7s] %3$s 4$s %5$s \n'
+      },
+      options
+    })
 
     this.write = this.write.bind(this)
     this.writeError = this.writeError.bind(this)

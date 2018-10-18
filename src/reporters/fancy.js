@@ -37,34 +37,33 @@ export default class FancyReporter extends BasicReporter {
     super(Object.assign({
       showType: true,
       formats: {
-        /* eslint-disable no-multi-spaces */
         default: '' +
-          '%1$s' +       // use text color
-          '%10$*-11$s' + // print icon with right padded space if exists
-          '%4$s' +       // end text color
-          '%7$s' +       // print tag
-          '%1$s' +       // use text color (tags separator reset to white)
-          '%8$s' +      // print log message
-          '%4$s' +       // end text color
-          '%2$s' +       // use additional text color
-          '%9$s' +      // print additional arguments
-          '%4$s' +       // end additional text color
-          '\n',
-        badge: '\n' +
-          '%3$s' +       // use background color
-          ' %6$s ' +     // log type with spacing
-          '%4$s' +       // end background color
-          ' ' +
-          '%1$s' +       // use text color
-          '%7$s' +       // print tag
-          '%8$s' +      // print log message
-          '%4$s' +       // end text color
-          '\n' +
-          '%2$s' +       // use additional text color
-          '%9$s' +      // print additional arguments
-          '%4$s' +       // end additional text color
-          '\n\n'
-        /* eslint-enable no-multi-spaces */
+          '%1$s' + // <color>
+          '%10$*-11$s' + // Icon with right padded space if exists
+          '%4$s' + // </color>
+          '%7$s' + // Tag
+          '%1$s' + // <color>
+          '%8$s' + // Message
+          '%4$s' + // </color>
+          '%2$s' + // <additional-color>
+          '%9$s' + // Additional
+          '%4$s' + // </additional-color>
+          '\n', // New line
+        badge: '' +
+          '\n' + // New line
+          '%3$s' + // <bg-color>
+          ' %6$s ' + // Type with spacing
+          '%4$s' + // </bg-color>
+          ' ' + // Space
+          '%1$s' + // <color>
+          '%7$s' + // Tag
+          '%8$s' + // Message
+          '%4$s' + // </color>
+          '\n' + // New line
+          '%2$s' + // <additional-color>
+          '%9$s' + // Additional
+          '%4$s' + // </additional-color>
+          '\n\n' // Two new lines
       }
     }, options))
 
