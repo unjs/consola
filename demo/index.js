@@ -14,7 +14,9 @@ const reporters = [
 for (const reporter of reporters) {
   const consola = new Consola.Consola({
     level: 5,
-    reporters: [new Consola[reporter]()]
+    reporters: [new Consola[reporter]({
+      errStream: process.stdout
+    })]
   })
 
   for (let type of Object.keys(consola.types).sort()) {
@@ -36,4 +38,18 @@ for (const reporter of reporters) {
   }
 
   consola.error(new Error('Something bad happened!'))
+
+  const tagged = consola.create({ defaults: { tag: 'tagged' } })
+  for (let type of Object.keys(consola.types).sort()) {
+    tagged[type](`A tagged message with consola.${type}()`)
+  }
+
+  if (reporter === 'FancyReporter') {
+    tagged.success({
+      message: 'This is a fancy badge',
+      additional: 'With some additional info',
+      additionalColor: 'brown',
+      badge: true
+    })
+  }
 }

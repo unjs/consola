@@ -1,5 +1,5 @@
 export default class JSONReporter {
-  constructor (stream) {
+  constructor ({ stream }) {
     this.stream = stream || process.stdout
   }
 

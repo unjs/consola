@@ -143,6 +143,66 @@ Available reporters:
 A reporter (Class or Object) exposes `log(logObj)` method.
 To write a reporter, check implementations to get an idea.
 
+### Formatting
+
+The `BasicReporter` and `FancyReporter` support custom log formats.
+
+#### Time formats
+
+Specify a `timeFormat` option when creating the reporter. Default format is `HH:mm:ss`.
+
+Consola uses Day.js for formatting, see [here](https://github.com/iamkun/dayjs/blob/master/docs/en/API-reference.md#list-of-all-available-formats) for a list of formatting options.
+
+#### Log formats
+
+The log formats can be customised with a `printf` format string. See [here](https://github.com/SheetJS/printj#printf-format-string-specification) for the used specification. 
+
+The following variables are supported:
+
+##### `BasicReporter`
+- `%1$s`: Date string as formatted by `timeFormat`
+- `%2$s`: Log type, e.g. SUCCESS
+- `%3$s`: Tag
+- `%4$s`: Log message
+- `%5$s`: Additional fields
+
+##### `FancyReporter`
+- `%1$s`: Start text color
+- `%2$s`: Start additional text color
+- `%3$s`: Start background color
+- `%4$s`: End all (background) colors
+- `%5$s`: Date string as formatted by `timeFormat`
+- `%6$s`: Log type, e.g. SUCCESS
+- `%7$s`: Tag
+- `%8$s`: Log message
+- `%9$s`: Additional fields
+- `%10$s`: Figure icon
+- `%11$d`: Length of figure icon string + 1 if icon exists, used for conditional space after icon
+
+```js
+consola = new Consola({
+  reporters: [
+    new BasicReporter({
+      timeFormat: 'hh:mm:ss A'
+    }),
+    new FancyReporter({
+      formats: {
+        default: '[%5$s] [%6$-7s] %7$s%8$s%9$s\n', // same format as BasicReporter
+        badge: '\n' +
+          '    /================================================\\\n' +
+          '    |%3$s' + '%10$s'.repeat(48) + '%4$s|\n' +
+          '    |%3$s%10$s' + ' '.repeat(46) + '%10$s%4$s|\n' +
+          '    |%3$s%10$s %6$-44s %10$s%4$s|\n' +
+          '    |%3$s%10$s %8$-44s %10$s%4$s|\n' +
+          '    |%3$s%10$s' + ' '.repeat(46) + '%10$s%4$s|\n' +
+          '    |%3$s' + '%10$s'.repeat(48) + '%4$s|\n' +
+          '    \\================================================/\n\n'
+      }
+    })
+  ]
+})
+```
+
 ## Types
 
 Types can be treated as _extended logging levels_ in Consola's world.

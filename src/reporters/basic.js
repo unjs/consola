@@ -1,24 +1,71 @@
+import { writeSync } from 'fs'
 import util from 'util'
-import { isPlainObject, parseStack, align } from '../utils'
+import { vsprintf } from 'printj'
+import dayjs from 'dayjs'
+import { isPlainObject, parseStack } from '../utils'
+
+const NS_SEPARATOR = ' - '
 
 export default class BasicReporter {
   constructor (options) {
     this.options = Object.assign({
       stream: process.stdout,
       errStream: process.stderr,
-      alignment: 'left'
+      timeFormat: 'HH:mm:ss',
+      formats: {
+        /* eslint-disable no-multi-spaces */
+        default: '' +
+          '[%1$s]' +   // print date in brackets
+          ' ' +
+          '[%2$-7s]' + // print right padded type in brackets
+          ' ' +
+          '%3$s' +     // print tag
+          '%4$s' +     // print log message
+          '%5$s' +     // print additional arguments
+          '\n'
+        /* eslint-disable no-multi-spaces */
+      }
     }, options)
 
     this.write = this.write.bind(this)
     this.writeError = this.writeError.bind(this)
   }
 
-  write (data) {
-    this.options.stream.write(data)
+  write (data, stream) {
+    stream = stream || this.options.stream
+    stream.write(data)
   }
 
   writeError (data) {
-    this.options.errStream.write(data)
+    this.write(data, this.options.errStream)
+  }
+
+  writeSync (data, stream) {
+    stream = stream || this.options.stream
+    writeSync(this.options.stream.fd, data)
+  }
+
+  writeErrorSync (data) {
+    this.writeSync(data, this.options.errStream)
+  }
+
+  writeAsync (data, stream) {
+    stream = stream || this.options.stream
+    return new Promise((resolve) => {
+      const flushed = stream.write(data)
+
+      if (flushed === true) {
+        resolve()
+      } else {
+        stream.once('drain', () => {
+          resolve()
+        })
+      }
+    })
+  }
+
+  writeErrorAsync (data) {
+    return this.writeAsync(data, this.options.errStream)
   }
 
   formatStack (stack) {
@@ -42,7 +89,7 @@ export default class BasicReporter {
     let message = logObj.message || ''
     let type = logObj.type || ''
     let tag = logObj.tag || ''
-    let date = logObj.date.toLocaleTimeString()
+    let date = dayjs(logObj.date).format(this.options.timeFormat)
 
     // Format args
     const args = logObj.args.map(arg => {
@@ -75,34 +122,39 @@ export default class BasicReporter {
     }
   }
 
-  log (logObj) {
+  getWriteMethod (isError, async) {
+    return 'write' + (isError ? 'Error' : '') +
+      (
+        async === true
+          ? 'Async'
+          : (
+            async === false
+              ? 'Sync'
+              : ''
+          )
+      )
+  }
+
+  prepareWrite (logObj, fields) {
+    const format = this.options.formats.default
+
+    const argv = [
+      fields.date,
+      fields.type.toUpperCase(),
+      !fields.tag.length ? '' : (fields.tag.replace(/:/g, '>') + '>').split('>').join(NS_SEPARATOR),
+      fields.message,
+      !fields.args.length ? '' : '\n' + fields.args.join(' ')
+    ]
+
+    return { format, argv }
+  }
+
+  log (logObj, async) {
     const fields = this.getFields(logObj)
-    const write = logObj.isError ? this.writeError : this.write
+    const writeMethod = this.getWriteMethod(logObj.isError, async)
 
-    // Print date
-    write((`[${align(this.options.alignment, fields.date, 8)}] `))
+    const { format, argv } = this.prepareWrite(logObj, fields)
 
-    // Print type
-    if (fields.type.length) {
-      write((`[${align(this.options.alignment, fields.type.toUpperCase(), 7)}] `))
-    }
-
-    // Print tag
-    if (fields.tag.length) {
-      write(`[${fields.tag}] `)
-    }
-
-    // Print message
-    if (fields.message.length) {
-      write(fields.message)
-    }
-
-    // Print additional args
-    if (fields.args.length) {
-      write('\n' + (fields.args.join(' ')))
-    }
-
-    // Newline
-    write('\n')
+    return this[writeMethod](vsprintf(format, argv))
   }
 }

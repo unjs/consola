@@ -1,7 +1,7 @@
-import figures from 'figures'
 import chalk from 'chalk'
+import figures from 'figures'
 import BasicReporter from './basic'
-import { parseStack, align } from '../utils'
+import { parseStack } from '../utils'
 
 function chalkColor (name) {
   if (name[0] === '#') {
@@ -17,9 +17,9 @@ function chalkBgColor (name) {
   return chalk['bg' + name[0] + name.slice(1)] || chalk.bgKeyword(name)
 }
 
-const NS_SEPARATOR = chalk.blue(figures(' › '))
+const NS_SEPARATOR = chalkColor('blue')(figures(' › '))
 
-const ICONS = {
+export const ICONS = {
   start: figures('●'),
   info: figures('ℹ'),
   success: figures('✔'),
@@ -35,8 +35,40 @@ const ICONS = {
 export default class FancyReporter extends BasicReporter {
   constructor (options) {
     super(Object.assign({
-      showType: true
+      showType: true,
+      formats: {
+        /* eslint-disable no-multi-spaces */
+        default: '' +
+          '%1$s' +       // use text color
+          '%10$*-11$s' + // print icon with right padded space if exists
+          '%4$s' +       // end text color
+          '%7$s' +       // print tag
+          '%1$s' +       // use text color (tags separator reset to white)
+          '%8$s' +      // print log message
+          '%4$s' +       // end text color
+          '%2$s' +       // use additional text color
+          '%9$s' +      // print additional arguments
+          '%4$s' +       // end additional text color
+          '\n',
+        badge: '\n' +
+          '%3$s' +       // use background color
+          ' %6$s ' +     // log type with spacing
+          '%4$s' +       // end background color
+          ' ' +
+          '%1$s' +       // use text color
+          '%7$s' +       // print tag
+          '%8$s' +      // print log message
+          '%4$s' +       // end text color
+          '\n' +
+          '%2$s' +       // use additional text color
+          '%9$s' +      // print additional arguments
+          '%4$s' +       // end additional text color
+          '\n\n'
+        /* eslint-enable no-multi-spaces */
+      }
     }, options))
+
+    this._colorCache = {}
   }
 
   formatStack (stack) {
@@ -47,49 +79,45 @@ export default class FancyReporter extends BasicReporter {
     this.write(process.platform === 'win32' ? '\x1B[2J\x1B[0f' : '\x1B[2J\x1B[3J\x1B[H')
   }
 
-  log (logObj) {
-    const fields = this.getFields(logObj)
-    const write = logObj.isError ? this.writeError : this.write
-
+  prepareWrite (logObj, fields) {
     // Clear console
     if (logObj.clear) {
       this.clear()
     }
 
-    // Print type
-    const type = align(this.options.alignment, fields.type.toUpperCase(), 7)
-    if (logObj.badge) {
-      write('\n' + chalkBgColor(logObj.color).black(` ${type} `) + ' ')
-    } else if (fields.type !== 'log') {
-      const icon = logObj.icon || ICONS[fields.type] || ICONS.default
-      if (this.options.showType) {
-        write(chalkColor(logObj.color)(`${icon} ${type} `))
-      } else {
-        write(chalkColor(logObj.color)(`${icon} `))
+    const format = this.options.formats[logObj.badge ? 'badge' : 'default']
+
+    const colors = ['grey', logObj.color, logObj.additionalColor]
+    colors.forEach((color) => {
+      if (color && color.length && !this._colorCache[color]) {
+        this._colorCache[color] = chalkColor(color)('|').split('|')
       }
+    })
+
+    const bgColorKey = `bg_${logObj.color}`
+    if (!this._colorCache[bgColorKey]) {
+      this._colorCache[bgColorKey] = chalkBgColor(logObj.color).black('|').split('|')
     }
 
-    // Print tag
-    if (fields.tag.length) {
-      write((fields.tag.replace(/:/g, '>') + '>').split('>').join(NS_SEPARATOR))
-    }
+    const argv = [
+      this._colorCache[logObj.color][0],
+      this._colorCache[logObj.additionalColor || 'grey'][0],
+      this._colorCache[bgColorKey][0],
+      this._colorCache[bgColorKey][1]
+    ]
 
-    // Print message
-    if (fields.message.length) {
-      write(chalkColor(logObj.color)(fields.message))
-    }
+    const icon = fields.type === 'log' ? '' : logObj.icon || ICONS[fields.type] || ICONS.default
 
-    // Badge additional line
-    if (logObj.badge) {
-      write('\n')
-    }
+    Array.prototype.push.apply(argv, [
+      fields.date,
+      fields.type.toUpperCase(),
+      !fields.tag.length ? '' : (fields.tag.replace(/:/g, '>') + '>').split('>').join(NS_SEPARATOR),
+      fields.message,
+      !fields.args.length ? '' : '\n' + fields.args.join(' '),
+      icon,
+      icon.length ? icon.length + 1 : 0 // used for conditional spacing after icon
+    ])
 
-    // Print additional args
-    if (fields.args.length) {
-      write('\n' + chalkColor(logObj.additionalColor || 'grey')(fields.args.join(' ')))
-    }
-
-    // Newline
-    write(logObj.badge ? '\n\n' : '\n')
+    return { format, argv }
   }
 }

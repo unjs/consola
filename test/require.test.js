@@ -1,8 +1,7 @@
-
-describe('custom consola', () => {
+describe('require', () => {
   afterEach(() => {
     delete global.consola
-    jest.resetModules()
+    jest.resetModules() // jest equivalent to delete require.cache
   })
 
   test('require twice has same consola', () => {
@@ -40,7 +39,7 @@ describe('custom consola', () => {
     const consola1 = 'my-consola2'
     global.consola = consola1
 
-    jest.resetModules() // jest equivalent to delete require.cache
+    jest.resetModules()
 
     const consola2 = require('consola')
     expect(consola1 === consola2).toBe(true)

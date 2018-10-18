@@ -39,10 +39,18 @@
   ],
   "dependencies": {
     "chalk": "^2.4.1",
+    "dayjs": "^1.7.7",
     "figures": "^2.0.0",
+    "printj": "^1.2.0",
     "std-env": "^2.0.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.6.0",
+    "benchmark": "^2.1.4",
     "bili": "^3.1.2",
     "eslint": "^5.6.1",
     "eslint-config-standard": "^12.0.0",
