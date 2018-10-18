@@ -1,63 +1,30 @@
-import { writeSync } from 'fs'
 import util from 'util'
-import { vsprintf } from 'printj'
-import dayjs from 'dayjs'
 import { isPlainObject, parseStack } from '../utils'
+import { writeStream } from '../utils/stream'
+import { formatArgs, formatDate } from '../utils/format'
 
 const NS_SEPARATOR = ' - '
 
+const DEFAULTS = {
+  stream: process.stdout,
+  errStream: process.stderr,
+  timeFormat: 'HH:mm:ss',
+  formats: {
+    default: '[%date$s][%type$-7s] %tag$s %message$s %additional$s \n'
+  }
+}
+
 export default class BasicReporter {
   constructor (options) {
-    this.options = Object.assign({
-      stream: process.stdout,
-      errStream: process.stderr,
-      timeFormat: 'HH:mm:ss',
-      formats: {
-        // [date] [right padded type] {tag} {log} {message}
-        default: '[%1$s][%2$-7s] %3$s 4$s %5$s \n'
-      },
-      options
-    })
-
-    this.write = this.write.bind(this)
-    this.writeError = this.writeError.bind(this)
+    this.options = Object.assign({}, DEFAULTS, options)
   }
 
-  write (data, stream) {
-    stream = stream || this.options.stream
-    stream.write(data)
-  }
-
-  writeError (data) {
-    this.write(data, this.options.errStream)
-  }
-
-  writeSync (data, stream) {
-    stream = stream || this.options.stream
-    writeSync(this.options.stream.fd, data)
-  }
-
-  writeErrorSync (data) {
-    this.writeSync(data, this.options.errStream)
-  }
-
-  writeAsync (data, stream) {
-    stream = stream || this.options.stream
-    return new Promise((resolve) => {
-      const flushed = stream.write(data)
-
-      if (flushed === true) {
-        resolve()
-      } else {
-        stream.once('drain', () => {
-          resolve()
-        })
-      }
-    })
-  }
-
-  writeErrorAsync (data) {
-    return this.writeAsync(data, this.options.errStream)
+  write (data, { error, mode }) {
+    return writeStream(
+      data,
+      error ? this.options.errStream : this.options.stream,
+      mode
+    )
   }
 
   formatStack (stack) {
@@ -81,7 +48,7 @@ export default class BasicReporter {
     let message = logObj.message || ''
     let type = logObj.type || ''
     let tag = logObj.tag || ''
-    let date = dayjs(logObj.date).format(this.options.timeFormat)
+    let date = formatDate(logObj.date, this.options.timeFormat)
 
     // Format args
     const args = logObj.args.map(arg => {
@@ -114,34 +81,39 @@ export default class BasicReporter {
     }
   }
 
-  getWriteMethod (isError, async) {
-    if (isError) {
-      return async ? this.writeErrorAsync : this.writeError
-    } else {
-      return async ? this.write : this.writeAsync
-    }
-  }
+  processLogObj (logObj) {
+    const fields = this.getFields(logObj)
 
-  prepareWrite (logObj, fields) {
     const format = this.options.formats.default
 
+    const tag = !fields.tag.length ? '' : (fields.tag.replace(/:/g, '>') + '>').split('>').join(NS_SEPARATOR)
+
     const argv = [
+      // %1: date
       fields.date,
+      // %2: type
       fields.type.toUpperCase(),
-      !fields.tag.length ? '' : (fields.tag.replace(/:/g, '>') + '>').split('>').join(NS_SEPARATOR),
+      // %3: tag
+      tag,
+      // %4: message
       fields.message,
+      // %5: additional
       !fields.args.length ? '' : '\n' + fields.args.join(' ')
     ]
 
-    return { format, argv }
+    return {
+      format,
+      argv
+    }
   }
 
-  log (logObj, async) {
-    const fields = this.getFields(logObj)
-    const writeMethod = this.getWriteMethod(logObj.isError, async)
+  log (logObj, mode) {
+    const { format, argv } = this.processLogObj(logObj)
+    const data = formatArgs(format, argv)
 
-    const { format, argv } = this.prepareWrite(logObj, fields)
-
-    return writeMethod(vsprintf(format, argv))
+    return this.write(data, {
+      isError: logObj.isError,
+      mode
+    })
   }
 }

@@ -1,5 +1,5 @@
 import Types from './types.js'
-import { isLogObj } from './utils.js'
+import { isLogObj } from './utils/index.js'
 
 const levelProp = Symbol('level')
 const typesProp = Symbol('types')
