@@ -155,7 +155,7 @@ Consola uses Day.js for formatting, see [here](https://github.com/iamkun/dayjs/b
 
 #### Log formats
 
-The log formats can be customised with a `printf` format string. See [here](https://github.com/SheetJS/printj#printf-format-string-specification) for the used specification. 
+The log formats can be customised with a `printf` format string. See [here](https://github.com/SheetJS/printj#printf-format-string-specification) for the used specification.
 
 The following variables are supported:
 
