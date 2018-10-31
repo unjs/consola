@@ -1,4 +1,4 @@
-import { Consola } from '../src'
+import { Consola } from '../../src'
 import { randomSentence } from './sentence'
 
 export function reporterDemo (reporter) {

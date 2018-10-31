@@ -1,6 +1,6 @@
 #!/usr/bin/env node -r esm
 
 import { FancyReporter } from '../src'
-import { reporterDemo } from './_demo'
+import { reporterDemo } from './utils/demo'
 
 reporterDemo(new FancyReporter({}))
