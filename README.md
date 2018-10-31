@@ -61,8 +61,8 @@ consola.error(new Error('Foo'))
 
 ## Methods
 
-#### `consola.<type>(logObject)`
-#### `consola.<type>(args...)`
+#### `<type>(logObject)`
+#### `<type>(args...)`
 
 Log to all reporters.
 
@@ -93,6 +93,11 @@ Create a new `Consola` instance with provided defaults
 #### `withTag(tag)`
 
 Create a new `Consola` instance with that tag.
+
+#### `wrapConsole()`
+#### `restoreConsole()`
+
+Globally redirect all `console.log`, etc calls to consola handlers.
 
 ## Fields
 

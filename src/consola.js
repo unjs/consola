@@ -1,6 +1,8 @@
 import Types from './types.js'
 import { isLogObj } from './utils/index.js'
 
+const originalConsole = Object.assign({}, console)
+
 export default class Consola {
   constructor (options = {}) {
     this._reporters = options.reporters || []
@@ -88,6 +90,16 @@ export default class Consola {
     return this.withDefaults({
       tag: this._defaults.tag ? (this._defaults.tag + ':' + tag) : tag
     })
+  }
+
+  wrapConsole () {
+    for (const type in this._types) {
+      console[type] = this[type] // eslint-disable-line no-console
+    }
+  }
+
+  restoreConsole () {
+    Object.assign(console, originalConsole)
   }
 
   _wrapLogFn (defaults) {

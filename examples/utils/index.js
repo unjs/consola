@@ -1,4 +1,4 @@
-import { Consola } from '../../src'
+import { Consola, FancyReporter } from '../../src'
 import { randomSentence } from './sentence'
 
 export function reporterDemo (reporter) {
@@ -26,3 +26,9 @@ export function reporterDemo (reporter) {
     tagged[type](randomSentence())
   }
 }
+
+export const consola = new Consola({
+  reporters: [
+    new FancyReporter()
+  ]
+})
