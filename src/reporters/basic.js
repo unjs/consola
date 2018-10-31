@@ -1,5 +1,4 @@
 import util from 'util'
-import { isPlainObject } from '../utils'
 import { parseStack } from '../utils/error'
 import { writeStream } from '../utils/stream'
 import { formatDate } from '../utils/date'
