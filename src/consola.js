@@ -190,7 +190,7 @@ export default class Consola {
 
     // Consume arguments
     if (args.length === 1 && isLogObj(args[0])) {
-      Object.assign(logObj, arguments[0])
+      Object.assign(logObj, args[0])
     } else {
       logObj.args = Array.from(args)
     }
