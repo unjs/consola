@@ -3,7 +3,6 @@ import { isPlainObject } from '../utils'
 import { parseStack } from '../utils/error'
 import { writeStream } from '../utils/stream'
 import { formatDate } from '../utils/date'
-import { leftAlign } from '../utils/string'
 
 const DEFAULTS = {
   dateFormat: 'HH:mm:ss'
@@ -83,7 +82,7 @@ export default class BasicReporter {
 
     const date = this.formatDate(fields.date)
 
-    const type = leftAlign(fields.type.toUpperCase(), 7)
+    const type = fields.type.toUpperCase()
 
     return [
       `[${date}]`,

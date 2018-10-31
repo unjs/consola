@@ -1,7 +1,6 @@
 import BasicReporter from './basic'
 import { parseStack } from '../utils/error'
 import { chalkColor } from '../utils/chalk'
-import { leftAlign } from '../utils/string'
 import { TYPE_NAME_MAP, TYPE_COLOR_MAP, LEVEL_COLOR_MAP } from '../utils/fancy'
 
 const DEFAULTS = {
@@ -27,7 +26,7 @@ export default class FancyReporter extends BasicReporter {
     if (TYPE_NAME_MAP[type] === '') {
       return ''
     }
-    return typeColor(leftAlign((TYPE_NAME_MAP[type] || type).toUpperCase(), 4))
+    return typeColor((TYPE_NAME_MAP[type] || type).toUpperCase())
   }
 
   formatTag (tag) {

@@ -1,5 +1,4 @@
 import { TYPE_NAME_MAP, TYPE_COLOR_MAP, LEVEL_COLOR_MAP } from '../utils/fancy.js'
-import { leftAlign } from '../utils/string.js'
 
 export default class BrowserReporter {
   constructor (options) {
@@ -14,7 +13,7 @@ export default class BrowserReporter {
     }
 
     // Type
-    const type = leftAlign((TYPE_NAME_MAP[logObj.type] || logObj.type).toUpperCase(), 4)
+    const type = (TYPE_NAME_MAP[logObj.type] || logObj.type).toUpperCase()
 
     // Styles
     const color = TYPE_COLOR_MAP[logObj.type] || LEVEL_COLOR_MAP[logObj.level]
