@@ -1,8 +1,6 @@
 import Types from './types.js'
 import { isLogObj } from './utils/index.js'
 
-const originalConsole = Object.assign({}, console)
-
 let paused = false
 const queue = []
 
@@ -97,12 +95,60 @@ export default class Consola {
 
   wrapConsole () {
     for (const type in this._types) {
+      // Backup original value
+      if (!console['__' + type]) { // eslint-disable-line no-console
+        console['__' + type] = console[type] // eslint-disable-line no-console
+      }
+      // Override
       console[type] = this[type] // eslint-disable-line no-console
     }
   }
 
   restoreConsole () {
-    Object.assign(console, originalConsole)
+    for (const type in this._types) {
+      // Restore if backup is available
+      if (console['__' + type]) { // eslint-disable-line no-console
+        console[type] = console['__' + type] // eslint-disable-line no-console
+        delete console['__' + type] // eslint-disable-line no-console
+      }
+    }
+  }
+
+  wrapStd () {
+    this._wrapStream(this._stdout, 'log')
+    this._wrapStream(this._stderr, 'error')
+  }
+
+  _wrapStream (stream, type) {
+    if (!stream) {
+      return
+    }
+
+    // Backup original value
+    if (!stream.__write) {
+      stream.__write = stream.write
+    }
+
+    // Override
+    stream.write = (data) => {
+      this[type](String(data).trim())
+    }
+  }
+
+  restoreStd () {
+    this._restoreStream(this._stdout)
+    this._restoreStream(this._stderr)
+  }
+
+  _restoreStream (stream) {
+    if (!stream) {
+      return
+    }
+
+    if (stream.__write) {
+      stream.write = stream.__write
+      delete stream.__write
+    }
   }
 
   pause () {

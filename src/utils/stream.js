@@ -1,10 +1,12 @@
 import { writeSync } from 'fs'
 
 export function writeStream (data, stream, mode = 'default') {
+  const write = stream.__write || stream.write
+
   switch (mode) {
     case 'async':
       return new Promise((resolve) => {
-        if (stream.write(data) === true) {
+        if (write.call(stream, data) === true) {
           resolve()
         } else {
           stream.once('drain', () => { resolve() })
@@ -13,6 +15,6 @@ export function writeStream (data, stream, mode = 'default') {
     case 'sync':
       return writeSync(stream.fd, data)
     default:
-      return stream.write(data)
+      return write.call(stream, data)
   }
 }
