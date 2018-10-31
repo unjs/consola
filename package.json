@@ -1,6 +1,6 @@
 {
   "name": "consola",
-  "version": "1.4.4",
+  "version": "2.0.0-0",
   "description": "Elegant Console Logger",
   "license": "MIT",
   "repository": "nuxt/consola",

@@ -2,6 +2,89 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.0-0"></a>
+# [2.0.0-0](https://github.com/nuxt/consola/compare/v1.4.4...v2.0.0-0) (2018-10-31)
+
+
+### Bug Fixes
+
+* add schmance.js ([2929648](https://github.com/nuxt/consola/commit/2929648))
+* **docs:** update readme ([#22](https://github.com/nuxt/consola/issues/22)) ([e75f2a0](https://github.com/nuxt/consola/commit/e75f2a0))
+* add default/undefined color for browser ([39584d2](https://github.com/nuxt/consola/commit/39584d2))
+* add missing parseStack import ([da53dee](https://github.com/nuxt/consola/commit/da53dee))
+* also copy symbols in assignGlobalReference ([b0eefb5](https://github.com/nuxt/consola/commit/b0eefb5))
+* don't return this when calling log functions ([f07e056](https://github.com/nuxt/consola/commit/f07e056))
+* fix badge display ([e036eed](https://github.com/nuxt/consola/commit/e036eed))
+* fix main field ([4b56e48](https://github.com/nuxt/consola/commit/4b56e48))
+* fix typos ([45e2f99](https://github.com/nuxt/consola/commit/45e2f99))
+* handle null value of obj for assignToLogObj ([d2402af](https://github.com/nuxt/consola/commit/d2402af))
+* improve browser packaging ([4d8c8d0](https://github.com/nuxt/consola/commit/4d8c8d0))
+* lint ([f909761](https://github.com/nuxt/consola/commit/f909761))
+* lint ([d976620](https://github.com/nuxt/consola/commit/d976620))
+* only one color ending parameter is enough ([d213634](https://github.com/nuxt/consola/commit/d213634))
+* readme: icon string length is digit ([31f1894](https://github.com/nuxt/consola/commit/31f1894))
+* remove name assignment ([8d59075](https://github.com/nuxt/consola/commit/8d59075))
+* remove pushes for better readability ([418d84a](https://github.com/nuxt/consola/commit/418d84a))
+* rename private fields ([244fe5c](https://github.com/nuxt/consola/commit/244fe5c))
+* rename require test file ([cfc8f9e](https://github.com/nuxt/consola/commit/cfc8f9e))
+* return earlier on not displaying levels ([cfdcf04](https://github.com/nuxt/consola/commit/cfdcf04))
+* support Error as logObject ([134ff54](https://github.com/nuxt/consola/commit/134ff54))
+* text color comment ([9336fbc](https://github.com/nuxt/consola/commit/9336fbc))
+* update demo ([3842e0e](https://github.com/nuxt/consola/commit/3842e0e))
+* use symbols for private property access ([8e6343c](https://github.com/nuxt/consola/commit/8e6343c))
+
+
+### Code Refactoring
+
+* additionalStyle ~> additionalColor ([3f808e9](https://github.com/nuxt/consola/commit/3f808e9))
+
+
+### Features
+
+* add __VERSION__ to consola prototype ([982c8ca](https://github.com/nuxt/consola/commit/982c8ca))
+* add assignGlobalConsola helper ([1af28f7](https://github.com/nuxt/consola/commit/1af28f7))
+* add getter/setter for level ([7af5ed5](https://github.com/nuxt/consola/commit/7af5ed5))
+* add global.consola ([4da784d](https://github.com/nuxt/consola/commit/4da784d))
+* add shmancy reporter ([dc6121a](https://github.com/nuxt/consola/commit/dc6121a))
+* add symbols to browser ([30cd4f0](https://github.com/nuxt/consola/commit/30cd4f0))
+* add sync/async write ([8525525](https://github.com/nuxt/consola/commit/8525525))
+* add typescript typings ([#24](https://github.com/nuxt/consola/issues/24)) ([0853a6f](https://github.com/nuxt/consola/commit/0853a6f))
+* align basic and fancy reporter tags ([38a4729](https://github.com/nuxt/consola/commit/38a4729))
+* better stack formater ([f5acb3c](https://github.com/nuxt/consola/commit/f5acb3c))
+* detect version changes and throw a warning ([73bdd1a](https://github.com/nuxt/consola/commit/73bdd1a))
+* improve packaging and exports ([90da862](https://github.com/nuxt/consola/commit/90da862))
+* improve packaging for browser support ([47af1df](https://github.com/nuxt/consola/commit/47af1df))
+* initial works for v2.0.0 ([455b6f9](https://github.com/nuxt/consola/commit/455b6f9))
+* log formatting using printf ([2afb025](https://github.com/nuxt/consola/commit/2afb025))
+* no more side effects ([c015c31](https://github.com/nuxt/consola/commit/c015c31))
+* pause/resume ([f217cc1](https://github.com/nuxt/consola/commit/f217cc1))
+* return new consola instance with consola.create ([4ae3614](https://github.com/nuxt/consola/commit/4ae3614))
+* rework _createLogFn with better argument handling ([2d4af39](https://github.com/nuxt/consola/commit/2d4af39))
+* scope inheritance support ([#23](https://github.com/nuxt/consola/issues/23)) ([0070c54](https://github.com/nuxt/consola/commit/0070c54))
+* **fancy/basic:** support logObj.stack field ([aa2216f](https://github.com/nuxt/consola/commit/aa2216f))
+* setReporters, withDefaults and withTag ([912446f](https://github.com/nuxt/consola/commit/912446f))
+* showType option ([ed294e4](https://github.com/nuxt/consola/commit/ed294e4))
+* style browser reporter ([d39684d](https://github.com/nuxt/consola/commit/d39684d))
+* support all chalk colors ([2cec678](https://github.com/nuxt/consola/commit/2cec678)), closes [#20](https://github.com/nuxt/consola/issues/20)
+* wrapConsole ([3962a1f](https://github.com/nuxt/consola/commit/3962a1f))
+* wrapStd ([f8bfbeb](https://github.com/nuxt/consola/commit/f8bfbeb))
+* write error and warns to process.stderr by default ([6565254](https://github.com/nuxt/consola/commit/6565254))
+
+
+### Performance Improvements
+
+* **basic:** refactor getWriteMethod ([c52db69](https://github.com/nuxt/consola/commit/c52db69))
+* remove all DEPRECATED helpers for less bundle size ([fe39d37](https://github.com/nuxt/consola/commit/fe39d37))
+
+
+### BREAKING CHANGES
+
+* Use new additionalColor prop
+* lot's of internals had been changed.
+* Behavior may be changed in some conditions
+
+
+
 <a name="1.4.4"></a>
 ## [1.4.4](https://github.com/nuxt/consola/compare/v1.4.3...v1.4.4) (2018-10-13)
 
