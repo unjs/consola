@@ -23,20 +23,19 @@ export default class BasicReporter {
     let additional = ''
     let message = ''
 
-    // error-like argument
-    for (const arg of args) {
+    const _args = Array.from(args)
+
+    _args.forEach((arg, i) => {
       if (arg.stack) {
-        if (!message.length && arg.message) {
-          message = arg.message
-        }
-        return '\n' + this.formatStack(arg.stack)
+        additional += (additional ? '\n' : '') + this.formatStack(arg.stack)
+        _args[i] = arg.message
       }
-    }
+    })
 
     if (util.formatWithOptions) {
-      message = util.formatWithOptions({ colors: true }, ...args) // Node >= 10
+      message = util.formatWithOptions({ colors: true }, ..._args) // Node >= 10
     } else {
-      message = util.format(...args)
+      message = util.format(..._args)
     }
 
     return {
