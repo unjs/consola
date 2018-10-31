@@ -43,7 +43,7 @@ consola.error(new Error('Foo'))
 
 <div align="center">
 <br>
-<img src="./assets/fancy.png" width="600px">
+<img src="./assets/fancy.png">
 <p>Fancy Reporter</p>
 <br>
 </div>
