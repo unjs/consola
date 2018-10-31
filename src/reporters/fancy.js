@@ -5,8 +5,7 @@ import { TYPE_NAME_MAP, TYPE_COLOR_MAP, LEVEL_COLOR_MAP } from '../utils/fancy'
 
 const DEFAULTS = {
   secondaryColor: 'grey',
-  tagColor: 'magenta',
-  dateFormat: 'HH:mm'
+  tagColor: 'magenta'
 }
 
 export default class FancyReporter extends BasicReporter {
