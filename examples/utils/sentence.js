@@ -1,4 +1,4 @@
-const Sentencer = require('sentencer')
+import Sentencer from 'sentencer'
 
 const sentenceTemplates = [
   'the {{ noun }} is {{ a_noun }}',

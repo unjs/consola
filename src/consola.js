@@ -1,6 +1,5 @@
 import Types from './types.js'
 import { isLogObj } from './utils/index.js'
-import { version } from '../package.json'
 
 export default class Consola {
   constructor (options = {}) {
@@ -9,8 +8,11 @@ export default class Consola {
     this._level = options.level != null ? options.level : 3
     this._defaults = options.defaults || {}
     this._async = typeof options.async !== 'undefined' ? options.async : null
-    this._stdout = options.stdout || process.stdout
-    this._stderr = options.stdout || process.stderr
+
+    if (typeof process !== 'undefined') {
+      this._stdout = options.stdout || process.stdout
+      this._stderr = options.stdout || process.stderr
+    }
 
     // Create logger functions for current instance
     for (const type in this._types) {
@@ -20,10 +22,6 @@ export default class Consola {
         this._defaults
       ))
     }
-  }
-
-  static get version () {
-    return version
   }
 
   get level () {
