@@ -90,7 +90,7 @@ export default class BasicReporter {
       `[${fields.tag}]`,
       `[${type}]`,
       `${fields.message}`,
-      `${fields.additional}`
+      `${fields.additional ? ('\n' + fields.additional) : ''}`
     ]
   }
 
