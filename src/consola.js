@@ -93,6 +93,16 @@ export default class Consola {
     })
   }
 
+  wrapAll () {
+    this.wrapConsole()
+    this.wrapStd()
+  }
+
+  restoreAll () {
+    this.restoreConsole()
+    this.restoreStd()
+  }
+
   wrapConsole () {
     for (const type in this._types) {
       // Backup original value
