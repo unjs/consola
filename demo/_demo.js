@@ -1,20 +1,11 @@
-#!/usr/bin/env node -r esm
-
-import { Consola, BasicReporter, FancyReporter } from '../src'
+import { Consola } from '../src'
 import { randomSentence } from './sentence'
 
-const reporters = [
-  BasicReporter,
-  FancyReporter
-]
-
-for (const Reporter of reporters) {
+export function reporterDemo (reporter) {
   const consola = new Consola({
     level: 5,
     reporters: [
-      new Reporter({
-        errStream: process.stdout
-      })
+      reporter
     ]
   })
 
