@@ -9,3 +9,5 @@ consola.error({
 consola.log({
   AAA: 'BBB'
 })
+
+consola.log(consola)

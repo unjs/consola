@@ -20,13 +20,8 @@ export default class BasicReporter {
   }
 
   formatArg (arg) {
-    if (isPlainObject(arg)) {
-      return JSON.stringify(arg, null, 2)
-    }
-
     if (util.formatWithOptions) {
-      // Node >= 10
-      return util.formatWithOptions({ colors: true }, arg)
+      return util.formatWithOptions({ colors: true }, arg) // Node >= 10
     } else {
       return util.format(arg)
     }
