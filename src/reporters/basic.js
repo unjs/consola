@@ -19,32 +19,34 @@ export default class BasicReporter {
   }
 
   formatArgs (args) {
-    let additional = ''
-    let message = ''
-
-    const _args = Array.from(args)
-
-    _args.forEach((arg, i) => {
+    const _args = args.map(arg => {
       if (arg.stack) {
-        additional += (additional ? '\n' : '') + this.formatStack(arg.stack)
-        _args[i] = arg.message
+        return arg.message + '\n' + this.formatStack(arg.stack) + '\n'
       }
+      return arg
     })
 
+    let formattedArgs
     if (util.formatWithOptions) {
-      message = util.formatWithOptions({ colors: true }, ..._args) // Node >= 10
+      formattedArgs = util.formatWithOptions({ colors: true }, ..._args) // Node >= 10
     } else {
-      message = util.format(..._args)
+      formattedArgs = util.format(..._args)
     }
+
+    const [ message, ...more ] = formattedArgs.split('\n')
 
     return {
       message,
-      additional
+      additional: more.join('\n')
     }
   }
 
   formatDate (date) {
     return formatDate(this.options.dateFormat, date)
+  }
+
+  filterAndJoin (arr) {
+    return arr.filter(x => x).join(' ')
   }
 
   formatLogObj (logObj) {
@@ -53,13 +55,13 @@ export default class BasicReporter {
     const date = this.formatDate(logObj.date)
     const type = logObj.type.toUpperCase()
 
-    return [
+    return this.filterAndJoin([
       bracket(date),
       bracket(logObj.tag),
       bracket(type),
       message,
       additional ? ('\n' + additional) : ''
-    ].filter(x => x).join(' ')
+    ])
   }
 
   log (logObj, { async, stdout, stderr } = {}) {

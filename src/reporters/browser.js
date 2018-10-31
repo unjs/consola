@@ -1,4 +1,4 @@
-import { TYPE_NAME_MAP, TYPE_COLOR_MAP, LEVEL_COLOR_MAP } from '../utils/fancy.js'
+import { TYPE_COLOR_MAP, LEVEL_COLOR_MAP } from '../utils/fancy.js'
 
 export default class BrowserReporter {
   constructor (options) {
@@ -13,7 +13,7 @@ export default class BrowserReporter {
     }
 
     // Type
-    const type = (TYPE_NAME_MAP[logObj.type] || logObj.type).toUpperCase()
+    const type = (logObj.type).toUpperCase()
 
     // Styles
     const color = TYPE_COLOR_MAP[logObj.type] || LEVEL_COLOR_MAP[logObj.level]

@@ -40,6 +40,7 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "dayjs": "^1.7.7",
+    "figures": "^2.0.0",
     "std-env": "^2.0.2",
     "string-width": "^2.1.1"
   },

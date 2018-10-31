@@ -1,10 +1,3 @@
-export const TYPE_NAME_MAP = {
-  error: 'ERR!',
-  fatal: 'FATAL!',
-  warn: 'WARN',
-  log: ''
-}
-
 export const TYPE_COLOR_MAP = {
   'info': 'cyan'
 }

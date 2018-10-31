@@ -207,11 +207,11 @@ export default class Consola {
 
     // Aliases
     if (logObj.message) {
-      args.unshift(logObj.message)
+      logObj.args.unshift(logObj.message)
       delete logObj.message
     }
     if (logObj.additional) {
-      args.push(logObj.additional)
+      logObj.args.push('\n' + logObj.additional)
       delete logObj.additional
     }
 
