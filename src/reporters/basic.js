@@ -8,6 +8,8 @@ const DEFAULTS = {
   dateFormat: 'HH:mm:ss'
 }
 
+const bracket = x => x ? `[${x}]` : ''
+
 export default class BasicReporter {
   constructor (options) {
     this.options = Object.assign({}, DEFAULTS, options)
@@ -81,22 +83,21 @@ export default class BasicReporter {
     const fields = this.getFields(logObj)
 
     const date = this.formatDate(fields.date)
-
     const type = fields.type.toUpperCase()
 
     return [
-      `[${date}]`,
-      `[${fields.tag}]`,
-      `[${type}]`,
-      `${fields.message}`,
-      `${fields.additional ? ('\n' + fields.additional) : ''}`
-    ]
+      bracket(date),
+      bracket(fields.tag),
+      bracket(type),
+      fields.message,
+      fields.additional ? ('\n' + fields.additional) : ''
+    ].filter(x => x).join(' ')
   }
 
   log (logObj, { async, stdout, stderr } = {}) {
-    const line = this.formatLogObj(logObj)
-      .filter(x => x && x.length && x !== '[]')
-      .join(' ') + '\n'
+    const line = this.formatLogObj(logObj, {
+      width: stdout.columns - 1
+    }) + '\n'
 
     return writeStream(
       line,

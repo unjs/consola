@@ -1,3 +1,4 @@
+import stringWidth from 'string-width'
 import BasicReporter from './basic'
 import { parseStack } from '../utils/error'
 import { chalkColor } from '../utils/chalk'
@@ -36,12 +37,11 @@ export default class FancyReporter extends BasicReporter {
     return chalkColor(additionalColor || this.options.secondaryColor)(str)
   }
 
-  formatLogObj (logObj) {
+  formatLogObj (logObj, { width }) {
     const fields = this.getFields(logObj)
 
     const typeColor = this.typeColor(fields.type, logObj.level)
 
-    const date = this.secondaryColor(`(${this.formatDate(fields.date)})`)
     const type = this.formatType(fields.type, typeColor)
     const tag = this.formatTag(fields.tag)
     const message = (fields.message)
@@ -49,12 +49,12 @@ export default class FancyReporter extends BasicReporter {
       ? this.secondaryColor('\n' + fields.additional, logObj.additionalColor)
       : ''
 
-    return [
-      `${tag}`,
-      `${type}`,
-      `${message}`,
-      `${date}`,
-      `${additional}`
-    ]
+    let line = [tag, type, message, additional].filter(x => x).join(' ')
+
+    const date = this.secondaryColor(this.formatDate(fields.date))
+    const space = Math.max(width - stringWidth(line) - stringWidth(date) - 2, 0)
+    line += ' '.repeat(space) + date
+
+    return line
   }
 }
