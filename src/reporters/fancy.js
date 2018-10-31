@@ -2,32 +2,12 @@ import BasicReporter from './basic'
 import { parseStack } from '../utils/error'
 import { chalkColor } from '../utils/chalk'
 import { leftAlign } from '../utils/string'
+import { TYPE_NAME_MAP, TYPE_COLOR_MAP, LEVEL_COLOR_MAP } from '../utils/fancy'
 
 const DEFAULTS = {
   secondaryColor: 'grey',
   tagColor: 'magenta',
   dateFormat: 'HH:mm'
-}
-
-const TYPE_NAME_MAP = {
-  error: 'ERR!',
-  fatal: 'DIE!',
-  warn: 'WARN',
-  success: 'OK',
-  debug: '...',
-  trace: '...',
-  log: ''
-}
-
-const TYPE_COLOR_MAP = {
-  'info': 'blue'
-}
-
-const LEVEL_COLOR_MAP = {
-  0: 'red',
-  1: 'yellow',
-  2: 'white',
-  3: 'green'
 }
 
 export default class FancyReporter extends BasicReporter {
@@ -54,8 +34,8 @@ export default class FancyReporter extends BasicReporter {
     return chalkColor(this.options.tagColor)(tag)
   }
 
-  secondaryColor (str) {
-    return chalkColor(this.options.secondaryColor)(str)
+  secondaryColor (str, additionalColor) {
+    return chalkColor(additionalColor || this.options.secondaryColor)(str)
   }
 
   formatLogObj (logObj) {
@@ -67,7 +47,9 @@ export default class FancyReporter extends BasicReporter {
     const type = this.formatType(fields.type, typeColor)
     const tag = this.formatTag(fields.tag)
     const message = (fields.message)
-    const additional = fields.additional.length ? this.secondaryColor('\n' + fields.additional) : ''
+    const additional = fields.additional.length
+      ? this.secondaryColor('\n' + fields.additional, logObj.additionalColor)
+      : ''
 
     return [
       `${tag}`,
