@@ -45,15 +45,16 @@ export default class FancyReporter extends BasicReporter {
     const type = this.formatType(fields.type, typeColor)
     const tag = this.formatTag(fields.tag)
     const message = (fields.message)
-    const additional = fields.additional.length
-      ? this.secondaryColor('\n' + fields.additional, logObj.additionalColor)
-      : ''
 
-    let line = [tag, type, message, additional].filter(x => x).join(' ')
+    let line = [tag, type, message].filter(x => x).join(' ')
 
     const date = this.secondaryColor(this.formatDate(fields.date))
     const space = Math.max(width - stringWidth(line) - stringWidth(date) - 2, 0)
     line += ' '.repeat(space) + date
+
+    line += fields.additional.length
+      ? this.secondaryColor('\n' + fields.additional, logObj.additionalColor)
+      : ''
 
     return line
   }
