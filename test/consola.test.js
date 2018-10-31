@@ -16,8 +16,5 @@ describe('consola', () => {
 
     consola.level = -99
     expect(consola.level).toBe(0)
-
-    consola.level = 99
-    expect(consola.level).toBe(5)
   })
 })
