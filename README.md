@@ -13,11 +13,11 @@
 - Pluggable reporters
 - Consistent command line interface (CLI) experience
 - Tag support
-- Support auto wrapping `console.*` calls
+- Redirect `console` and `stdout/stderror` to the consola and easily restore redirect.
 - Browser support
 - Pause/Resume support
 
-!!! Note: Consola v2 is stil under development. Meanwhile, you may want to use [1.x](https://github.com/nuxt/consola/tree/1.x) branch docs.
+!!! Note: Consola v2 is stil under development. Meanwhile, you may want to use [1.x](https://github.com/nuxt/consola/tree/1.x) branch docs. !!!
 
 ## Installation
 
@@ -65,8 +65,7 @@ consola.error(new Error('Foo'))
 
 ## Methods
 
-#### `<type>(logObject)`
-#### `<type>(args...)`
+#### `<type>(logObject)` `<type>(args...)`
 
 Log to all reporters.
 
@@ -98,13 +97,22 @@ Create a new `Consola` instance with provided defaults
 
 Create a new `Consola` instance with that tag.
 
-#### `wrapConsole()`
-#### `restoreConsole()`
+#### `wrapConsole()` `restoreConsole()`
 
 Globally redirect all `console.log`, etc calls to consola handlers.
 
-#### `pause()`
-#### `resume()`
+#### `wrapStd()` `restoreStd()`
+
+Globally redirect all stdout/stderr outputs to consola.
+
+#### `wrapAll()` `restoreAll()`
+
+Wraps both std and console.
+
+Console uses std in the underlying so calling `wrapStd` redirects console too.
+Benefit of this function is that things like `console.info` will be correctly redirected to the corresponding type.
+
+#### `pause()` `resume()`
 
 **Globally** pause and resume logs.
 
