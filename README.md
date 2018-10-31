@@ -9,11 +9,13 @@
 ## Why Consola?
 
 - Easy to use
-- Fancy output with fallback for continuous integration (CI) environments
-- Global mockable stdout/stderr wrapper
+- Fancy output with fallback for minimal environments
 - Pluggable reporters
 - Consistent command line interface (CLI) experience
 - Tag support
+- Support auto wrapping `console.*` calls
+- Browser support
+- Pause/Resume support
 
 !!! Note: Consola v2 is stil under development. Meanwhile, you may want to use [1.x](https://github.com/nuxt/consola/tree/1.x) branch docs.
 
