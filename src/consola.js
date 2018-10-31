@@ -3,6 +3,9 @@ import { isLogObj } from './utils/index.js'
 
 const originalConsole = Object.assign({}, console)
 
+let paused = false
+const queue = []
+
 export default class Consola {
   constructor (options = {}) {
     this._reporters = options.reporters || []
@@ -102,8 +105,27 @@ export default class Consola {
     Object.assign(console, originalConsole)
   }
 
+  pause () {
+    paused = true
+  }
+
+  resume () {
+    paused = false
+
+    // Process queue
+    const _queue = queue.splice(0)
+    for (const item of _queue) {
+      item[0]._logFn(item[1], item[2])
+    }
+  }
+
   _wrapLogFn (defaults) {
     function logFn () {
+      if (paused) {
+        queue.push([this, defaults, arguments])
+        return
+      }
+
       return this._logFn(defaults, arguments)
     }
     return logFn.bind(this)

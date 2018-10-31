@@ -99,6 +99,13 @@ Create a new `Consola` instance with that tag.
 
 Globally redirect all `console.log`, etc calls to consola handlers.
 
+#### `pause()`
+#### `resume()`
+
+**Globally** pause and resume logs.
+
+Consola will enqueue all logs when paused and then sends them to the reported when resumed.
+
 ## Fields
 
 #### `reporters`
