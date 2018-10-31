@@ -214,7 +214,7 @@ export default class Consola {
       if (!Array.isArray(logObj.additional)) {
         logObj.additional = logObj.additional.split('\n')
       }
-      logObj.args.push('\n', ...logObj.additional)
+      logObj.args.push('\n' + logObj.additional.join('\n'))
       delete logObj.additional
     }
 
