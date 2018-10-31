@@ -205,9 +205,13 @@ export default class Consola {
       logObj.args = Array.from(args)
     }
 
-    // Addtional message
+    // Aliases
+    if (logObj.message) {
+      args.unshift(logObj.message)
+      delete logObj.message
+    }
     if (logObj.additional) {
-      logObj.args.push.apply(logObj.args, logObj.additional.split('\n'))
+      args.push(logObj.additional)
       delete logObj.additional
     }
 

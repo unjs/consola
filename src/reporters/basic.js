@@ -19,11 +19,29 @@ export default class BasicReporter {
     return ' at ' + parseStack(stack).join('\n at ')
   }
 
-  formatArg (arg) {
+  formatArgs (args) {
+    let additional = ''
+    let message = ''
+
+    // error-like argument
+    for (const arg of args) {
+      if (arg.stack) {
+        if (!message.length && arg.message) {
+          message = arg.message
+        }
+        return '\n' + this.formatStack(arg.stack)
+      }
+    }
+
     if (util.formatWithOptions) {
-      return util.formatWithOptions({ colors: true }, arg) // Node >= 10
+      message = util.formatWithOptions({ colors: true }, ...args) // Node >= 10
     } else {
-      return util.format(arg)
+      message = util.format(...args)
+    }
+
+    return {
+      message,
+      additional
     }
   }
 
@@ -31,61 +49,18 @@ export default class BasicReporter {
     return formatDate(this.options.dateFormat, date)
   }
 
-  getFields (logObj) {
-    let message = logObj.message || ''
-    let type = logObj.type || ''
-    let tag = logObj.tag || ''
-    let date = logObj.date || new Date()
-
-    // Format args
-    const args = logObj.args.map(arg => {
-      // error-like argument
-      if (arg.stack) {
-        if (!message.length && arg.message) {
-          message = arg.message
-        }
-        if (!type.length) {
-          type = 'error'
-        }
-        if (!tag.length && arg.code) {
-          tag = arg.code
-        }
-        return this.formatStack(arg.stack)
-      }
-
-      // General argument
-      return this.formatArg(arg)
-    })
-
-    // If no message is provided, assume args[0] as message
-    if (!message.length && args.length) {
-      message = args.shift()
-    }
-
-    // Concert other args to additional
-    const additional = args.join('\n')
-
-    return {
-      additional,
-      date,
-      message,
-      tag,
-      type
-    }
-  }
-
   formatLogObj (logObj) {
-    const fields = this.getFields(logObj)
+    const { message, additional } = this.formatArgs(logObj.args)
 
-    const date = this.formatDate(fields.date)
-    const type = fields.type.toUpperCase()
+    const date = this.formatDate(logObj.date)
+    const type = logObj.type.toUpperCase()
 
     return [
       bracket(date),
-      bracket(fields.tag),
+      bracket(logObj.tag),
       bracket(type),
-      fields.message,
-      fields.additional ? ('\n' + fields.additional) : ''
+      message,
+      additional ? ('\n' + additional) : ''
     ].filter(x => x).join(' ')
   }
 

@@ -25,17 +25,13 @@ export default class BrowserReporter {
     // Date
     const date = (new Date(logObj.date)).toLocaleTimeString()
 
-    // Message
-    const message = logObj.message ? logObj.message : (
-      // If no message is provided, assume args[0] as message
-      logObj.args.length ? logObj.args.shift() : ''
-    )
-
-    // Additional
-    const additonal = logObj.args.length ? '\n' + logObj.args.join() : ''
-
     // Log to the console
-    const args = `%c${type} %c${message} %c${additonal ? additonal + ' ' : ''}(${date})`
-    consoleLogFn(args, styleColor, styleInherit, styleAdditional)
+    consoleLogFn(
+      `%c[${type}]%c[${date}]%c`,
+      styleColor,
+      styleAdditional,
+      styleInherit,
+      ...logObj.args
+    )
   }
 }

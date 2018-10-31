@@ -137,12 +137,8 @@ logObject is a free-to-extend object which will be passed to reporters.
 
 Standard fields:
 
-- `additional`
-- `additionalColor`
 - `args`
 - `date`
-- `icon`
-- `message`
 - `tag`
 
 ## Reporters

@@ -23,14 +23,12 @@ export default class FancyReporter extends BasicReporter {
   }
 
   formatType (type, typeColor) {
-    if (TYPE_NAME_MAP[type] === '') {
-      return ''
-    }
-    return typeColor((TYPE_NAME_MAP[type] || type).toUpperCase())
+    const _type = typeof TYPE_NAME_MAP[type] === 'string' ? TYPE_NAME_MAP[type] : type
+    return _type ? typeColor(_type.toUpperCase()) : ''
   }
 
   formatTag (tag) {
-    return chalkColor(this.options.tagColor)(tag)
+    return tag ? chalkColor(this.options.tagColor)(tag) : ''
   }
 
   secondaryColor (str, additionalColor) {
@@ -38,22 +36,22 @@ export default class FancyReporter extends BasicReporter {
   }
 
   formatLogObj (logObj, { width }) {
-    const fields = this.getFields(logObj)
+    const { message, additional } = this.formatArgs(logObj.args)
 
-    const typeColor = this.typeColor(fields.type, logObj.level)
+    const typeColor = this.typeColor(logObj.type, logObj.level)
 
-    const type = this.formatType(fields.type, typeColor)
-    const tag = this.formatTag(fields.tag)
-    const message = (fields.message)
+    const date = this.secondaryColor(this.formatDate(logObj.date))
+    const type = this.formatType(logObj.type, typeColor)
+    const tag = this.formatTag(logObj.tag)
 
-    let line = [tag, type, message].filter(x => x).join(' ')
+    let left = [tag, type, message].filter(x => x).join(' ')
+    let right = date
 
-    const date = this.secondaryColor(this.formatDate(fields.date))
-    const space = Math.max(width - stringWidth(line) - stringWidth(date) - 2, 0)
-    line += ' '.repeat(space) + date
+    const space = Math.max(width - stringWidth(left) - stringWidth(right) - 2, 0)
+    let line = left + ' '.repeat(space) + right
 
-    line += fields.additional.length
-      ? this.secondaryColor('\n' + fields.additional, logObj.additionalColor)
+    line += additional
+      ? this.secondaryColor('\n' + additional, logObj.additionalColor)
       : ''
 
     return line

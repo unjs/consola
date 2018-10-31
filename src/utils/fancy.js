@@ -1,10 +1,7 @@
 export const TYPE_NAME_MAP = {
   error: 'ERR!',
-  fatal: 'DIE!',
+  fatal: 'FATAL!',
   warn: 'WARN',
-  success: 'OK',
-  debug: '...',
-  trace: '...',
   log: ''
 }
 
