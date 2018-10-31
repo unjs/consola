@@ -8,6 +8,8 @@ export default class Consola {
     this._level = options.level != null ? options.level : 3
     this._defaults = options.defaults || {}
     this._async = typeof options.async !== 'undefined' ? options.async : null
+    this._stdout = options.stdout || process.stdout
+    this._stderr = options.stdout || process.stderr
 
     // Create logger functions for current instance
     for (const type in this._types) {
@@ -44,7 +46,9 @@ export default class Consola {
       reporters: this._reporters,
       level: this._level,
       types: this._types,
-      defaults: this._defaults
+      defaults: this._defaults,
+      stdout: this._stdout,
+      stderr: this._stderr
     }, options))
   }
 
@@ -120,13 +124,21 @@ export default class Consola {
 
   _log (logObj) {
     for (const reporter of this._reporters) {
-      reporter.log(logObj, { async: false })
+      reporter.log(logObj, {
+        async: false,
+        stdout: this._stdout,
+        stderr: this._stderr
+      })
     }
   }
 
   _logAsync (logObj) {
     return Promise.all(
-      this._reporters.map(reporter => reporter.log(logObj, { async: true }))
+      this._reporters.map(reporter => reporter.log(logObj, {
+        async: true,
+        stdout: this._stdout,
+        stderr: this._stderr
+      }))
     )
   }
 }

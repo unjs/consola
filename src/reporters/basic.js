@@ -6,22 +6,12 @@ import { formatDate } from '../utils/date'
 import { leftAlign } from '../utils/string'
 
 const DEFAULTS = {
-  stream: process.stdout,
-  errStream: process.stderr,
   dateFormat: 'HH:mm:ss'
 }
 
 export default class BasicReporter {
   constructor (options) {
     this.options = Object.assign({}, DEFAULTS, options)
-  }
-
-  write (data, { error, mode }) {
-    return writeStream(
-      data,
-      error ? this.options.errStream : this.options.stream,
-      mode
-    )
   }
 
   formatStack (stack) {
@@ -104,14 +94,15 @@ export default class BasicReporter {
     ]
   }
 
-  log (logObj, { async = false } = {}) {
+  log (logObj, { async, stdout, stderr } = {}) {
     const line = this.formatLogObj(logObj)
       .filter(x => x && x.length && x !== '[]')
       .join(' ') + '\n'
 
-    return this.write(line, {
-      error: logObj.error,
-      mode: async ? 'async' : 'default'
-    })
+    return writeStream(
+      line,
+      logObj.level < 2 ? stderr : stdout,
+      async ? 'async' : 'default'
+    )
   }
 }
