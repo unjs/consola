@@ -6,7 +6,7 @@ import { chalkColor } from '../utils/chalk'
 import { TYPE_COLOR_MAP, LEVEL_COLOR_MAP } from '../utils/fancy'
 
 const DEFAULTS = {
-  secondaryColor: 'dim'
+  secondaryColor: 'grey'
 }
 
 const TYPE_ICONS = {
@@ -51,11 +51,12 @@ export default class FancyReporter extends BasicReporter {
     let left = this.filterAndJoin([type, message])
     let right = this.filterAndJoin([tag, date])
 
-    const space = Math.max(width - stringWidth(left) - stringWidth(right) - 2, 0)
-    let line = left + ' '.repeat(space) + right
+    const space = width - stringWidth(left) - stringWidth(right) - 2
+
+    let line = space > 0 ? (left + ' '.repeat(space) + right) : left
 
     line += additional
-      ? secondaryColor('\n' + additional, logObj.additionalColor)
+      ? secondaryColor('\n' + additional)
       : ''
 
     return line

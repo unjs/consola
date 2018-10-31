@@ -10,4 +10,6 @@ consola.log({
   AAA: 'BBB'
 })
 
-consola.log(consola)
+// consola.log(consola)
+
+consola.log('%d', 12)

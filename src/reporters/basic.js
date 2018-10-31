@@ -21,7 +21,7 @@ export default class BasicReporter {
   formatArgs (args) {
     const _args = args.map(arg => {
       if (arg.stack) {
-        return arg.message + '\n' + this.formatStack(arg.stack) + '\n'
+        return arg.message + '\n' + this.formatStack(arg.stack)
       }
       return arg
     })
@@ -66,11 +66,11 @@ export default class BasicReporter {
 
   log (logObj, { async, stdout, stderr } = {}) {
     const line = this.formatLogObj(logObj, {
-      width: stdout.columns - 1
-    }) + '\n'
+      width: stdout.columns ? (stdout.columns - 1) : 80
+    })
 
     return writeStream(
-      line,
+      line + '\n',
       logObj.level < 2 ? stderr : stdout,
       async ? 'async' : 'default'
     )
