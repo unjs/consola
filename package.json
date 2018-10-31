@@ -40,8 +40,6 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "dayjs": "^1.7.7",
-    "figures": "^2.0.0",
-    "printj": "^1.2.0",
     "std-env": "^2.0.2"
   },
   "devDependencies": {
@@ -63,6 +61,7 @@
     "esm": "^3.0.84",
     "jest": "^23.6.0",
     "lodash": "^4.17.11",
+    "sentencer": "^0.1.5",
     "serve": "^10.0.2",
     "standard-version": "^4.4.0",
     "winston": "^3.1.0"

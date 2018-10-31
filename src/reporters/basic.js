@@ -1,17 +1,14 @@
 import util from 'util'
-import { isPlainObject, parseStack } from '../utils'
+import { isPlainObject } from '../utils'
+import { parseStack } from '../utils/error'
 import { writeStream } from '../utils/stream'
-import { formatArgs, formatDate } from '../utils/format'
-
-const NS_SEPARATOR = ' - '
+import { formatDate } from '../utils/date'
+import { leftAlign } from '../utils/string'
 
 const DEFAULTS = {
   stream: process.stdout,
   errStream: process.stderr,
-  timeFormat: 'HH:mm:ss',
-  formats: {
-    default: '[%date$s][%type$-7s] %tag$s %message$s %additional$s \n'
-  }
+  dateFormat: 'HH:mm:ss'
 }
 
 export default class BasicReporter {
@@ -28,10 +25,10 @@ export default class BasicReporter {
   }
 
   formatStack (stack) {
-    return '> ' + parseStack(stack).join('\n> ')
+    return ' at ' + parseStack(stack).join('\n at ')
   }
 
-  format (arg) {
+  formatArg (arg) {
     if (isPlainObject(arg)) {
       return JSON.stringify(arg, null, 2)
     }
@@ -44,11 +41,15 @@ export default class BasicReporter {
     }
   }
 
+  formatDate (date) {
+    return formatDate(this.options.dateFormat, date)
+  }
+
   getFields (logObj) {
     let message = logObj.message || ''
     let type = logObj.type || ''
     let tag = logObj.tag || ''
-    let date = formatDate(logObj.date, this.options.timeFormat)
+    let date = logObj.date || new Date()
 
     // Format args
     const args = logObj.args.map(arg => {
@@ -60,11 +61,14 @@ export default class BasicReporter {
         if (!type.length) {
           type = 'error'
         }
-        return this.formatStack(arg.stack, { suffix: ' ↲' })
+        if (!tag.length && arg.code) {
+          tag = arg.code
+        }
+        return this.formatStack(arg.stack)
       }
 
       // General argument
-      return this.format(arg)
+      return this.formatArg(arg)
     })
 
     // If no message is provided, assume args[0] as message
@@ -72,8 +76,11 @@ export default class BasicReporter {
       message = args.shift()
     }
 
+    // Concert other args to additional
+    const additional = args.join('\n')
+
     return {
-      args,
+      additional,
       date,
       message,
       tag,
@@ -81,38 +88,29 @@ export default class BasicReporter {
     }
   }
 
-  processLogObj (logObj) {
+  formatLogObj (logObj) {
     const fields = this.getFields(logObj)
 
-    const format = this.options.formats.default
+    const date = this.formatDate(fields.date)
 
-    const tag = !fields.tag.length ? '' : (fields.tag.replace(/:/g, '>') + '>').split('>').join(NS_SEPARATOR)
+    const type = leftAlign(fields.type.toUpperCase(), 7)
 
-    const argv = [
-      // %1: date
-      fields.date,
-      // %2: type
-      fields.type.toUpperCase(),
-      // %3: tag
-      tag,
-      // %4: message
-      fields.message,
-      // %5: additional
-      !fields.args.length ? '' : '\n' + fields.args.join(' ')
+    return [
+      `[${date}]`,
+      `[${fields.tag}]`,
+      `[${type}]`,
+      `${fields.message}`,
+      `${fields.additional}`
     ]
-
-    return {
-      format,
-      argv
-    }
   }
 
   log (logObj, { async = false } = {}) {
-    const { format, argv } = this.processLogObj(logObj)
-    const data = formatArgs(format, argv)
+    const line = this.formatLogObj(logObj)
+      .filter(x => x && x.length && x !== '[]')
+      .join(' ') + '\n'
 
-    return this.write(data, {
-      isError: logObj.isError,
+    return this.write(line, {
+      error: logObj.error,
       mode: async ? 'async' : 'default'
     })
   }

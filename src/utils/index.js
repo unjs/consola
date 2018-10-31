@@ -8,63 +8,6 @@ export function isLogObj (arg) {
   return isPlainObject(arg) && (Boolean(arg.message || arg.args))
 }
 
-export function parseStack (stack) {
-  let lines = stack
-    .split('\n')
-    .map(l => l
-      .trim()
-      .replace(/^at /, '')
-    )
-
-  if (lines[0].indexOf('Error: ') === 0) {
-    lines = lines.splice(1)
-  }
-
-  return lines
-}
-
-export function centerALign (str, len, space = ' ') {
-  const free = len - str.length
-  if (free <= 0) {
-    return str
-  }
-  const freeLeft = Math.floor(free / 2)
-  let _str = ''
-  for (let i = 0; i < len; i++) {
-    _str += (i < freeLeft || i >= freeLeft + str.length) ? space : str[i - freeLeft]
-  }
-  return _str
-}
-
-export function rightALign (str, len, space = ' ') {
-  const free = len - str.length
-  if (free <= 0) {
-    return str
-  }
-  let _str = ''
-  for (let i = 0; i < len; i++) {
-    _str += i < free ? space : str[i - free]
-  }
-  return _str
-}
-
-export function leftALign (str, len, space = ' ') {
-  let _str = ''
-  for (let i = 0; i < len; i++) {
-    _str += i < str.length ? str[i] : space
-  }
-  return _str
-}
-
-export function align (alignment, str, len, space = ' ') {
-  switch (alignment) {
-    case 'left': return leftALign(str, len, space)
-    case 'right': return rightALign(str, len, space)
-    case 'center': return centerALign(str, len, space)
-    default: return str
-  }
-}
-
 export function assignGlobalReference (newInstance, referenceKey) {
   if (!newInstance.constructor || (global[referenceKey] && !global[referenceKey].constructor)) {
     throw new Error('Assigning to global reference is only supported for class instances')

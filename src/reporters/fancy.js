@@ -1,52 +1,33 @@
-import figures from 'figures'
 import BasicReporter from './basic'
-import { parseStack } from '../utils'
+import { parseStack } from '../utils/error'
 import { chalkColor } from '../utils/chalk'
-
-const NS_SEPARATOR = chalkColor('blue')(figures(' › '))
+import { leftAlign } from '../utils/string'
 
 const DEFAULTS = {
-  showType: true,
-  icons: {
-    start: figures('●'),
-    info: figures('ℹ'),
-    success: figures('✔'),
-    error: figures('✖'),
-    fatal: figures('✖'),
-    warn: figures('⚠'),
-    debug: figures('…'),
-    trace: figures('…'),
-    default: figures('❯'),
-    ready: figures('♥')
-  },
-  formats: {
-    default: '' +
-      '%textColor$s' +
-      '%icon$*-iconSpacer$s' +
-      '%textColorEnd$s' +
-      '%tag$s' +
-      '%textColor$s' +
-      '%message$s' +
-      '%textColorEnd$s' +
-      '%additionalColor$s' +
-      '%additional$s' +
-      '%additionalColorEnd$s' +
-      '\n',
-    badge: '' +
-      '\n' +
-      '%bgColor$s' +
-      ' %type$s ' +
-      '%bgColorEnd$s ' +
-      '%textColor$s' +
-      '%tag$s' +
-      '%message$s' +
-      '%textColorEnd$s' +
-      '\n' +
-      '%additionalColor$s' +
-      '%additional$s' +
-      '%additionalColorEnd$s' +
-      '\n\n'
-  }
+  secondaryColor: 'grey',
+  tagColor: 'magenta',
+  dateFormat: 'HH:mm'
+}
+
+const TYPE_NAME_MAP = {
+  error: 'ERR!',
+  fatal: 'DIE!',
+  warn: 'WARN',
+  success: 'OK',
+  debug: '...',
+  trace: '...',
+  log: ''
+}
+
+const TYPE_COLOR_MAP = {
+  'info': 'blue'
+}
+
+const LEVEL_COLOR_MAP = {
+  0: 'red',
+  1: 'yellow',
+  2: 'white',
+  3: 'green'
 }
 
 export default class FancyReporter extends BasicReporter {
@@ -55,62 +36,45 @@ export default class FancyReporter extends BasicReporter {
   }
 
   formatStack (stack) {
-    return '  ' + parseStack(stack).join('↲\n  ')
+    return ' at ' + parseStack(stack).join(' ↲\n at ')
   }
 
-  processLogObj (logObj) {
+  typeColor (type, level) {
+    return chalkColor(TYPE_COLOR_MAP[type] || LEVEL_COLOR_MAP[level] || this.options.secondaryColor)
+  }
+
+  formatType (type, typeColor) {
+    if (TYPE_NAME_MAP[type] === '') {
+      return ''
+    }
+    return typeColor(leftAlign((TYPE_NAME_MAP[type] || type).toUpperCase(), 4))
+  }
+
+  formatTag (tag) {
+    return chalkColor(this.options.tagColor)(tag)
+  }
+
+  secondaryColor (str) {
+    return chalkColor(this.options.secondaryColor)(str)
+  }
+
+  formatLogObj (logObj) {
     const fields = this.getFields(logObj)
 
-    // Format
-    const format = logObj.badge
-      ? this.options.formats.badge
-      : this.options.formats.default
+    const typeColor = this.typeColor(fields.type, logObj.level)
 
-    // Colors
-    const textColor = chalkColor(logObj.color)
-    const bgColor = chalkColor(logObj.color)
-    const additionalColor = chalkColor(logObj.additionalColor || 'grey')
+    const date = this.secondaryColor(`(${this.formatDate(fields.date)})`)
+    const type = this.formatType(fields.type, typeColor)
+    const tag = this.formatTag(fields.tag)
+    const message = (fields.message)
+    const additional = fields.additional.length ? this.secondaryColor('\n' + fields.additional) : ''
 
-    // Icon
-    const icon = logObj.icon || this.options.icons[fields.type] || this.options.icons.default
-
-    // Argv
-    const argv = [
-      // %1: date
-      fields.date,
-      // %2: type
-      fields.type.toUpperCase(),
-      // %3: tag
-      !fields.tag.length ? '' : (fields.tag.replace(/:/g, '>') + '>').split('>').join(NS_SEPARATOR),
-      // %4: message
-      fields.message,
-      // %5: additional
-      !fields.args.length ? '' : '\n' + fields.args.join(' '),
-
-      // %6: icon
-      icon,
-      // %7: iconSpacer
-      icon.length ? icon.length + 1 : 0,
-
-      // %8: textColor
-      textColor._styles[0].open,
-      // %9: textColorEnd
-      textColor._styles[0].close,
-
-      // %10: additionalColor
-      additionalColor._styles[0].open,
-      // %11: additionalColorEnd
-      additionalColor._styles[0].close,
-
-      // %12: bgColor
-      bgColor._styles[0].open,
-      // %13: bgColorEnd
-      bgColor._styles[0].close
+    return [
+      `${tag}`,
+      `${type}`,
+      `${message}`,
+      `${date}`,
+      `${additional}`
     ]
-
-    return {
-      format,
-      argv
-    }
   }
 }

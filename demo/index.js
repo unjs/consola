@@ -1,55 +1,36 @@
-#!/usr/bin/env node
+#!/usr/bin/env node -r esm
 
-const esm = require('esm')(module)
-
-const Consola = esm('../src')
+import { Consola, BasicReporter, FancyReporter } from '../src'
+import { randomSentence } from './sentence'
 
 const reporters = [
-  'FancyReporter',
-  'BasicReporter',
-  'JSONReporter',
-  'WinstonReporter'
+  BasicReporter,
+  FancyReporter
 ]
 
-for (const reporter of reporters) {
-  const consola = new Consola.Consola({
+for (const Reporter of reporters) {
+  const consola = new Consola({
     level: 5,
-    reporters: [new Consola[reporter]({
-      errStream: process.stdout
-    })]
+    reporters: [
+      new Reporter({
+        errStream: process.stdout
+      })
+    ]
   })
 
   for (let type of Object.keys(consola._types).sort()) {
-    consola[type](`A message with consola.${type}()`)
+    consola[type](randomSentence())
   }
 
-  consola.info('A JSON Log:', {
+  consola.info('JSON', {
     name: 'Cat',
     color: '#454545'
   })
 
-  if (reporter === 'FancyReporter') {
-    consola.success({
-      message: 'This is a fancy badge',
-      additional: 'With some additional info',
-      additionalColor: 'brown',
-      badge: true
-    })
-  }
+  consola.error(new Error(randomSentence()))
 
-  consola.error(new Error('Something bad happened!'))
-
-  const tagged = consola.create({ defaults: { tag: 'tagged' } })
+  const tagged = consola.withTag('router')
   for (let type of Object.keys(consola._types).sort()) {
-    tagged[type](`A tagged message with consola.${type}()`)
-  }
-
-  if (reporter === 'FancyReporter') {
-    tagged.success({
-      message: 'This is a fancy badge',
-      additional: 'With some additional info',
-      additionalColor: 'brown',
-      badge: true
-    })
+    tagged[type](randomSentence())
   }
 }

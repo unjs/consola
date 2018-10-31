@@ -43,7 +43,7 @@ export default class BrowserReporter {
 
     let type = logObj.type
     if (!console[type]) { // eslint-disable-line no-console
-      type = logObj.isError ? 'error' : 'log'
+      type = logObj.error ? 'error' : 'log'
     }
 
     const date = (new Date(logObj.date)).toLocaleTimeString()

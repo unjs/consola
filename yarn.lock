@@ -837,6 +837,13 @@ anymatch@^2.0.0:
     micromatch "^3.1.4"
     normalize-path "^2.1.1"
 
+"apparatus@>= 0.0.6":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/apparatus/-/apparatus-0.0.10.tgz#81ea756772ada77863db54ceee8202c109bdca3e"
+  integrity sha512-KLy/ugo33KZA7nugtQ7O0E1c8kQ52N3IvD/XgIh4w/Nr28ypfkwDfA67F1ev4N1m5D+BOk1+b2dEJDfpj/VvZg==
+  dependencies:
+    sylvester ">= 0.0.8"
+
 append-transform@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/append-transform/-/append-transform-0.4.0.tgz#d76ebf8ca94d276e247a36bad44a4b74ab611991"
@@ -937,6 +944,11 @@ arrify@^1.0.0, arrify@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
   integrity sha1-iYUI2iIm84DfkEcoRWhJwVAaSw0=
+
+articles@~0.2.1:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/articles/-/articles-0.2.2.tgz#cc6b429f8cfa811f41e7a08505abbb4e45503197"
+  integrity sha512-S3Y4MPp+LD/l0HHm/4yrr6MoXhUkKT98ZdsV2tkTuBNywqUXEtvJT+NBO3KTSQEttc5EOwEJe2Xw8cZ9TI5Hrw==
 
 asn1@~0.2.3:
   version "0.2.4"
@@ -4477,6 +4489,11 @@ lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.4, lodash@^4.17.5
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
   integrity sha512-cQKh8igo5QUhZ7lg38DYWAxMvjSAKG0A8wGSVimP07SIUEK2UO+arSRKbRZWtelMtN5V0Hkwh5ryOto/SshYIg==
 
+lodash@~2.4.1:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-2.4.2.tgz#fadd834b9683073da179b3eae6d9c0d15053f73e"
+  integrity sha1-+t2DS5aDBz2hebPq5tnA0VBT9z4=
+
 log-update@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/log-update/-/log-update-2.3.0.tgz#88328fd7d1ce7938b29283746f0b1bc126b24708"
@@ -4810,6 +4827,15 @@ natural-compare@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
+
+natural@~0.1.28:
+  version "0.1.29"
+  resolved "https://registry.yarnpkg.com/natural/-/natural-0.1.29.tgz#59a37a6cd86d55e904b656d3b9da43fd2dc9e04a"
+  integrity sha1-WaN6bNhtVekEtlbTudpD/S3J4Eo=
+  dependencies:
+    apparatus ">= 0.0.6"
+    sylvester ">= 0.0.12"
+    underscore ">=1.3.1"
 
 needle@^2.2.1:
   version "2.2.4"
@@ -5671,15 +5697,15 @@ pretty-ms@^3.1.0:
   dependencies:
     parse-ms "^1.0.0"
 
-printj@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/printj/-/printj-1.2.0.tgz#852fca7283cdb82f3fd08d007bde701a224cc397"
-  integrity sha512-wQ6jPc72jVXX/qpP2/oDIPQ+ZJqvZGAZPm47LnBwzWTBssK1a/c9p09e/Pd1Nx4ACm+Ru86AT99nuiyOFT2zOQ==
-
 private@^0.1.6, private@^0.1.8:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/private/-/private-0.1.8.tgz#2381edb3689f7a53d653190060fcf822d2f368ff"
   integrity sha512-VvivMrbvd2nKkiG38qjULzlc+4Vx4wm/whI9pQD35YrARNnhxeiRktSOhSukRLFNlzg6Br/cJPet5J/u19r/mg==
+
+prng-well1024a@~1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/prng-well1024a/-/prng-well1024a-1.0.1.tgz#05e8ed923e4ea2b3f78af5ee94f056b4d5cfab24"
+  integrity sha1-Bejtkj5OorP3ivXulPBWtNXPqyQ=
 
 process-nextick-args@~2.0.0:
   version "2.0.0"
@@ -5760,6 +5786,13 @@ randomatic@^3.0.0:
     is-number "^4.0.0"
     kind-of "^6.0.0"
     math-random "^1.0.1"
+
+randy@~1.5.1:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/randy/-/randy-1.5.1.tgz#e7dc086a0ecb8bef7d67356642cd2a33f962465c"
+  integrity sha1-59wIag7Li+99ZzVmQs0qM/liRlw=
+  dependencies:
+    prng-well1024a "~1.0.0"
 
 range-parser@1.2.0:
   version "1.2.0"
@@ -6320,6 +6353,16 @@ sax@^1.2.4, sax@~1.2.1:
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.6.0.tgz#7e74256fbaa49c75aa7c7a205cc22799cac80004"
   integrity sha512-RS9R6R35NYgQn++fkDWaOmqGoj4Ek9gGs+DPxNUZKuwE183xjJroKvyo1IzVFeXvUrvmALy6FWD5xrdJT25gMg==
 
+sentencer@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/sentencer/-/sentencer-0.1.5.tgz#1c3511581a00b2236127ffb21fde17f4f48659e2"
+  integrity sha1-HDURWBoAsiNhJ/+yH94X9PSGWeI=
+  dependencies:
+    articles "~0.2.1"
+    lodash "~2.4.1"
+    natural "~0.1.28"
+    randy "~1.5.1"
+
 serve-handler@5.0.3:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/serve-handler/-/serve-handler-5.0.3.tgz#19033fa7f804c4c9447aacd6d323fa595845c878"
@@ -6746,6 +6789,11 @@ svgo@^0.7.0:
     sax "~1.2.1"
     whet.extend "~0.9.9"
 
+"sylvester@>= 0.0.12", "sylvester@>= 0.0.8":
+  version "0.0.21"
+  resolved "https://registry.yarnpkg.com/sylvester/-/sylvester-0.0.21.tgz#2987b1ce2bd2f38b0dce2a34388884bfa4400ea7"
+  integrity sha1-KYexzivS84sNzio0OIiEv6RADqc=
+
 symbol-tree@^3.2.2:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.2.tgz#ae27db38f660a7ae2e1c3b7d1bc290819b8519e6"
@@ -6961,6 +7009,11 @@ uglify-js@^3.1.4:
   dependencies:
     commander "~2.17.1"
     source-map "~0.6.1"
+
+underscore@>=1.3.1:
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.9.1.tgz#06dce34a0e68a7babc29b365b8e74b8925203961"
+  integrity sha512-5/4etnCkd9c8gwgowi5/om/mYO5ajCaOgdzj/oW+0eQV9WxKBDZw5+ycmKmeaTXjInS/W0BzpGLo2xR2aBwZdg==
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"
