@@ -20,7 +20,8 @@ export function reporterDemo (reporter) {
 
   consola.error(new Error(randomSentence()))
 
-  const tagged = consola.withTag('router')
+  const tagged = consola.withTag('nuxt').withTag('router')
+
   for (let type of Object.keys(consola._types).sort()) {
     tagged[type](randomSentence())
   }

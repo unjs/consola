@@ -79,11 +79,15 @@ export default class Consola {
   }
 
   withDefaults (defaults) {
-    return this.create({ defaults })
+    return this.create({
+      defaults: Object.assign({}, this._defaults, defaults)
+    })
   }
 
   withTag (tag) {
-    return this.withDefaults({ tag })
+    return this.withDefaults({
+      tag: this._defaults.tag ? (this._defaults.tag + ':' + tag) : tag
+    })
   }
 
   _wrapLogFn (defaults) {
