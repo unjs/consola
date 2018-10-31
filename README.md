@@ -13,7 +13,7 @@
 - Pluggable reporters
 - Consistent command line interface (CLI) experience
 - Tag support
-- Redirect `console` and `stdout/stderror` to the consola and easily restore redirect.
+- Redirect `console` and `stdout/stderr` to the consola and easily restore redirect.
 - Browser support
 - Pause/Resume support
 
@@ -109,7 +109,7 @@ Globally redirect all stdout/stderr outputs to consola.
 
 Wraps both std and console.
 
-Console uses std in the underlying so calling `wrapStd` redirects console too.
+console uses std in the underlying so calling `wrapStd` redirects console too.
 Benefit of this function is that things like `console.info` will be correctly redirected to the corresponding type.
 
 #### `pause()` `resume()`
