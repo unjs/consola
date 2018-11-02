@@ -13,7 +13,8 @@ const TYPE_ICONS = {
   info: figures('ℹ'),
   success: figures('✔'),
   debug: figures('›'),
-  trace: figures('›')
+  trace: figures('›'),
+  log: ''
 }
 
 export default class FancyReporter extends BasicReporter {
