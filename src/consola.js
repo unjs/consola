@@ -44,6 +44,14 @@ export default class Consola {
     this._level = Math.min(max, Math.max(min, newLevel))
   }
 
+  get stdout () {
+    return this._stdout || console._stdout // eslint-disable-line no-console
+  }
+
+  get stderr () {
+    return this._stderr || console._stderr // eslint-disable-line no-console
+  }
+
   create (options) {
     return new Consola(Object.assign({
       reporters: this._reporters,
@@ -122,8 +130,8 @@ export default class Consola {
   }
 
   wrapStd () {
-    this._wrapStream(this._stdout, 'log')
-    this._wrapStream(this._stderr, 'error')
+    this._wrapStream(this.stdout, 'log')
+    this._wrapStream(this.stderr, 'log')
   }
 
   _wrapStream (stream, type) {
@@ -143,8 +151,8 @@ export default class Consola {
   }
 
   restoreStd () {
-    this._restoreStream(this._stdout)
-    this._restoreStream(this._stderr)
+    this._restoreStream(this.stdout)
+    this._restoreStream(this.stderr)
   }
 
   _restoreStream (stream) {
@@ -227,8 +235,8 @@ export default class Consola {
     for (const reporter of this._reporters) {
       reporter.log(logObj, {
         async: false,
-        stdout: this._stdout || console._stdout, // eslint-disable-line no-console
-        stderr: this._stderr || console._stderr // eslint-disable-line no-console
+        stdout: this.stdout,
+        stderr: this.stderr
       })
     }
   }
@@ -237,8 +245,8 @@ export default class Consola {
     return Promise.all(
       this._reporters.map(reporter => reporter.log(logObj, {
         async: true,
-        stdout: this._stdout || console._stdout, // eslint-disable-line no-console
-        stderr: this._stderr || console._stderr // eslint-disable-line no-console
+        stdout: this.stdout,
+        stderr: this.stderr
       }))
     )
   }
