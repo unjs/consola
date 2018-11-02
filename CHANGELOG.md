@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.3"></a>
+## [2.0.3](https://github.com/nuxt/consola/compare/v2.0.2...v2.0.3) (2018-11-02)
+
+
+### Bug Fixes
+
+* **pkg:** exclude src from package ([4b1fb7d](https://github.com/nuxt/consola/commit/4b1fb7d))
+* use live console._stdout bindings for default stream ([d9573c3](https://github.com/nuxt/consola/commit/d9573c3))
+
+
+
 <a name="2.0.2"></a>
 ## [2.0.2](https://github.com/nuxt/consola/compare/v2.0.1...v2.0.2) (2018-11-02)
 
