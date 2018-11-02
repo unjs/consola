@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.7"></a>
+## [2.0.7](https://github.com/nuxt/consola/compare/v2.0.6...v2.0.7) (2018-11-02)
+
+
+### Bug Fixes
+
+* always use computed values for stdout/stderr ([f91abc0](https://github.com/nuxt/consola/commit/f91abc0))
+
+
+
 <a name="2.0.6"></a>
 ## [2.0.6](https://github.com/nuxt/consola/compare/v2.0.5...v2.0.6) (2018-11-02)
 
