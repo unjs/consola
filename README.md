@@ -17,8 +17,6 @@
 - Browser support
 - Pause/Resume support
 
-!!! Note: Consola v2 is stil under development. Meanwhile, you may want to use [1.x](https://github.com/nuxt/consola/tree/1.x) branch docs. !!!
-
 ## Installation
 
 Using yarn:
