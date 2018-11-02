@@ -15,7 +15,8 @@ export default class BasicReporter {
   }
 
   formatStack (stack) {
-    return ' at ' + parseStack(stack).join('\n at ')
+    return ' at ' + parseStack(stack)
+      .join('\n at ')
   }
 
   formatArgs (args) {
