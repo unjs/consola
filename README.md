@@ -6,6 +6,8 @@
 [![Standard JS][standard-js-src]][standard-js-href]
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
+[![package phobia][package-phobia-src]][package-phobia-href]
+[![bundle phobia][bundle-phobia-src]][bundle-phobia-href]
 
 ## Why Consola?
 
@@ -190,7 +192,15 @@ MIT - Made with 💖 By Nuxt.js team!
 <!-- Refs -->
 [standard-js-src]: https://flat.badgen.net/badge/code%20style/standard/green
 [standard-js-href]: https://standardjs.com
+
 [npm-version-src]: https://flat.badgen.net/npm/v/consola/latest
 [npm-version-href]: https://npmjs.com/package/consola
+
 [npm-downloads-src]: https://flat.badgen.net/npm/dt/consola
 [npm-downloads-href]: https://npmjs.com/package/consola
+
+[package-phobia-src]: https://flat.badgen.net/packagephobia/install/consola
+[package-phobia-href]: https://packagephobia.now.sh/result?p=consola
+
+[bundle-phobia-src]: https://flat.badgen.net/bundlephobia/minzip/consola
+[bundle-phobia-href]: https://bundlephobia.com/result?p=consola
