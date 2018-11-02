@@ -26,7 +26,11 @@ export default class FancyReporter extends BasicReporter {
   }
 
   formatStack (stack) {
-    return ' at ' + parseStack(stack).join(' ↲\n at ')
+    return ' at ' + parseStack(stack)
+      .map(line => {
+        return line
+      })
+      .join(' ↲\n at ')
   }
 
   typeColor (type, level) {
@@ -47,7 +51,7 @@ export default class FancyReporter extends BasicReporter {
   }
 
   formatLogObj (logObj, { width }) {
-    const { message, additional } = this.formatArgs(logObj.args)
+    const [ message, ...additional ] = this.formatArgs(logObj.args).split('\n')
 
     const isBadge = logObj.badge || logObj.level < 2
 
@@ -66,8 +70,8 @@ export default class FancyReporter extends BasicReporter {
 
     let line = space > 0 ? (left + ' '.repeat(space) + right) : left
 
-    line += additional
-      ? secondaryColor('\n' + additional)
+    line += additional.length
+      ? '\n' + additional.join('\n')
       : ''
 
     return isBadge ? '\n' + line + '\n' : line

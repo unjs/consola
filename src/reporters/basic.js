@@ -26,18 +26,10 @@ export default class BasicReporter {
       return arg
     })
 
-    let formattedArgs
-    if (util.formatWithOptions) {
-      formattedArgs = util.formatWithOptions({ colors: true }, ..._args) // Node >= 10
+    if (typeof util.formatWithOptions === 'function') {
+      return util.formatWithOptions({ colors: true }, ..._args) // Node >= 10
     } else {
-      formattedArgs = util.format(..._args)
-    }
-
-    const [ message, ...more ] = formattedArgs.split('\n')
-
-    return {
-      message,
-      additional: more.join('\n')
+      return util.format(..._args)
     }
   }
 
@@ -50,7 +42,7 @@ export default class BasicReporter {
   }
 
   formatLogObj (logObj) {
-    const { message, additional } = this.formatArgs(logObj.args)
+    const message = this.formatArgs(logObj.args)
 
     const date = this.formatDate(logObj.date)
     const type = logObj.type.toUpperCase()
@@ -59,8 +51,7 @@ export default class BasicReporter {
       bracket(date),
       bracket(logObj.tag),
       bracket(type),
-      message,
-      additional ? ('\n' + additional) : ''
+      message
     ])
   }
 
