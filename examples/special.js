@@ -13,3 +13,5 @@ consola.log({
 // consola.log(consola)
 
 consola.log('%d', 12)
+
+consola.error({ type: 'CSSError', message: 'Use scss' })
