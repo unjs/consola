@@ -1,10 +1,11 @@
-# 🎮  Consola
+<p align="center">
+  <h1>🐨 Consola</h1>
+  <span>Elegant Console Logger for Node.js and Browser</span>
+</p>
 
 [![Standard JS][standard-js-src]][standard-js-href]
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
-
-> Elegant Console Logger
 
 ## Why Consola?
 
