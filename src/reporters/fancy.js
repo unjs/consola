@@ -2,7 +2,7 @@ import stringWidth from 'string-width'
 import figures from 'figures'
 import BasicReporter from './basic'
 import { parseStack } from '../utils/error'
-import { chalkColor } from '../utils/chalk'
+import { chalkColor, chalkBgColor } from '../utils/chalk'
 import { TYPE_COLOR_MAP, LEVEL_COLOR_MAP } from '../utils/fancy'
 
 const DEFAULTS = {
@@ -30,22 +30,33 @@ export default class FancyReporter extends BasicReporter {
   }
 
   typeColor (type, level) {
-    return chalkColor(TYPE_COLOR_MAP[type] || LEVEL_COLOR_MAP[level] || this.options.secondaryColor)
+    return chalkColor()
   }
 
-  formatType (type, typeColor) {
-    const _type = typeof TYPE_ICONS[type] === 'string' ? TYPE_ICONS[type] : type
-    return _type ? typeColor(_type) : ''
+  formatType (logObj, isBadge) {
+    const typeColor = TYPE_COLOR_MAP[logObj.type] ||
+      LEVEL_COLOR_MAP[logObj.level] ||
+      this.options.secondaryColor
+
+    if (isBadge) {
+      return chalkBgColor(typeColor).black(` ${logObj.type.toUpperCase()} `)
+    }
+
+    const _type = typeof TYPE_ICONS[logObj.type] === 'string' ? TYPE_ICONS[logObj.type] : logObj.type
+    return _type ? chalkColor(typeColor)(_type) : ''
   }
 
   formatLogObj (logObj, { width }) {
     const { message, additional } = this.formatArgs(logObj.args)
 
-    const typeColor = this.typeColor(logObj.type, logObj.level)
+    const isBadge = logObj.badge || logObj.level < 2
+
     const secondaryColor = chalkColor(this.options.secondaryColor)
 
     const date = secondaryColor(this.formatDate(logObj.date))
-    const type = this.formatType(logObj.type, typeColor)
+
+    const type = this.formatType(logObj, isBadge)
+
     const tag = logObj.tag ? secondaryColor(logObj.tag) : ''
 
     let left = this.filterAndJoin([type, message])
@@ -59,6 +70,6 @@ export default class FancyReporter extends BasicReporter {
       ? secondaryColor('\n' + additional)
       : ''
 
-    return line
+    return isBadge ? '\n' + line + '\n' : line
   }
 }
