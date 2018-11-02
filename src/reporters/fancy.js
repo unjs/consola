@@ -12,12 +12,8 @@ const DEFAULTS = {
 const TYPE_ICONS = {
   info: figures('ℹ'),
   success: figures('✔'),
-  error: figures('✖'),
-  fatal: figures('✖'),
-  warn: figures('⚠'),
-  debug: figures('→'),
-  trace: figures('→'),
-  log: figures('›')
+  debug: figures('›'),
+  trace: figures('›')
 }
 
 export default class FancyReporter extends BasicReporter {
@@ -55,7 +51,7 @@ export default class FancyReporter extends BasicReporter {
   formatLogObj (logObj, { width }) {
     const [ message, ...additional ] = this.formatArgs(logObj.args).split('\n')
 
-    const isBadge = logObj.badge || logObj.level < 2
+    const isBadge = typeof logObj.badge !== 'undefined' ? Boolean(logObj.badge) : logObj.level < 2
 
     const secondaryColor = chalkColor(this.options.secondaryColor)
 
