@@ -26,12 +26,13 @@ export default class FancyReporter extends BasicReporter {
   }
 
   formatStack (stack) {
-    const color1 = chalkColor('cyan')
-    const color2 = chalkColor('grey')
+    const color1 = chalkColor('grey')
+    const color2 = chalkColor('cyan')
+    const color3 = chalkColor('white')
 
-    return '\n' + color2(' at ') + parseStack(stack)
-      .map(line => color1(line.replace(/(\(.*\))/, (m, p1) => color2(p1))))
-      .join(color2(' ↲\n at '))
+    return '\n' + color1(' at ') + parseStack(stack)
+      .map(line => color2(line.replace(/(\(.*\))/, (m, p1) => color3(p1))))
+      .join(color1(' ↲\n at '))
   }
 
   typeColor (type, level) {
