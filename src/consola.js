@@ -246,3 +246,9 @@ export default class Consola {
     )
   }
 }
+
+// Legacy support
+Consola.prototype.add = Consola.prototype.addReporter
+Consola.prototype.remove = Consola.prototype.removeReporter
+Consola.prototype.clear = Consola.prototype.removeReporter
+Consola.prototype.withScope = Consola.prototype.withTag
