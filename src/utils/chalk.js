@@ -23,7 +23,7 @@ const _bgColorCache = {}
 export function chalkBgColor (name) {
   let color = _bgColorCache[name]
   if (color) {
-    return _bgColorCache
+    return color
   }
 
   if (name[0] === '#') {
