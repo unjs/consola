@@ -45,24 +45,6 @@ consola.info('Reporter: Some info')
 consola.error(new Error('Foo'))
 ```
 
-<div align="center">
-<br>
-<img src="./assets/fancy.png">
-<p>Fancy Reporter</p>
-<br>
-</div>
-
-<pre>
-[15:21:29] [nuxt:router] [DEBUG  ] consola log
-[15:21:29] [nuxt:router] [ERROR  ] consola log
-[15:21:29] [nuxt:router] [FATAL  ] consola log
-[15:21:29] [nuxt:router] [INFO   ] consola log
-</pre>
-<div align="center">
-  <p>Minimal Reporter (CI)</p>
-  <br>
-</div>
-
 ## Methods
 
 #### `<type>(logObject)` `<type>(args...)`
