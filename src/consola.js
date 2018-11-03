@@ -173,11 +173,11 @@ export default class Consola {
     }
   }
 
-  pause () {
+  pauseLogs () {
     paused = true
   }
 
-  resume () {
+  resumeLogs () {
     paused = false
 
     // Process queue
@@ -273,6 +273,13 @@ export default class Consola {
 
 // Legacy support
 Consola.prototype.add = Consola.prototype.addReporter
+
 Consola.prototype.remove = Consola.prototype.removeReporter
 Consola.prototype.clear = Consola.prototype.removeReporter
+
 Consola.prototype.withScope = Consola.prototype.withTag
+
+Consola.prototype.mock = Consola.prototype.mockTypes
+
+Consola.prototype.pause = Consola.prototype.pauseLogs
+Consola.prototype.resume = Consola.prototype.resumeLogs

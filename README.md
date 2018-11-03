@@ -55,17 +55,19 @@ Log to all reporters.
 
 #### `addReporter(reporter)`
 
+- Aliases: `add`
+
 Register a custom reporter instance.
 
 #### `removeReporter(reporter?)`
+
+- Aliases: `remove`, `clear`
 
 Remove a registered reporter.
 
 If no arguments are passed all reporters will be removed.
 
 #### `setReporters(reporter|reporter[])`
-
-- Type: `Object` or `Array`
 
 Replace all reporters.
 
@@ -78,6 +80,8 @@ Create a new `Consola` instance and inherit all parent options for defaults.
 Create a new `Consola` instance with provided defaults
 
 #### `withTag(tag)`
+
+- Aliases: `withScope`
 
 Create a new `Consola` instance with that tag.
 
@@ -96,13 +100,17 @@ Wraps both std and console.
 console uses std in the underlying so calling `wrapStd` redirects console too.
 Benefit of this function is that things like `console.info` will be correctly redirected to the corresponding type.
 
-#### `pause()` `resume()`
+#### `pauseLogs()` `resumeLogs()`
+
+- Aliases: `pause`/`resume`
 
 **Globally** pause and resume logs.
 
 Consola will enqueue all logs when paused and then sends them to the reported when resumed.
 
 #### `mockTypes`
+
+- Aliases: `mock`
 
 Mock all types. Useful for using with tests.
 
