@@ -32,5 +32,13 @@ export default {
   // Silent
   silent: {
     level: Infinity
-  }
+  },
+
+  // Legacy
+  ready: {
+    level: 3,
+  },
+  start: {
+    level: 3,
+  },
 }
