@@ -213,9 +213,7 @@ const logger = consola.create({
 ### With jest
 
 ```js
-consola.setReporters({
-  log: jest.fn()
-})
+consola.mockTypes(() => jest.fn())
 ```
 
 ### With jsdom
