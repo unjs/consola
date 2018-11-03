@@ -13,6 +13,7 @@ export default class Consola {
     this._async = typeof options.async !== 'undefined' ? options.async : null
     this._stdout = options.stdout
     this._stderr = options.stdout
+    this._mockFn = options.mockFn
 
     // Create logger functions for current instance
     for (const type in this._types) {
@@ -21,6 +22,11 @@ export default class Consola {
         this._types[type],
         this._defaults
       ))
+    }
+
+    // Use _mockFn if is set
+    if (this._mockFn) {
+      this.mockTypes()
     }
   }
 
@@ -59,7 +65,8 @@ export default class Consola {
       types: this._types,
       defaults: this._defaults,
       stdout: this._stdout,
-      stderr: this._stderr
+      stderr: this._stderr,
+      mockFn: this._mockFn
     }, options))
   }
 
@@ -177,6 +184,18 @@ export default class Consola {
     const _queue = queue.splice(0)
     for (const item of _queue) {
       item[0]._logFn(item[1], item[2])
+    }
+  }
+
+  mockTypes (mockFn) {
+    this._mockFn = mockFn || this._mockFn
+
+    if (typeof this._mockFn !== 'function') {
+      return
+    }
+
+    for (const type in this._types) {
+      this[type] = this._mockFn(type, this._types[type]) || this[type]
     }
   }
 

@@ -19,6 +19,7 @@
 - Redirect `console` and `stdout/stderr` to the consola and easily restore redirect.
 - Browser support
 - Pause/Resume support
+- Mocking support
 
 ## Installation
 
@@ -100,6 +101,34 @@ Benefit of this function is that things like `console.info` will be correctly re
 **Globally** pause and resume logs.
 
 Consola will enqueue all logs when paused and then sends them to the reported when resumed.
+
+#### `mockTypes`
+
+Mock all types. Useful for using with tests.
+
+The first argument passed to `mockTypes` should be a callback function accepting `(typeName, type)` and returning the mocked value:
+
+```js
+consola.mockTypes((typeName, type) => jest.fn())
+```
+
+Please note that with the example above, everything is mocked independently for each type. If you need one mocked fn create it outside:
+
+```js
+const fn = jest.fn()
+consola.mockTypes(() => fn)
+```
+
+If callback function returns a _falsy_ value, that type won't be mocked.
+
+For example if you just need to mock `consola.fatal`:
+
+```js
+consola.mockTypes((typeName) => typeName === 'fatal' && jest.fn())
+```
+
+**NOTE:** Any instance of consola that inherits the mocked instance, will apply provided callback again.
+This way, mocking works for `withTag` scopped logers without need to extra efforts.
 
 ## Fields
 
