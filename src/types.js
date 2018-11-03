@@ -36,9 +36,9 @@ export default {
 
   // Legacy
   ready: {
-    level: 3,
+    level: 3
   },
   start: {
-    level: 3,
-  },
+    level: 3
+  }
 }
