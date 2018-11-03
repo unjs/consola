@@ -163,6 +163,10 @@ Standard fields:
 - `date`
 - `tag`
 
+Extra fields:
+
+- `badge`
+
 ## Reporters
 
 Choose between one of the built-in reporters or bring own reporter.
