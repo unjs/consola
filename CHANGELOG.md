@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.1.0"></a>
+# [2.1.0](https://github.com/nuxt/consola/compare/v2.0.9...v2.1.0) (2018-11-03)
+
+
+### Features
+
+* add aliases ([cbea7bd](https://github.com/nuxt/consola/commit/cbea7bd))
+* mockTypes for easy mocking ([a332890](https://github.com/nuxt/consola/commit/a332890))
+
+
+
 <a name="2.0.9"></a>
 ## [2.0.9](https://github.com/nuxt/consola/compare/v2.0.8...v2.0.9) (2018-11-03)
 
