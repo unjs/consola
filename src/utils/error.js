@@ -8,7 +8,6 @@ export function parseStack (stack) {
     .splice(1)
     .map(l => l
       .trim()
-      .replace(/^at /, '')
       .replace(cwd, '')
     )
 
