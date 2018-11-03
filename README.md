@@ -53,6 +53,10 @@ consola.error(new Error('Foo'))
 
 Log to all reporters.
 
+Example: `consola.info('Message')`
+
+A list of available types can be found [here](./src/types.js).
+
 #### `addReporter(reporter)`
 
 - Aliases: `add`
@@ -95,7 +99,7 @@ Globally redirect all stdout/stderr outputs to consola.
 
 #### `wrapAll()` `restoreAll()`
 
-Wraps both std and console.
+Wrap both, std and console.
 
 console uses std in the underlying so calling `wrapStd` redirects console too.
 Benefit of this function is that things like `console.info` will be correctly redirected to the corresponding type.
@@ -136,7 +140,7 @@ consola.mockTypes((typeName) => typeName === 'fatal' && jest.fn())
 ```
 
 **NOTE:** Any instance of consola that inherits the mocked instance, will apply provided callback again.
-This way, mocking works for `withTag` scopped logers without need to extra efforts.
+This way, mocking works for `withTag` scoped loggers without need to extra efforts.
 
 ## Fields
 
@@ -151,9 +155,9 @@ List of available levels [here](./src/types.js).
 
 You can set log level using `CONSOLA_LEVEL` environment variable.
 
-## logObject
+## `logObject`
 
-logObject is a free-to-extend object which will be passed to reporters.
+The `logObject` is a free-to-extend object which will be passed to reporters.
 
 Standard fields:
 
@@ -169,7 +173,7 @@ Extra fields:
 
 ## Reporters
 
-Choose between one of the built-in reporters or bring own reporter.
+Choose between one of the built-in reporters or bring in your own one.
 
 By default `FancyReporter` is registered for modern terminals or `BasicReporter` will be used if running in limited environments such as CIs.
 
@@ -182,12 +186,15 @@ Available reporters:
 
 ### Creating your own reporter
 
-A reporter (Class or Object) exposes `log(logObj)` method.
-To write a reporter, check implementations to get an idea.
+A reporter (class or object) exposes `log(logObj)` method.
+To get more info about how to write your own reporter, take a look into the linked implementations above.
 
 ## Types
 
-Types are _logging levels_. A list of all available default types is [here](./src/types.js).
+Types are used to actually log messages to the reporters.
+Each type is attached to a _logging level_.
+
+A list of all available default types is [here](./src/types.js).
 
 ## Creating a new instance
 
@@ -213,7 +220,30 @@ const logger = consola.create({
 ### With jest
 
 ```js
-consola.mockTypes(() => jest.fn())
+describe('your-consola-mock-test', () => {
+  beforeAll(() => {
+      // Redirect std and console to consola too
+      // Calling this once is sufficient
+      consola.wrapAll()
+    })
+
+    beforeEach(() => {
+      // Re-mock consola before each test call to remove
+      // calls from before
+      consola.mockTypes(() => jest.fn())
+    })
+
+
+  test('your test', async () => {
+    // Some code here
+
+    // Let's retrieve all messages of `consola.log`
+    // Get the mock and map all calls to their first argument
+    const consolaMessages = consola.log.mock.calls.map(c => c[0])
+    expect(consolaMessages).toContain('your message')
+  })
+
+})
 ```
 
 ### With jsdom
