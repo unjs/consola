@@ -4,7 +4,11 @@ import { writeStream } from '../utils/stream'
 import { formatDate } from '../utils/date'
 
 const DEFAULTS = {
-  dateFormat: 'HH:mm:ss'
+  dateFormat: 'HH:mm:ss',
+  formatOptions: {
+    colors: false,
+    compact: true
+  }
 }
 
 const bracket = x => x ? `[${x}]` : ''
@@ -26,8 +30,10 @@ export default class BasicReporter {
       return arg
     })
 
+    // Only supportet with Node >= 10
+    // https://nodejs.org/api/util.html#util_util_inspect_object_options
     if (typeof util.formatWithOptions === 'function') {
-      return util.formatWithOptions({ colors: true }, ..._args) // Node >= 10
+      return util.formatWithOptions(this.options.formatOptions, ..._args)
     } else {
       return util.format(..._args)
     }

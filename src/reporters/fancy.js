@@ -6,7 +6,11 @@ import { chalkColor, chalkBgColor } from '../utils/chalk'
 import { TYPE_COLOR_MAP, LEVEL_COLOR_MAP } from '../utils/fancy'
 
 const DEFAULTS = {
-  secondaryColor: 'grey'
+  secondaryColor: 'grey',
+  formatOptions: {
+    colors: true,
+    compact: false
+  }
 }
 
 const TYPE_ICONS = {
