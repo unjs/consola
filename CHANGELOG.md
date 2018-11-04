@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.2.0"></a>
+# [2.2.0](https://github.com/nuxt/consola/compare/v2.1.1...v2.2.0) (2018-11-04)
+
+
+### Bug Fixes
+
+* correctly handle falsy values ([367fb19](https://github.com/nuxt/consola/commit/367fb19))
+
+
+### Features
+
+* support formatOptions. resolves [#29](https://github.com/nuxt/consola/issues/29). ([7ed640f](https://github.com/nuxt/consola/commit/7ed640f))
+
+
+
 <a name="2.1.1"></a>
 ## [2.1.1](https://github.com/nuxt/consola/compare/v2.1.0...v2.1.1) (2018-11-03)
 
