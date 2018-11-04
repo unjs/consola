@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.2.2"></a>
+## [2.2.2](https://github.com/nuxt/consola/compare/v2.2.1...v2.2.2) (2018-11-04)
+
+
+### Bug Fixes
+
+* update std-env to 2.1.1 ([32a9c67](https://github.com/nuxt/consola/commit/32a9c67))
+
+
+
 <a name="2.2.1"></a>
 ## [2.2.1](https://github.com/nuxt/consola/compare/v2.2.0...v2.2.1) (2018-11-04)
 
