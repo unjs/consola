@@ -30,7 +30,7 @@ export default class BasicReporter {
       return arg
     })
 
-    // Only supportet with Node >= 10
+    // Only supported with Node >= 10
     // https://nodejs.org/api/util.html#util_util_inspect_object_options
     if (typeof util.formatWithOptions === 'function') {
       return util.formatWithOptions(this.options.formatOptions, ..._args)
