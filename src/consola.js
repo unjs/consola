@@ -81,3 +81,11 @@ export default class Consola {
     return this.withDefaults({ scope })
   }
 }
+
+// Upward compatibility support to >= v2
+Consola.prototype.addReporter = Consola.prototype.add
+
+Consola.prototype.removeReporter = Consola.prototype.remove
+Consola.prototype.removeReporter = Consola.prototype.clear
+
+Consola.prototype.withTag = Consola.prototype.withScope
