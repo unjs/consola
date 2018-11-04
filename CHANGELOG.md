@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.4.5"></a>
+## [1.4.5](https://github.com/nuxt/consola/compare/v1.4.4...v1.4.5) (2018-11-04)
+
+
+### Bug Fixes
+
+* **v1:** upward compatibility support to >= v2 ([060ad3b](https://github.com/nuxt/consola/commit/060ad3b))
+
+
+
 <a name="1.4.4"></a>
 ## [1.4.4](https://github.com/nuxt/consola/compare/v1.4.3...v1.4.4) (2018-10-13)
 
