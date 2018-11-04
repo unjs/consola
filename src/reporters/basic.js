@@ -20,7 +20,7 @@ export default class BasicReporter {
 
   formatArgs (args) {
     const _args = args.map(arg => {
-      if (arg.stack) {
+      if (arg && typeof arg.stack === 'string') {
         return arg.message + '\n' + this.formatStack(arg.stack)
       }
       return arg
