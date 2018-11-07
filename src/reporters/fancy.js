@@ -52,7 +52,7 @@ export default class FancyReporter extends BasicReporter {
       return chalkBgColor(typeColor).black(` ${logObj.type.toUpperCase()} `)
     }
 
-    const _type = typeof TYPE_ICONS[logObj.type] === 'string' ? TYPE_ICONS[logObj.type] : logObj.type
+    const _type = typeof TYPE_ICONS[logObj.type] === 'string' ? TYPE_ICONS[logObj.type] : (logObj.icon || logObj.type)
     return _type ? chalkColor(typeColor)(_type) : ''
   }
 
