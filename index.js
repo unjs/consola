@@ -14,7 +14,7 @@ if (global.consola) {
   module.exports = global.consola = new Consola({
     level,
     reporters: [
-      env.minimalCLI
+      (env.ci || env.test)
         ? new BasicReporter()
         : new FancyReporter()
     ]
