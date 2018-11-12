@@ -6,6 +6,7 @@
   "repository": "nuxt/consola",
   "main": "index.js",
   "browser": "dist/consola.js",
+  "typings": "types/consola.d.ts",
   "scripts": {
     "build": "yarn build:cjs && yarn build:browser",
     "build:cjs": "bili -t node --format cjs src/index.js",
@@ -19,7 +20,8 @@
   },
   "files": [
     "dist",
-    "index.js"
+    "index.js",
+    "types"
   ],
   "keywords": [
     "console",
