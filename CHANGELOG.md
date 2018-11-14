@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.2.6"></a>
+## [2.2.6](https://github.com/nuxt/consola/compare/v2.2.5...v2.2.6) (2018-11-14)
+
+
+### Bug Fixes
+
+* **json-reporter:** add a default value to the constructor ([#33](https://github.com/nuxt/consola/issues/33)) ([c59db36](https://github.com/nuxt/consola/commit/c59db36))
+
+
+
 <a name="2.2.5"></a>
 ## [2.2.5](https://github.com/nuxt/consola/compare/v2.2.4...v2.2.5) (2018-11-14)
 
