@@ -38,10 +38,6 @@ export default class FancyReporter extends BasicReporter {
       .join('\n')
   }
 
-  typeColor (type, level) {
-    return chalkColor()
-  }
-
   formatType (logObj, isBadge) {
     const typeColor = TYPE_COLOR_MAP[logObj.type] ||
       LEVEL_COLOR_MAP[logObj.level] ||
