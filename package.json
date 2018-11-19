@@ -46,18 +46,18 @@
     "string-width": "^2.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.1.2",
-    "@babel/preset-env": "^7.1.0",
+    "@babel/core": "^7.1.6",
+    "@babel/preset-env": "^7.1.6",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
     "benchmark": "^2.1.4",
-    "bili": "^3.1.2",
+    "bili": "^3.4.1",
     "eslint": "^5.7.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jest": "^21.25.1",
-    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-jest": "^22.0.0",
+    "eslint-plugin-node": "^8.0.0",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^4.7.1",
@@ -65,7 +65,7 @@
     "jest": "^23.6.0",
     "lodash": "^4.17.11",
     "sentencer": "^0.1.5",
-    "serve": "^10.0.2",
+    "serve": "^10.1.1",
     "standard-version": "^4.4.0",
     "winston": "^3.1.0"
   }
