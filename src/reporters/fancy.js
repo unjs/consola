@@ -27,15 +27,14 @@ export default class FancyReporter extends BasicReporter {
   }
 
   formatStack (stack) {
-    const color1 = chalkColor('grey')
-    const color2 = chalkColor('cyan')
-    const color3 = chalkColor('reset')
+    const grey = chalkColor('grey')
+    const cyan = chalkColor('cyan')
 
     return '\n' + parseStack(stack)
-      .map(line => color2('  ' + line
-        .replace(/^at /, m => color1(m))
-        .replace(/\(.*\)/, (m) => color3(m))
-      ))
+      .map(line => '  ' + line
+        .replace(/^at +/, m => grey(m))
+        .replace(/\((.+)\)/, (_, m) => `(${cyan(m)})`)
+      )
       .join('\n')
   }
 
