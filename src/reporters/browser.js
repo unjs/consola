@@ -6,31 +6,29 @@ export default class BrowserReporter {
   }
 
   log (logObj) {
-    // consoleLogFn
-    let consoleLogFn = console[logObj.type] // eslint-disable-line no-console
-    if (!consoleLogFn) {
-      consoleLogFn = console[logObj.level < 2 ? 'error' : 'log'] // eslint-disable-line no-console
-    }
+    const consoleLogFn = logObj.level < 1
+      // eslint-disable-next-line no-console
+      ? (console.__error || console.error) : (console.__log || console.log)
 
     // Type
-    const type = (logObj.type).toUpperCase()
+    const type = logObj.type !== 'log' ? `[${logObj.type.toUpperCase()}]` : ''
+
+    // Tag
+    const tag = logObj.tag ? `[${logObj.tag.toUpperCase()}]` : ''
+
+    // Date
+    const date = `[${new Date(logObj.date).toLocaleTimeString()}]`
 
     // Styles
     const color = TYPE_COLOR_MAP[logObj.type] || LEVEL_COLOR_MAP[logObj.level]
-
     const styleColor = `color: ${color}; background-color: inherit;`
-    const styleInherit = `color: inherit; background-color: inherit;`
-    const styleAdditional = `color: ${logObj.additionalColor || 'grey'}; background-color: inherit;`
-
-    // Date
-    const date = (new Date(logObj.date)).toLocaleTimeString()
+    const styleGrey = `color: ${logObj.additionalColor || 'grey'}; background-color: inherit;`
 
     // Log to the console
     consoleLogFn(
-      `%c[${type}]%c[${date}]%c`,
+      '%c' + date + tag + '%c' + type,
+      styleGrey,
       styleColor,
-      styleAdditional,
-      styleInherit,
       ...logObj.args
     )
   }
