@@ -6692,10 +6692,10 @@ static-extend@^0.1.1:
     define-property "^0.2.5"
     object-copy "^0.1.0"
 
-std-env@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/std-env/-/std-env-2.1.1.tgz#b7429cee321390faf39a07f10f0747eec736a78b"
-  integrity sha512-EPOQ97Zg5xlQj322LohFaGoUXFSr9VY30mjL5hKXWMcRUf5o6bOF1S1dkbFH1vOXTD3PcUePr3v4oj1RTeXgHw==
+std-env@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/std-env/-/std-env-2.2.1.tgz#2ffa0fdc9e2263e0004c1211966e960948a40f6b"
+  integrity sha512-IjYQUinA3lg5re/YMlwlfhqNRTzMZMqE+pezevdcTaHceqx8ngEi1alX9nNCk9Sc81fy1fLDeQoaCzeiW1yBOQ==
   dependencies:
     ci-info "^1.6.0"
 
