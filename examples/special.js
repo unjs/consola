@@ -17,3 +17,7 @@ consola.log('%d', 12)
 consola.error({ type: 'CSSError', message: 'Use scss' })
 
 consola.error(undefined, null, false, true, NaN)
+
+// Nonstandard error
+const { message, stack } = new Error('Custom Error!')
+consola.error({ message, stack })
