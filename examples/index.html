@@ -9,6 +9,8 @@
       import consola from '../src/browser.js'
       consola.level = 5
 
+      consola.wrapAll()
+
       for (let type of Object.keys(consola._types).sort()) {
           consola[type]('Open developer tools to see the magic!')
       }
