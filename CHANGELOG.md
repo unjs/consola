@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.3.0"></a>
+# [2.3.0](https://github.com/nuxt/consola/compare/v2.2.6...v2.3.0) (2018-11-19)
+
+
+### Bug Fixes
+
+* **isLogObj:** handle non-standard error objects ([8748c81](https://github.com/nuxt/consola/commit/8748c81))
+
+
+### Features
+
+* browser reporter improvements ([591d0b4](https://github.com/nuxt/consola/commit/591d0b4)), closes [#31](https://github.com/nuxt/consola/issues/31)
+* **fancy:** look like jest traces ([ecae238](https://github.com/nuxt/consola/commit/ecae238))
+
+
+
 <a name="2.2.6"></a>
 ## [2.2.6](https://github.com/nuxt/consola/compare/v2.2.5...v2.2.6) (2018-11-14)
 
