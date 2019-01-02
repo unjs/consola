@@ -1,12 +1,14 @@
 // This reporter is compatible with Winston 3
 // https://github.com/winstonjs/winston
 
+const _require = require // bypass webpack
+
 export default class WinstonReporter {
   constructor (logger) {
     if (logger && logger.log) {
       this.logger = logger
     } else {
-      const winston = require('winston')
+      const winston = _require('winston')
 
       this.logger = winston.createLogger(Object.assign({
         level: 'info',
