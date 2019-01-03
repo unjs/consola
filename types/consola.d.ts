@@ -13,6 +13,14 @@ declare class Consola {
     static removeReporter (): (typeof Consola);
     static withTag (tag: string): (typeof Consola);
     static withScope (tag: string): (typeof Consola);
+    static wrapAll (): void;
+    static restoreAll (): void;
+    static wrapConsole (): void;
+    static restoreConsole (): void;
+    static wrapStd (): void;
+    static restoreStd (): void;
+    static pauseLogs (): void;
+    static resumeLogs (): void;
 }
 
 declare module "consola" {
