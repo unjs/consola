@@ -11,6 +11,8 @@ declare class Consola {
     static trace (message: string): void;
     static addReporter (reporter: (message: string) => void): (typeof Consola);
     static removeReporter (): (typeof Consola);
+    static withTag (tag: string): (typeof Consola);
+    static withScope (tag: string): (typeof Consola);
 }
 
 declare module "consola" {
