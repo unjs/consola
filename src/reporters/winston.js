@@ -2,7 +2,7 @@
 // https://github.com/winstonjs/winston
 
 // eslint-disable-next-line
-const _require = __non_webpack_require__ || require // bypass webpack
+const _require = typeof __non_webpack_require__ !== 'undefined' ? __non_webpack_require__ : require // bypass webpack
 
 export default class WinstonReporter {
   constructor (logger) {
