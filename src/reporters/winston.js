@@ -1,7 +1,8 @@
 // This reporter is compatible with Winston 3
 // https://github.com/winstonjs/winston
 
-const _require = require // bypass webpack
+// eslint-disable-next-line
+const _require = __non_webpack_require__ || require // bypass webpack
 
 export default class WinstonReporter {
   constructor (logger) {
