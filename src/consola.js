@@ -70,6 +70,18 @@ class Consola {
     }, options))
   }
 
+  withDefaults (defaults) {
+    return this.create({
+      defaults: Object.assign({}, this._defaults, defaults)
+    })
+  }
+
+  withTag (tag) {
+    return this.withDefaults({
+      tag: this._defaults.tag ? (this._defaults.tag + ':' + tag) : tag
+    })
+  }
+
   addReporter (reporter) {
     this._reporters.push(reporter)
     return this
@@ -92,18 +104,6 @@ class Consola {
       ? reporters
       : [reporters]
     return this
-  }
-
-  withDefaults (defaults) {
-    return this.create({
-      defaults: Object.assign({}, this._defaults, defaults)
-    })
-  }
-
-  withTag (tag) {
-    return this.withDefaults({
-      tag: this._defaults.tag ? (this._defaults.tag + ':' + tag) : tag
-    })
   }
 
   wrapAll () {
