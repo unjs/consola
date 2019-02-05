@@ -4,13 +4,14 @@
   "description": "Elegant Console Logger for Node.js and Browser",
   "license": "MIT",
   "repository": "nuxt/consola",
-  "main": "index.js",
-  "browser": "dist/consola.js",
+  "main": "consola.js",
+  "browser": "dist/consola.browser.js",
   "typings": "types/consola.d.ts",
   "scripts": {
-    "build": "yarn build:cjs && yarn build:browser",
-    "build:cjs": "bili --format cjs src/index.js",
-    "build:browser": "bili --format umd --module-name consola src/browser.js",
+    "build": "yarn build:cjs && yarn build:es && yarn build:browser",
+    "build:cjs": "bili --file-name consola.js --format cjs src/index.js",
+    "build:es": "bili --file-name consola.mjs --format es src/index.js",
+    "build:browser": "bili --file-name consola.browser.js --format umd --module-name consola src/browser.js",
     "demo": "node demo",
     "browser": "serve",
     "lint": "eslint .",
@@ -20,7 +21,7 @@
   },
   "files": [
     "dist",
-    "index.js",
+    "consola.js",
     "types"
   ],
   "keywords": [

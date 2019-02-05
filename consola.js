@@ -2,7 +2,7 @@ if (global.consola) {
   module.exports = global.consola
 } else {
   const env = require('std-env')
-  const { Consola, BasicReporter, FancyReporter } = require('./dist/consola.cjs.js')
+  const { Consola, BasicReporter, FancyReporter } = require('./dist/consola.js')
 
   // Log level
   let level = env.debug ? 4 : 3
