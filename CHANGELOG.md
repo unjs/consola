@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.4.0"></a>
+# [2.4.0](https://github.com/nuxt/consola/compare/v2.3.2...v2.4.0) (2019-02-05)
+
+
+### Bug Fixes
+
+* fix esm compatibility ([8ddecc3](https://github.com/nuxt/consola/commit/8ddecc3))
+* return this in setReporters ([544a887](https://github.com/nuxt/consola/commit/544a887))
+* **ts:** set message type to "any" ([#39](https://github.com/nuxt/consola/issues/39)) ([ff97b09](https://github.com/nuxt/consola/commit/ff97b09)), closes [#38](https://github.com/nuxt/consola/issues/38)
+
+
+### Features
+
+* **types:** update types ([d0d7455](https://github.com/nuxt/consola/commit/d0d7455))
+
+
+
 <a name="2.3.2"></a>
 ## [2.3.2](https://github.com/nuxt/consola/compare/v2.3.1...v2.3.2) (2019-01-06)
 
