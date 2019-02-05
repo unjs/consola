@@ -8,10 +8,9 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Bug Fixes
 
-* fix esm compatibility ([8ddecc3](https://github.com/nuxt/consola/commit/8ddecc3))
-* return this in setReporters ([544a887](https://github.com/nuxt/consola/commit/544a887))
-* **ts:** set message type to "any" ([#39](https://github.com/nuxt/consola/issues/39)) ([ff97b09](https://github.com/nuxt/consola/commit/ff97b09)), closes [#38](https://github.com/nuxt/consola/issues/38)
-
+* **esm:** fix esm compatibility ([8ddecc3](https://github.com/nuxt/consola/commit/8ddecc3))
+* **consola:** return `this` in setReporters ([544a887](https://github.com/nuxt/consola/commit/544a887))
+* **types:** set message type to "any" ([#39](https://github.com/nuxt/consola/issues/39)) ([ff97b09](https://github.com/nuxt/consola/commit/ff97b09)), closes [#38](https://github.com/nuxt/consola/issues/38)
 
 ### Features
 
