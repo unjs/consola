@@ -9,8 +9,8 @@
   "typings": "types/consola.d.ts",
   "scripts": {
     "build": "yarn build:cjs && yarn build:browser",
-    "build:cjs": "bili -t node --format cjs src/index.js",
-    "build:browser": "bili --format umd src/browser.js",
+    "build:cjs": "bili --format cjs src/index.js",
+    "build:browser": "bili --format umd --module-name consola src/browser.js",
     "demo": "node demo",
     "browser": "serve",
     "lint": "eslint .",
@@ -39,20 +39,20 @@
     "@pimlie <pimlie@hotmail.com>"
   ],
   "dependencies": {
-    "chalk": "^2.4.1",
-    "dayjs": "^1.7.7",
+    "chalk": "^2.4.2",
+    "dayjs": "^1.8.3",
     "figures": "^2.0.0",
     "std-env": "^2.2.1",
-    "string-width": "^2.1.1"
+    "string-width": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.1.6",
     "@babel/preset-env": "^7.1.6",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
-    "babel-jest": "^23.6.0",
+    "babel-jest": "^24.0.0",
     "benchmark": "^2.1.4",
-    "bili": "^3.4.1",
+    "bili": "^4.2.5",
     "eslint": "^5.7.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
@@ -60,9 +60,8 @@
     "eslint-plugin-node": "^8.0.0",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
-    "eslint-plugin-vue": "^4.7.1",
     "esm": "^3.0.84",
-    "jest": "^23.6.0",
+    "jest": "^24.0.0",
     "lodash": "^4.17.11",
     "sentencer": "^0.1.5",
     "serve": "^10.1.1",
