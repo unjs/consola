@@ -91,6 +91,7 @@ class Consola {
     this._reporters = Array.isArray(reporters)
       ? reporters
       : [reporters]
+    return this
   }
 
   withDefaults (defaults) {
