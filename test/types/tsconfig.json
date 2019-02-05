@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "moduleResolution": "node",
+    "noEmit": true,
+    // "strict": true,
+    "paths": {
+      "consola": [
+        "../.."
+      ]
+    }
+  }
+}

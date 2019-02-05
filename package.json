@@ -14,8 +14,9 @@
     "build:browser": "bili --file-name consola.browser.js --format umd --module-name consola src/browser.js",
     "demo": "node demo",
     "browser": "serve",
+    "test": "yarn lint && yarn test:types && yarn build && jest test",
     "lint": "eslint .",
-    "test": "yarn lint && yarn build && jest test",
+    "test:types": "tsc -p test/types",
     "prepublish": "yarn build",
     "release": "standard-version && yarn build && git push --follow-tags && npm publish"
   },
@@ -67,6 +68,8 @@
     "sentencer": "^0.1.5",
     "serve": "^10.1.1",
     "standard-version": "^4.4.0",
+    "ts-node": "^8.0.2",
+    "typescript": "^3.3.1",
     "winston": "^3.1.0"
   }
 }
