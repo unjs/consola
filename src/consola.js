@@ -4,7 +4,7 @@ import { isLogObj } from './utils/index.js'
 let paused = false
 const queue = []
 
-export default class Consola {
+class Consola {
   constructor (options = {}) {
     this._reporters = options.reporters || []
     this._types = options.types || Types
@@ -283,3 +283,6 @@ Consola.prototype.mock = Consola.prototype.mockTypes
 
 Consola.prototype.pause = Consola.prototype.pauseLogs
 Consola.prototype.resume = Consola.prototype.resumeLogs
+
+// Export class
+export default Consola
