@@ -1,5 +1,5 @@
 declare interface ConsolaReporter {
-    log: (logObj, { async, stdout, stderr }) => void
+    log: (logObj: any, { async, stdout, stderr }: any) => void
 }
 
 declare class Consola {
@@ -46,8 +46,8 @@ declare class Consola {
     static resume(): void;
 
     // Mock
-    static mockTypes(mockFn: any);
-    static mock(mockFn: any);
+    static mockTypes(mockFn: any): any;
+    static mock(mockFn: any): any;
 }
 
 declare module "consola" {
