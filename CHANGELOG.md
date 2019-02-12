@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.4.1"></a>
+## [2.4.1](https://github.com/nuxt/consola/compare/v2.4.0...v2.4.1) (2019-02-12)
+
+
+### Bug Fixes
+
+* **ts:** set type "any" ([#40](https://github.com/nuxt/consola/issues/40)) ([ea9d551](https://github.com/nuxt/consola/commit/ea9d551))
+
+
+
 <a name="2.4.0"></a>
 # [2.4.0](https://github.com/nuxt/consola/compare/v2.3.2...v2.4.0) (2019-02-05)
 
