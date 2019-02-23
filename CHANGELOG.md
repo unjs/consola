@@ -2,19 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-# [2.5.0](https://github.com/nuxt/consola/compare/v2.4.1...v2.5.0) (2019-02-23)
+## [2.5.1](https://github.com/nuxt/consola/compare/v2.5.0...v2.5.1) (2019-02-23)
 
 
-### Features
+### Bug Fixes
 
-* upgrade dependencies ([1b6ea4b](https://github.com/nuxt/consola/commit/1b6ea4b))
-* **fancy:** highlight keywords with grave accent char ([b3e09fd](https://github.com/nuxt/consola/commit/b3e09fd))
-* **fancy:** move right to the left if length is <= 80 ([34738c7](https://github.com/nuxt/consola/commit/34738c7))
-
-
-### Performance Improvements
-
-* **pkg:** reduce install size ([f4a1861](https://github.com/nuxt/consola/commit/f4a1861))
+* **pkg:** remove sourcemaps for less package size ([67565fc](https://github.com/nuxt/consola/commit/67565fc))
 
 
 
