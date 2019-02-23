@@ -1,5 +1,6 @@
 import stringWidth from 'string-width'
 import figures from 'figures'
+import chalk from 'chalk'
 import BasicReporter from './basic'
 import { parseStack } from '../utils/error'
 import { chalkColor, chalkBgColor } from '../utils/chalk'
@@ -76,6 +77,8 @@ export default class FancyReporter extends BasicReporter {
     }
 
     line += additional.length ? '\n' + additional.join('\n') : ''
+
+    line = line.replace(/`(.+)`/g, (_, m) => chalk.cyan(m))
 
     return isBadge ? '\n' + line + '\n' : line
   }

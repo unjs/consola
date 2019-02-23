@@ -18,6 +18,8 @@ consola.error({ type: 'CSSError', message: 'Use scss' })
 
 consola.error(undefined, null, false, true, NaN)
 
+consola.log('We can `monospace` keyword using grave accent charachter!')
+
 // Nonstandard error
 const { message, stack } = new Error('Custom Error!')
 consola.error({ message, stack })
