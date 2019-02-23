@@ -2,12 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [2.5.2](https://github.com/nuxt/consola/compare/v2.5.1...v2.5.2) (2019-02-23)
+## [2.5.3](https://github.com/nuxt/consola/compare/v2.5.2...v2.5.3) (2019-02-23)
 
 
 ### Bug Fixes
 
-* bundle std-env and entrypoint ([7b0f838](https://github.com/nuxt/consola/commit/7b0f838))
+* fix main field in package.json ([31030c2](https://github.com/nuxt/consola/commit/31030c2))
 
 
 
