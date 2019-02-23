@@ -64,16 +64,18 @@ export default class FancyReporter extends BasicReporter {
 
     const tag = logObj.tag ? secondaryColor(logObj.tag) : ''
 
+    let line
     let left = this.filterAndJoin([type, message])
     let right = this.filterAndJoin([tag, date])
 
-    const space = width - stringWidth(left) - stringWidth(right) - 2
+    if (width > 80) {
+      const space = width - stringWidth(left) - stringWidth(right) - 2
+      line = space > 0 ? (left + ' '.repeat(space) + right) : left
+    } else {
+      line = right + ' ' + left
+    }
 
-    let line = space > 0 ? (left + ' '.repeat(space) + right) : left
-
-    line += additional.length
-      ? '\n' + additional.join('\n')
-      : ''
+    line += additional.length ? '\n' + additional.join('\n') : ''
 
     return isBadge ? '\n' + line + '\n' : line
   }
