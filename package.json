@@ -8,10 +8,9 @@
   "browser": "dist/consola.browser.js",
   "typings": "types/consola.d.ts",
   "scripts": {
-    "build": "yarn build:cjs && yarn build:es && yarn build:browser",
-    "build:cjs": "bili --file-name consola.js --format cjs src/index.js",
-    "build:es": "bili --file-name consola.mjs --format es src/index.js",
-    "build:browser": "bili --file-name consola.browser.js --format umd --module-name consola src/browser.js",
+    "build": "yarn build:cjs && yarn build:browser",
+    "build:cjs": "bili --file-name consola.js --format cjs --bundle-node-modules --minify src/index.js",
+    "build:browser": "bili --file-name consola.browser.js --format umd --module-name consola --bundle-node-modules --minify src/browser.js",
     "demo": "node demo",
     "browser": "serve",
     "test": "yarn lint && yarn test:types && yarn build && jest test",
@@ -40,13 +39,6 @@
     "Clark Du (@clarkdo)",
     "@pimlie <pimlie@hotmail.com>"
   ],
-  "dependencies": {
-    "chalk": "^2.4.2",
-    "dayjs": "^1.8.6",
-    "figures": "^2.0.0",
-    "std-env": "^2.2.1",
-    "string-width": "^3.0.0"
-  },
   "devDependencies": {
     "@babel/core": "^7.1.6",
     "@babel/preset-env": "^7.1.6",
@@ -55,6 +47,8 @@
     "babel-jest": "^24.0.0",
     "benchmark": "^2.1.4",
     "bili": "^4.2.5",
+    "chalk": "^2.4.2",
+    "dayjs": "^1.8.6",
     "eslint": "^5.7.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.14.0",
@@ -63,11 +57,14 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
     "esm": "^3.0.84",
+    "figures": "^2.0.0",
     "jest": "^24.0.0",
     "lodash": "^4.17.11",
     "sentencer": "^0.1.5",
     "serve": "^10.1.1",
     "standard-version": "^5.0.0",
+    "std-env": "^2.2.1",
+    "string-width": "^3.0.0",
     "ts-node": "^8.0.2",
     "typescript": "^3.3.1",
     "winston": "^3.1.0"
