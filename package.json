@@ -8,8 +8,8 @@
   "browser": "dist/consola.browser.js",
   "typings": "types/consola.d.ts",
   "scripts": {
-    "build": "rm -rf dist && yarn build:cjs && yarn build:browser && rm dist/*.map",
-    "build:cjs": "bili --file-name consola.js --format cjs --bundle-node-modules --minify src/index.js",
+    "build": "rm -rf dist && yarn build:node && yarn build:browser && rm dist/*.map",
+    "build:node": "bili --file-name consola.js --format cjs --bundle-node-modules --minify src/node.js",
     "build:browser": "bili --file-name consola.browser.js --format umd --module-name consola --bundle-node-modules --minify src/browser.js",
     "demo": "node demo",
     "browser": "serve",
@@ -21,7 +21,6 @@
   },
   "files": [
     "dist",
-    "consola.js",
     "types"
   ],
   "keywords": [

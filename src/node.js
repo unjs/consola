@@ -1,9 +1,7 @@
-if (global.consola) {
-  module.exports = global.consola
-} else {
-  const env = require('std-env')
-  const { Consola, BasicReporter, FancyReporter } = require('./dist/consola.js')
+import env from 'std-env'
+import { Consola, BasicReporter, FancyReporter } from '.'
 
+function createConsola () {
   // Log level
   let level = env.debug ? 4 : 3
   if (process.env['CONSOLA_LEVEL']) {
@@ -11,7 +9,7 @@ if (global.consola) {
   }
 
   // Create new consola instance
-  module.exports = global.consola = new Consola({
+  return new Consola({
     level,
     reporters: [
       (env.ci || env.test)
@@ -20,3 +18,9 @@ if (global.consola) {
     ]
   })
 }
+
+if (!global.consola) {
+  global.consola = createConsola()
+}
+
+export default global.consola
