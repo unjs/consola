@@ -9,8 +9,8 @@
   "typings": "types/consola.d.ts",
   "scripts": {
     "build": "rm -rf dist && yarn build:node && yarn build:browser",
-    "build:node": "bili --file-name consola.js --format cjs --bundle-node-modules --minify src/node.js --no-map",
-    "build:browser": "bili --file-name consola.browser.js --format umd --module-name consola --bundle-node-modules --minify src/browser.js --no-map",
+    "build:node": "bili src/node.js --file-name consola.js --format cjs --bundle-node-modules --minify --no-map",
+    "build:browser": "bili src/browser.js --file-name consola.browser.js --format umd --module-name consola --bundle-node-modules --minify --no-map",
     "demo": "node demo",
     "browser": "serve",
     "test": "yarn lint && yarn test:types && yarn build && jest test",
