@@ -9,4 +9,4 @@ function createConsola () {
   })
 }
 
-export default window.consola || createConsola()
+export default (typeof window !== 'undefined' && window.consola) || createConsola()
