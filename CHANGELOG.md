@@ -2,12 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [2.5.5](https://github.com/nuxt/consola/compare/v2.5.4...v2.5.5) (2019-02-25)
+## [2.5.6](https://github.com/nuxt/consola/compare/v2.5.5...v2.5.6) (2019-02-25)
 
 
 ### Bug Fixes
 
-* **ts:** export consola ts declarations ([#42](https://github.com/nuxt/consola/issues/42)) ([a884773](https://github.com/nuxt/consola/commit/a884773))
+* **ts:** revert export consola ts declarations ([#43](https://github.com/nuxt/consola/issues/43)) ([6bd4f85](https://github.com/nuxt/consola/commit/6bd4f85))
 
 
 
