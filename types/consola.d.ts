@@ -1,8 +1,8 @@
-export declare interface ConsolaReporter {
+declare interface ConsolaReporter {
     log: (logObj: any, { async, stdout, stderr }: any) => void
 }
 
-export declare class Consola {
+declare class Consola {
     // Built-in log levels
     static fatal (message: any): void;
     static error (message: any): void;
