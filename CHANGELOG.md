@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.7](https://github.com/nuxt/consola/compare/v2.5.6...v2.5.7) (2019-03-19)
+
+
+### Bug Fixes
+
+* **formatting:** fix formatting when multiple back-quotes ([#44](https://github.com/nuxt/consola/issues/44)) ([669a12e](https://github.com/nuxt/consola/commit/669a12e))
+
+
+
 ## [2.5.6](https://github.com/nuxt/consola/compare/v2.5.5...v2.5.6) (2019-02-25)
 
 
