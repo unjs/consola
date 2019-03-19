@@ -59,11 +59,11 @@
     "figures": "^2.0.0",
     "jest": "^24.0.0",
     "lodash": "^4.17.11",
-    "sentencer": "^0.1.5",
+    "sentencer": "^0.2.0",
     "serve": "^10.1.1",
     "standard-version": "^5.0.0",
     "std-env": "^2.2.1",
-    "string-width": "^3.0.0",
+    "string-width": "^4.0.0",
     "ts-node": "^8.0.2",
     "typescript": "^3.3.1",
     "winston": "^3.1.0"
