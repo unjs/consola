@@ -78,7 +78,7 @@ export default class FancyReporter extends BasicReporter {
 
     line += additional.length ? '\n' + additional.join('\n') : ''
 
-    line = line.replace(/`(.+)`/g, (_, m) => chalk.cyan(m))
+    line = line.replace(/`([^`]+)`/g, (_, m) => chalk.cyan(m))
 
     return isBadge ? '\n' + line + '\n' : line
   }
