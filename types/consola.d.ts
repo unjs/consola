@@ -4,16 +4,16 @@ declare interface ConsolaReporter {
 
 declare class Consola {
   // Built-in log levels
-  static fatal(message: any, ...optionalParams: any[]): void
-  static error(message: any, ...optionalParams: any[]): void
-  static warn(message: any, ...optionalParams: any[]): void
-  static log(message: any, ...optionalParams: any[]): void
-  static info(message: any, ...optionalParams: any[]): void
-  static start(message: any, ...optionalParams: any[]): void
-  static success(message: any, ...optionalParams: any[]): void
-  static ready(message: any, ...optionalParams: any[]): void
-  static debug(message: any, ...optionalParams: any[]): void
-  static trace(message: any, ...optionalParams: any[]): void
+  static fatal(message: any, ...args: any[]): void
+  static error(message: any, ...args: any[]): void
+  static warn(message: any, ...args: any[]): void
+  static log(message: any, ...args: any[]): void
+  static info(message: any, ...args: any[]): void
+  static start(message: any, ...args: any[]): void
+  static success(message: any, ...args: any[]): void
+  static ready(message: any, ...args: any[]): void
+  static debug(message: any, ...args: any[]): void
+  static trace(message: any, ...args: any[]): void
 
   // Create
   static create(options: any): typeof Consola
