@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.5.8](https://github.com/nuxt/consola/compare/v2.5.7...v2.5.8) (2019-03-29)
+
+
+### Bug Fixes
+
+* **types:** allow passing extra arguments ([#46](https://github.com/nuxt/consola/issues/46)) ([d29fc46](https://github.com/nuxt/consola/commit/d29fc46))
+
+
+
 ## [2.5.7](https://github.com/nuxt/consola/compare/v2.5.6...v2.5.7) (2019-03-19)
 
 
