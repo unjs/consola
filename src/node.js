@@ -1,5 +1,5 @@
 import env from 'std-env'
-import { Consola, BasicReporter, FancyReporter } from '.'
+import { Consola, BasicReporter, FancyReporter, JSONReporter, WinstonReporter } from '.'
 
 function createConsola () {
   // Log level
@@ -9,7 +9,7 @@ function createConsola () {
   }
 
   // Create new consola instance
-  return new Consola({
+  const consola = new Consola({
     level,
     reporters: [
       (env.ci || env.test)
@@ -17,6 +17,15 @@ function createConsola () {
         : new FancyReporter()
     ]
   })
+
+  // Expose constructors
+  consola.Consola = Consola
+  consola.BasicReporter = BasicReporter
+  consola.FancyReporter = FancyReporter
+  consola.JSONReporter = JSONReporter
+  consola.WinstonReporter = WinstonReporter
+
+  return consola
 }
 
 if (!global.consola) {
