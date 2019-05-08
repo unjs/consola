@@ -8,7 +8,9 @@ export default class BrowserReporter {
   log (logObj) {
     const consoleLogFn = logObj.level < 1
       // eslint-disable-next-line no-console
-      ? (console.__error || console.error) : (console.__log || console.log)
+      ? (console.__error || console.error)
+      // eslint-disable-next-line no-console
+      : logObj.level === 1 && console.warn ? (console.__warn || console.warn) : (console.__log || console.log)
 
     // Type
     const type = logObj.type !== 'log' ? `[${logObj.type.toUpperCase()}]` : ''
