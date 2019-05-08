@@ -1,6 +1,15 @@
-# Change Log
+# Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [2.6.1](https://github.com/nuxt/consola/compare/v2.6.0...v2.6.1) (2019-05-08)
+
+
+### Bug Fixes
+
+* **browser:** use `console.warn` when possible ([#49](https://github.com/nuxt/consola/issues/49)) ([e386ede](https://github.com/nuxt/consola/commit/e386ede))
+
+
 
 # [2.6.0](https://github.com/nuxt/consola/compare/v2.5.8...v2.6.0) (2019-04-12)
 
