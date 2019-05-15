@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.6.2](https://github.com/nuxt/consola/compare/v2.6.1...v2.6.2) (2019-05-15)
+
+
+### Bug Fixes
+
+* transpile browser dist to ES5 ([1f81eea](https://github.com/nuxt/consola/commit/1f81eea)), closes [nuxt/nuxt.js#5743](https://github.com/nuxt/consola/issues/5743)
+
+
+
 ### [2.6.1](https://github.com/nuxt/consola/compare/v2.6.0...v2.6.1) (2019-05-08)
 
 
