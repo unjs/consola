@@ -8,6 +8,17 @@
           }
         }]
       ]
-    }
+    },
+    "browser": {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "useBuiltIns": "entry",
+            "corejs": { "version": 2 }
+          }
+        ]
+      ]
+    },
   }
 }
