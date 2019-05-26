@@ -59,7 +59,7 @@ export default class BasicReporter {
 
   log (logObj, { async, stdout, stderr } = {}) {
     const line = this.formatLogObj(logObj, {
-      width: stdout.columns ? (stdout.columns - 1) : 0
+      width: stdout.columns || 0
     })
 
     return writeStream(

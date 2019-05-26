@@ -70,7 +70,7 @@ export default class FancyReporter extends BasicReporter {
     const right = this.filterAndJoin([tag, date])
     const space = width - stringWidth(left) - stringWidth(right) - 2
 
-    if (space > 0) {
+    if (space > 0 && width >= 80) {
       line = left + ' '.repeat(space) + right
     } else {
       line = left
