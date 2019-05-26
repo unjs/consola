@@ -5,8 +5,8 @@
   </head>
   <body>
     Open developer tools to see the magic!
-    <script src="../dist/consola.browser.js"></script>
-    <script>
+    <script type="module">
+      import consola from '../src/browser.js'
       consola.level = 5
 
       consola.wrapAll()

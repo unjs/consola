@@ -1,8 +1,16 @@
-import { TYPE_COLOR_MAP, LEVEL_COLOR_MAP } from '../utils/fancy.js'
-
 export default class BrowserReporter {
   constructor (options) {
     this.options = Object.assign({}, options)
+
+    this.defaultColor = '#7f8c8d' // Gray
+    this.levelColorMap = {
+      0: '#c0392b', // Red
+      1: '#f39c12', // Yellow
+      3: '#00BCD4' // Cyan
+    }
+    this.typeColorMap = {
+      success: '#2ecc71' // Green
+    }
   }
 
   log (logObj) {
@@ -13,24 +21,26 @@ export default class BrowserReporter {
       : logObj.level === 1 && console.warn ? (console.__warn || console.warn) : (console.__log || console.log)
 
     // Type
-    const type = logObj.type !== 'log' ? `[${logObj.type.toUpperCase()}]` : ''
+    const type = logObj.type !== 'log' ? logObj.type.toLowerCase() : ''
 
     // Tag
-    const tag = logObj.tag ? `[${logObj.tag.toUpperCase()}]` : ''
-
-    // Date
-    const date = `[${new Date(logObj.date).toLocaleTimeString()}]`
+    const tag = logObj.tag ? logObj.tag.toLowerCase() : ''
 
     // Styles
-    const color = TYPE_COLOR_MAP[logObj.type] || LEVEL_COLOR_MAP[logObj.level]
-    const styleColor = `color: ${color}; background-color: inherit;`
-    const styleGrey = `color: ${logObj.additionalColor || 'grey'}; background-color: inherit;`
+
+    const color = this.typeColorMap[logObj.type] || this.levelColorMap[logObj.level] || this.defaultColor
+    const style = `
+      background: ${color};
+      border-radius: 0.5em;
+      color: white;
+      font-weight: bold;
+      padding: 2px 0.5em;
+    `
 
     // Log to the console
     consoleLogFn(
-      '%c' + date + tag + '%c' + type,
-      styleGrey,
-      styleColor,
+      '%c' + tag + (tag ? ':' : '') + type,
+      style,
       ...logObj.args
     )
   }
