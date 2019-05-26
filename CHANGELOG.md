@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.7.0](https://github.com/nuxt/consola/compare/v2.6.2...v2.7.0) (2019-05-26)
+
+
+### Bug Fixes
+
+* correctly calculate line width when using grave accent ([bad52bd](https://github.com/nuxt/consola/commit/bad52bd))
+
+
+### Features
+
+* always hide right side on width < 80 ([07d8246](https://github.com/nuxt/consola/commit/07d8246))
+* improve basic logs ([ea6ce59](https://github.com/nuxt/consola/commit/ea6ce59))
+* **browser:** fancier logs ([b64f337](https://github.com/nuxt/consola/commit/b64f337))
+* hide time from basic logger as it is commonly used in CI environments ([68c3bae](https://github.com/nuxt/consola/commit/68c3bae))
+* smart hide time and tag when there is no space ([00a375f](https://github.com/nuxt/consola/commit/00a375f))
+
+
+
 ### [2.6.2](https://github.com/nuxt/consola/compare/v2.6.1...v2.6.2) (2019-05-15)
 
 
