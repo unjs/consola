@@ -243,6 +243,14 @@ class Consola {
       delete logObj.additional
     }
 
+    // Normalize type and tag to lowercase
+    if (logObj.type) {
+      logObj.type = logObj.type.toLowerCase()
+    }
+    if (logObj.tag) {
+      logObj.tag = logObj.tag.toLowerCase()
+    }
+
     // Log
     if (this._async) {
       return this._logAsync(logObj)

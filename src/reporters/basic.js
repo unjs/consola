@@ -50,10 +50,8 @@ export default class BasicReporter {
   formatLogObj (logObj) {
     const message = this.formatArgs(logObj.args)
 
-    const type = logObj.type.toLowerCase()
-
     return this.filterAndJoin([
-      bracket(type),
+      bracket(logObj.type),
       bracket(logObj.tag),
       message
     ])

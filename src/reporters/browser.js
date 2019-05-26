@@ -21,10 +21,10 @@ export default class BrowserReporter {
       : logObj.level === 1 && console.warn ? (console.__warn || console.warn) : (console.__log || console.log)
 
     // Type
-    const type = logObj.type !== 'log' ? logObj.type.toLowerCase() : ''
+    const type = logObj.type !== 'log' ? logObj.type : ''
 
     // Tag
-    const tag = logObj.tag ? logObj.tag.toLowerCase() : ''
+    const tag = logObj.tag ? logObj.tag : ''
 
     // Styles
 
