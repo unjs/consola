@@ -65,8 +65,10 @@ export default class FancyReporter extends BasicReporter {
 
     const tag = logObj.tag ? secondaryColor(logObj.tag) : ''
 
+    const formattedMessage = message.replace(/`([^`]+)`/g, (_, m) => chalk.cyan(m))
+
     let line
-    const left = this.filterAndJoin([type, message])
+    const left = this.filterAndJoin([type, formattedMessage])
     const right = this.filterAndJoin([tag, date])
     const space = width - stringWidth(left) - stringWidth(right) - 2
 
@@ -77,8 +79,6 @@ export default class FancyReporter extends BasicReporter {
     }
 
     line += additional.length ? '\n' + additional.join('\n') : ''
-
-    line = line.replace(/`([^`]+)`/g, (_, m) => chalk.cyan(m))
 
     return isBadge ? '\n' + line + '\n' : line
   }
