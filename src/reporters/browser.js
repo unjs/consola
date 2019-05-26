@@ -39,7 +39,7 @@ export default class BrowserReporter {
 
     // Log to the console
     consoleLogFn(
-      '%c' + tag + (tag ? ':' : '') + type,
+      '%c' + [tag, type].filter(Boolean).join(':'),
       style,
       ...logObj.args
     )
