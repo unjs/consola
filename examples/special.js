@@ -23,3 +23,8 @@ consola.log('We can `monospace` keyword using grave accent charachter!')
 // Nonstandard error
 const { message, stack } = new Error('Custom Error!')
 consola.error({ message, stack })
+
+// Circular object
+const a = { foo: 1 }
+a.bar = a
+consola.log(a)
