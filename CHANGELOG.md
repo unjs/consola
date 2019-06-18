@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.9.0](https://github.com/nuxt/consola/compare/v2.8.0...v2.9.0) (2019-06-18)
+
+
+### Features
+
+* count spam log ([197a6b3](https://github.com/nuxt/consola/commit/197a6b3))
+
+
+
 ## [2.8.0](https://github.com/nuxt/consola/compare/v2.7.1...v2.8.0) (2019-06-18)
 
 
