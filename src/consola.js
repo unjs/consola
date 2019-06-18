@@ -14,6 +14,7 @@ class Consola {
     this._stdout = options.stdout
     this._stderr = options.stdout
     this._mockFn = options.mockFn
+    this._throttle = options.throttle || 2000
 
     // Create logger functions for current instance
     for (const type in this._types) {
@@ -28,6 +29,10 @@ class Consola {
     if (this._mockFn) {
       this.mockTypes()
     }
+
+    // Keep serialized version of last message
+    this._lastMessage = null
+    this._lastMessageTime = null
   }
 
   get level () {
@@ -249,6 +254,22 @@ class Consola {
     }
     if (logObj.tag) {
       logObj.tag = logObj.tag.toLowerCase()
+    }
+
+    // Throttle
+    const diffTime = this._lastMessageTime ? logObj.date - this._lastMessageTime : 0
+    this._lastMessageTime = logObj.date
+    if (diffTime < this._throttle) {
+      try {
+        const serializedMessage = JSON.stringify([logObj.type, logObj.tag, logObj.args])
+        const isSameMessage = this._lastMessage === serializedMessage
+        this._lastMessage = serializedMessage
+        if (isSameMessage) {
+          return // SPAM!
+        }
+      } catch (_) {
+        // Circular References
+      }
     }
 
     // Log
