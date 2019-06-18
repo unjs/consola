@@ -30,9 +30,11 @@ class Consola {
       this.mockTypes()
     }
 
-    // Keep serialized version of last message
-    this._lastMessage = null
-    this._lastMessageTime = null
+    // Keep serialized version of last log
+    this._lastLogSerialized = null
+    this._lastLog = null
+    this._lastLogTime = null
+    this._lastLogCount = 0
   }
 
   get level () {
@@ -257,20 +259,32 @@ class Consola {
     }
 
     // Throttle
-    const diffTime = this._lastMessageTime ? logObj.date - this._lastMessageTime : 0
-    this._lastMessageTime = logObj.date
+    const diffTime = this._lastLogTime ? logObj.date - this._lastLogTime : 0
+    this._lastLogTime = logObj.date
     if (diffTime < this._throttle) {
       try {
-        const serializedMessage = JSON.stringify([logObj.type, logObj.tag, logObj.args])
-        const isSameMessage = this._lastMessage === serializedMessage
-        this._lastMessage = serializedMessage
-        if (isSameMessage) {
+        const serializedLog = JSON.stringify([logObj.type, logObj.tag, logObj.args])
+        const isSameLog = this._lastLogSerialized === serializedLog
+        this._lastLogSerialized = serializedLog
+        if (isSameLog) {
+          this._lastLogCount++
           return // SPAM!
         }
       } catch (_) {
         // Circular References
       }
     }
+    if (this._lastLogCount) {
+      this._log({
+        ...this._lastLog,
+        args: [
+          ...this._lastLog.args,
+          `(repeated ${this._lastLogCount} times)`
+        ]
+      })
+      this._lastLogCount = 0
+    }
+    this._lastLog = logObj
 
     // Log
     if (this._async) {
