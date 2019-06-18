@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.8.0](https://github.com/nuxt/consola/compare/v2.7.1...v2.8.0) (2019-06-18)
+
+
+### Features
+
+* spam preventation ([7da806b](https://github.com/nuxt/consola/commit/7da806b))
+
+
+
 ### [2.7.1](https://github.com/nuxt/consola/compare/v2.7.0...v2.7.1) (2019-05-26)
 
 
