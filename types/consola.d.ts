@@ -1,55 +1,92 @@
-declare interface ConsolaReporter {
-  log: (logObj: any, { async, stdout, stderr }: any) => void
+export interface ConsolaLogObject {
+  level?: number,
+  tag?: string,
+  type?: string,
+  message?: string,
+  additional?: string | string[],
+  args?: any[],
 }
 
-declare class Consola {
+type ConsolaMock = (...args: any) => void
+
+type ConsolaMockFn = (type: string, defaults: ConsolaLogObject) => ConsolaMock
+
+export interface ConsolaReporterArgs {
+  async: boolean,
+  stdout: any,
+  stderr: any,
+}
+
+export interface ConsolaReporter {
+  log: (logObj: ConsolaLogObject, args: ConsolaReporterArgs) => void
+}
+
+export interface ConsolaOptions {
+  reporters?: ConsolaReporter[],
+  types?: { [type: string]: ConsolaLogObject },
+  level?: number,
+  defaults?: ConsolaLogObject,
+  async?: boolean,
+  stdout?: any,
+  stderr?: any,
+  mockFn?: ConsolaMockFn,
+  throttle?: number,
+}
+
+export declare class Consola {
+  constructor(options: ConsolaOptions)
+
   // Built-in log levels
-  static fatal(message: any, ...args: any[]): void
-  static error(message: any, ...args: any[]): void
-  static warn(message: any, ...args: any[]): void
-  static log(message: any, ...args: any[]): void
-  static info(message: any, ...args: any[]): void
-  static start(message: any, ...args: any[]): void
-  static success(message: any, ...args: any[]): void
-  static ready(message: any, ...args: any[]): void
-  static debug(message: any, ...args: any[]): void
-  static trace(message: any, ...args: any[]): void
+  fatal(message: ConsolaLogObject | any, ...args: any[]): void
+  error(message: ConsolaLogObject | any, ...args: any[]): void
+  warn(message: ConsolaLogObject | any, ...args: any[]): void
+  log(message: ConsolaLogObject | any, ...args: any[]): void
+  info(message: ConsolaLogObject | any, ...args: any[]): void
+  start(message: ConsolaLogObject | any, ...args: any[]): void
+  success(message: ConsolaLogObject | any, ...args: any[]): void
+  ready(message: ConsolaLogObject | any, ...args: any[]): void
+  debug(message: ConsolaLogObject | any, ...args: any[]): void
+  trace(message: ConsolaLogObject | any, ...args: any[]): void
 
   // Create
-  static create(options: any): typeof Consola
-  static withDefaults(defaults: any): typeof Consola
+  create(options: ConsolaOptions): Consola
+  withDefaults(defaults: ConsolaLogObject): Consola
 
-  static withTag(tag: string): typeof Consola
-  static withScope(tag: string): typeof Consola
+  withTag(tag: string): Consola
+  withScope(tag: string): Consola
 
   // Reporter
-  static addReporter(reporter: ConsolaReporter): typeof Consola
-  static setReporters(reporters: Array<ConsolaReporter>): typeof Consola
+  addReporter(reporter: ConsolaReporter): Consola
+  setReporters(reporters: Array<ConsolaReporter>): Consola
 
-  static removeReporter(reporter: any): typeof Consola
-  static remove(reporter: any): typeof Consola
-  static clear(reporter: any): typeof Consola
+  removeReporter(reporter: ConsolaReporter): Consola
+  remove(reporter: ConsolaReporter): Consola
+  clear(reporter: ConsolaReporter): Consola
 
   // Wrappers
-  static wrapAll(): void
-  static restoreAll(): void
-  static wrapConsole(): void
-  static restoreConsole(): void
-  static wrapStd(): void
-  static restoreStd(): void
+  wrapAll(): void
+  restoreAll(): void
+  wrapConsole(): void
+  restoreConsole(): void
+  wrapStd(): void
+  restoreStd(): void
 
   // Pause/Resume
-  static pauseLogs(): void
-  static pause(): void
+  pauseLogs(): void
+  pause(): void
 
-  static resumeLogs(): void
-  static resume(): void
+  resumeLogs(): void
+  resume(): void
 
   // Mock
-  static mockTypes(mockFn: any): any
-  static mock(mockFn: any): any
+  mockTypes(mockFn: ConsolaMockFn): any
+  mock(mockFn: ConsolaMockFn): any
 }
 
-declare module 'consola' {
-  export default Consola
+export declare class BrowserReporter implements ConsolaReporter {
+  log: (logObj: ConsolaLogObject, args: ConsolaReporterArgs) => void
 }
+
+declare const consolaGlobalInstance: Consola;
+
+export default consolaGlobalInstance
