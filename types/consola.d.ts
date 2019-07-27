@@ -36,6 +36,10 @@ export interface ConsolaOptions {
 export declare class Consola {
   constructor(options: ConsolaOptions)
 
+  level: number
+  readonly stdout: any
+  readonly stderr: any
+
   // Built-in log levels
   fatal(message: ConsolaLogObject | any, ...args: any[]): void
   error(message: ConsolaLogObject | any, ...args: any[]): void
