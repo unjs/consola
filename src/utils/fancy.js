@@ -1,5 +1,5 @@
 export const TYPE_COLOR_MAP = {
-  'info': 'cyan'
+  info: 'cyan'
 }
 
 export const LEVEL_COLOR_MAP = {

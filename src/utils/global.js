@@ -12,21 +12,21 @@ export function assignGlobalReference (newInstance, referenceKey) {
 
   const oldInstance = Object.create(global[referenceKey])
 
-  for (let prop in global[referenceKey]) {
+  for (const prop in global[referenceKey]) {
     oldInstance[prop] = global[referenceKey][prop]
     delete global[referenceKey][prop]
   }
 
-  for (let prop of Object.getOwnPropertySymbols(global[referenceKey])) {
+  for (const prop of Object.getOwnPropertySymbols(global[referenceKey])) {
     oldInstance[prop] = global[referenceKey][prop]
     delete global[referenceKey][prop]
   }
 
-  for (let prop in newInstance) {
+  for (const prop in newInstance) {
     global[referenceKey][prop] = newInstance[prop]
   }
 
-  for (let prop of Object.getOwnPropertySymbols(newInstance)) {
+  for (const prop of Object.getOwnPropertySymbols(newInstance)) {
     global[referenceKey][prop] = newInstance[prop]
   }
 

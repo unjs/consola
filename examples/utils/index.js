@@ -9,7 +9,7 @@ export function reporterDemo (reporter) {
     ]
   })
 
-  for (let type of Object.keys(consola._types).sort()) {
+  for (const type of Object.keys(consola._types).sort()) {
     consola[type](randomSentence())
   }
 
@@ -22,7 +22,7 @@ export function reporterDemo (reporter) {
 
   const tagged = consola.withTag('nuxt').withTag('router')
 
-  for (let type of Object.keys(consola._types).sort()) {
+  for (const type of Object.keys(consola._types).sort()) {
     tagged[type](randomSentence())
   }
 }

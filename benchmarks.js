@@ -31,11 +31,11 @@ const consolaAsync = new Consola({
 
 let suite
 const benchmarks = {
-  'log': [ 'test' ],
-  'log with string arg': [ 'test', 'test' ],
-  'log with array arg': [ 'test', [ 1, 2, 3 ] ],
-  'log with object arg': [ 'test', { a: 1, b: 2, c: 3 } ],
-  'log with error': [ 'test', new Error('test') ]
+  log: ['test'],
+  'log with string arg': ['test', 'test'],
+  'log with array arg': ['test', [1, 2, 3]],
+  'log with object arg': ['test', { a: 1, b: 2, c: 3 }],
+  'log with error': ['test', new Error('test')]
 }
 
 function run () {

@@ -53,7 +53,7 @@ export default class FancyReporter extends BasicReporter {
   }
 
   formatLogObj (logObj, { width }) {
-    const [ message, ...additional ] = this.formatArgs(logObj.args).split('\n')
+    const [message, ...additional] = this.formatArgs(logObj.args).split('\n')
 
     const isBadge = typeof logObj.badge !== 'undefined' ? Boolean(logObj.badge) : logObj.level < 2
 
