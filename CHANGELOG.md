@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.10.0](https://github.com/nuxt/consola/compare/v2.9.0...v2.10.0) (2019-08-05)
+
+
+### Bug Fixes
+
+* add missing typescript declaration for level, stdout and stderr ([#58](https://github.com/nuxt/consola/issues/58)) ([a149dbb](https://github.com/nuxt/consola/commit/a149dbb))
+
+
+### Features
+
+* improve typescript type definitions ([#57](https://github.com/nuxt/consola/issues/57)) ([80eefd8](https://github.com/nuxt/consola/commit/80eefd8))
+
 ## [2.9.0](https://github.com/nuxt/consola/compare/v2.8.0...v2.9.0) (2019-06-18)
 
 
