@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.10.1](https://github.com/nuxt/consola/compare/v2.10.0...v2.10.1) (2019-08-05)
+
 ## [2.10.0](https://github.com/nuxt/consola/compare/v2.9.0...v2.10.0) (2019-08-05)
 
 
