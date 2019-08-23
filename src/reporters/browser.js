@@ -27,7 +27,6 @@ export default class BrowserReporter {
     const tag = logObj.tag ? logObj.tag : ''
 
     // Styles
-
     const color = this.typeColorMap[logObj.type] || this.levelColorMap[logObj.level] || this.defaultColor
     const style = `
       background: ${color};
@@ -38,10 +37,15 @@ export default class BrowserReporter {
     `
 
     // Log to the console
-    consoleLogFn(
-      '%c' + [tag, type].filter(Boolean).join(':'),
-      style,
-      ...logObj.args
-    )
+    if (typeof logObj.args[0] === 'string') {
+      consoleLogFn(
+        `%c${[tag, type].filter(Boolean).join(':')}%c ${logObj.args[0]}`,
+        style,
+        '',
+        ...logObj.args.slice(1)
+      )
+    } else {
+      consoleLogFn(`%c${[tag, type].filter(Boolean).join(':')}`, style, ...logObj.args)
+    }
   }
 }
