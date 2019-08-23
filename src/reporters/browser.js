@@ -36,16 +36,18 @@ export default class BrowserReporter {
       padding: 2px 0.5em;
     `
 
+    const badge = `%c${[tag, type].filter(Boolean).join(':')}`
+
     // Log to the console
     if (typeof logObj.args[0] === 'string') {
       consoleLogFn(
-        `%c${[tag, type].filter(Boolean).join(':')}%c ${logObj.args[0]}`,
+        `${badge}%c ${logObj.args[0]}`,
         style,
         '',
         ...logObj.args.slice(1)
       )
     } else {
-      consoleLogFn(`%c${[tag, type].filter(Boolean).join(':')}`, style, ...logObj.args)
+      consoleLogFn(badge, style, ...logObj.args)
     }
   }
 }
