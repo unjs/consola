@@ -43,6 +43,7 @@ export default class BrowserReporter {
       consoleLogFn(
         `${badge}%c ${logObj.args[0]}`,
         style,
+        // Empty string as style resets to default console style
         '',
         ...logObj.args.slice(1)
       )
