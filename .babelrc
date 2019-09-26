@@ -14,11 +14,14 @@
         [
           "@babel/preset-env",
           {
-            "useBuiltIns": "entry",
+            "targets": {
+              "ie": "9"
+            },
+            "useBuiltIns": "usage",
             "corejs": { "version": 2 }
           }
         ]
       ]
-    },
+    }
   }
 }

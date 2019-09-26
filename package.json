@@ -10,7 +10,7 @@
   "scripts": {
     "build": "rm -rf dist && yarn build:node && yarn build:browser",
     "build:node": "NODE_ENV=node bili src/node.js --file-name consola.js --format cjs --bundle-node-modules --minify --no-map",
-    "build:browser": "NODE_ENV=browser bili src/browser.js --file-name consola.browser.js --format umd --module-name consola --bundle-node-modules --minify --no-map",
+    "build:browser": "NODE_ENV=browser bili src/browser.js --file-name consola.browser.js --format umd --module-name consola --minify --no-map",
     "demo": "node demo",
     "browser": "serve",
     "test": "yarn lint && yarn test:types && yarn build && jest test",
@@ -48,6 +48,7 @@
     "benchmark": "^2.1.4",
     "bili": "^4.8.1",
     "chalk": "^2.4.2",
+    "core-js": "^2",
     "dayjs": "^1.8.15",
     "eslint": "^6.1.0",
     "eslint-config-standard": "^14.1.0",
