@@ -48,7 +48,7 @@
     "benchmark": "^2.1.4",
     "bili": "^4.8.1",
     "chalk": "^2.4.2",
-    "core-js": "^2",
+    "core-js": "^3",
     "dayjs": "^1.8.15",
     "eslint": "^6.1.0",
     "eslint-config-standard": "^14.1.0",
