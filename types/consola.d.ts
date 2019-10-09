@@ -63,9 +63,9 @@ export declare class Consola {
   addReporter(reporter: ConsolaReporter): Consola
   setReporters(reporters: Array<ConsolaReporter>): Consola
 
-  removeReporter(reporter: ConsolaReporter): Consola
-  remove(reporter: ConsolaReporter): Consola
-  clear(reporter: ConsolaReporter): Consola
+  removeReporter(reporter?: ConsolaReporter): Consola
+  remove(reporter?: ConsolaReporter): Consola
+  clear(reporter?: ConsolaReporter): Consola
 
   // Wrappers
   wrapAll(): void
