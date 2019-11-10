@@ -251,12 +251,8 @@ class Consola {
     }
 
     // Normalize type and tag to lowercase
-    if (logObj.type) {
-      logObj.type = logObj.type.toLowerCase()
-    }
-    if (logObj.tag) {
-      logObj.tag = logObj.tag.toLowerCase()
-    }
+    logObj.type = typeof logObj.type === 'string' ? logObj.type.toLowerCase() : ''
+    logObj.tag = typeof logObj.tag === 'string' ? logObj.tag.toLowerCase() : ''
 
     // Throttle
     const diffTime = this._lastLogTime ? logObj.date - this._lastLogTime : 0
