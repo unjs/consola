@@ -4,8 +4,8 @@ import { Consola, BasicReporter, FancyReporter, JSONReporter, WinstonReporter } 
 function createConsola () {
   // Log level
   let level = env.debug ? 4 : 3
-  if (process.env['CONSOLA_LEVEL']) {
-    level = parseInt(process.env['CONSOLA_LEVEL']) || level
+  if (process.env.CONSOLA_LEVEL) {
+    level = parseInt(process.env.CONSOLA_LEVEL) || level
   }
 
   // Create new consola instance
