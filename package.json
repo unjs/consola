@@ -41,14 +41,14 @@
     "Sébastien Chopin <seb@orion.sh>"
   ],
   "devDependencies": {
-    "@babel/core": "^7.6.4",
-    "@babel/preset-env": "^7.6.3",
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
     "benchmark": "^2.1.4",
     "bili": "^4.8.1",
     "chalk": "^2.4.2",
-    "dayjs": "^1.8.16",
+    "dayjs": "^1.8.17",
     "eslint": "^6.6.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.18.2",
@@ -66,7 +66,7 @@
     "std-env": "^2.2.1",
     "string-width": "^4.1.0",
     "ts-node": "^8.4.1",
-    "typescript": "^3.6.4",
+    "typescript": "^3.7.2",
     "winston": "^3.2.1"
   }
 }
