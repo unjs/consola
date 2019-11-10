@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.11.0](https://github.com/nuxt/consola/compare/v2.10.0...v2.11.0) (2019-11-10)
+
+
+### Features
+
+* **browser:** add support of formatted strings ([#66](https://github.com/nuxt/consola/issues/66)) ([920f313](https://github.com/nuxt/consola/commit/920f313dba322c34ccd1b2f08afba59122c3b8e7))
+
+
+### Bug Fixes
+
+* typecheck type and tag before normalize ([1984deb](https://github.com/nuxt/consola/commit/1984deb0a5214a3aa82dab972ec76af20ba14d1b))
+* **types:** reporter in remove methods are optional ([#70](https://github.com/nuxt/consola/issues/70)) ([a17cdb1](https://github.com/nuxt/consola/commit/a17cdb1a423e41076c58692130955d5a9f5e36ba))
+
 ### [2.10.1](https://github.com/nuxt/consola/compare/v2.10.0...v2.10.1) (2019-08-05)
 
 ## [2.10.0](https://github.com/nuxt/consola/compare/v2.9.0...v2.10.0) (2019-08-05)
