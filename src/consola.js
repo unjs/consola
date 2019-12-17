@@ -12,7 +12,7 @@ class Consola {
     this._defaults = options.defaults || {}
     this._async = typeof options.async !== 'undefined' ? options.async : null
     this._stdout = options.stdout
-    this._stderr = options.stdout
+    this._stderr = options.stderr
     this._mockFn = options.mockFn
     this._throttle = options.throttle || 2000
 
