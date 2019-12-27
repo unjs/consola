@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.11.2](https://github.com/nuxt/consola/compare/v2.11.1...v2.11.2) (2019-12-27)
+
+
+### Bug Fixes
+
+* **types:** `const consola = require('consola')` type is wrong ([#80](https://github.com/nuxt/consola/issues/80)) ([5c22d8c](https://github.com/nuxt/consola/commit/5c22d8cd4624e3bbd7294b9eba09f131ed786332))
+* throttle expiration ([#81](https://github.com/nuxt/consola/issues/81)) ([940474d](https://github.com/nuxt/consola/commit/940474d3b64a4969acdec04290734e700920c19f)), closes [#68](https://github.com/nuxt/consola/issues/68)
+
 ### [2.11.1](https://github.com/nuxt/consola/compare/v2.11.0...v2.11.1) (2019-12-17)
 
 
