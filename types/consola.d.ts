@@ -94,3 +94,5 @@ export declare class BrowserReporter implements ConsolaReporter {
 declare const consolaGlobalInstance: Consola;
 
 export default consolaGlobalInstance
+
+export = consolaGlobalInstance
