@@ -35,6 +35,7 @@ class Consola {
     this._lastLog = null
     this._lastLogTime = null
     this._lastLogCount = 0
+    this._throttleTimeout = null
   }
 
   get level () {
@@ -254,7 +255,38 @@ class Consola {
     logObj.type = typeof logObj.type === 'string' ? logObj.type.toLowerCase() : ''
     logObj.tag = typeof logObj.tag === 'string' ? logObj.tag.toLowerCase() : ''
 
+    // Resolve log
+    /**
+     * @param newLog false if the throttle expired and
+     *  we don't want to log a duplicate
+     */
+    const resolveLog = (newLog = false) => {
+      if (this._lastLogCount) {
+        this._log({
+          ...this._lastLog,
+          args: [
+            ...this._lastLog.args,
+            // Minus one since we logged the message once already
+            // before queuing the duplicates
+            `(repeated ${this._lastLogCount - (newLog ? 1 : 0)} times)`
+          ]
+        })
+        this._lastLogCount = 0
+      }
+      this._lastLog = logObj
+
+      // Log
+      if (newLog) {
+        if (this._async) {
+          return this._logAsync(logObj)
+        } else {
+          this._log(logObj)
+        }
+      }
+    }
+
     // Throttle
+    clearTimeout(this._throttleTimeout)
     const diffTime = this._lastLogTime ? logObj.date - this._lastLogTime : 0
     this._lastLogTime = logObj.date
     if (diffTime < this._throttle) {
@@ -264,30 +296,16 @@ class Consola {
         this._lastLogSerialized = serializedLog
         if (isSameLog) {
           this._lastLogCount++
+          // Auto-resolve when throttle is timed out
+          this._throttleTimeout = setTimeout(resolveLog, this._throttle)
           return // SPAM!
         }
       } catch (_) {
         // Circular References
       }
     }
-    if (this._lastLogCount) {
-      this._log({
-        ...this._lastLog,
-        args: [
-          ...this._lastLog.args,
-          `(repeated ${this._lastLogCount} times)`
-        ]
-      })
-      this._lastLogCount = 0
-    }
-    this._lastLog = logObj
 
-    // Log
-    if (this._async) {
-      return this._logAsync(logObj)
-    } else {
-      this._log(logObj)
-    }
+    resolveLog(true)
   }
 
   _log (logObj) {
