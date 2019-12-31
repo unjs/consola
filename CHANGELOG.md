@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.11.3](https://github.com/nuxt/consola/compare/v2.11.2...v2.11.3) (2019-12-31)
+
+
+### Bug Fixes
+
+* **typescript:** remove cjs export (fixes [#88](https://github.com/nuxt/consola/issues/88)) ([0d9ab1b](https://github.com/nuxt/consola/commit/0d9ab1bba8645853c721069c57527764ed708869))
+
 ### [2.11.2](https://github.com/nuxt/consola/compare/v2.11.1...v2.11.2) (2019-12-27)
 
 
