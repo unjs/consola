@@ -95,4 +95,3 @@ declare const consolaGlobalInstance: Consola;
 
 export default consolaGlobalInstance
 
-export = consolaGlobalInstance
