@@ -20,7 +20,7 @@
 - Browser support
 - Pause/Resume support
 - Mocking support
-- Spam preventation by throttling logs
+- Spam prevention by throttling logs
 
 ## Installation
 
