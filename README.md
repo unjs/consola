@@ -48,7 +48,11 @@ consola.info('Reporter: Some info')
 consola.error(new Error('Foo'))
 ```
 
-NOTE: Alternatively, you can import consola from source. But don't forget to whitelist it for transpilation:
+Will display in the terminal:
+
+![Screenshot 2020-01-28 at 14 15 15](https://user-images.githubusercontent.com/904724/73267133-af6b2f00-41d8-11ea-9f16-4a8243d19c43.png)
+
+**NOTE:** Alternatively, you can import consola from source. But don't forget to whitelist it for transpilation:
 
 ```js
 import consola from 'consola/src/node'
