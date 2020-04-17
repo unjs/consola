@@ -1,10 +1,35 @@
+import { InspectOptions } from 'util';
+import {Logger} from 'winston';
+
+export type Infinity = 999e308; // Infinity is not a valid type. see https://github.com/microsoft/TypeScript/issues/32277
+export type FatalLogLevel = 0;
+export type ErrorLogLevel = 0;
+export type WarnLogLevel = 1;
+export type LogLogLevel = 2;
+export type InfoLogLevel = 3;
+export type SuccessLogLevel = 3;
+export type DebugLogLevel = 4;
+export type TraceLogLevel = 5;
+export type SilentLogLevel = Infinity;
+export type LogLevel =
+  | FatalLogLevel
+  | ErrorLogLevel
+  | WarnLogLevel
+  | LogLogLevel
+  | InfoLogLevel
+  | SuccessLogLevel
+  | DebugLogLevel
+  | TraceLogLevel
+  | SilentLogLevel;
+
 export interface ConsolaLogObject {
-  level?: number,
+  level?: LogLevel,
   tag?: string,
   type?: string,
   message?: string,
   additional?: string | string[],
   args?: any[],
+  date?: Date,
 }
 
 type ConsolaMock = (...args: any) => void
@@ -13,8 +38,8 @@ type ConsolaMockFn = (type: string, defaults: ConsolaLogObject) => ConsolaMock
 
 export interface ConsolaReporterArgs {
   async: boolean,
-  stdout: any,
-  stderr: any,
+  stdout: NodeJS.WritableStream,
+  stderr: NodeJS.WritableStream,
 }
 
 export interface ConsolaReporter {
@@ -24,7 +49,7 @@ export interface ConsolaReporter {
 export interface ConsolaOptions {
   reporters?: ConsolaReporter[],
   types?: { [type: string]: ConsolaLogObject },
-  level?: number,
+  level?: LogLevel,
   defaults?: ConsolaLogObject,
   async?: boolean,
   stdout?: any,
@@ -36,7 +61,7 @@ export interface ConsolaOptions {
 export declare class Consola {
   constructor(options: ConsolaOptions)
 
-  level: number
+  level: LogLevel
   readonly stdout: any
   readonly stderr: any
 
@@ -87,8 +112,54 @@ export declare class Consola {
   mock(mockFn: ConsolaMockFn): any
 }
 
+export interface BasicReporterOptions {
+  dateFormat?: string;
+  formatOptions?: InspectOptions;
+}
+
+export declare class BasicReporter implements ConsolaReporter {
+  protected options: BasicReporterOptions;
+
+  constructor(options?: BasicReporterOptions);
+
+  public log(logObj: ConsolaLogObject, args: ConsolaReporterArgs): void;
+
+  protected formatStack(stack: string): string;
+  protected formatArgs(args: any[]): string;
+  protected formatDate(date: Date): string;
+  protected filterAndJoin(arr: Array<string | undefined>): string;
+  protected formatLogObj(logObj: ConsolaLogObject): string;
+}
+
+export interface FancyReporterOptions extends BasicReporterOptions{
+  secondaryColor?: string;
+}
+
+export declare class FancyReporter extends BasicReporter {
+  constructor(options?: FancyReporterOptions);
+
+  protected formatType(logObj: ConsolaLogObject): void;
+}
+
+export type BrowserReporterOptions = {};
+
 export declare class BrowserReporter implements ConsolaReporter {
-  log: (logObj: ConsolaLogObject, args: ConsolaReporterArgs) => void
+  public log(logObj: ConsolaLogObject, args: ConsolaReporterArgs): void;
+}
+
+export type JSONReporterOptions = {
+  stream?: NodeJS.WritableStream;
+};
+
+export declare class JSONReporter implements ConsolaReporter {
+  constructor(options?: JSONReporterOptions);
+  public log(logObj: ConsolaLogObject, args: ConsolaReporterArgs): void;
+}
+
+
+export declare class WinstonReporter implements ConsolaReporter {
+  constructor(logger?: Logger);
+  public log(logObj: ConsolaLogObject, args: ConsolaReporterArgs): void;
 }
 
 declare const consolaGlobalInstance: Consola;
