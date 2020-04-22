@@ -1,5 +1,4 @@
 import { InspectOptions } from 'util';
-import {Logger} from 'winston';
 
 export enum LogLevel {
   Fatal= 0,
@@ -147,9 +146,10 @@ export declare class JSONReporter implements ConsolaReporter {
   public log(logObj: ConsolaLogObject, args: ConsolaReporterArgs): void;
 }
 
+export type Winston = any;
 
 export declare class WinstonReporter implements ConsolaReporter {
-  constructor(logger?: Logger);
+  constructor(logger?: Winston);
   public log(logObj: ConsolaLogObject, args: ConsolaReporterArgs): void;
 }
 
