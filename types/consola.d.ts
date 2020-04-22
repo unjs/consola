@@ -1,26 +1,17 @@
 import { InspectOptions } from 'util';
 import {Logger} from 'winston';
 
-export type Infinity = 999e308; // Infinity is not a valid type. see https://github.com/microsoft/TypeScript/issues/32277
-export type FatalLogLevel = 0;
-export type ErrorLogLevel = 0;
-export type WarnLogLevel = 1;
-export type LogLogLevel = 2;
-export type InfoLogLevel = 3;
-export type SuccessLogLevel = 3;
-export type DebugLogLevel = 4;
-export type TraceLogLevel = 5;
-export type SilentLogLevel = Infinity;
-export type LogLevel =
-  | FatalLogLevel
-  | ErrorLogLevel
-  | WarnLogLevel
-  | LogLogLevel
-  | InfoLogLevel
-  | SuccessLogLevel
-  | DebugLogLevel
-  | TraceLogLevel
-  | SilentLogLevel;
+export enum LogLevel {
+  Fatal= 0,
+  Error= 0,
+  Warn= 1,
+  Log= 2,
+  Info= 3,
+  Success= 3,
+  Debug= 4,
+  Trace= 5,
+  Silent= Infinity,
+}
 
 export interface ConsolaLogObject {
   level?: LogLevel,
