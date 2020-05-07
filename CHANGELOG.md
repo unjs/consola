@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.12.0](https://github.com/nuxt/consola/compare/v2.11.3...v2.12.0) (2020-05-07)
+
+
+### Features
+
+* **types:** add missing typescript definitions for reporters  ([#94](https://github.com/nuxt/consola/issues/94)) ([4a08ef0](https://github.com/nuxt/consola/commit/4a08ef02bc48ddc887f2b91713520eda50793a27))
+
 ### [2.11.3](https://github.com/nuxt/consola/compare/v2.11.2...v2.11.3) (2019-12-31)
 
 
