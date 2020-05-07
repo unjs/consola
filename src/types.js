@@ -1,44 +1,46 @@
+import { LogLevel } from './logLevels'
+
 export default {
   // Level 0
   fatal: {
-    level: 0
+    level: LogLevel.Fatal
   },
   error: {
-    level: 0
+    level: LogLevel.Error
   },
   // Level 1
   warn: {
-    level: 1
+    level: LogLevel.Warn
   },
   // Level 2
   log: {
-    level: 2
+    level: LogLevel.Log
   },
   // Level 3
   info: {
-    level: 3
+    level: LogLevel.Info
   },
   success: {
-    level: 3
+    level: LogLevel.Success
   },
   // Level 4
   debug: {
-    level: 4
+    level: LogLevel.Debug
   },
   // Level 5
   trace: {
-    level: 5
+    level: LogLevel.Trace
   },
   // Silent
   silent: {
-    level: Infinity
+    level: LogLevel.Silent
   },
 
   // Legacy
   ready: {
-    level: 3
+    level: LogLevel.Info
   },
   start: {
-    level: 3
+    level: LogLevel.Info
   }
 }
