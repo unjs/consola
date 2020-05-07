@@ -1,5 +1,5 @@
 import env from 'std-env'
-import { Consola, BasicReporter, FancyReporter, JSONReporter, WinstonReporter } from '.'
+import { Consola, BasicReporter, FancyReporter, JSONReporter, WinstonReporter, LogLevel } from '.'
 
 function createConsola () {
   // Log level
@@ -24,6 +24,7 @@ function createConsola () {
   consola.FancyReporter = FancyReporter
   consola.JSONReporter = JSONReporter
   consola.WinstonReporter = WinstonReporter
+  consola.LogLevel = LogLevel
 
   return consola
 }

@@ -20,7 +20,6 @@
     "release": "standard-version && yarn build && git push --follow-tags && npm publish"
   },
   "files": [
-    "src",
     "dist",
     "types"
   ],
