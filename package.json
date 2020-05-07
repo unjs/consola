@@ -34,11 +34,19 @@
     "unified",
     "winston"
   ],
-  "contributes": [
-    "Pooya Parsa <pooya@pi0.ir>",
-    "Clark Du (@clarkdo)",
-    "@pimlie <pimlie@hotmail.com>",
-    "Sébastien Chopin <seb@orion.sh>"
+  "contributors": [
+    {
+      "name": "Pooya Parsa <pooya@pi0.ir>"
+    },
+    {
+      "name": "Clark Du (@clarkdo)"
+    },
+    {
+      "name": "@pimlie <pimlie@hotmail.com>"
+    },
+    {
+      "name": "Sébastien Chopin <@Atinux>"
+    }
   ],
   "devDependencies": {
     "@babel/core": "^7.9.6",
