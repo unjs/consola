@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.12.1](https://github.com/nuxt/consola/compare/v2.12.0...v2.12.1) (2020-05-07)
+
+
+### Bug Fixes
+
+* new LogLevel enum is not exported properly [#95](https://github.com/nuxt/consola/issues/95) ([#96](https://github.com/nuxt/consola/issues/96)) ([fafbec2](https://github.com/nuxt/consola/commit/fafbec2b1bc75912eea5d0618a27b982738d6cda))
+
 ## [2.12.0](https://github.com/nuxt/consola/compare/v2.11.3...v2.12.0) (2020-05-07)
 
 
