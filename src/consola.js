@@ -48,6 +48,9 @@ class Consola {
     let max = 0
     for (const typeName in this._types) {
       const type = this._types[typeName]
+      if (type.level === Infinity || type.level === -Infinity) {
+        continue
+      }
       if (type.level > max) {
         max = type.level
       } else if (type.level < min) {
