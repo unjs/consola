@@ -23,7 +23,7 @@ export interface ConsolaLogObject {
   date?: Date,
 }
 
-export interface ConstructedConsolaLogObject {
+export interface ConsolaReporterLogObject {
   level: LogLevel,
   type: string,
   tag: string;
@@ -42,7 +42,7 @@ export interface ConsolaReporterArgs {
 }
 
 export interface ConsolaReporter {
-  log: (logObj: ConstructedConsolaLogObject, args: ConsolaReporterArgs) => void
+  log: (logObj: ConsolaReporterLogObject, args: ConsolaReporterArgs) => void
 }
 
 export interface ConsolaOptions {
@@ -121,13 +121,13 @@ export declare class BasicReporter implements ConsolaReporter {
 
   constructor(options?: BasicReporterOptions);
 
-  public log(logObj: ConstructedConsolaLogObject, args: ConsolaReporterArgs): void;
+  public log(logObj: ConsolaReporterLogObject, args: ConsolaReporterArgs): void;
 
   protected formatStack(stack: string): string;
   protected formatArgs(args: any[]): string;
   protected formatDate(date: Date): string;
   protected filterAndJoin(arr: Array<string | undefined>): string;
-  protected formatLogObj(logObj: ConstructedConsolaLogObject): string;
+  protected formatLogObj(logObj: ConsolaReporterLogObject): string;
 }
 
 export interface FancyReporterOptions extends BasicReporterOptions{
@@ -137,13 +137,13 @@ export interface FancyReporterOptions extends BasicReporterOptions{
 export declare class FancyReporter extends BasicReporter {
   constructor(options?: FancyReporterOptions);
 
-  protected formatType(logObj: ConstructedConsolaLogObject): void;
+  protected formatType(logObj: ConsolaReporterLogObject): void;
 }
 
 export type BrowserReporterOptions = {};
 
 export declare class BrowserReporter implements ConsolaReporter {
-  public log(logObj: ConstructedConsolaLogObject, args: ConsolaReporterArgs): void;
+  public log(logObj: ConsolaReporterLogObject, args: ConsolaReporterArgs): void;
 }
 
 export type JSONReporterOptions = {
@@ -152,14 +152,14 @@ export type JSONReporterOptions = {
 
 export declare class JSONReporter implements ConsolaReporter {
   constructor(options?: JSONReporterOptions);
-  public log(logObj: ConstructedConsolaLogObject, args: ConsolaReporterArgs): void;
+  public log(logObj: ConsolaReporterLogObject, args: ConsolaReporterArgs): void;
 }
 
 export type Winston = any;
 
 export declare class WinstonReporter implements ConsolaReporter {
   constructor(logger?: Winston);
-  public log(logObj: ConstructedConsolaLogObject, args: ConsolaReporterArgs): void;
+  public log(logObj: ConsolaReporterLogObject, args: ConsolaReporterArgs): void;
 }
 
 declare const consolaGlobalInstance: Consola;
