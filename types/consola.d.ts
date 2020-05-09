@@ -42,8 +42,8 @@ export interface ConsolaOptions {
   level?: LogLevel,
   defaults?: ConsolaLogObject,
   async?: boolean,
-  stdout?: any,
-  stderr?: any,
+  stdout?: NodeJS.WritableStream,
+  stderr?: NodeJS.WritableStream,
   mockFn?: ConsolaMockFn,
   throttle?: number,
 }
@@ -52,8 +52,8 @@ export declare class Consola {
   constructor(options: ConsolaOptions)
 
   level: LogLevel
-  readonly stdout: any
-  readonly stderr: any
+  readonly stdout: NodeJS.WritableStream
+  readonly stderr: NodeJS.WritableStream
 
   // Built-in log levels
   fatal(message: ConsolaLogObject | any, ...args: any[]): void
