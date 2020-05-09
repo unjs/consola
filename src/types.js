@@ -35,6 +35,10 @@ export default {
   silent: {
     level: LogLevel.Silent
   },
+  // Enable all log levels
+  verbose: {
+    level: LogLevel.Verbose
+  },
 
   // Legacy
   ready: {

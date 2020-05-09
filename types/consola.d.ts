@@ -9,7 +9,8 @@ export enum LogLevel {
   Success= 3,
   Debug= 4,
   Trace= 5,
-  Silent= Infinity,
+  Silent= -Infinity,
+  Verbose= Infinity,
 }
 
 export interface ConsolaLogObject {
