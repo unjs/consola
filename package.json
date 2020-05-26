@@ -57,7 +57,7 @@
     "bili": "^4.10.0",
     "chalk": "^4.0.0",
     "dayjs": "^1.8.26",
-    "eslint": "^6.8.0",
+    "eslint": "^7.1.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jest": "^23.9.0",

@@ -10,7 +10,7 @@ module.exports = {
   },
   extends: 'standard',
   plugins: [
-    'jest',
+    'jest'
   ],
   rules: {
     // Allow paren-less arrow functions
