@@ -9,7 +9,8 @@ export enum LogLevel {
   Success= 3,
   Debug= 4,
   Trace= 5,
-  Silent= Infinity,
+  Silent= -Infinity,
+  Verbose= Infinity,
 }
 
 export interface ConsolaLogObject {
@@ -20,6 +21,14 @@ export interface ConsolaLogObject {
   additional?: string | string[],
   args?: any[],
   date?: Date,
+}
+
+export interface ConsolaReporterLogObject {
+  level: LogLevel,
+  type: string,
+  tag: string;
+  args: any[],
+  date: Date,
 }
 
 type ConsolaMock = (...args: any) => void
@@ -33,7 +42,7 @@ export interface ConsolaReporterArgs {
 }
 
 export interface ConsolaReporter {
-  log: (logObj: ConsolaLogObject, args: ConsolaReporterArgs) => void
+  log: (logObj: ConsolaReporterLogObject, args: ConsolaReporterArgs) => void
 }
 
 export interface ConsolaOptions {
@@ -42,8 +51,8 @@ export interface ConsolaOptions {
   level?: LogLevel,
   defaults?: ConsolaLogObject,
   async?: boolean,
-  stdout?: any,
-  stderr?: any,
+  stdout?: NodeJS.WritableStream,
+  stderr?: NodeJS.WritableStream,
   mockFn?: ConsolaMockFn,
   throttle?: number,
 }
@@ -52,8 +61,8 @@ export declare class Consola {
   constructor(options: ConsolaOptions)
 
   level: LogLevel
-  readonly stdout: any
-  readonly stderr: any
+  readonly stdout: NodeJS.WritableStream
+  readonly stderr: NodeJS.WritableStream
 
   // Built-in log levels
   fatal(message: ConsolaLogObject | any, ...args: any[]): void
@@ -112,13 +121,13 @@ export declare class BasicReporter implements ConsolaReporter {
 
   constructor(options?: BasicReporterOptions);
 
-  public log(logObj: ConsolaLogObject, args: ConsolaReporterArgs): void;
+  public log(logObj: ConsolaReporterLogObject, args: ConsolaReporterArgs): void;
 
   protected formatStack(stack: string): string;
   protected formatArgs(args: any[]): string;
   protected formatDate(date: Date): string;
   protected filterAndJoin(arr: Array<string | undefined>): string;
-  protected formatLogObj(logObj: ConsolaLogObject): string;
+  protected formatLogObj(logObj: ConsolaReporterLogObject): string;
 }
 
 export interface FancyReporterOptions extends BasicReporterOptions{
@@ -128,13 +137,13 @@ export interface FancyReporterOptions extends BasicReporterOptions{
 export declare class FancyReporter extends BasicReporter {
   constructor(options?: FancyReporterOptions);
 
-  protected formatType(logObj: ConsolaLogObject): void;
+  protected formatType(logObj: ConsolaReporterLogObject): void;
 }
 
 export type BrowserReporterOptions = {};
 
 export declare class BrowserReporter implements ConsolaReporter {
-  public log(logObj: ConsolaLogObject, args: ConsolaReporterArgs): void;
+  public log(logObj: ConsolaReporterLogObject, args: ConsolaReporterArgs): void;
 }
 
 export type JSONReporterOptions = {
@@ -143,14 +152,14 @@ export type JSONReporterOptions = {
 
 export declare class JSONReporter implements ConsolaReporter {
   constructor(options?: JSONReporterOptions);
-  public log(logObj: ConsolaLogObject, args: ConsolaReporterArgs): void;
+  public log(logObj: ConsolaReporterLogObject, args: ConsolaReporterArgs): void;
 }
 
 export type Winston = any;
 
 export declare class WinstonReporter implements ConsolaReporter {
   constructor(logger?: Winston);
-  public log(logObj: ConsolaLogObject, args: ConsolaReporterArgs): void;
+  public log(logObj: ConsolaReporterLogObject, args: ConsolaReporterArgs): void;
 }
 
 declare const consolaGlobalInstance: Consola;
