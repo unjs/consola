@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.12.2](https://github.com/nuxt/consola/compare/v2.12.1...v2.12.2) (2020-05-26)
+
+
+### Bug Fixes
+
+* silent log level does not work ([#98](https://github.com/nuxt/consola/issues/98)) ([6a4a79c](https://github.com/nuxt/consola/commit/6a4a79c24b8db902b078ad92a6ee7a33880ed26c))
+
 ### [2.12.1](https://github.com/nuxt/consola/compare/v2.12.0...v2.12.1) (2020-05-07)
 
 
