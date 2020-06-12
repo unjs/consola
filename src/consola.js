@@ -8,7 +8,7 @@ class Consola {
   constructor (options = {}) {
     this._reporters = options.reporters || []
     this._types = options.types || Types
-    this._level = options.level != null ? options.level : 3
+    this.level = options.level != null ? options.level : 3
     this._defaults = options.defaults || {}
     this._async = typeof options.async !== 'undefined' ? options.async : null
     this._stdout = options.stdout
@@ -38,29 +38,6 @@ class Consola {
     this._throttleTimeout = null
   }
 
-  get level () {
-    return this._level
-  }
-
-  set level (newLevel) {
-    // Ensure that newLevel does not exceeds type level boundaries
-    let min = 0
-    let max = 0
-    for (const typeName in this._types) {
-      const type = this._types[typeName]
-      if (type.level === Infinity || type.level === -Infinity) {
-        continue
-      }
-      if (type.level > max) {
-        max = type.level
-      } else if (type.level < min) {
-        min = type.level
-      }
-    }
-    // Set level
-    this._level = Math.min(max, Math.max(min, newLevel))
-  }
-
   get stdout () {
     return this._stdout || console._stdout // eslint-disable-line no-console
   }
@@ -72,7 +49,7 @@ class Consola {
   create (options) {
     return new Consola(Object.assign({
       reporters: this._reporters,
-      level: this._level,
+      level: this.level,
       types: this._types,
       defaults: this._defaults,
       stdout: this._stdout,
@@ -224,7 +201,7 @@ class Consola {
   }
 
   _logFn (defaults, args) {
-    if (defaults.level > this._level) {
+    if (defaults.level > this.level) {
       return this._async ? Promise.resolve(false) : false
     }
 

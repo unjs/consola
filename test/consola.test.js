@@ -11,16 +11,6 @@ describe('consola', () => {
     }
   })
 
-  test('cannot set not existing level', () => {
-    const consola = new Consola()
-
-    consola.level = -99
-    expect(consola.level).toBe(0)
-
-    consola.level = 99
-    expect(consola.level).toBe(5)
-  })
-
   test('silent log level does\'t print logs', async () => {
     const logs = []
     class TestReporter {
