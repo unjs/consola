@@ -8,9 +8,9 @@ class Consola {
   constructor (options = {}) {
     this._reporters = options.reporters || []
     this._types = options.types || Types
-    this.level = options.level != null ? options.level : 3
+    this.level = options.level !== undefined ? options.level : 3
     this._defaults = options.defaults || {}
-    this._async = typeof options.async !== 'undefined' ? options.async : null
+    this._async = options.async !== undefined ? options.async : undefined
     this._stdout = options.stdout
     this._stderr = options.stderr
     this._mockFn = options.mockFn
@@ -31,11 +31,11 @@ class Consola {
     }
 
     // Keep serialized version of last log
-    this._lastLogSerialized = null
-    this._lastLog = null
-    this._lastLogTime = null
+    this._lastLogSerialized = undefined
+    this._lastLog = undefined
+    this._lastLogTime = undefined
     this._lastLogCount = 0
-    this._throttleTimeout = null
+    this._throttleTimeout = undefined
   }
 
   get stdout () {
