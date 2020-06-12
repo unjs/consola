@@ -1,6 +1,10 @@
 import { LogLevel } from './logLevels'
 
 export default {
+  // Silent
+  silent: {
+    level: -1
+  },
   // Level 0
   fatal: {
     level: LogLevel.Fatal
@@ -31,13 +35,9 @@ export default {
   trace: {
     level: LogLevel.Trace
   },
-  // Silent
-  silent: {
-    level: LogLevel.Silent
-  },
-  // Enable all log levels
+  // Verbose
   verbose: {
-    level: LogLevel.Verbose
+    level: LogLevel.Trace
   },
 
   // Legacy
