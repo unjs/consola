@@ -1,6 +1,6 @@
 {
   "name": "consola",
-  "version": "2.13.0",
+  "version": "2.14.0",
   "description": "Elegant Console Logger for Node.js and Browser",
   "license": "MIT",
   "repository": "nuxt/consola",

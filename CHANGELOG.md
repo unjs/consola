@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.14.0](https://github.com/nuxt/consola/compare/v2.13.0...v2.14.0) (2020-06-26)
+
+
+### Features
+
+* improve spam throttle ([5314eee](https://github.com/nuxt/consola/commit/5314eeebb4b564408a4ab14cb457bdbd426f6124))
+
 ## [2.13.0](https://github.com/nuxt/consola/compare/v2.12.2...v2.13.0) (2020-06-12)
 
 
