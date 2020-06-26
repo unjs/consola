@@ -14,7 +14,8 @@ class Consola {
     this._stdout = options.stdout
     this._stderr = options.stderr
     this._mockFn = options.mockFn
-    this._throttle = options.throttle || 2000
+    this._throttle = options.throttle || 1000
+    this._throttleMin = options.throttleMin || 5
 
     // Create logger functions for current instance
     for (const type in this._types) {
@@ -241,22 +242,19 @@ class Consola {
      *  we don't want to log a duplicate
      */
     const resolveLog = (newLog = false) => {
-      if (this._lastLogCount) {
-        this._log({
-          ...this._lastLog,
-          args: [
-            ...this._lastLog.args,
-            // Minus one since we logged the message once already
-            // before queuing the duplicates
-            `(repeated ${this._lastLogCount - (newLog ? 1 : 0)} times)`
-          ]
-        })
-        this._lastLogCount = 0
+      const repeated = this._lastLogCount - this._throttleMin
+      if (this._lastLog && repeated > 0) {
+        const args = [...this._lastLog.args]
+        if (repeated > 1) {
+          args.push(`(repeated ${repeated} times)`)
+        }
+        this._log({ ...this._lastLog, args })
+        this._lastLogCount = 1
       }
-      this._lastLog = logObj
 
       // Log
       if (newLog) {
+        this._lastLog = logObj
         if (this._async) {
           return this._logAsync(logObj)
         } else {
@@ -276,9 +274,11 @@ class Consola {
         this._lastLogSerialized = serializedLog
         if (isSameLog) {
           this._lastLogCount++
+          if (this._lastLogCount > this._throttleMin) {
           // Auto-resolve when throttle is timed out
-          this._throttleTimeout = setTimeout(resolveLog, this._throttle)
-          return // SPAM!
+            this._throttleTimeout = setTimeout(resolveLog, this._throttle)
+            return // SPAM!
+          }
         }
       } catch (_) {
         // Circular References

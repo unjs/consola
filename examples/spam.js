@@ -2,12 +2,20 @@
 
 import { consola } from './utils'
 
-function spam (msg, level = 'warn', count = 10) {
-  for (let i = 0; i < 10; i++) {
-    consola[level](msg)
+function waitFor (ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+async function spam ({ count, delay }) {
+  for (let i = 0; i < count; i++) {
+    await waitFor(delay)
+    consola.log(`Spam (Count: ${count} Delay: ${delay} ms)`)
   }
 }
 
-spam('FOOOOOOO FOOOOOOOOO')
-consola.log('bar')
-spam('FOOOOOOO FOOOOOOOOO')
+(async () => {
+  await spam({ count: 2, delay: 10 })
+  await spam({ count: 20, delay: 10 })
+  await spam({ count: 20, delay: 0 })
+  await spam({ count: 80, delay: 10 })
+})()
