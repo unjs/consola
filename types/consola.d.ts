@@ -13,10 +13,24 @@ export enum LogLevel {
   Verbose= Infinity,
 }
 
+export type logType =
+  | 'silent'
+  | 'fatal'
+  | 'error'
+  | 'warn'
+  | 'log'
+  | 'info'
+  | 'success'
+  | 'debug'
+  | 'trace'
+  | 'verbose'
+  | 'ready'
+  | 'start'
+
 export interface ConsolaLogObject {
   level?: LogLevel,
   tag?: string,
-  type?: string,
+  type?: logType,
   message?: string,
   additional?: string | string[],
   args?: any[],
@@ -25,7 +39,7 @@ export interface ConsolaLogObject {
 
 export interface ConsolaReporterLogObject {
   level: LogLevel,
-  type: string,
+  type: logType,
   tag: string;
   args: any[],
   date: Date,
@@ -33,7 +47,7 @@ export interface ConsolaReporterLogObject {
 
 type ConsolaMock = (...args: any) => void
 
-type ConsolaMockFn = (type: string, defaults: ConsolaLogObject) => ConsolaMock
+type ConsolaMockFn = (type: logType, defaults: ConsolaLogObject) => ConsolaMock
 
 export interface ConsolaReporterArgs {
   async: boolean,
@@ -47,7 +61,7 @@ export interface ConsolaReporter {
 
 export interface ConsolaOptions {
   reporters?: ConsolaReporter[],
-  types?: { [type: string]: ConsolaLogObject },
+  types?: { [type in logType]: ConsolaLogObject },
   level?: LogLevel,
   defaults?: ConsolaLogObject,
   async?: boolean,
