@@ -40,7 +40,8 @@ export default class BasicReporter {
   }
 
   formatDate (date) {
-    return formatDate(this.options.dateFormat, date)
+    const { dateFormat } = this.options
+    return dateFormat ? formatDate(this.options.dateFormat, date) : ''
   }
 
   filterAndJoin (arr) {
