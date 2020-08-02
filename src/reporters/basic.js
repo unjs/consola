@@ -41,7 +41,7 @@ export default class BasicReporter {
 
   formatDate (date) {
     const { dateFormat } = this.options
-    return dateFormat ? formatDate(this.options.dateFormat, date) : ''
+    return dateFormat ? formatDate(dateFormat, date) : ''
   }
 
   filterAndJoin (arr) {
