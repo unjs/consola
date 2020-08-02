@@ -9,6 +9,7 @@ import { TYPE_COLOR_MAP, LEVEL_COLOR_MAP } from '../utils/fancy'
 const DEFAULTS = {
   secondaryColor: 'grey',
   formatOptions: {
+    dateVisible: true,
     colors: true,
     compact: false
   }

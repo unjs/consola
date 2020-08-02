@@ -6,6 +6,7 @@ import { formatDate } from '../utils/date'
 const DEFAULTS = {
   dateFormat: 'HH:mm:ss',
   formatOptions: {
+    dateVisible: true,
     colors: false,
     compact: true
   }
@@ -39,9 +40,8 @@ export default class BasicReporter {
     }
   }
 
-  formatDate (date) {
-    const { dateFormat } = this.options
-    return dateFormat ? formatDate(dateFormat, date) : ''
+  formatDate(date) {
+    return this.options.formatOptions.dateVisible ? formatDate(this.options.dateFormat, date) : ''
   }
 
   filterAndJoin (arr) {
