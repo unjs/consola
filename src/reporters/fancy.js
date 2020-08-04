@@ -9,6 +9,7 @@ import { TYPE_COLOR_MAP, LEVEL_COLOR_MAP } from '../utils/fancy'
 const DEFAULTS = {
   secondaryColor: 'grey',
   formatOptions: {
+    date: true,
     colors: true,
     compact: false
   }
@@ -59,7 +60,8 @@ export default class FancyReporter extends BasicReporter {
 
     const secondaryColor = chalkColor(this.options.secondaryColor)
 
-    const date = secondaryColor(this.formatDate(logObj.date))
+    const date = this.formatDate(logObj.date)
+    const coloredDate = date && secondaryColor(date)
 
     const type = this.formatType(logObj, isBadge)
 
@@ -69,7 +71,7 @@ export default class FancyReporter extends BasicReporter {
 
     let line
     const left = this.filterAndJoin([type, formattedMessage])
-    const right = this.filterAndJoin([tag, date])
+    const right = this.filterAndJoin([tag, coloredDate])
     const space = width - stringWidth(left) - stringWidth(right) - 2
 
     if (space > 0 && width >= 80) {
