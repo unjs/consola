@@ -40,7 +40,7 @@ export default class BasicReporter {
     }
   }
 
-  formatDate(date) {
+  formatDate (date) {
     return this.options.formatOptions.date ? formatDate(this.options.dateFormat, date) : ''
   }
 
