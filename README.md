@@ -1,7 +1,8 @@
-<p align="center">
-  <h1>🐨 Consola</h1>
-  <span>Elegant Console Logger for Node.js and Browser</span>
-</p>
+![consola](.github/banner.svg)
+
+# 🐨 Consola</h1>
+
+> Elegant Console Logger for Node.js and Browser
 
 [![Standard JS][standard-js-src]][standard-js-href]
 [![npm version][npm-version-src]][npm-version-href]
@@ -11,16 +12,16 @@
 
 ## Why Consola?
 
-- Easy to use
-- Fancy output with fallback for minimal environments
-- Pluggable reporters
-- Consistent command line interface (CLI) experience
-- Tag support
-- Redirect `console` and `stdout/stderr` to the consola and easily restore redirect.
-- Browser support
-- Pause/Resume support
-- Mocking support
-- Spam prevention by throttling logs
+👌&nbsp; Easy to use<br>
+💅&nbsp; Fancy output with fallback for minimal environments<br>
+🔌&nbsp; Pluggable reporters<br>
+🪖&nbsp; Consistent command line interface (CLI) experience<br>
+🏷&nbsp; Tag support<br>
+🚏&nbsp; Redirect `console` and `stdout/stderr` to consola and easily restore redirect.<br>
+🌐&nbsp; Browser support<br>
+⏯&nbsp; Pause/Resume support<br>
+👻&nbsp; Mocking support<br>
+👮‍♂️&nbsp; Spam prevention by throttling logs<br>
 
 ## Installation
 
