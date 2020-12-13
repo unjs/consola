@@ -1,6 +1,6 @@
 ![consola](.github/banner.svg)
 
-# 🐨 Consola</h1>
+# Consola
 
 > Elegant Console Logger for Node.js and Browser
 
@@ -15,7 +15,7 @@
 👌&nbsp; Easy to use<br>
 💅&nbsp; Fancy output with fallback for minimal environments<br>
 🔌&nbsp; Pluggable reporters<br>
-🪖&nbsp; Consistent command line interface (CLI) experience<br>
+💻&nbsp; Consistent command line interface (CLI) experience<br>
 🏷&nbsp; Tag support<br>
 🚏&nbsp; Redirect `console` and `stdout/stderr` to consola and easily restore redirect.<br>
 🌐&nbsp; Browser support<br>
