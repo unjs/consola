@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.15.1](https://github.com/nuxt/consola/compare/v2.15.0...v2.15.1) (2021-02-02)
+
+
+### Bug Fixes
+
+* skip logObj check for wrapped calls (fixes [#109](https://github.com/nuxt/consola/issues/109)) ([091a244](https://github.com/nuxt/consola/commit/091a24423bb9c28b7371e7af849b15c7e39747fa))
+
 ## [2.15.0](https://github.com/nuxt/consola/compare/v2.14.0...v2.15.0) (2020-08-05)
 
 
