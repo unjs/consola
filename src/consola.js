@@ -19,11 +19,13 @@ class Consola {
 
     // Create logger functions for current instance
     for (const type in this._types) {
-      this[type] = this._wrapLogFn(Object.assign(
-        { type },
-        this._types[type],
-        this._defaults
-      ))
+      const defaults = {
+        type,
+        ...this._types[type],
+        ...this._defaults
+      }
+      this[type] = this._wrapLogFn(defaults)
+      this[type].raw = this._wrapLogFn(defaults, true)
     }
 
     // Use _mockFn if is set
@@ -112,7 +114,7 @@ class Consola {
         console['__' + type] = console[type] // eslint-disable-line no-console
       }
       // Override
-      console[type] = this[type] // eslint-disable-line no-console
+      console[type] = this[type].raw // eslint-disable-line no-console
     }
   }
 
@@ -143,7 +145,7 @@ class Consola {
 
     // Override
     stream.write = (data) => {
-      this[type](String(data).trim())
+      this[type].raw(String(data).trim())
     }
   }
 
@@ -189,19 +191,17 @@ class Consola {
     }
   }
 
-  _wrapLogFn (defaults) {
-    function logFn () {
+  _wrapLogFn (defaults, isRaw) {
+    return (...args) => {
       if (paused) {
-        queue.push([this, defaults, arguments, true])
+        queue.push([this, defaults, args, isRaw])
         return
       }
-
-      return this._logFn(defaults, arguments, true)
+      return this._logFn(defaults, args, isRaw)
     }
-    return logFn.bind(this)
   }
 
-  _logFn (defaults, args, isWrapped) {
+  _logFn (defaults, args, isRaw) {
     if (defaults.level > this.level) {
       return this._async ? Promise.resolve(false) : false
     }
@@ -213,7 +213,7 @@ class Consola {
     }, defaults)
 
     // Consume arguments
-    if (!isWrapped && args.length === 1 && isLogObj(args[0])) {
+    if (!isRaw && args.length === 1 && isLogObj(args[0])) {
       Object.assign(logObj, args[0])
     } else {
       logObj.args = Array.from(args)
