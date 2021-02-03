@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.15.2](https://github.com/nuxt/consola/compare/v2.15.1...v2.15.2) (2021-02-03)
+
+
+### Bug Fixes
+
+* add isRaw flag only for wrapped calls ([23b1184](https://github.com/nuxt/consola/commit/23b1184e2897f5d33943bec7180fb2427402d400)), closes [nuxt/nuxt.js#8752](https://github.com/nuxt/nuxt.js/issues/8752)
+
 ### [2.15.1](https://github.com/nuxt/consola/compare/v2.15.0...v2.15.1) (2021-02-02)
 
 
