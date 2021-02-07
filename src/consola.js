@@ -188,6 +188,7 @@ class Consola {
 
     for (const type in this._types) {
       this[type] = this._mockFn(type, this._types[type]) || this[type]
+      this[type].raw = this[type]
     }
   }
 
