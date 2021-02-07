@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.15.3](https://github.com/nuxt/consola/compare/v2.15.2...v2.15.3) (2021-02-07)
+
+
+### Bug Fixes
+
+* add `.raw` to mocked functions ([987dadc](https://github.com/nuxt/consola/commit/987dadcc81a82698051ade2384ae2f0fc12d8aef))
+
 ### [2.15.2](https://github.com/nuxt/consola/compare/v2.15.1...v2.15.2) (2021-02-03)
 
 
