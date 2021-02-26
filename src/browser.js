@@ -1,6 +1,6 @@
 import Consola from './consola.js'
 import BrowserReporter from './reporters/browser.js'
-import { LogLevel } from './logLevels'
+import { LogLevel } from './logLevels.js'
 
 function createConsola () {
   const consola = new Consola({
