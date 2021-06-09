@@ -166,7 +166,7 @@ An array of active reporters.
 The level to display logs. Any logs at or above this level will be displayed.
 List of available levels [here](./src/types.js).
 
-You can set the log level using the `CONSOLA_LEVEL` environment variable, which must have the numeric log level as its value.
+You can set the log level using the `CONSOLA_LEVEL` environment variable, log level name and numeric value are both works.
 
 ## `logObject`
 

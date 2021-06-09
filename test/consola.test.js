@@ -9,6 +9,15 @@ describe('consola', () => {
       consola.level = i
       expect(consola.level).toBe(i)
     }
+
+    consola.level = 'Warn'
+    expect(consola.level).toBe(1)
+
+    consola.level = 'success'
+    expect(consola.level).toBe(3)
+
+    consola.level = 'DEBUG'
+    expect(consola.level).toBe(4)
   })
 
   test('silent log level does\'t print logs', async () => {

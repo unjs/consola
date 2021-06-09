@@ -1,5 +1,6 @@
 import Types from './types.js'
 import { isLogObj } from './utils/index.js'
+import { LogLevel } from './logLevels'
 
 let paused = false
 const queue = []
@@ -47,6 +48,14 @@ class Consola {
 
   get stderr () {
     return this._stderr || console._stderr // eslint-disable-line no-console
+  }
+
+  get level () {
+    return this._level
+  }
+
+  set level (v) {
+    this._level = this._normalizeLevel(v)
   }
 
   create (options) {
@@ -307,6 +316,15 @@ class Consola {
         stderr: this.stderr
       }))
     )
+  }
+
+  _normalizeLevel (level) {
+    if (typeof level === 'number') return level
+
+    // 'WARN' => level.warn
+    if (typeof level === 'string' && level) {
+      return LogLevel[level.charAt(0).toUpperCase() + level.slice(1).toLowerCase()]
+    }
   }
 }
 
