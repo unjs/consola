@@ -5,7 +5,7 @@ function createConsola () {
   // Log level
   let level = env.debug ? 4 : 3
   if (process.env.CONSOLA_LEVEL) {
-    level = parseInt(process.env.CONSOLA_LEVEL) || level
+    level = LogLevel.normalize(process.env.CONSOLA_LEVEL)
   }
 
   // Create new consola instance

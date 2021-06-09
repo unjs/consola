@@ -55,7 +55,7 @@ class Consola {
   }
 
   set level (v) {
-    this._level = this._normalizeLevel(v)
+    this._level = LogLevel.normalize(v)
   }
 
   create (options) {
@@ -316,15 +316,6 @@ class Consola {
         stderr: this.stderr
       }))
     )
-  }
-
-  _normalizeLevel (level) {
-    if (typeof level === 'number') return level
-
-    // 'WARN' => level.warn
-    if (typeof level === 'string' && level) {
-      return LogLevel[level.charAt(0).toUpperCase() + level.slice(1).toLowerCase()]
-    }
   }
 }
 
