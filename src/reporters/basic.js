@@ -20,13 +20,13 @@ export default class BasicReporter {
   }
 
   formatStack (stack) {
-    return '  ' + parseStack(stack).join('\n  ')
+    return '\n  ' + parseStack(stack).join('\n  ')
   }
 
   formatArgs (args) {
     const _args = args.map(arg => {
       if (arg && typeof arg.stack === 'string') {
-        return arg.message + '\n' + this.formatStack(arg.stack)
+        return arg.message + this.formatStack(arg.stack)
       }
       return arg
     })
