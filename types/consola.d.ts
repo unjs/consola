@@ -125,9 +125,15 @@ export declare class Consola {
   mock(mockFn: ConsolaMockFn): any
 }
 
+interface BasicReporterFormatOptions {
+    date?: boolean,
+    colors?: boolean,
+    compact?: boolean
+}
+
 export interface BasicReporterOptions {
   dateFormat?: string;
-  formatOptions?: InspectOptions;
+  formatOptions?: BasicReporterFormatOptions;
 }
 
 export declare class BasicReporter implements ConsolaReporter {
