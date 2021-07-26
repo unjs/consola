@@ -126,9 +126,9 @@ export declare class Consola {
 }
 
 interface BasicReporterFormatOptions {
-    date?: boolean,
-    colors?: boolean,
-    compact?: boolean
+  date?: boolean
+  colors?: boolean
+  compact?: boolean
 }
 
 export interface BasicReporterOptions {
@@ -185,4 +185,3 @@ export declare class WinstonReporter implements ConsolaReporter {
 declare const consolaGlobalInstance: Consola;
 
 export default consolaGlobalInstance
-
