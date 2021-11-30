@@ -12,15 +12,14 @@ const DEFAULTS = {
     date: true,
     colors: true,
     compact: false
+  },
+  typeIcons: {
+    info: figures('ℹ'),
+    success: figures('✔'),
+    debug: figures('›'),
+    trace: figures('›'),
+    log: ''
   }
-}
-
-const TYPE_ICONS = {
-  info: figures('ℹ'),
-  success: figures('✔'),
-  debug: figures('›'),
-  trace: figures('›'),
-  log: ''
 }
 
 export default class FancyReporter extends BasicReporter {
@@ -49,7 +48,7 @@ export default class FancyReporter extends BasicReporter {
       return chalkBgColor(typeColor).black(` ${logObj.type.toUpperCase()} `)
     }
 
-    const _type = typeof TYPE_ICONS[logObj.type] === 'string' ? TYPE_ICONS[logObj.type] : (logObj.icon || logObj.type)
+    const _type = typeof this.options.typeIcons[logObj.type] === 'string' ? this.options.typeIcons[logObj.type] : (logObj.icon || logObj.type)
     return _type ? chalkColor(typeColor)(_type) : ''
   }
 

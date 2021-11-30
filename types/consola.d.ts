@@ -146,6 +146,7 @@ export declare class BasicReporter implements ConsolaReporter {
 
 export interface FancyReporterOptions extends BasicReporterOptions{
   secondaryColor?: string;
+  typeIcons?: Partial<Record<logType, string>>;
 }
 
 export declare class FancyReporter extends BasicReporter {
