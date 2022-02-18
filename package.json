@@ -3,7 +3,7 @@
   "version": "2.15.3",
   "description": "Elegant Console Logger for Node.js and Browser",
   "license": "MIT",
-  "repository": "nuxt/consola",
+  "repository": "unjs/consola",
   "main": "dist/consola.js",
   "browser": "dist/consola.browser.js",
   "typings": "types/consola.d.ts",
