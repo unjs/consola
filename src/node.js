@@ -3,7 +3,11 @@ import { Consola, BasicReporter, FancyReporter, JSONReporter, WinstonReporter, L
 
 function createConsola () {
   // Log level
-  let level = env.debug ? 4 : 3
+  let level = env.debug
+    ? LogLevel.Debug
+    : env.test
+      ? LogLevel.Warn
+      : LogLevel.Info
   if (process.env.CONSOLA_LEVEL) {
     level = parseInt(process.env.CONSOLA_LEVEL) || level
   }
