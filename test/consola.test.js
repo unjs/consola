@@ -1,4 +1,4 @@
-import { Consola, LogLevel } from '../src'
+import { Consola } from '../src'
 
 describe('consola', () => {
   test('can set level', () => {
@@ -21,7 +21,7 @@ describe('consola', () => {
 
     const consola = new Consola({
       throttle: 100,
-      level: LogLevel.Silent,
+      level: 'silent',
       reporters: [
         new TestReporter()
       ]

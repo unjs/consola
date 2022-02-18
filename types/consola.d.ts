@@ -13,6 +13,8 @@ export enum LogLevel {
   Verbose= Infinity,
 }
 
+export type LogLevelLiterals = 'fatal' | 'error' | 'warn' | 'log' | 'info' | 'success' | 'debug' | 'trace' | 'silent' | 'verbose'
+
 export type logType =
   | 'silent'
   | 'fatal'
@@ -28,7 +30,7 @@ export type logType =
   | 'start'
 
 export interface ConsolaLogObject {
-  level?: LogLevel,
+  level?: LogLevel | LogLevelLiterals,
   tag?: string,
   type?: logType,
   message?: string,
