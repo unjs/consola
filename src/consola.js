@@ -9,7 +9,7 @@ class Consola {
   constructor (options = {}) {
     this._reporters = options.reporters || []
     this._types = options.types || Types
-    this.level = normalizeLogLevel(options.level, this._types)
+    this._level = normalizeLogLevel(options.level, this._types)
     this._defaults = options.defaults || {}
     this._async = options.async !== undefined ? options.async : undefined
     this._stdout = options.stdout
@@ -40,6 +40,14 @@ class Consola {
     this._lastLogTime = undefined
     this._lastLogCount = 0
     this._throttleTimeout = undefined
+  }
+
+  get level () {
+    return this._level
+  }
+
+  set level (level) {
+    this._level = normalizeLogLevel(level, this._types)
   }
 
   get stdout () {
