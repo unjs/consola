@@ -9,3 +9,10 @@ LogLevel[LogLevel.Debug = 4] = 'Debug'
 LogLevel[LogLevel.Trace = 5] = 'Trace'
 LogLevel[LogLevel.Silent = -Infinity] = 'Silent'
 LogLevel[LogLevel.Verbose = Infinity] = 'Verbose'
+
+export function normalizeLogLevel (input, types = {}, defaultLevel = 3) {
+  if (input == null) { return defaultLevel }
+  if (typeof input === 'number') { return input }
+  if (types[input] && types[input].level != null) { return types[input].level }
+  return defaultLevel
+}
