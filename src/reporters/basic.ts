@@ -15,15 +15,17 @@ const DEFAULTS = {
 const bracket = x => x ? `[${x}]` : ''
 
 export default class BasicReporter {
-  constructor (options) {
+  options: typeof DEFAULTS
+
+  constructor(options) {
     this.options = Object.assign({}, DEFAULTS, options)
   }
 
-  formatStack (stack) {
+  formatStack(stack) {
     return '  ' + parseStack(stack).join('\n  ')
   }
 
-  formatArgs (args) {
+  formatArgs(args) {
     const _args = args.map(arg => {
       if (arg && typeof arg.stack === 'string') {
         return arg.message + '\n' + this.formatStack(arg.stack)
@@ -40,15 +42,15 @@ export default class BasicReporter {
     }
   }
 
-  formatDate (date) {
+  formatDate(date) {
     return this.options.formatOptions.date ? formatDate(this.options.dateFormat, date) : ''
   }
 
-  filterAndJoin (arr) {
+  filterAndJoin(arr) {
     return arr.filter(x => x).join(' ')
   }
 
-  formatLogObj (logObj) {
+  formatLogObj(logObj) {
     const message = this.formatArgs(logObj.args)
 
     return this.filterAndJoin([
@@ -58,7 +60,7 @@ export default class BasicReporter {
     ])
   }
 
-  log (logObj, { async, stdout, stderr } = {}) {
+  log(logObj, { async, stdout, stderr } = {}) {
     const line = this.formatLogObj(logObj, {
       width: stdout.columns || 0
     })

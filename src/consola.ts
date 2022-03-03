@@ -1,12 +1,31 @@
-import { normalizeLogLevel } from './logLevels'
-import Types from './types'
+import { normalizeLogLevel } from './log.levels'
+import Types from './log.types'
 import { isLogObj } from './utils/index'
-
+import type { ConsolaOptions } from './types'
 let paused = false
 const queue = []
 
 class Consola {
-  constructor (options = {}) {
+  _reporters: any
+  _types: any
+  _level: any
+  _defaults: any
+  _async: any
+  _stdout: any
+  _stderr: any
+  _mockFn: any
+  _throttle: any
+  _throttleMin: any
+
+  _lastLogSerialized: any
+  _lastLog: any
+  _lastLogTime: any
+  _lastLogCount: any
+  _throttleTimeout: any
+
+  options: ConsolaOptions
+
+  constructor(options: Partial<ConsolaOptions> = {}) {
     this._reporters = options.reporters || []
     this._types = options.types || Types
     this._level = normalizeLogLevel(options.level, this._types)
@@ -42,23 +61,25 @@ class Consola {
     this._throttleTimeout = undefined
   }
 
-  get level () {
+  get level() {
     return this._level
   }
 
-  set level (level) {
+  set level(level) {
     this._level = normalizeLogLevel(level, this._types)
   }
 
-  get stdout () {
+  get stdout() {
+    // @ts-ignore
     return this._stdout || console._stdout // eslint-disable-line no-console
   }
 
-  get stderr () {
+  get stderr() {
+    // @ts-ignore
     return this._stderr || console._stderr // eslint-disable-line no-console
   }
 
-  create (options) {
+  create(options: ConsolaOptions) {
     return new Consola(Object.assign({
       reporters: this._reporters,
       level: this.level,
@@ -70,24 +91,24 @@ class Consola {
     }, options))
   }
 
-  withDefaults (defaults) {
+  withDefaults(defaults) {
     return this.create({
       defaults: Object.assign({}, this._defaults, defaults)
     })
   }
 
-  withTag (tag) {
+  withTag(tag) {
     return this.withDefaults({
       tag: this._defaults.tag ? (this._defaults.tag + ':' + tag) : tag
     })
   }
 
-  addReporter (reporter) {
+  addReporter(reporter) {
     this._reporters.push(reporter)
     return this
   }
 
-  removeReporter (reporter) {
+  removeReporter(reporter) {
     if (reporter) {
       const i = this._reporters.indexOf(reporter)
       if (i >= 0) {
@@ -99,24 +120,24 @@ class Consola {
     return this
   }
 
-  setReporters (reporters) {
+  setReporters(reporters) {
     this._reporters = Array.isArray(reporters)
       ? reporters
       : [reporters]
     return this
   }
 
-  wrapAll () {
+  wrapAll() {
     this.wrapConsole()
     this.wrapStd()
   }
 
-  restoreAll () {
+  restoreAll() {
     this.restoreConsole()
     this.restoreStd()
   }
 
-  wrapConsole () {
+  wrapConsole() {
     for (const type in this._types) {
       // Backup original value
       if (!console['__' + type]) { // eslint-disable-line no-console
@@ -127,7 +148,7 @@ class Consola {
     }
   }
 
-  restoreConsole () {
+  restoreConsole() {
     for (const type in this._types) {
       // Restore if backup is available
       if (console['__' + type]) { // eslint-disable-line no-console
@@ -137,12 +158,12 @@ class Consola {
     }
   }
 
-  wrapStd () {
+  wrapStd() {
     this._wrapStream(this.stdout, 'log')
     this._wrapStream(this.stderr, 'log')
   }
 
-  _wrapStream (stream, type) {
+  _wrapStream(stream, type) {
     if (!stream) {
       return
     }
@@ -158,12 +179,12 @@ class Consola {
     }
   }
 
-  restoreStd () {
+  restoreStd() {
     this._restoreStream(this.stdout)
     this._restoreStream(this.stderr)
   }
 
-  _restoreStream (stream) {
+  _restoreStream(stream) {
     if (!stream) {
       return
     }
@@ -174,11 +195,11 @@ class Consola {
     }
   }
 
-  pauseLogs () {
+  pauseLogs() {
     paused = true
   }
 
-  resumeLogs () {
+  resumeLogs() {
     paused = false
 
     // Process queue
@@ -188,7 +209,7 @@ class Consola {
     }
   }
 
-  mockTypes (mockFn) {
+  mockTypes(mockFn?: Function) {
     this._mockFn = mockFn || this._mockFn
 
     if (typeof this._mockFn !== 'function') {
@@ -201,7 +222,7 @@ class Consola {
     }
   }
 
-  _wrapLogFn (defaults, isRaw) {
+  _wrapLogFn(defaults, isRaw?: boolean) {
     return (...args) => {
       if (paused) {
         queue.push([this, defaults, args, isRaw])
@@ -211,7 +232,7 @@ class Consola {
     }
   }
 
-  _logFn (defaults, args, isRaw) {
+  _logFn(defaults, args, isRaw) {
     if (defaults.level > this.level) {
       return this._async ? Promise.resolve(false) : false
     }
@@ -285,7 +306,7 @@ class Consola {
         if (isSameLog) {
           this._lastLogCount++
           if (this._lastLogCount > this._throttleMin) {
-          // Auto-resolve when throttle is timed out
+            // Auto-resolve when throttle is timed out
             this._throttleTimeout = setTimeout(resolveLog, this._throttle)
             return // SPAM!
           }
@@ -298,7 +319,7 @@ class Consola {
     resolveLog(true)
   }
 
-  _log (logObj) {
+  _log(logObj) {
     for (const reporter of this._reporters) {
       reporter.log(logObj, {
         async: false,
@@ -308,7 +329,7 @@ class Consola {
     }
   }
 
-  _logAsync (logObj) {
+  _logAsync(logObj) {
     return Promise.all(
       this._reporters.map(reporter => reporter.log(logObj, {
         async: true,
@@ -320,17 +341,13 @@ class Consola {
 }
 
 // Legacy support
-Consola.prototype.add = Consola.prototype.addReporter
-
-Consola.prototype.remove = Consola.prototype.removeReporter
-Consola.prototype.clear = Consola.prototype.removeReporter
-
-Consola.prototype.withScope = Consola.prototype.withTag
-
-Consola.prototype.mock = Consola.prototype.mockTypes
-
-Consola.prototype.pause = Consola.prototype.pauseLogs
-Consola.prototype.resume = Consola.prototype.resumeLogs
+// Consola.prototype.add = Consola.prototype.addReporter
+// Consola.prototype.remove = Consola.prototype.removeReporter
+// Consola.prototype.clear = Consola.prototype.removeReporter
+// Consola.prototype.withScope = Consola.prototype.withTag
+// Consola.prototype.mock = Consola.prototype.mockTypes
+// Consola.prototype.pause = Consola.prototype.pauseLogs
+// Consola.prototype.resume = Consola.prototype.resumeLogs
 
 // Export class
 export default Consola

@@ -1,5 +1,10 @@
 export default class BrowserReporter {
-  constructor (options) {
+  options: any
+  defaultColor: string
+  levelColorMap: Record<number, string>
+  typeColorMap: Record<string, string>
+
+  constructor(options) {
     this.options = Object.assign({}, options)
 
     this.defaultColor = '#7f8c8d' // Gray
@@ -13,7 +18,7 @@ export default class BrowserReporter {
     }
   }
 
-  log (logObj) {
+  log(logObj) {
     const consoleLogFn = logObj.level < 1
       // eslint-disable-next-line no-console
       ? (console.__error || console.error)

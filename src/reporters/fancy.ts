@@ -1,5 +1,5 @@
 import stringWidth from 'string-width'
-import figures from 'figures'
+import { mainSymbols } from 'figures'
 import chalk from 'chalk'
 import BasicReporter from './basic'
 import { parseStack } from '../utils/error'
@@ -16,19 +16,19 @@ const DEFAULTS = {
 }
 
 const TYPE_ICONS = {
-  info: figures('ℹ'),
-  success: figures('✔'),
-  debug: figures('›'),
-  trace: figures('›'),
+  info: mainSymbols.info,
+  success: mainSymbols.tick,
+  debug: mainSymbols.pointerSmall,
+  trace: mainSymbols.pointerSmall,
   log: ''
 }
 
 export default class FancyReporter extends BasicReporter {
-  constructor (options) {
+  constructor(options) {
     super(Object.assign({}, DEFAULTS, options))
   }
 
-  formatStack (stack) {
+  formatStack(stack) {
     const grey = chalkColor('grey')
     const cyan = chalkColor('cyan')
 
@@ -40,7 +40,7 @@ export default class FancyReporter extends BasicReporter {
       .join('\n')
   }
 
-  formatType (logObj, isBadge) {
+  formatType(logObj, isBadge) {
     const typeColor = TYPE_COLOR_MAP[logObj.type] ||
       LEVEL_COLOR_MAP[logObj.level] ||
       this.options.secondaryColor
@@ -53,7 +53,7 @@ export default class FancyReporter extends BasicReporter {
     return _type ? chalkColor(typeColor)(_type) : ''
   }
 
-  formatLogObj (logObj, { width }) {
+  formatLogObj(logObj, { width }) {
     const [message, ...additional] = this.formatArgs(logObj.args).split('\n')
 
     const isBadge = typeof logObj.badge !== 'undefined' ? Boolean(logObj.badge) : logObj.level < 2

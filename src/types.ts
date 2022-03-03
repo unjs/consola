@@ -1,19 +1,8 @@
 import { InspectOptions } from 'util';
 
-export enum LogLevel {
-  Fatal= 0,
-  Error= 0,
-  Warn= 1,
-  Log= 2,
-  Info= 3,
-  Success= 3,
-  Debug= 4,
-  Trace= 5,
-  Silent= -Infinity,
-  Verbose= Infinity,
-}
 
-export type LogLevelLiterals = 'fatal' | 'error' | 'warn' | 'log' | 'info' | 'success' | 'debug' | 'trace' | 'silent' | 'verbose'
+export type LogLevelLiteral = 'fatal' | 'error' | 'warn' | 'log' | 'info' | 'success' | 'debug' | 'trace' | 'silent' | 'verbose'
+export type LogLevel = 0 | 1 | 2 | 3 | 4 | 5
 
 export type logType =
   | 'silent'
@@ -30,7 +19,7 @@ export type logType =
   | 'start'
 
 export interface ConsolaLogObject {
-  level?: LogLevel | LogLevelLiterals,
+  level?: LogLevel | LogLevelLiteral,
   tag?: string,
   type?: logType,
   message?: string,
@@ -71,6 +60,7 @@ export interface ConsolaOptions {
   stderr?: NodeJS.WritableStream,
   mockFn?: ConsolaMockFn,
   throttle?: number,
+  throttleMin?: number
 }
 
 export declare class Consola {
@@ -146,7 +136,7 @@ export declare class BasicReporter implements ConsolaReporter {
   protected formatLogObj(logObj: ConsolaReporterLogObject): string;
 }
 
-export interface FancyReporterOptions extends BasicReporterOptions{
+export interface FancyReporterOptions extends BasicReporterOptions {
   secondaryColor?: string;
 }
 
