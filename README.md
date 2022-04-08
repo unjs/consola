@@ -235,16 +235,16 @@ const logger = consola.create({
 ```js
 describe('your-consola-mock-test', () => {
   beforeAll(() => {
-      // Redirect std and console to consola too
-      // Calling this once is sufficient
-      consola.wrapAll()
-    })
+    // Redirect std and console to consola too
+    // Calling this once is sufficient
+    consola.wrapAll()
+  })
 
-    beforeEach(() => {
-      // Re-mock consola before each test call to remove
-      // calls from before
-      consola.mockTypes(() => jest.fn())
-    })
+  beforeEach(() => {
+    // Re-mock consola before each test call to remove
+    // calls from before
+    consola.mockTypes(() => jest.fn())
+  })
 
 
   test('your test', async () => {
