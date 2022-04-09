@@ -65,7 +65,7 @@
     "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-standard": "^4.1.0",
     "esm": "^3.2.25",
-    "figures": "^3.2.0",
+    "figures": "^4.0.1",
     "jest": "^26.6.3",
     "lodash": "^4.17.21",
     "sentencer": "^0.2.1",
