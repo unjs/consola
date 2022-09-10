@@ -178,7 +178,7 @@ export declare class WinstonReporter implements ConsolaReporter {
   public log(logObj: ConsolaReporterLogObject, args: ConsolaReporterArgs): void;
 }
 
-declare const consolaGlobalInstance: Consola;
+declare const consola: Consola;
 
-export default consolaGlobalInstance
+export default consola
 
