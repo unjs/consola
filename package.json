@@ -49,14 +49,14 @@
     }
   ],
   "devDependencies": {
-    "@babel/core": "^7.17.9",
-    "@babel/preset-env": "^7.16.11",
+    "@babel/core": "^7.20.5",
+    "@babel/preset-env": "^7.20.2",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.3",
     "benchmark": "^2.1.4",
     "bili": "^4.10.1",
     "chalk": "^4.1.2",
-    "dayjs": "^1.11.0",
+    "dayjs": "^1.11.7",
     "eslint": "^7.32.0",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.26.0",
@@ -75,6 +75,6 @@
     "string-width": "^4.2.3",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.10",
-    "winston": "^3.7.2"
+    "winston": "^3.8.2"
   }
 }
