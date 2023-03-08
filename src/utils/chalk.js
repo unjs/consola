@@ -2,6 +2,8 @@ import chalk from 'chalk'
 
 const _colorCache = {}
 
+export { chalk }
+
 export function chalkColor (name) {
   let color = _colorCache[name]
   if (color) {
