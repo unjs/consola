@@ -18,20 +18,20 @@
   "exports": {
     ".": {
       "node": {
-        "types": "./dist/consola.node.d.ts",
-        "require": "./dist/consola.node.cjs",
-        "import": "./dist/consola.node.mjs"
+        "types": "./dist/index.d.ts",
+        "require": "./dist/index.cjs",
+        "import": "./dist/index.mjs"
       },
       "default": {
-        "types": "./dist/consola.browser.d.ts",
-        "require": "./dist/consola.browser.cjs",
-        "import": "./dist/consola.browser.mjs"
+        "types": "./dist/index.browser.d.ts",
+        "require": "./dist/index.browser.cjs",
+        "import": "./dist/index.browser.mjs"
       }
     }
   },
-  "main": "./dist/consola.node.cjs",
-  "module": "./dist/consola.node.mjs",
-  "types": "./dist/consola.node.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist",
     "types"

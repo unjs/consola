@@ -2,7 +2,6 @@ export function isPlainObject(obj) {
   return Object.prototype.toString.call(obj) === "[object Object]";
 }
 
-// TODO: remove for consola@3
 export function isLogObj(arg) {
   // Should be plain object
   if (!isPlainObject(arg)) {

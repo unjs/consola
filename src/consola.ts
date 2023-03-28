@@ -1,11 +1,12 @@
 import { normalizeLogLevel } from "./log.levels";
-import Types from "./log.types";
+import { Types } from "./log.types";
 import { isLogObj } from "./utils/index";
 import type { ConsolaOptions } from "./types";
+
 let paused = false;
 const queue = [];
 
-class Consola {
+export class Consola {
   _reporters: any;
   _types: any;
   _level: any;
@@ -356,13 +357,21 @@ class Consola {
 }
 
 // Legacy support
-// Consola.prototype.add = Consola.prototype.addReporter
-// Consola.prototype.remove = Consola.prototype.removeReporter
-// Consola.prototype.clear = Consola.prototype.removeReporter
-// Consola.prototype.withScope = Consola.prototype.withTag
-// Consola.prototype.mock = Consola.prototype.mockTypes
-// Consola.prototype.pause = Consola.prototype.pauseLogs
-// Consola.prototype.resume = Consola.prototype.resumeLogs
+// @ts-expect-error
+Consola.prototype.add = Consola.prototype.addReporter;
+// @ts-expect-error
+Consola.prototype.remove = Consola.prototype.removeReporter;
+// @ts-expect-error
+Consola.prototype.clear = Consola.prototype.removeReporter;
+// @ts-expect-error
+Consola.prototype.withScope = Consola.prototype.withTag;
+// @ts-expect-error
+Consola.prototype.mock = Consola.prototype.mockTypes;
+// @ts-expect-error
+Consola.prototype.pause = Consola.prototype.pauseLogs;
+// @ts-expect-error
+Consola.prototype.resume = Consola.prototype.resumeLogs;
 
-// Export class
-export default Consola;
+export function createConsola(options: Partial<ConsolaOptions>) {
+  return new Consola(options);
+}

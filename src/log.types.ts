@@ -1,6 +1,6 @@
 import { LogLevels } from "./log.levels";
 
-export default {
+export const Types = {
   // Silent
   silent: {
     level: -1,
