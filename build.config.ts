@@ -1,7 +1,15 @@
-import { defineBuildConfig } from 'unbuild'
+import { defineBuildConfig } from "unbuild";
 
 export default defineBuildConfig({
   rollup: {
-    inlineDependencies: true
-  }
-})
+    inlineDependencies: true,
+  },
+  hooks: {
+    "rollup:options"(_, options) {
+      for (const output of options.output) {
+        // @ts-ignore
+        output.exports = "named";
+      }
+    },
+  },
+});
