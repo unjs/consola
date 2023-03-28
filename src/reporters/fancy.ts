@@ -1,8 +1,7 @@
 import stringWidth from "string-width";
 import { mainSymbols } from "figures";
-import chalk from "chalk";
+import * as colors from "colorette";
 import { parseStack } from "../utils/error";
-import { chalkColor, chalkBgColor } from "../utils/chalk";
 import { TYPE_COLOR_MAP, LEVEL_COLOR_MAP } from "../utils/fancy";
 import BasicReporter from "./basic";
 
@@ -29,9 +28,6 @@ export default class FancyReporter extends BasicReporter {
   }
 
   formatStack(stack) {
-    const grey = chalkColor("grey");
-    const cyan = chalkColor("cyan");
-
     return (
       "\n" +
       parseStack(stack)
@@ -39,8 +35,8 @@ export default class FancyReporter extends BasicReporter {
           (line) =>
             "  " +
             line
-              .replace(/^at +/, (m) => grey(m))
-              .replace(/\((.+)\)/, (_, m) => `(${cyan(m)})`)
+              .replace(/^at +/, (m) => colors.gray(m))
+              .replace(/\((.+)\)/, (_, m) => `(${colors.cyan(m)})`)
         )
         .join("\n")
     );
@@ -53,14 +49,16 @@ export default class FancyReporter extends BasicReporter {
       this.options.secondaryColor;
 
     if (isBadge) {
-      return chalkBgColor(typeColor).black(` ${logObj.type.toUpperCase()} `);
+      return getBgColor(typeColor)(
+        colors.black(` ${logObj.type.toUpperCase()} `)
+      );
     }
 
     const _type =
       typeof TYPE_ICONS[logObj.type] === "string"
         ? TYPE_ICONS[logObj.type]
         : logObj.icon || logObj.type;
-    return _type ? chalkColor(typeColor)(_type) : "";
+    return _type ? getColor(typeColor)(_type) : "";
   }
 
   formatLogObj(logObj, { width }) {
@@ -71,7 +69,7 @@ export default class FancyReporter extends BasicReporter {
         ? Boolean(logObj.badge)
         : logObj.level < 2;
 
-    const secondaryColor = chalkColor(this.options.secondaryColor);
+    const secondaryColor = getColor(this.options.secondaryColor);
 
     const date = this.formatDate(logObj.date);
     const coloredDate = date && secondaryColor(date);
@@ -81,7 +79,7 @@ export default class FancyReporter extends BasicReporter {
     const tag = logObj.tag ? secondaryColor(logObj.tag) : "";
 
     const formattedMessage = message.replace(/`([^`]+)`/g, (_, m) =>
-      chalk.cyan(m)
+      colors.cyan(m)
     );
 
     let line;
@@ -95,4 +93,15 @@ export default class FancyReporter extends BasicReporter {
 
     return isBadge ? "\n" + line + "\n" : line;
   }
+}
+
+function getColor(color: string) {
+  return (colors as any)[color] || colors.white;
+}
+
+function getBgColor(color: string) {
+  return (
+    (colors as any)[`bg${color[0].toUpperCase()}${color.slice(1)}`] ||
+    colors.bgWhite
+  );
 }

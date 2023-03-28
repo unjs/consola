@@ -48,8 +48,8 @@
   "devDependencies": {
     "@types/node": "^18.15.10",
     "@vitest/coverage-c8": "^0.29.8",
-    "chalk": "^5.2.0",
     "changelogen": "^0.5.2",
+    "colorette": "^2.0.19",
     "dayjs": "^1.11.7",
     "eslint": "^8.36.0",
     "eslint-config-unjs": "^0.1.0",
