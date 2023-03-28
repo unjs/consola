@@ -1,42 +1,42 @@
 export function assignGlobalReference(newInstance, referenceKey) {
   if (
     !newInstance.constructor ||
-    (global[referenceKey] && !global[referenceKey].constructor)
+    (globalThis[referenceKey] && !globalThis[referenceKey].constructor)
   ) {
     throw new Error(
       "Assigning to global reference is only supported for class instances"
     );
-  } else if (newInstance.constructor && !global[referenceKey]) {
-    global[referenceKey] = newInstance;
+  } else if (newInstance.constructor && !globalThis[referenceKey]) {
+    globalThis[referenceKey] = newInstance;
   } else if (
     !(
-      newInstance instanceof global[referenceKey].constructor ||
-      global[referenceKey] instanceof newInstance.constructor
+      newInstance instanceof globalThis[referenceKey].constructor ||
+      globalThis[referenceKey] instanceof newInstance.constructor
     )
   ) {
     throw new TypeError(
-      `Not a ${global[referenceKey].constructor.name} instance`
+      `Not a ${globalThis[referenceKey].constructor.name} instance`
     );
   }
 
-  const oldInstance = Object.create(global[referenceKey]);
+  const oldInstance = Object.create(globalThis[referenceKey]);
 
-  for (const prop in global[referenceKey]) {
-    oldInstance[prop] = global[referenceKey][prop];
-    delete global[referenceKey][prop];
+  for (const prop in globalThis[referenceKey]) {
+    oldInstance[prop] = globalThis[referenceKey][prop];
+    delete globalThis[referenceKey][prop];
   }
 
-  for (const prop of Object.getOwnPropertySymbols(global[referenceKey])) {
-    oldInstance[prop] = global[referenceKey][prop];
-    delete global[referenceKey][prop];
+  for (const prop of Object.getOwnPropertySymbols(globalThis[referenceKey])) {
+    oldInstance[prop] = globalThis[referenceKey][prop];
+    delete globalThis[referenceKey][prop];
   }
 
   for (const prop in newInstance) {
-    global[referenceKey][prop] = newInstance[prop];
+    globalThis[referenceKey][prop] = newInstance[prop];
   }
 
   for (const prop of Object.getOwnPropertySymbols(newInstance)) {
-    global[referenceKey][prop] = newInstance[prop];
+    globalThis[referenceKey][prop] = newInstance[prop];
   }
 
   return oldInstance;
