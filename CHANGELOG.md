@@ -6,40 +6,41 @@ All notable changes to this project will be documented in this file. See [standa
 
 [compare changes](https://github.com/unjs/consola/compare/v2.15.3...v3.0.0-1)
 
+>
 
 ### 🚀 Enhancements
 
-  - Default `logLevel` to 1 in test environments ([#134](https://github.com/unjs/consola/pull/134))
-  - Support literal for logLevels ([#133](https://github.com/unjs/consola/pull/133))
-  - Expose `createConsola` and named exports ([ef6e5e5](https://github.com/unjs/consola/commit/ef6e5e5))
+- Default `logLevel` to 1 in test environments ([#134](https://github.com/unjs/consola/pull/134))
+- Support literal for logLevels ([#133](https://github.com/unjs/consola/pull/133))
+- Expose `createConsola` and named exports ([ef6e5e5](https://github.com/unjs/consola/commit/ef6e5e5))
 
 ### 🔥 Performance
 
-  - Switch from chalk to colorette ([271b4db](https://github.com/unjs/consola/commit/271b4db))
-  - Remove `dayjs` dependency ([d6a3776](https://github.com/unjs/consola/commit/d6a3776))
+- Switch from chalk to colorette ([271b4db](https://github.com/unjs/consola/commit/271b4db))
+- Remove `dayjs` dependency ([d6a3776](https://github.com/unjs/consola/commit/d6a3776))
 
 ### 💅 Refactors
 
-  - ⚠️  Rewrite consola with typescript ([4479d2f](https://github.com/unjs/consola/commit/4479d2f))
-  - Rename `global` to `globalThis` ([bd03098](https://github.com/unjs/consola/commit/bd03098))
-  - **utils:** Rename `global` to `globalThis` ([8c3ef77](https://github.com/unjs/consola/commit/8c3ef77))
-  - Strict typechecks ([63bbd56](https://github.com/unjs/consola/commit/63bbd56))
+- ⚠️ Rewrite consola with typescript ([4479d2f](https://github.com/unjs/consola/commit/4479d2f))
+- Rename `global` to `globalThis` ([bd03098](https://github.com/unjs/consola/commit/bd03098))
+- **utils:** Rename `global` to `globalThis` ([8c3ef77](https://github.com/unjs/consola/commit/8c3ef77))
+- Strict typechecks ([63bbd56](https://github.com/unjs/consola/commit/63bbd56))
 
 ### 🏡 Chore
 
-  - Make example/index.js working ([#110](https://github.com/unjs/consola/pull/110))
-  - Add LICENSE ([#121](https://github.com/unjs/consola/pull/121))
-  - **npm:** Update repository to unjs orgnization ([#125](https://github.com/unjs/consola/pull/125))
-  - Add prerelease script ([cfaba5e](https://github.com/unjs/consola/commit/cfaba5e))
-  - Hide rollup warn ([5c3b7f1](https://github.com/unjs/consola/commit/5c3b7f1))
-  - Ignore coverage ([da557ac](https://github.com/unjs/consola/commit/da557ac))
-  - Update examples ([e07e3ab](https://github.com/unjs/consola/commit/e07e3ab))
+- Make example/index.js working ([#110](https://github.com/unjs/consola/pull/110))
+- Add LICENSE ([#121](https://github.com/unjs/consola/pull/121))
+- **npm:** Update repository to unjs orgnization ([#125](https://github.com/unjs/consola/pull/125))
+- Add prerelease script ([cfaba5e](https://github.com/unjs/consola/commit/cfaba5e))
+- Hide rollup warn ([5c3b7f1](https://github.com/unjs/consola/commit/5c3b7f1))
+- Ignore coverage ([da557ac](https://github.com/unjs/consola/commit/da557ac))
+- Update examples ([e07e3ab](https://github.com/unjs/consola/commit/e07e3ab))
 
-#### ⚠️  Breaking Changes
+#### ⚠️ Breaking Changes
 
-  - ⚠️  Rewrite consola with typescript ([4479d2f](https://github.com/unjs/consola/commit/4479d2f))
+- ⚠️ Rewrite consola with typescript ([4479d2f](https://github.com/unjs/consola/commit/4479d2f))
 
-### ❤️  Contributors
+### ❤️ Contributors
 
 - Pooya Parsa ([@pi0](http://github.com/pi0))
 - Anthony Fu <anthonyfu117@hotmail.com>

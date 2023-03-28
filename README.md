@@ -26,25 +26,29 @@
 Using npm:
 
 ```bash
-npm i consola
+npm i consola@3x
 ```
 
 Using yarn:
 
 ```bash
-yarn add consola
+yarn add consola@3x
 ```
 
 Using pnpm:
 
 ```bash
-pnpm i consola
+pnpm i consola@3x
 ```
 
 ## Getting Started
 
 ```js
-const consola = require("consola");
+// ESM
+import { consola } from "consola";
+
+// CommonJS
+const { consola } = require("consola");
 
 // See types section for all available types
 
@@ -56,13 +60,6 @@ consola.error(new Error("Foo"));
 Will display in the terminal:
 
 ![Screenshot 2020-01-28 at 14 15 15](https://user-images.githubusercontent.com/904724/73267133-af6b2f00-41d8-11ea-9f16-4a8243d19c43.png)
-
-**NOTE:** Alternatively, you can import consola from source. But don't forget to whitelist it for transpilation:
-
-```js
-import consola from "consola/src/node";
-import consola from "consola/src/browser";
-```
 
 ## Methods
 
@@ -232,7 +229,7 @@ const logger = consola.create({
 
 ## Integrations
 
-### With jest
+### With jest or vitest
 
 ```js
 describe("your-consola-mock-test", () => {
