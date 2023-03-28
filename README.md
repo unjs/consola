@@ -8,8 +8,6 @@
 
 <!-- [![Codecov][codecov-src]][codecov-href] -->
 
-[![License][license-src]][license-href]
-
 ## Why Consola?
 
 👌&nbsp; Easy to use<br>
@@ -280,5 +278,3 @@ MIT
 [codecov-href]: https://codecov.io/gh/unjs/consola
 [bundle-src]: https://img.shields.io/bundlephobia/min/consola?style=flat&colorA=18181B&colorB=F0DB4F
 [bundle-href]: https://bundlephobia.com/result?p=consola
-
-<
