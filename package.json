@@ -41,7 +41,7 @@
     "dev": "vitest",
     "lint": "eslint . && prettier -c src examples test",
     "lint:fix": "eslint . --fix && prettier -w src examples test",
-    "prerelease": "pnpm test && pnpm build && changelogen --release --prerelease --push && npm publish --tag next",
+    "prerelease": "pnpm test && pnpm build && changelogen --release --prerelease --push && npm publish --tag 3x",
     "release": "pnpm prerelease",
     "test": "pnpm lint && pnpm build && pnpm vitest run --coverage"
   },
