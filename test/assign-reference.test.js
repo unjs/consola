@@ -20,7 +20,7 @@ describe("assignGlobalConsola", () => {
     const symbol1 = "my-symbol1";
     const consola1 = new TestClass("my-consola1");
     consola1.symbol = symbol1;
-    global.consola = consola1;
+    globalThis.consola = consola1;
     const json1 = JSON.stringify(consola1);
 
     const symbol2 = "my-symbol2";
@@ -31,13 +31,13 @@ describe("assignGlobalConsola", () => {
     expect(consola3).not.toBe(consola1);
     expect(consola3.symbol).toBe(symbol1);
 
-    expect(global.consola).toBe(consola1);
-    expect(global.consola).not.toBe(consola2);
-    expect(global.consola).not.toBe(consola3);
+    expect(globalThis.consola).toBe(consola1);
+    expect(globalThis.consola).not.toBe(consola2);
+    expect(globalThis.consola).not.toBe(consola3);
 
-    expect(global.consola.symbol).toBe(consola1.symbol);
-    expect(global.consola.symbol).toBe(consola2.symbol);
-    expect(global.consola.symbol).not.toBe(consola3.symbol);
+    expect(globalThis.consola.symbol).toBe(consola1.symbol);
+    expect(globalThis.consola.symbol).toBe(consola2.symbol);
+    expect(globalThis.consola.symbol).not.toBe(consola3.symbol);
 
     expect(JSON.stringify(consola1)).toEqual(JSON.stringify(consola2));
     expect(JSON.stringify(consola3)).toEqual(json1);
@@ -60,7 +60,7 @@ describe("assignGlobalConsola", () => {
 
     const param1 = "my-consola1";
     const consola1 = new TestClass(param1);
-    global.consola = consola1;
+    globalThis.consola = consola1;
 
     expect(consola1.fn()).toBe(param1);
 
@@ -70,13 +70,13 @@ describe("assignGlobalConsola", () => {
 
     expect(consola2.fn()).toBe(param2);
     expect(consola3.fn()).toBe(param1);
-    expect(global.consola.fn()).toBe(param2);
+    expect(globalThis.consola.fn()).toBe(param2);
   });
 
   test("cannot assign different constructor", () => {
     class TestClass {}
     class TestClass2 {}
-    global.consola = new TestClass();
+    globalThis.consola = new TestClass();
 
     expect(() => {
       assignGlobalConsola(new TestClass2());
@@ -86,7 +86,7 @@ describe("assignGlobalConsola", () => {
   test("can assign inherited constructor to base", () => {
     class TestClass {}
     class TestClass2 extends TestClass {}
-    global.consola = new TestClass();
+    globalThis.consola = new TestClass();
 
     expect(() => {
       assignGlobalConsola(new TestClass2());
@@ -97,7 +97,7 @@ describe("assignGlobalConsola", () => {
     class TestClass {}
     class TestClass2 extends TestClass {}
     class TestClass3 extends TestClass2 {}
-    global.consola = new TestClass3();
+    globalThis.consola = new TestClass3();
 
     expect(() => {
       assignGlobalConsola(new TestClass());

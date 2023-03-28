@@ -43,8 +43,8 @@ function createConsola() {
   return consola;
 }
 
-if (!global.consola) {
-  global.consola = createConsola();
+if (!globalThis.consola) {
+  globalThis.consola = createConsola();
 }
 
-export default global.consola;
+export default globalThis.consola;
