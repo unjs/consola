@@ -1,6 +1,4 @@
-![consola](.github/banner.svg)
-
-# Consola
+# 🐨 Consola
 
 > Elegant Console Logger for Node.js and Browser
 
@@ -25,28 +23,34 @@
 
 ## Installation
 
-Using yarn:
-
-```bash
-yarn add consola
-```
-
 Using npm:
 
 ```bash
 npm i consola
 ```
 
+Using yarn:
+
+```bash
+yarn add consola
+```
+
+Using pnpm:
+
+```bash
+pnpm i consola
+```
+
 ## Getting Started
 
 ```js
-const consola = require('consola')
+const consola = require("consola");
 
 // See types section for all available types
 
-consola.success('Built!')
-consola.info('Reporter: Some info')
-consola.error(new Error('Foo'))
+consola.success("Built!");
+consola.info("Reporter: Some info");
+consola.error(new Error("Foo"));
 ```
 
 Will display in the terminal:
@@ -56,8 +60,8 @@ Will display in the terminal:
 **NOTE:** Alternatively, you can import consola from source. But don't forget to whitelist it for transpilation:
 
 ```js
-import consola from 'consola/src/node'
-import consola from 'consola/src/browser'
+import consola from "consola/src/node";
+import consola from "consola/src/browser";
 ```
 
 ## Methods
@@ -134,14 +138,14 @@ Mock all types. Useful for using with tests.
 The first argument passed to `mockTypes` should be a callback function accepting `(typeName, type)` and returning the mocked value:
 
 ```js
-consola.mockTypes((typeName, type) => jest.fn())
+consola.mockTypes((typeName, type) => jest.fn());
 ```
 
 Please note that with the example above, everything is mocked independently for each type. If you need one mocked fn create it outside:
 
 ```js
-const fn = jest.fn()
-consola.mockTypes(() => fn)
+const fn = jest.fn();
+consola.mockTypes(() => fn);
 ```
 
 If callback function returns a _falsy_ value, that type won't be mocked.
@@ -149,7 +153,7 @@ If callback function returns a _falsy_ value, that type won't be mocked.
 For example if you just need to mock `consola.fatal`:
 
 ```js
-consola.mockTypes((typeName) => typeName === 'fatal' && jest.fn())
+consola.mockTypes((typeName) => typeName === "fatal" && jest.fn());
 ```
 
 **NOTE:** Any instance of consola that inherits the mocked instance, will apply provided callback again.
@@ -215,17 +219,15 @@ Consola has a global instance and is recommended to use everywhere.
 In case more control is needed, create a new instance.
 
 ```js
-import consola from 'consola'
+import consola from "consola";
 
 const logger = consola.create({
-    // level: 4,
-    reporters: [
-      new consola.JSONReporter()
-    ],
-    defaults: {
-      additionalColor: 'white'
-    }
-})
+  // level: 4,
+  reporters: [new consola.JSONReporter()],
+  defaults: {
+    additionalColor: "white",
+  },
+});
 ```
 
 ## Integrations
@@ -233,56 +235,51 @@ const logger = consola.create({
 ### With jest
 
 ```js
-describe('your-consola-mock-test', () => {
+describe("your-consola-mock-test", () => {
   beforeAll(() => {
-      // Redirect std and console to consola too
-      // Calling this once is sufficient
-      consola.wrapAll()
-    })
+    // Redirect std and console to consola too
+    // Calling this once is sufficient
+    consola.wrapAll();
+  });
 
-    beforeEach(() => {
-      // Re-mock consola before each test call to remove
-      // calls from before
-      consola.mockTypes(() => jest.fn())
-    })
+  beforeEach(() => {
+    // Re-mock consola before each test call to remove
+    // calls from before
+    consola.mockTypes(() => jest.fn());
+  });
 
-
-  test('your test', async () => {
+  test("your test", async () => {
     // Some code here
 
     // Let's retrieve all messages of `consola.log`
     // Get the mock and map all calls to their first argument
-    const consolaMessages = consola.log.mock.calls.map(c => c[0])
-    expect(consolaMessages).toContain('your message')
-  })
-
-})
+    const consolaMessages = consola.log.mock.calls.map((c) => c[0]);
+    expect(consolaMessages).toContain("your message");
+  });
+});
 ```
 
 ### With jsdom
 
 ```js
 {
-  virtualConsole: new jsdom.VirtualConsole().sendTo(consola)
+  virtualConsole: new jsdom.VirtualConsole().sendTo(consola);
 }
 ```
 
 ## License
 
-MIT - Made with 💖 By Nuxt.js team!
+MIT
 
 <!-- Refs -->
+
 [standard-js-src]: https://flat.badgen.net/badge/code%20style/standard/green
 [standard-js-href]: https://standardjs.com
-
 [npm-version-src]: https://flat.badgen.net/npm/v/consola/latest
 [npm-version-href]: https://npmjs.com/package/consola
-
 [npm-downloads-src]: https://flat.badgen.net/npm/dt/consola
 [npm-downloads-href]: https://npmjs.com/package/consola
-
 [package-phobia-src]: https://flat.badgen.net/packagephobia/install/consola
 [package-phobia-href]: https://packagephobia.now.sh/result?p=consola
-
 [bundle-phobia-src]: https://flat.badgen.net/bundlephobia/minzip/consola
 [bundle-phobia-href]: https://bundlephobia.com/result?p=consola

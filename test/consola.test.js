@@ -1,64 +1,60 @@
-import { Consola } from '../src'
+import { Consola } from "../src";
 
-describe('consola', () => {
-  test('can set level', () => {
-    const consola = new Consola()
-    expect(consola.level).toBe(3)
+describe("consola", () => {
+  test("can set level", () => {
+    const consola = new Consola();
+    expect(consola.level).toBe(3);
 
     for (let i = 0; i <= 5; i++) {
-      consola.level = i
-      expect(consola.level).toBe(i)
+      consola.level = i;
+      expect(consola.level).toBe(i);
     }
-  })
+  });
 
-  test('silent log level does\'t print logs', async () => {
-    const logs = []
+  test("silent log level does't print logs", async () => {
+    const logs = [];
     class TestReporter {
-      log (logObj) {
-        logs.push(logObj)
+      log(logObj) {
+        logs.push(logObj);
       }
     }
 
     const consola = new Consola({
       throttle: 100,
-      level: 'silent',
-      reporters: [
-        new TestReporter()
-      ]
-    })
+      level: "silent",
+      reporters: [new TestReporter()],
+    });
     for (let i = 0; i < 10; i++) {
-      consola.log('SPAM')
+      consola.log("SPAM");
     }
-    await wait(200)
-    expect(logs.length).toBe(0)
-  })
+    await wait(200);
+    expect(logs.length).toBe(0);
+  });
 
-  test('can see spams without ending log', async () => {
-    const logs = []
+  test("can see spams without ending log", async () => {
+    const logs = [];
     class TestReporter {
-      log (logObj) {
-        logs.push(logObj)
+      log(logObj) {
+        logs.push(logObj);
       }
     }
 
     const consola = new Consola({
       throttle: 100,
-      reporters: [
-        new TestReporter()
-      ]
-    })
+      reporters: [new TestReporter()],
+    });
     for (let i = 0; i < 10; i++) {
-      consola.log('SPAM')
+      consola.log("SPAM");
     }
-    await wait(200)
-    expect(logs.length).toBe(7)
+    await wait(200);
+    expect(logs.length).toBe(7);
     // 6 + Last one indicating it repeated 4
-    expect(logs[logs.length - 1].args).toEqual(['SPAM', '(repeated 4 times)'])
-  })
-})
+    expect(logs[logs.length - 1].args).toEqual(["SPAM", "(repeated 4 times)"]);
+  });
+});
 
-function wait (delay) {
+function wait(delay) {
   return new Promise((resolve) => {
-    setTimeout(resolve, delay)
-  })
+    setTimeout(resolve, delay);
+  });
 }

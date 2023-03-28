@@ -6,19 +6,19 @@
   <body>
     Open developer tools to see the magic!
     <script type="module">
-      import consola from '../src/browser.js'
-      consola.level = 5
+      import consola from "../src/browser.js";
+      consola.level = 5;
 
-      consola.wrapAll()
+      consola.wrapAll();
 
       for (let type of Object.keys(consola._types).sort()) {
-          consola[type]('Open developer tools to see the magic!')
+        consola[type]("Open developer tools to see the magic!");
       }
 
-      consola.withTag('customTag').info('Im from custom world!')
-      consola.withTag('customTag').log('Im from custom world!')
+      consola.withTag("customTag").info("Im from custom world!");
+      consola.withTag("customTag").log("Im from custom world!");
 
-      consola.error(new Error('Whoo Haha'))
+      consola.error(new Error("Whoo Haha"));
     </script>
   </body>
 </html>
