@@ -1,7 +1,11 @@
 import { writeSync } from "node:fs";
 
-export function writeStream(data, stream, mode = "default") {
-  const write = stream.__write || stream.write;
+export function writeStream(
+  data: any,
+  stream: NodeJS.WriteStream,
+  mode = "default"
+) {
+  const write = (stream as any).__write || stream.write;
 
   switch (mode) {
     case "async":
@@ -15,7 +19,7 @@ export function writeStream(data, stream, mode = "default") {
         }
       });
     case "sync":
-      return writeSync(stream.fd, data);
+      return writeSync((stream as any).fd, data);
     default:
       return write.call(stream, data);
   }

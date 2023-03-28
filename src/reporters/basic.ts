@@ -1,4 +1,5 @@
 import util from "node:util";
+import { ConsolaReporterLogObject } from "../types";
 import { parseStack } from "../utils/error";
 import { writeStream } from "../utils/stream";
 
@@ -10,20 +11,20 @@ const DEFAULTS = {
   },
 };
 
-const bracket = (x) => (x ? `[${x}]` : "");
+const bracket = (x: string) => (x ? `[${x}]` : "");
 
 export default class BasicReporter {
   options: typeof DEFAULTS;
 
-  constructor(options) {
+  constructor(options: Partial<typeof DEFAULTS>) {
     this.options = Object.assign({}, DEFAULTS, options);
   }
 
-  formatStack(stack) {
+  formatStack(stack: string) {
     return "  " + parseStack(stack).join("\n  ");
   }
 
-  formatArgs(args) {
+  formatArgs(args: any[]) {
     const _args = args.map((arg) => {
       if (arg && typeof arg.stack === "string") {
         return arg.message + "\n" + this.formatStack(arg.stack);
@@ -38,15 +39,15 @@ export default class BasicReporter {
       : util.format(..._args);
   }
 
-  formatDate(date) {
+  formatDate(date: Date) {
     return this.options.formatOptions.date ? date.toLocaleTimeString() : "";
   }
 
-  filterAndJoin(arr) {
+  filterAndJoin(arr: any[]) {
     return arr.filter(Boolean).join(" ");
   }
 
-  formatLogObj(logObj) {
+  formatLogObj(logObj: ConsolaReporterLogObject, _opts: any) {
     const message = this.formatArgs(logObj.args);
 
     return this.filterAndJoin([
@@ -56,7 +57,7 @@ export default class BasicReporter {
     ]);
   }
 
-  log(logObj, { async, stdout, stderr } = {}) {
+  log(logObj: ConsolaReporterLogObject, { async, stdout, stderr }: any = {}) {
     const line = this.formatLogObj(logObj, {
       width: stdout.columns || 0,
     });

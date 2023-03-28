@@ -11,7 +11,11 @@ export const LogLevels = {
   Verbose: Number.POSITIVE_INFINITY,
 };
 
-export function normalizeLogLevel(input, types = {}, defaultLevel = 3) {
+export function normalizeLogLevel(
+  input: any,
+  types: any = {},
+  defaultLevel = 3
+) {
   if (input === undefined) {
     return defaultLevel;
   }

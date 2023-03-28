@@ -1,6 +1,7 @@
 import { LogLevels } from "./log.levels";
+import { ConsolaLogObject } from "./types";
 
-export const Types = {
+export const Types: Record<string, ConsolaLogObject> = {
   // Silent
   silent: {
     level: -1,

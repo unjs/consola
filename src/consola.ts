@@ -1,20 +1,42 @@
 import { normalizeLogLevel } from "./log.levels";
 import { Types } from "./log.types";
 import { isLogObj } from "./utils/index";
-import type { ConsolaOptions } from "./types";
+import type {
+  ConsolaOptions,
+  ConsolaReporter,
+  ConsolaLogObject,
+  logType,
+  LogLevel,
+  ConsolaMockFn,
+  ConsolaReporterLogObject,
+} from "./types";
 
 let paused = false;
-const queue = [];
+const queue: any[] = [];
+
+interface _ConsolaLoggers {
+  // Built-in log levels
+  fatal(message: ConsolaLogObject | any, ...args: any[]): void;
+  error(message: ConsolaLogObject | any, ...args: any[]): void;
+  warn(message: ConsolaLogObject | any, ...args: any[]): void;
+  log(message: ConsolaLogObject | any, ...args: any[]): void;
+  info(message: ConsolaLogObject | any, ...args: any[]): void;
+  start(message: ConsolaLogObject | any, ...args: any[]): void;
+  success(message: ConsolaLogObject | any, ...args: any[]): void;
+  ready(message: ConsolaLogObject | any, ...args: any[]): void;
+  debug(message: ConsolaLogObject | any, ...args: any[]): void;
+  trace(message: ConsolaLogObject | any, ...args: any[]): void;
+}
 
 export class Consola {
-  _reporters: any;
-  _types: any;
-  _level: any;
-  _defaults: any;
-  _async: any;
+  _reporters: ConsolaReporter[];
+  _types: Record<logType, ConsolaLogObject>;
+  _level: LogLevel;
+  _defaults: ConsolaLogObject;
+  _async: boolean | undefined;
   _stdout: any;
   _stderr: any;
-  _mockFn: any;
+  _mockFn: ConsolaMockFn | undefined;
   _throttle: any;
   _throttleMin: any;
 
@@ -27,6 +49,8 @@ export class Consola {
   options: ConsolaOptions;
 
   constructor(options: Partial<ConsolaOptions> = {}) {
+    this.options = options;
+
     this._reporters = options.reporters || [];
     this._types = options.types || Types;
     this._level = normalizeLogLevel(options.level, this._types);
@@ -40,13 +64,13 @@ export class Consola {
 
     // Create logger functions for current instance
     for (const type in this._types) {
-      const defaults = {
-        type,
-        ...this._types[type],
+      const defaults: ConsolaLogObject = {
+        type: type as logType,
+        ...this._types[type as logType],
         ...this._defaults,
       };
-      this[type] = this._wrapLogFn(defaults);
-      this[type].raw = this._wrapLogFn(defaults, true);
+      (this as any)[type] = this._wrapLogFn(defaults);
+      (this as any)[type].raw = this._wrapLogFn(defaults, true);
     }
 
     // Use _mockFn if is set
@@ -97,24 +121,24 @@ export class Consola {
     );
   }
 
-  withDefaults(defaults) {
+  withDefaults(defaults: ConsolaLogObject) {
     return this.create({
       defaults: Object.assign({}, this._defaults, defaults),
     });
   }
 
-  withTag(tag) {
+  withTag(tag: string) {
     return this.withDefaults({
       tag: this._defaults.tag ? this._defaults.tag + ":" + tag : tag,
     });
   }
 
-  addReporter(reporter) {
+  addReporter(reporter: ConsolaReporter) {
     this._reporters.push(reporter);
     return this;
   }
 
-  removeReporter(reporter) {
+  removeReporter(reporter: ConsolaReporter) {
     if (reporter) {
       const i = this._reporters.indexOf(reporter);
       if (i >= 0) {
@@ -126,7 +150,7 @@ export class Consola {
     return this;
   }
 
-  setReporters(reporters) {
+  setReporters(reporters: ConsolaReporter[]) {
     this._reporters = Array.isArray(reporters) ? reporters : [reporters];
     return this;
   }
@@ -144,22 +168,22 @@ export class Consola {
   wrapConsole() {
     for (const type in this._types) {
       // Backup original value
-      if (!console["__" + type]) {
+      if (!(console as any)["__" + type]) {
         // eslint-disable-line no-console
-        console["__" + type] = console[type]; // eslint-disable-line no-console
+        (console as any)["__" + type] = (console as any)[type]; // eslint-disable-line no-console
       }
       // Override
-      console[type] = this[type].raw; // eslint-disable-line no-console
+      (console as any)[type] = (this as any)[type].raw; // eslint-disable-line no-console
     }
   }
 
   restoreConsole() {
     for (const type in this._types) {
       // Restore if backup is available
-      if (console["__" + type]) {
+      if ((console as any)["__" + type]) {
         // eslint-disable-line no-console
-        console[type] = console["__" + type]; // eslint-disable-line no-console
-        delete console["__" + type]; // eslint-disable-line no-console
+        (console as any)[type] = (console as any)["__" + type]; // eslint-disable-line no-console
+        delete (console as any)["__" + type]; // eslint-disable-line no-console
       }
     }
   }
@@ -169,19 +193,19 @@ export class Consola {
     this._wrapStream(this.stderr, "log");
   }
 
-  _wrapStream(stream, type) {
+  _wrapStream(stream: NodeJS.WritableStream, type: string) {
     if (!stream) {
       return;
     }
 
     // Backup original value
-    if (!stream.__write) {
-      stream.__write = stream.write;
+    if (!(stream as any).__write) {
+      (stream as any).__write = stream.write;
     }
 
     // Override
-    stream.write = (data) => {
-      this[type].raw(String(data).trim());
+    (stream as any).write = (data: any) => {
+      (this as any)[type].raw(String(data).trim());
     };
   }
 
@@ -190,14 +214,14 @@ export class Consola {
     this._restoreStream(this.stderr);
   }
 
-  _restoreStream(stream) {
+  _restoreStream(stream: NodeJS.WritableStream) {
     if (!stream) {
       return;
     }
 
-    if (stream.__write) {
-      stream.write = stream.__write;
-      delete stream.__write;
+    if ((stream as any).__write) {
+      stream.write = (stream as any).__write;
+      delete (stream as any).__write;
     }
   }
 
@@ -223,13 +247,15 @@ export class Consola {
     }
 
     for (const type in this._types) {
-      this[type] = this._mockFn(type, this._types[type]) || this[type];
-      this[type].raw = this[type];
+      (this as any)[type] =
+        this._mockFn(type as logType, (this as any)._types[type]) ||
+        (this as any)[type];
+      (this as any)[type].raw = (this as any)[type];
     }
   }
 
-  _wrapLogFn(defaults, isRaw?: boolean) {
-    return (...args) => {
+  _wrapLogFn(defaults: ConsolaLogObject, isRaw?: boolean) {
+    return (...args: any[]) => {
       if (paused) {
         queue.push([this, defaults, args, isRaw]);
         return;
@@ -238,19 +264,17 @@ export class Consola {
     };
   }
 
-  _logFn(defaults, args, isRaw) {
-    if (defaults.level > this.level) {
+  _logFn(defaults: ConsolaLogObject, args: any[], isRaw?: boolean) {
+    if ((defaults.level || 0) > this.level) {
       return this._async ? Promise.resolve(false) : false;
     }
 
     // Construct a new log object
-    const logObj = Object.assign(
-      {
-        date: new Date(),
-        args: [],
-      },
-      defaults
-    );
+    const logObj: ConsolaReporterLogObject | ConsolaLogObject = {
+      date: new Date(),
+      args: [],
+      ...defaults,
+    };
 
     // Consume arguments
     if (!isRaw && args.length === 1 && isLogObj(args[0])) {
@@ -261,20 +285,23 @@ export class Consola {
 
     // Aliases
     if (logObj.message) {
-      logObj.args.unshift(logObj.message);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      logObj.args!.unshift(logObj.message);
       delete logObj.message;
     }
     if (logObj.additional) {
       if (!Array.isArray(logObj.additional)) {
         logObj.additional = logObj.additional.split("\n");
       }
-      logObj.args.push("\n" + logObj.additional.join("\n"));
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      logObj.args!.push("\n" + logObj.additional.join("\n"));
       delete logObj.additional;
     }
 
     // Normalize type and tag to lowercase
-    logObj.type =
-      typeof logObj.type === "string" ? logObj.type.toLowerCase() : "";
+    logObj.type = (
+      typeof logObj.type === "string" ? logObj.type.toLowerCase() : ""
+    ) as logType;
     logObj.tag = typeof logObj.tag === "string" ? logObj.tag.toLowerCase() : "";
 
     // Resolve log
@@ -297,16 +324,18 @@ export class Consola {
       if (newLog) {
         this._lastLog = logObj;
         if (this._async) {
-          return this._logAsync(logObj);
+          return this._logAsync(logObj as ConsolaReporterLogObject);
         } else {
-          this._log(logObj);
+          this._log(logObj as ConsolaReporterLogObject);
         }
       }
     };
 
     // Throttle
     clearTimeout(this._throttleTimeout);
-    const diffTime = this._lastLogTime ? logObj.date - this._lastLogTime : 0;
+    const diffTime = this._lastLogTime
+      ? (logObj.date as any) - this._lastLogTime
+      : 0;
     this._lastLogTime = logObj.date;
     if (diffTime < this._throttle) {
       try {
@@ -333,7 +362,7 @@ export class Consola {
     resolveLog(true);
   }
 
-  _log(logObj) {
+  _log(logObj: ConsolaReporterLogObject) {
     for (const reporter of this._reporters) {
       reporter.log(logObj, {
         async: false,
@@ -343,7 +372,7 @@ export class Consola {
     }
   }
 
-  _logAsync(logObj) {
+  _logAsync(logObj: ConsolaReporterLogObject) {
     return Promise.all(
       this._reporters.map((reporter) =>
         reporter.log(logObj, {
@@ -372,6 +401,8 @@ Consola.prototype.pause = Consola.prototype.pauseLogs;
 // @ts-expect-error
 Consola.prototype.resume = Consola.prototype.resumeLogs;
 
-export function createConsola(options: Partial<ConsolaOptions>) {
-  return new Consola(options);
+export function createConsola(
+  options: Partial<ConsolaOptions>
+): Consola & _ConsolaLoggers {
+  return new Consola(options) as any;
 }

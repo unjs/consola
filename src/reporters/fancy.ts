@@ -3,10 +3,10 @@ import { mainSymbols } from "figures";
 import * as colors from "colorette";
 import { parseStack } from "../utils/error";
 import { TYPE_COLOR_MAP, LEVEL_COLOR_MAP } from "../utils/fancy";
+import { ConsolaReporterLogObject } from "../types";
 import BasicReporter from "./basic";
 
 const DEFAULTS = {
-  secondaryColor: "gray",
   formatOptions: {
     date: true,
     colors: true,
@@ -23,11 +23,11 @@ const TYPE_ICONS = {
 };
 
 export default class FancyReporter extends BasicReporter {
-  constructor(options) {
+  constructor(options: Partial<typeof DEFAULTS>) {
     super(Object.assign({}, DEFAULTS, options));
   }
 
-  formatStack(stack) {
+  formatStack(stack: string) {
     return (
       "\n" +
       parseStack(stack)
@@ -42,11 +42,11 @@ export default class FancyReporter extends BasicReporter {
     );
   }
 
-  formatType(logObj, isBadge) {
+  formatType(logObj: ConsolaReporterLogObject, isBadge: boolean) {
     const typeColor =
-      TYPE_COLOR_MAP[logObj.type] ||
-      LEVEL_COLOR_MAP[logObj.level] ||
-      this.options.secondaryColor;
+      (TYPE_COLOR_MAP as any)[logObj.type] ||
+      (LEVEL_COLOR_MAP as any)[logObj.level] ||
+      (this.options as any).secondaryColor;
 
     if (isBadge) {
       return getBgColor(typeColor)(
@@ -55,21 +55,21 @@ export default class FancyReporter extends BasicReporter {
     }
 
     const _type =
-      typeof TYPE_ICONS[logObj.type] === "string"
-        ? TYPE_ICONS[logObj.type]
-        : logObj.icon || logObj.type;
+      typeof (TYPE_ICONS as any)[logObj.type] === "string"
+        ? (TYPE_ICONS as any)[logObj.type]
+        : (logObj as any).icon || logObj.type;
     return _type ? getColor(typeColor)(_type) : "";
   }
 
-  formatLogObj(logObj, { width }) {
+  formatLogObj(logObj: ConsolaReporterLogObject, opts: { width: number }) {
     const [message, ...additional] = this.formatArgs(logObj.args).split("\n");
 
     const isBadge =
-      typeof logObj.badge !== "undefined"
-        ? Boolean(logObj.badge)
+      typeof (logObj as any).badge !== "undefined"
+        ? Boolean((logObj as any).badge)
         : logObj.level < 2;
 
-    const secondaryColor = getColor(this.options.secondaryColor);
+    const secondaryColor = getColor((this.options as any).secondaryColor);
 
     const date = this.formatDate(logObj.date);
     const coloredDate = date && secondaryColor(date);
@@ -85,9 +85,10 @@ export default class FancyReporter extends BasicReporter {
     let line;
     const left = this.filterAndJoin([type, formattedMessage]);
     const right = this.filterAndJoin([tag, coloredDate]);
-    const space = width - stringWidth(left) - stringWidth(right) - 2;
+    const space = opts.width - stringWidth(left) - stringWidth(right) - 2;
 
-    line = space > 0 && width >= 80 ? left + " ".repeat(space) + right : left;
+    line =
+      space > 0 && opts.width >= 80 ? left + " ".repeat(space) + right : left;
 
     line += additional.length > 0 ? "\n" + additional.join("\n") : "";
 

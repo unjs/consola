@@ -1,10 +1,12 @@
+import { ConsolaReporterLogObject } from "../types";
+
 export default class BrowserReporter {
   options: any;
   defaultColor: string;
   levelColorMap: Record<number, string>;
   typeColorMap: Record<string, string>;
 
-  constructor(options) {
+  constructor(options: any) {
     this.options = Object.assign({}, options);
 
     this.defaultColor = "#7f8c8d"; // Gray
@@ -28,7 +30,7 @@ export default class BrowserReporter {
     return (console as any).__log || console.log;
   }
 
-  log(logObj) {
+  log(logObj: ConsolaReporterLogObject) {
     const consoleLogFn = this._getLogFn(logObj.level);
 
     // Type

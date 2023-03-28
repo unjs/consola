@@ -1,3 +1,5 @@
+import { ConsolaReporterLogObject } from "../types";
+
 export default class JSONReporter {
   stream: NodeJS.WriteStream;
 
@@ -5,7 +7,7 @@ export default class JSONReporter {
     this.stream = opts.stream || process.stdout;
   }
 
-  log(logObj) {
+  log(logObj: ConsolaReporterLogObject) {
     this.stream.write(JSON.stringify(logObj) + "\n");
   }
 }

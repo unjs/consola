@@ -8,10 +8,10 @@ const FORMAT_ARGS = [
   ["tag", 3],
 ]; // .sort((a, b) => b[0].length - a[0].length)
 
-const _compileCache = {};
+const _compileCache: any = {};
 // process.on('beforeExit', () => { console.log(_compileCache) })
 
-export function compileFormat(format) {
+export function compileFormat(format: string) {
   if (_compileCache[format]) {
     return _compileCache[format];
   }
@@ -28,6 +28,6 @@ export function compileFormat(format) {
   return _format;
 }
 
-export function formatString(format, argv) {
+export function formatString(format: string, argv: any) {
   return vsprintf(compileFormat(format), argv);
 }

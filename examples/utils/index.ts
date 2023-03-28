@@ -27,5 +27,5 @@ export function reporterDemo(reporter) {
 }
 
 export const consola = createConsola({
-  reporters: [new FancyReporter()],
+  reporters: [new FancyReporter({})],
 });

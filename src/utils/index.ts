@@ -1,8 +1,8 @@
-export function isPlainObject(obj) {
+export function isPlainObject(obj: any) {
   return Object.prototype.toString.call(obj) === "[object Object]";
 }
 
-export function isLogObj(arg) {
+export function isLogObj(arg: any) {
   // Should be plain object
   if (!isPlainObject(arg)) {
     return false;

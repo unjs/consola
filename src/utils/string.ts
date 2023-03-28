@@ -1,4 +1,4 @@
-export function centerAlign(str, len, space = " ") {
+export function centerAlign(str: string, len: number, space = " ") {
   const free = len - str.length;
   if (free <= 0) {
     return str;
@@ -12,7 +12,7 @@ export function centerAlign(str, len, space = " ") {
   return _str;
 }
 
-export function rightAlign(str, len, space = " ") {
+export function rightAlign(str: string, len: number, space = " ") {
   const free = len - str.length;
   if (free <= 0) {
     return str;
@@ -24,7 +24,7 @@ export function rightAlign(str, len, space = " ") {
   return _str;
 }
 
-export function leftAlign(str, len, space = " ") {
+export function leftAlign(str: string, len: number, space = " ") {
   let _str = "";
   for (let i = 0; i < len; i++) {
     _str += i < str.length ? str[i] : space;
@@ -32,7 +32,12 @@ export function leftAlign(str, len, space = " ") {
   return _str;
 }
 
-export function align(alignment, str, len, space = " ") {
+export function align(
+  alignment: "left" | "right" | "center",
+  str: string,
+  len: number,
+  space = " "
+) {
   switch (alignment) {
     case "left":
       return leftAlign(str, len, space);

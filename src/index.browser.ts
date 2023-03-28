@@ -10,7 +10,7 @@ function _createConsola() {
   return consola;
 }
 
-export const consola = (globalThis.consola =
-  globalThis.consola || _createConsola());
+export const consola = ((globalThis as any).consola =
+  (globalThis as any).consola || _createConsola());
 
 export default consola;
