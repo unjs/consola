@@ -6,7 +6,7 @@ import { TYPE_COLOR_MAP, LEVEL_COLOR_MAP } from "../utils/fancy";
 import BasicReporter from "./basic";
 
 const DEFAULTS = {
-  secondaryColor: "grey",
+  secondaryColor: "gray",
   formatOptions: {
     date: true,
     colors: true,

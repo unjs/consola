@@ -1,10 +1,8 @@
 import util from "node:util";
 import { parseStack } from "../utils/error";
 import { writeStream } from "../utils/stream";
-import { formatDate } from "../utils/date";
 
 const DEFAULTS = {
-  dateFormat: "HH:mm:ss",
   formatOptions: {
     date: true,
     colors: false,
@@ -41,9 +39,7 @@ export default class BasicReporter {
   }
 
   formatDate(date) {
-    return this.options.formatOptions.date
-      ? formatDate(this.options.dateFormat, date)
-      : "";
+    return this.options.formatOptions.date ? date.toLocaleTimeString() : "";
   }
 
   filterAndJoin(arr) {
