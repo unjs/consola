@@ -1,8 +1,9 @@
-import { Consola, FancyReporter } from "../../src";
+import { FancyReporter } from "../../src/reporters";
+import { createConsola } from "../../src";
 import { randomSentence } from "./sentence";
 
 export function reporterDemo(reporter) {
-  const consola = new Consola({
+  const consola = createConsola({
     level: 5,
     reporters: [reporter],
   });
@@ -25,6 +26,6 @@ export function reporterDemo(reporter) {
   }
 }
 
-export const consola = new Consola({
+export const consola = createConsola({
   reporters: [new FancyReporter()],
 });
