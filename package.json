@@ -1,6 +1,6 @@
 {
   "name": "consola",
-  "version": "2.15.3",
+  "version": "3.0.0-0",
   "description": "Elegant Console Logger for Node.js and Browser",
   "keywords": [
     "console",
@@ -41,14 +41,15 @@
     "dev": "vitest",
     "lint": "eslint . && prettier -c src examples test",
     "lint:fix": "eslint . --fix && prettier -w src examples test",
-    "release": "pnpm test && pnpm build && changelogen --release --push && npm publish",
+    "prerelease": "pnpm test && pnpm build && changelogen --release --prerelease --push && npm publish --tag next",
+    "release": "pnpm prerelease",
     "test": "pnpm lint && pnpm build && pnpm vitest run --coverage"
   },
   "devDependencies": {
     "@types/node": "^18.15.10",
     "@vitest/coverage-c8": "^0.29.8",
     "chalk": "^5.2.0",
-    "changelogen": "^0.5.1",
+    "changelogen": "^0.5.2",
     "dayjs": "^1.11.7",
     "eslint": "^8.36.0",
     "eslint-config-unjs": "^0.1.0",
