@@ -2,11 +2,13 @@
 
 > Elegant Console Logger for Node.js and Browser
 
-[![Standard JS][standard-js-src]][standard-js-href]
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
-[![package phobia][package-phobia-src]][package-phobia-href]
-[![bundle phobia][bundle-phobia-src]][bundle-phobia-href]
+[![bundle][bundle-src]][bundle-href]
+
+<!-- [![Codecov][codecov-src]][codecov-href] -->
+
+[![License][license-src]][license-href]
 
 ## Why Consola?
 
@@ -268,15 +270,15 @@ describe("your-consola-mock-test", () => {
 
 MIT
 
-<!-- Refs -->
+<!-- Badges -->
 
-[standard-js-src]: https://flat.badgen.net/badge/code%20style/standard/green
-[standard-js-href]: https://standardjs.com
-[npm-version-src]: https://flat.badgen.net/npm/v/consola/latest
+[npm-version-src]: https://img.shields.io/npm/v/consola?style=flat&colorA=18181B&colorB=F0DB4F
 [npm-version-href]: https://npmjs.com/package/consola
-[npm-downloads-src]: https://flat.badgen.net/npm/dt/consola
+[npm-downloads-src]: https://img.shields.io/npm/dm/consola?style=flat&colorA=18181B&colorB=F0DB4F
 [npm-downloads-href]: https://npmjs.com/package/consola
-[package-phobia-src]: https://flat.badgen.net/packagephobia/install/consola
-[package-phobia-href]: https://packagephobia.now.sh/result?p=consola
-[bundle-phobia-src]: https://flat.badgen.net/bundlephobia/minzip/consola
-[bundle-phobia-href]: https://bundlephobia.com/result?p=consola
+[codecov-src]: https://img.shields.io/codecov/c/gh/unjs/consola/main?style=flat&colorA=18181B&colorB=F0DB4F
+[codecov-href]: https://codecov.io/gh/unjs/consola
+[bundle-src]: https://img.shields.io/bundlephobia/min/consola?style=flat&colorA=18181B&colorB=F0DB4F
+[bundle-href]: https://bundlephobia.com/result?p=consola
+
+<
