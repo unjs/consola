@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v3.0.0-2
+
+[compare changes](https://github.com/unjs/consola/compare/v3.0.0-1...v3.0.0-2)
+
+
+### 🚀 Enhancements
+
+  - `consola.prompt` util ([#170](https://github.com/unjs/consola/pull/170))
+
+### 🏡 Chore
+
+  - Rename dist-tag to 3.x ([3e8f1e0](https://github.com/unjs/consola/commit/3e8f1e0))
+  - Update readme ([85bbe3a](https://github.com/unjs/consola/commit/85bbe3a))
+  - Update badges ([cf7c6e5](https://github.com/unjs/consola/commit/cf7c6e5))
+  - Update badges ([566ff68](https://github.com/unjs/consola/commit/566ff68))
+
+### ❤️  Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+
 ## v3.0.0-1
 
 [compare changes](https://github.com/unjs/consola/compare/v2.15.3...v3.0.0-1)
