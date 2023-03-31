@@ -28,10 +28,10 @@ export { isCancel } from "@clack/core";
 
 const unicode = isUnicodeSupported();
 const s = (c: string, fallback: string) => (unicode ? c : fallback);
-const S_STEP_ACTIVE = ""; // s("◆", "*");
+const S_STEP_ACTIVE = s("❯", ">");
 const S_STEP_CANCEL = s("■", "x");
 const S_STEP_ERROR = s("▲", "x");
-const S_STEP_SUBMIT = ""; // s("◇", "o");
+const S_STEP_SUBMIT = s("✔", "√");
 
 const S_BAR_START = ""; // s("┌", "T");
 const S_BAR = ""; // s("│", "|");
@@ -82,7 +82,7 @@ export const text = (opts: TextOptions) => {
     defaultValue: opts.defaultValue,
     initialValue: opts.initialValue,
     render() {
-      const title = `${color.gray(S_BAR)}\n${symbol(this.state)}  ${
+      const title = `${color.gray(S_BAR)}\n${symbol(this.state)} ${
         opts.message
       }\n`;
       const placeholder = opts.placeholder
@@ -95,19 +95,19 @@ export const text = (opts: TextOptions) => {
         case "error":
           return `${title.trim()}\n${color.yellow(
             S_BAR
-          )}  ${value}\n${color.yellow(S_BAR_END)}  ${color.yellow(
+          )} ${value}\n${color.yellow(S_BAR_END)} ${color.yellow(
             this.error
           )}\n`;
         case "submit":
-          return `${title}${color.gray(S_BAR)}  ${color.dim(
+          return `${title}${color.gray(S_BAR)} ${color.dim(
             this.value || opts.placeholder
           )}`;
         case "cancel":
-          return `${title}${color.gray(S_BAR)}  ${color.strikethrough(
+          return `${title}${color.gray(S_BAR)} ${color.strikethrough(
             color.dim(this.value ?? "")
           )}${this.value?.trim() ? "\n" + color.gray(S_BAR) : ""}`;
         default:
-          return `${title}${color.cyan(S_BAR)}  ${value}\n${color.cyan(
+          return `${title}${color.cyan(S_BAR)} ${value}\n${color.cyan(
             S_BAR_END
           )}\n`;
       }
@@ -125,7 +125,7 @@ export const password = (opts: PasswordOptions) => {
     validate: opts.validate,
     mask: opts.mask ?? S_PASSWORD_MASK,
     render() {
-      const title = `${color.gray(S_BAR)}\n${symbol(this.state)}  ${
+      const title = `${color.gray(S_BAR)}\n${symbol(this.state)} ${
         opts.message
       }\n`;
       const value = this.valueWithCursor;
@@ -135,17 +135,17 @@ export const password = (opts: PasswordOptions) => {
         case "error":
           return `${title.trim()}\n${color.yellow(
             S_BAR
-          )}  ${masked}\n${color.yellow(S_BAR_END)}  ${color.yellow(
+          )} ${masked}\n${color.yellow(S_BAR_END)} ${color.yellow(
             this.error
           )}\n`;
         case "submit":
-          return `${title}${color.gray(S_BAR)}  ${color.dim(masked)}`;
+          return `${title}${color.gray(S_BAR)} ${color.dim(masked)}`;
         case "cancel":
-          return `${title}${color.gray(S_BAR)}  ${color.strikethrough(
+          return `${title}${color.gray(S_BAR)} ${color.strikethrough(
             color.dim(masked ?? "")
           )}${masked ? "\n" + color.gray(S_BAR) : ""}`;
         default:
-          return `${title}${color.cyan(S_BAR)}  ${value}\n${color.cyan(
+          return `${title}${color.cyan(S_BAR)} ${value}\n${color.cyan(
             S_BAR_END
           )}\n`;
       }
@@ -167,20 +167,20 @@ export const confirm = (opts: ConfirmOptions) => {
     inactive,
     initialValue: opts.initialValue ?? true,
     render() {
-      const title = `${color.gray(S_BAR)}\n${symbol(this.state)}  ${
+      const title = `${color.gray(S_BAR)}\n${symbol(this.state)} ${
         opts.message
       }\n`;
       const value = this.value ? active : inactive;
 
       switch (this.state) {
         case "submit":
-          return `${title}${color.gray(S_BAR)}  ${color.dim(value)}`;
+          return `${title}${color.gray(S_BAR)} ${color.dim(value)}`;
         case "cancel":
-          return `${title}${color.gray(S_BAR)}  ${color.strikethrough(
+          return `${title}${color.gray(S_BAR)} ${color.strikethrough(
             color.dim(value)
           )}\n${color.gray(S_BAR)}`;
         default: {
-          return `${title}${color.cyan(S_BAR)}  ${
+          return `${title}${color.cyan(S_BAR)} ${
             this.value
               ? `${color.green(S_RADIO_ACTIVE)} ${active}`
               : `${color.dim(S_RADIO_INACTIVE)} ${color.dim(active)}`
@@ -236,23 +236,23 @@ export const select = <Options extends Option<Value>[], Value>(
     options: opts.options,
     initialValue: opts.initialValue,
     render() {
-      const title = `${color.gray(S_BAR)}\n${symbol(this.state)}  ${
+      const title = `${color.gray(S_BAR)}\n${symbol(this.state)} ${
         opts.message
       }\n`;
 
       switch (this.state) {
         case "submit":
-          return `${title}${color.gray(S_BAR)}  ${opt(
+          return `${title}${color.gray(S_BAR)} ${opt(
             this.options[this.cursor],
             "selected"
           )}`;
         case "cancel":
-          return `${title}${color.gray(S_BAR)}  ${opt(
+          return `${title}${color.gray(S_BAR)} ${opt(
             this.options[this.cursor],
             "cancelled"
           )}\n${color.gray(S_BAR)}`;
         default: {
-          return `${title}${color.cyan(S_BAR)}  ${this.options
+          return `${title}${color.cyan(S_BAR)} ${this.options
             .map((option, i) =>
               opt(option, i === this.cursor ? "active" : "inactive")
             )
@@ -297,24 +297,24 @@ export const selectKey = <
     options: opts.options,
     initialValue: opts.initialValue,
     render() {
-      const title = `${color.gray(S_BAR)}\n${symbol(this.state)}  ${
+      const title = `${color.gray(S_BAR)}\n${symbol(this.state)} ${
         opts.message
       }\n`;
 
       switch (this.state) {
         case "submit":
-          return `${title}${color.gray(S_BAR)}  ${opt(
+          return `${title}${color.gray(S_BAR)} ${opt(
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             this.options.find((opt) => opt.value === this.value)!,
             "selected"
           )}`;
         case "cancel":
-          return `${title}${color.gray(S_BAR)}  ${opt(
+          return `${title}${color.gray(S_BAR)} ${opt(
             this.options[0],
             "cancelled"
           )}\n${color.gray(S_BAR)}`;
         default: {
-          return `${title}${color.cyan(S_BAR)}  ${this.options
+          return `${title}${color.cyan(S_BAR)} ${this.options
             .map((option, i) =>
               opt(option, i === this.cursor ? "active" : "inactive")
             )
@@ -390,13 +390,13 @@ export const multiselect = <Options extends Option<Value>[], Value>(
       }
     },
     render() {
-      const title = `${color.gray(S_BAR)}\n${symbol(this.state)}  ${
+      const title = `${color.gray(S_BAR)}\n${symbol(this.state)} ${
         opts.message
       }\n`;
 
       switch (this.state) {
         case "submit": {
-          return `${title}${color.gray(S_BAR)}  ${
+          return `${title}${color.gray(S_BAR)} ${
             this.options
               .filter(({ value }) => this.value.includes(value))
               .map((option) => opt(option, "submitted"))
@@ -408,7 +408,7 @@ export const multiselect = <Options extends Option<Value>[], Value>(
             .filter(({ value }) => this.value.includes(value))
             .map((option) => opt(option, "cancelled"))
             .join(color.dim(", "));
-          return `${title}${color.gray(S_BAR)}  ${
+          return `${title}${color.gray(S_BAR)} ${
             label.trim() ? `${label}\n${color.gray(S_BAR)}` : ""
           }`;
         }
@@ -417,7 +417,7 @@ export const multiselect = <Options extends Option<Value>[], Value>(
             .split("\n")
             .map((ln, i) =>
               i === 0
-                ? `${color.yellow(S_BAR_END)}  ${color.yellow(ln)}`
+                ? `${color.yellow(S_BAR_END)} ${color.yellow(ln)}`
                 : `   ${ln}`
             )
             .join("\n");
@@ -444,7 +444,7 @@ export const multiselect = <Options extends Option<Value>[], Value>(
           );
         }
         default: {
-          return `${title}${color.cyan(S_BAR)}  ${this.options
+          return `${title}${color.cyan(S_BAR)} ${this.options
             .map((option, i) => {
               const selected = this.value.includes(option.value);
               const active = i === this.cursor;
@@ -552,13 +552,13 @@ export const groupMultiselect = <Options extends Option<Value>[], Value>(
       }
     },
     render() {
-      const title = `${color.gray(S_BAR)}\n${symbol(this.state)}  ${
+      const title = `${color.gray(S_BAR)}\n${symbol(this.state)} ${
         opts.message
       }\n`;
 
       switch (this.state) {
         case "submit": {
-          return `${title}${color.gray(S_BAR)}  ${this.options
+          return `${title}${color.gray(S_BAR)} ${this.options
             .filter(({ value }) => this.value.includes(value))
             .map((option) => opt(option, "submitted"))
             .join(color.dim(", "))}`;
@@ -568,7 +568,7 @@ export const groupMultiselect = <Options extends Option<Value>[], Value>(
             .filter(({ value }) => this.value.includes(value))
             .map((option) => opt(option, "cancelled"))
             .join(color.dim(", "));
-          return `${title}${color.gray(S_BAR)}  ${
+          return `${title}${color.gray(S_BAR)} ${
             label.trim() ? `${label}\n${color.gray(S_BAR)}` : ""
           }`;
         }
@@ -577,11 +577,11 @@ export const groupMultiselect = <Options extends Option<Value>[], Value>(
             .split("\n")
             .map((ln, i) =>
               i === 0
-                ? `${color.yellow(S_BAR_END)}  ${color.yellow(ln)}`
+                ? `${color.yellow(S_BAR_END)} ${color.yellow(ln)}`
                 : `   ${ln}`
             )
             .join("\n");
-          return `${title}${color.yellow(S_BAR)}  ${this.options
+          return `${title}${color.yellow(S_BAR)} ${this.options
             .map((option, i, options) => {
               const selected =
                 this.value.includes(option.value) ||
@@ -610,7 +610,7 @@ export const groupMultiselect = <Options extends Option<Value>[], Value>(
             .join(`\n${color.yellow(S_BAR)}  `)}\n${footer}\n`;
         }
         default: {
-          return `${title}${color.cyan(S_BAR)}  ${this.options
+          return `${title}${color.cyan(S_BAR)} ${this.options
             .map((option, i, options) => {
               const selected =
                 this.value.includes(option.value) ||
@@ -658,13 +658,13 @@ export const note = (message = "", title = "") => {
   const msg = lines
     .map(
       (ln) =>
-        `${color.gray(S_BAR)}  ${color.dim(ln)}${" ".repeat(
+        `${color.gray(S_BAR)} ${color.dim(ln)}${" ".repeat(
           len - strip(ln).length
         )}${color.gray(S_BAR)}`
     )
     .join("\n");
   process.stdout.write(
-    `${color.gray(S_BAR)}\n${color.green(S_STEP_SUBMIT)}  ${color.reset(
+    `${color.gray(S_BAR)}\n${color.green(S_STEP_SUBMIT)} ${color.reset(
       title
     )} ${color.gray(
       S_BAR_H.repeat(Math.max(len - title.length - 1, 1)) + S_CORNER_TOP_RIGHT
@@ -675,16 +675,16 @@ export const note = (message = "", title = "") => {
 };
 
 export const cancel = (message = "") => {
-  process.stdout.write(`${color.gray(S_BAR_END)}  ${color.red(message)}\n\n`);
+  process.stdout.write(`${color.gray(S_BAR_END)} ${color.red(message)}\n\n`);
 };
 
 export const intro = (title = "") => {
-  process.stdout.write(`${color.gray(S_BAR_START)}  ${title}\n`);
+  process.stdout.write(`${color.gray(S_BAR_START)} ${title}\n`);
 };
 
 export const outro = (message = "") => {
   process.stdout.write(
-    `${color.gray(S_BAR)}\n${color.gray(S_BAR_END)}  ${message}\n\n`
+    `${color.gray(S_BAR)}\n${color.gray(S_BAR_END)} ${message}\n\n`
   );
 };
 
@@ -700,8 +700,8 @@ export const log = {
     if (message) {
       const [firstLine, ...lines] = message.split("\n");
       parts.push(
-        `${symbol}  ${firstLine}`,
-        ...lines.map((ln) => `${color.gray(S_BAR)}  ${ln}`)
+        `${symbol} ${firstLine}`,
+        ...lines.map((ln) => `${color.gray(S_BAR)} ${ln}`)
       );
     }
     process.stdout.write(`${parts.join("\n")}\n`);
@@ -738,7 +738,7 @@ export const spinner = () => {
       message = message.replace(/\.?\.?\.$/, "");
       unblock = block();
       process.stdout.write(
-        `${color.gray(S_BAR)}\n${color.magenta("○")}  ${message}\n`
+        `${color.gray(S_BAR)}\n${color.magenta("○")} ${message}\n`
       );
       let i = 0;
       let dot = 0;
@@ -746,7 +746,7 @@ export const spinner = () => {
         const frame = frames[i];
         process.stdout.write(cursor.move(-999, -1));
         process.stdout.write(
-          `${color.magenta(frame)}  ${message}${
+          `${color.magenta(frame)} ${message}${
             Math.floor(dot) >= 1 ? ".".repeat(Math.floor(dot)).slice(0, 3) : ""
           }   \n`
         );
@@ -759,7 +759,7 @@ export const spinner = () => {
       process.stdout.write(erase.down(2));
       clearInterval(loop);
       process.stdout.write(
-        `${color.gray(S_BAR)}\n${color.green(S_STEP_SUBMIT)}  ${message}\n`
+        `${color.gray(S_BAR)}\n${color.green(S_STEP_SUBMIT)} ${message}\n`
       );
       unblock();
     },
