@@ -10,11 +10,12 @@ import type {
   ConsolaMockFn,
   ConsolaReporterLogObject,
 } from "./types";
+import type { PromptOptions } from "./prompt";
 
 let paused = false;
 const queue: any[] = [];
 
-interface _ConsolaLoggers {
+export interface _ConsolaLoggers {
   // Built-in log levels
   fatal(message: ConsolaLogObject | any, ...args: any[]): void;
   error(message: ConsolaLogObject | any, ...args: any[]): void;
@@ -39,6 +40,7 @@ export class Consola {
   _mockFn: ConsolaMockFn | undefined;
   _throttle: any;
   _throttleMin: any;
+  _prompt: typeof import("./prompt").prompt | undefined;
 
   _lastLogSerialized: any;
   _lastLog: any;
@@ -61,6 +63,7 @@ export class Consola {
     this._mockFn = options.mockFn;
     this._throttle = options.throttle || 1000;
     this._throttleMin = options.throttleMin || 5;
+    this._prompt = options.prompt;
 
     // Create logger functions for current instance
     for (const type in this._types) {
@@ -102,6 +105,13 @@ export class Consola {
   get stderr() {
     // @ts-ignore
     return this._stderr || console._stderr; // eslint-disable-line no-console
+  }
+
+  prompt<T extends PromptOptions>(message: string, opts: T) {
+    if (!this._prompt) {
+      throw new Error("prompt is not supported!");
+    }
+    return this._prompt<any, any, T>(message, opts);
   }
 
   create(options: ConsolaOptions) {
@@ -265,7 +275,7 @@ export class Consola {
   }
 
   _logFn(defaults: ConsolaLogObject, args: any[], isRaw?: boolean) {
-    if ((defaults.level || 0) > this.level) {
+    if (((defaults.level as number) || 0) > this.level) {
       return this._async ? Promise.resolve(false) : false;
     }
 

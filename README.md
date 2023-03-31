@@ -1,6 +1,6 @@
 # 🐨 Consola
 
-> Elegant Console Logger for Node.js and Browser
+> Elegant Console Wrapper
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
@@ -20,6 +20,7 @@
 ⏯&nbsp; Pause/Resume support<br>
 👻&nbsp; Mocking support<br>
 👮‍♂️&nbsp; Spam prevention by throttling logs<br>
+❯&nbsp; Interactive prompt support powered by [`clack`](https://github.com/natemoo-re/clack)<br>
 
 ## Installation
 
@@ -70,6 +71,12 @@ Log to all reporters.
 Example: `consola.info('Message')`
 
 A list of available types can be found [here](./src/types.js).
+
+### `await prompt(message, { type })`
+
+Show an input prompt. Type can either of `text`, `confirm`, `select` or `multiselect`.
+
+See [examples/prompt.ts](./examples/prompt.ts) for usage examples.
 
 #### `addReporter(reporter)`
 
