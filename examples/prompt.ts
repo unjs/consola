@@ -21,12 +21,12 @@ async function main() {
 
   const tools = await consola.prompt("Select additional tools.", {
     type: "multiselect",
+    required: false,
     options: [
       { value: "eslint", label: "ESLint", hint: "recommended" },
       { value: "prettier", label: "Prettier" },
       { value: "gh-action", label: "GitHub Action" },
     ],
-    required: false,
   });
 }
 

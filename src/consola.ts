@@ -40,6 +40,7 @@ export class Consola {
   _mockFn: ConsolaMockFn | undefined;
   _throttle: any;
   _throttleMin: any;
+  _prompt: typeof import("./prompt").prompt | undefined;
 
   _lastLogSerialized: any;
   _lastLog: any;
@@ -62,6 +63,7 @@ export class Consola {
     this._mockFn = options.mockFn;
     this._throttle = options.throttle || 1000;
     this._throttleMin = options.throttleMin || 5;
+    this._prompt = options.prompt;
 
     // Create logger functions for current instance
     for (const type in this._types) {
@@ -105,9 +107,11 @@ export class Consola {
     return this._stderr || console._stderr; // eslint-disable-line no-console
   }
 
-  async prompt<T extends PromptOptions>(message: string, opts: T) {
-    const { prompt } = await import("./prompt");
-    return prompt<any, any, T>(message, opts);
+  prompt<T extends PromptOptions>(message: string, opts: T) {
+    if (!this._prompt) {
+      throw new Error("prompt is not supported!");
+    }
+    return this._prompt<any, any, T>(message, opts);
   }
 
   create(options: ConsolaOptions) {

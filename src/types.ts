@@ -74,6 +74,7 @@ export interface ConsolaOptions {
   mockFn?: ConsolaMockFn;
   throttle?: number;
   throttleMin?: number;
+  prompt?: typeof import("./prompt").prompt | undefined;
 }
 
 export interface BasicReporterOptions {
