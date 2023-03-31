@@ -45,10 +45,10 @@ pnpm i consola@3x
 
 ```js
 // ESM
-import { consola } from "consola";
+import consola from "consola";
 
 // CommonJS
-const { consola } = require("consola");
+const consola = require("consola");
 
 // See types section for all available types
 
