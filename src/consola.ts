@@ -10,6 +10,7 @@ import type {
   ConsolaMockFn,
   ConsolaReporterLogObject,
 } from "./types";
+import type { PromptOptions } from "./prompt";
 
 let paused = false;
 const queue: any[] = [];
@@ -102,6 +103,11 @@ export class Consola {
   get stderr() {
     // @ts-ignore
     return this._stderr || console._stderr; // eslint-disable-line no-console
+  }
+
+  async prompt<T extends PromptOptions>(message: string, opts: T) {
+    const { prompt } = await import("./prompt");
+    return prompt<any, any, T>(message, opts);
   }
 
   create(options: ConsolaOptions) {
@@ -265,7 +271,7 @@ export class Consola {
   }
 
   _logFn(defaults: ConsolaLogObject, args: any[], isRaw?: boolean) {
-    if ((defaults.level || 0) > this.level) {
+    if (((defaults.level as number) || 0) > this.level) {
       return this._async ? Promise.resolve(false) : false;
     }
 
