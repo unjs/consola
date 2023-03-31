@@ -15,7 +15,7 @@ import type { PromptOptions } from "./prompt";
 let paused = false;
 const queue: any[] = [];
 
-interface _ConsolaLoggers {
+export interface _ConsolaLoggers {
   // Built-in log levels
   fatal(message: ConsolaLogObject | any, ...args: any[]): void;
   error(message: ConsolaLogObject | any, ...args: any[]): void;
