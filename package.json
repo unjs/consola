@@ -19,21 +19,21 @@
     ".": {
       "node": {
         "types": "./dist/index.d.ts",
-        "require": "./dist/index.cjs",
+        "require": "./lib/index.cjs",
         "import": "./dist/index.mjs"
       },
       "default": {
         "types": "./dist/index.browser.d.ts",
-        "require": "./dist/index.browser.cjs",
         "import": "./dist/index.browser.mjs"
       }
     }
   },
-  "main": "./dist/index.cjs",
+  "main": "./lib/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
+    "lib",
     "types"
   ],
   "scripts": {
