@@ -36,7 +36,6 @@ function _getDefaultLogLevel() {
   return LogLevels.Info;
 }
 
-export const consola = ((globalThis as any).consola =
-  (globalThis as any).consola || createConsola());
+export const consola = createConsola();
 
 export default consola;
