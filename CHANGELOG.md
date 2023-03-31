@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v3.0.0-3
+
+[compare changes](https://github.com/unjs/consola/compare/v3.0.0-2...v3.0.0-3)
+
+
+### 💅 Refactors
+
+  - Remove `globalThis` caching ([4e7b909](https://github.com/unjs/consola/commit/4e7b909))
+
+### 📦 Build
+
+  - Use backward compatible cjs wrapper for default export ([e2e6aa6](https://github.com/unjs/consola/commit/e2e6aa6))
+
+### 🏡 Chore
+
+  - Update shared exports ([8fc0fdd](https://github.com/unjs/consola/commit/8fc0fdd))
+
+### ❤️  Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+
 ## v3.0.0-2
 
 [compare changes](https://github.com/unjs/consola/compare/v3.0.0-1...v3.0.0-2)
