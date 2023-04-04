@@ -47,11 +47,11 @@
   },
   "devDependencies": {
     "@clack/core": "^0.3.2",
-    "@types/node": "^18.15.10",
+    "@types/node": "^18.15.11",
     "@vitest/coverage-c8": "^0.29.8",
     "changelogen": "^0.5.2",
     "colorette": "^2.0.19",
-    "eslint": "^8.36.0",
+    "eslint": "^8.37.0",
     "eslint-config-unjs": "^0.1.0",
     "figures": "^5.0.0",
     "is-unicode-supported": "^1.3.0",
@@ -62,10 +62,10 @@
     "sisteransi": "^1.0.5",
     "std-env": "^3.3.2",
     "string-width": "^5.1.2",
-    "typescript": "^5.0.2",
+    "typescript": "^5.0.3",
     "unbuild": "^1.2.0",
     "vitest": "^0.29.8",
     "winston": "^3.8.2"
   },
-  "packageManager": "pnpm@8.0.0"
+  "packageManager": "pnpm@8.1.1"
 }
