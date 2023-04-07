@@ -70,7 +70,7 @@ Log to all reporters.
 
 Example: `consola.info('Message')`
 
-A list of available types can be found [here](./src/types.js).
+A list of available types can be found [here](./src/types.ts).
 
 ### `await prompt(message, { type })`
 
@@ -172,7 +172,7 @@ An array of active reporters.
 #### `level`
 
 The level to display logs. Any logs at or above this level will be displayed.
-List of available levels [here](./src/types.js).
+List of available levels [here](./src/types.ts).
 
 You can set the log level using the `CONSOLA_LEVEL` environment variable, which must have the numeric log level as its value.
 
@@ -200,10 +200,10 @@ By default `FancyReporter` is registered for modern terminals or `BasicReporter`
 
 Available reporters:
 
-- [BasicReporter](./src/reporters/basic.js)
-- [FancyReporter](./src/reporters/fancy.js)
-- [JSONReporter](./src/reporters/json.js)
-- [WinstonReporter](./src/reporters/winston.js)
+- [BasicReporter](./src/reporters/basic.ts)
+- [FancyReporter](./src/reporters/fancy.ts)
+- [JSONReporter](./src/reporters/json.ts)
+- [WinstonReporter](./src/reporters/winston.ts)
 
 ### Creating your own reporter
 
@@ -215,7 +215,7 @@ To get more info about how to write your own reporter, take a look into the link
 Types are used to actually log messages to the reporters.
 Each type is attached to a _logging level_.
 
-A list of all available default types is [here](./src/types.js).
+A list of all available default types is [here](./src/types.ts).
 
 ## Creating a new instance
 
