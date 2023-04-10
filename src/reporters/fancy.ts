@@ -3,7 +3,7 @@ import { mainSymbols } from "figures";
 import * as colors from "colorette";
 import { parseStack } from "../utils/error";
 import { TYPE_COLOR_MAP, LEVEL_COLOR_MAP } from "../utils/fancy";
-import { ConsolaReporterLogObject } from "../types";
+import { LogObject } from "../types";
 import BasicReporter from "./basic";
 
 const DEFAULTS = {
@@ -43,7 +43,7 @@ export default class FancyReporter extends BasicReporter {
     );
   }
 
-  formatType(logObj: ConsolaReporterLogObject, isBadge: boolean) {
+  formatType(logObj: LogObject, isBadge: boolean) {
     const typeColor =
       (TYPE_COLOR_MAP as any)[logObj.type] ||
       (LEVEL_COLOR_MAP as any)[logObj.level] ||
@@ -62,7 +62,7 @@ export default class FancyReporter extends BasicReporter {
     return _type ? getColor(typeColor)(_type) : "";
   }
 
-  formatLogObj(logObj: ConsolaReporterLogObject, opts: { width: number }) {
+  formatLogObj(logObj: LogObject, opts: { width: number }) {
     const [message, ...additional] = this.formatArgs(logObj.args).split("\n");
 
     const isBadge =

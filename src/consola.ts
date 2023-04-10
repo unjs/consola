@@ -1,22 +1,30 @@
-import { LogTypes, LogType } from "./constants";
+import { LogTypes, LogType, LogLevel } from "./constants";
 import { isLogObj } from "./utils/index";
-import type {
-  ConsolaOptions,
-  ConsolaReporter,
-  ConsolaLogObject,
-  ConsolaReporterLogObject,
-} from "./types";
+import type { ConsolaReporter, InputLogObject, LogObject } from "./types";
 import type { PromptOptions } from "./prompt";
 
 let paused = false;
 const queue: any[] = [];
+
+export interface ConsolaOptions {
+  reporters: ConsolaReporter[];
+  types: Record<LogType, InputLogObject>;
+  level: LogLevel;
+  defaults: InputLogObject;
+  throttle: number;
+  throttleMin: number;
+  stdout?: NodeJS.WritableStream;
+  stderr?: NodeJS.WritableStream;
+  mockFn?: (type: LogType, defaults: InputLogObject) => (...args: any) => void;
+  prompt?: typeof import("./prompt").prompt | undefined;
+}
 
 export class Consola {
   options: ConsolaOptions;
 
   _lastLog: {
     serialized?: string;
-    object?: ConsolaReporterLogObject;
+    object?: LogObject;
     count?: number;
     time?: Date;
     timeout?: ReturnType<typeof setTimeout>;
@@ -40,7 +48,7 @@ export class Consola {
 
     // Create logger functions for current instance
     for (const type in types) {
-      const defaults: ConsolaLogObject = {
+      const defaults: InputLogObject = {
         type: type as LogType,
         ...types[type as LogType],
         ...this.options.defaults,
@@ -94,7 +102,7 @@ export class Consola {
     }) as ConsolaInstance;
   }
 
-  withDefaults(defaults: ConsolaLogObject): ConsolaInstance {
+  withDefaults(defaults: InputLogObject): ConsolaInstance {
     return this.create({
       ...this.options,
       defaults: {
@@ -233,7 +241,7 @@ export class Consola {
     }
   }
 
-  _wrapLogFn(defaults: ConsolaLogObject, isRaw?: boolean) {
+  _wrapLogFn(defaults: InputLogObject, isRaw?: boolean) {
     return (...args: any[]) => {
       if (paused) {
         queue.push([this, defaults, args, isRaw]);
@@ -243,16 +251,17 @@ export class Consola {
     };
   }
 
-  _logFn(defaults: ConsolaLogObject, args: any[], isRaw?: boolean) {
+  _logFn(defaults: InputLogObject, args: any[], isRaw?: boolean) {
     if (((defaults.level as number) || 0) > this.level) {
       return false;
     }
 
     // Construct a new log object
-    const logObj: ConsolaReporterLogObject | ConsolaLogObject = {
+    const logObj: Partial<LogObject> = {
       date: new Date(),
       args: [],
       ...defaults,
+      level: _normalizeLogLevel(defaults.level, this.options.types),
     };
 
     // Consume arguments
@@ -279,7 +288,7 @@ export class Consola {
 
     // Normalize type and tag to lowercase
     logObj.type = (
-      typeof logObj.type === "string" ? logObj.type.toLowerCase() : ""
+      typeof logObj.type === "string" ? logObj.type.toLowerCase() : "log"
     ) as LogType;
     logObj.tag = typeof logObj.tag === "string" ? logObj.tag.toLowerCase() : "";
 
@@ -301,8 +310,8 @@ export class Consola {
 
       // Log
       if (newLog) {
-        this._lastLog.object = logObj as ConsolaReporterLogObject;
-        this._log(logObj as ConsolaReporterLogObject);
+        this._lastLog.object = logObj as LogObject;
+        this._log(logObj as LogObject);
       }
     };
 
@@ -341,7 +350,7 @@ export class Consola {
     resolveLog(true);
   }
 
-  _log(logObj: ConsolaReporterLogObject) {
+  _log(logObj: LogObject) {
     for (const reporter of this.options.reporters) {
       reporter.log(logObj, {
         stdout: this.stdout,
@@ -351,7 +360,11 @@ export class Consola {
   }
 }
 
-function _normalizeLogLevel(input: any, types: any = {}, defaultLevel = 3) {
+function _normalizeLogLevel(
+  input: LogLevel | LogType | undefined,
+  types: any = {},
+  defaultLevel = 3
+) {
   if (input === undefined) {
     return defaultLevel;
   }
@@ -364,18 +377,8 @@ function _normalizeLogLevel(input: any, types: any = {}, defaultLevel = 3) {
   return defaultLevel;
 }
 
-export interface ConsolaInstance extends Consola {
-  fatal(message: ConsolaLogObject | any, ...args: any[]): void;
-  error(message: ConsolaLogObject | any, ...args: any[]): void;
-  warn(message: ConsolaLogObject | any, ...args: any[]): void;
-  log(message: ConsolaLogObject | any, ...args: any[]): void;
-  info(message: ConsolaLogObject | any, ...args: any[]): void;
-  start(message: ConsolaLogObject | any, ...args: any[]): void;
-  success(message: ConsolaLogObject | any, ...args: any[]): void;
-  ready(message: ConsolaLogObject | any, ...args: any[]): void;
-  debug(message: ConsolaLogObject | any, ...args: any[]): void;
-  trace(message: ConsolaLogObject | any, ...args: any[]): void;
-}
+export type ConsolaInstance = Consola &
+  Record<LogType, (message: InputLogObject | any, ...args: any[]) => void>;
 
 // Legacy support
 // @ts-expect-error

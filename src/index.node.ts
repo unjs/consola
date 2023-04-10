@@ -1,6 +1,6 @@
 import { isDebug, isTest, isCI } from "std-env";
 import { LogLevels, LogLevel } from "./constants";
-import type { ConsolaOptions } from "./types";
+import type { ConsolaOptions } from "./consola";
 import { BasicReporter, FancyReporter } from "./reporters";
 import { createConsola as _createConsola } from "./consola";
 
@@ -29,12 +29,12 @@ export function createConsola(options: Partial<ConsolaOptions> = {}) {
 
 function _getDefaultLogLevel() {
   if (isDebug) {
-    return LogLevels.Debug;
+    return LogLevels.debug;
   }
   if (isTest) {
-    return LogLevels.Warn;
+    return LogLevels.warn;
   }
-  return LogLevels.Info;
+  return LogLevels.info;
 }
 
 export const consola = createConsola();

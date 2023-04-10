@@ -1,5 +1,5 @@
 import util from "node:util";
-import { ConsolaReporterLogObject } from "../types";
+import { LogObject } from "../types";
 import { parseStack } from "../utils/error";
 import { writeStream } from "../utils/stream";
 
@@ -47,7 +47,7 @@ export default class BasicReporter {
     return arr.filter(Boolean).join(" ");
   }
 
-  formatLogObj(logObj: ConsolaReporterLogObject, _opts: any) {
+  formatLogObj(logObj: LogObject, _opts: any) {
     const message = this.formatArgs(logObj.args);
 
     return this.filterAndJoin([
@@ -57,7 +57,7 @@ export default class BasicReporter {
     ]);
   }
 
-  log(logObj: ConsolaReporterLogObject, { stdout, stderr }: any = {}) {
+  log(logObj: LogObject, { stdout, stderr }: any = {}) {
     const line = this.formatLogObj(logObj, {
       width: stdout.columns || 0,
     });

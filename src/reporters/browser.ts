@@ -1,4 +1,4 @@
-import { ConsolaReporterLogObject } from "../types";
+import { LogObject } from "../types";
 
 export default class BrowserReporter {
   options: any;
@@ -30,7 +30,7 @@ export default class BrowserReporter {
     return (console as any).__log || console.log;
   }
 
-  log(logObj: ConsolaReporterLogObject) {
+  log(logObj: LogObject) {
     const consoleLogFn = this._getLogFn(logObj.level);
 
     // Type

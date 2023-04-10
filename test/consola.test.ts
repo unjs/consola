@@ -1,9 +1,15 @@
-import { Consola } from "../src";
+import { describe, test, expect } from "vitest";
+import {
+  ConsolaReporter,
+  LogLevels,
+  LogObject,
+  createConsola,
+} from "../src/index.node";
 
 describe("consola", () => {
   test("can set level", () => {
-    const consola = new Consola();
-    expect(consola.level).toBe(3);
+    const consola = createConsola();
+    expect(consola.level).toBe(1);
 
     for (let i = 0; i <= 5; i++) {
       consola.level = i;
@@ -12,36 +18,38 @@ describe("consola", () => {
   });
 
   test("silent log level does't print logs", async () => {
-    const logs = [];
-    class TestReporter {
+    const logs: LogObject[] = [];
+    const TestReporter: ConsolaReporter = {
       log(logObj) {
         logs.push(logObj);
-      }
-    }
+      },
+    };
 
-    const consola = new Consola({
+    const consola = createConsola({
       throttle: 100,
-      level: "silent",
-      reporters: [new TestReporter()],
+      level: LogLevels.silent,
+      reporters: [TestReporter],
     });
+
     for (let i = 0; i < 10; i++) {
       consola.log("SPAM");
     }
+
     await wait(200);
     expect(logs.length).toBe(0);
   });
 
   test("can see spams without ending log", async () => {
-    const logs = [];
-    class TestReporter {
+    const logs: LogObject[] = [];
+    const TestReporter: ConsolaReporter = {
       log(logObj) {
         logs.push(logObj);
-      }
-    }
+      },
+    };
 
-    const consola = new Consola({
+    const consola = createConsola({
       throttle: 100,
-      reporters: [new TestReporter()],
+      reporters: [TestReporter],
     });
     for (let i = 0; i < 10; i++) {
       consola.log("SPAM");

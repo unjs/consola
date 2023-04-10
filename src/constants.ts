@@ -1,4 +1,4 @@
-import { ConsolaLogObject } from "./types";
+import { LogObject } from "./types";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type LogLevel = 0 | 1 | 2 | 3 | 4 | 5 | (number & {});
@@ -37,11 +37,9 @@ export type LogType =
   // Verbose
   | "debug"
   | "trace"
-  | "verbose"
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  | (string & {});
+  | "verbose";
 
-export const LogTypes: Record<LogType, ConsolaLogObject> = {
+export const LogTypes: Record<LogType, Partial<LogObject>> = {
   // Silent
   silent: {
     level: -1,
@@ -49,51 +47,51 @@ export const LogTypes: Record<LogType, ConsolaLogObject> = {
 
   // Level 0
   fatal: {
-    level: LogLevels.Fatal,
+    level: LogLevels.fatal,
   },
   error: {
-    level: LogLevels.Error,
+    level: LogLevels.error,
   },
 
   // Level 1
   warn: {
-    level: LogLevels.Warn,
+    level: LogLevels.warn,
   },
 
   // Level 2
   log: {
-    level: LogLevels.Log,
+    level: LogLevels.log,
   },
 
   // Level 3
   info: {
-    level: LogLevels.Info,
+    level: LogLevels.info,
   },
   success: {
-    level: LogLevels.Success,
+    level: LogLevels.success,
   },
   fail: {
-    level: LogLevels.Fail,
+    level: LogLevels.fail,
   },
   ready: {
-    level: LogLevels.Info,
+    level: LogLevels.info,
   },
   start: {
-    level: LogLevels.Info,
+    level: LogLevels.info,
   },
 
   // Level 4
   debug: {
-    level: LogLevels.Debug,
+    level: LogLevels.debug,
   },
 
   // Level 5
   trace: {
-    level: LogLevels.Trace,
+    level: LogLevels.trace,
   },
 
   // Verbose
   verbose: {
-    level: LogLevels.Verbose,
+    level: LogLevels.verbose,
   },
 };
