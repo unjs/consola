@@ -19,16 +19,12 @@ export default class WinstonReporter {
     this.logger =
       logger && logger.log
         ? logger
-        : winston.createLogger(
-            Object.assign(
-              {
-                level: "info",
-                format: winston.format.simple(),
-                transports: [new winston.transports.Console()],
-              },
-              logger
-            )
-          );
+        : winston.createLogger({
+            level: "info",
+            format: winston.format.simple(),
+            transports: [new winston.transports.Console()],
+            ...logger,
+          });
   }
 
   log(logObj: ConsolaReporterLogObject) {

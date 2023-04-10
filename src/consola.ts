@@ -101,25 +101,21 @@ export class Consola {
   }
 
   create(options: ConsolaOptions): ConsolaInstance {
-    return new Consola(
-      Object.assign(
-        {
-          reporters: this._reporters,
-          level: this.level,
-          types: this._types,
-          defaults: this._defaults,
-          stdout: this._stdout,
-          stderr: this._stderr,
-          mockFn: this._mockFn,
-        },
-        options
-      )
-    ) as ConsolaInstance;
+    return new Consola({
+      reporters: this._reporters,
+      level: this.level,
+      types: this._types,
+      defaults: this._defaults,
+      stdout: this._stdout,
+      stderr: this._stderr,
+      mockFn: this._mockFn,
+      ...options,
+    }) as ConsolaInstance;
   }
 
   withDefaults(defaults: ConsolaLogObject): ConsolaInstance {
     return this.create({
-      defaults: Object.assign({}, this._defaults, defaults),
+      defaults: { ...this._defaults, ...defaults },
     });
   }
 

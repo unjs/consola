@@ -17,7 +17,7 @@ export default class BasicReporter {
   options: typeof DEFAULTS;
 
   constructor(options: Partial<typeof DEFAULTS>) {
-    this.options = Object.assign({}, DEFAULTS, options);
+    this.options = { ...DEFAULTS, ...options };
   }
 
   formatStack(stack: string) {

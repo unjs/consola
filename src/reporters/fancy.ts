@@ -24,7 +24,7 @@ const TYPE_ICONS = {
 
 export default class FancyReporter extends BasicReporter {
   constructor(options: Partial<typeof DEFAULTS>) {
-    super(Object.assign({}, DEFAULTS, options));
+    super({ ...DEFAULTS, ...options });
   }
 
   formatStack(stack: string) {

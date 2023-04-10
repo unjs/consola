@@ -7,7 +7,7 @@ export default class BrowserReporter {
   typeColorMap: Record<string, string>;
 
   constructor(options: any) {
-    this.options = Object.assign({}, options);
+    this.options = { ...options };
 
     this.defaultColor = "#7f8c8d"; // Gray
     this.levelColorMap = {
