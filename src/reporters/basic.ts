@@ -57,15 +57,11 @@ export default class BasicReporter {
     ]);
   }
 
-  log(logObj: ConsolaReporterLogObject, { async, stdout, stderr }: any = {}) {
+  log(logObj: ConsolaReporterLogObject, { stdout, stderr }: any = {}) {
     const line = this.formatLogObj(logObj, {
       width: stdout.columns || 0,
     });
 
-    return writeStream(
-      line + "\n",
-      logObj.level < 2 ? stderr : stdout,
-      async ? "async" : "default"
-    );
+    return writeStream(line + "\n", logObj.level < 2 ? stderr : stdout);
   }
 }

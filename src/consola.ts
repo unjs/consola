@@ -247,7 +247,7 @@ export class Consola {
 
   _logFn(defaults: ConsolaLogObject, args: any[], isRaw?: boolean) {
     if (((defaults.level as number) || 0) > this.level) {
-      return this.options.async ? Promise.resolve(false) : false;
+      return false;
     }
 
     // Construct a new log object
@@ -304,11 +304,7 @@ export class Consola {
       // Log
       if (newLog) {
         this._lastLog.object = logObj as ConsolaReporterLogObject;
-        if (this.options.async) {
-          return this._logAsync(logObj as ConsolaReporterLogObject);
-        } else {
-          this._log(logObj as ConsolaReporterLogObject);
-        }
+        this._log(logObj as ConsolaReporterLogObject);
       }
     };
 
@@ -350,23 +346,10 @@ export class Consola {
   _log(logObj: ConsolaReporterLogObject) {
     for (const reporter of this.options.reporters) {
       reporter.log(logObj, {
-        async: false,
         stdout: this.stdout,
         stderr: this.stderr,
       });
     }
-  }
-
-  _logAsync(logObj: ConsolaReporterLogObject) {
-    return Promise.all(
-      this.options.reporters.map((reporter) =>
-        reporter.log(logObj, {
-          async: true,
-          stdout: this.stdout,
-          stderr: this.stderr,
-        })
-      )
-    );
   }
 }
 

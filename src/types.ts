@@ -54,7 +54,6 @@ export type ConsolaMockFn = (
 ) => ConsolaMock;
 
 export interface ConsolaReporterArgs {
-  async: boolean;
   stdout: NodeJS.WritableStream;
   stderr: NodeJS.WritableStream;
 }
@@ -70,7 +69,6 @@ export interface ConsolaOptions {
   defaults: ConsolaLogObject;
   throttle: number;
   throttleMin: number;
-  async?: boolean;
   stdout?: NodeJS.WritableStream;
   stderr?: NodeJS.WritableStream;
   mockFn?: ConsolaMockFn;
