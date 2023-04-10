@@ -64,16 +64,16 @@ export interface ConsolaReporter {
 }
 
 export interface ConsolaOptions {
-  reporters?: ConsolaReporter[];
-  types?: Record<logType, ConsolaLogObject>;
-  level?: LogLevel;
-  defaults?: ConsolaLogObject;
+  reporters: ConsolaReporter[];
+  types: Record<logType, ConsolaLogObject>;
+  level: LogLevel;
+  defaults: ConsolaLogObject;
+  throttle: number;
+  throttleMin: number;
   async?: boolean;
   stdout?: NodeJS.WritableStream;
   stderr?: NodeJS.WritableStream;
   mockFn?: ConsolaMockFn;
-  throttle?: number;
-  throttleMin?: number;
   prompt?: typeof import("./prompt").prompt | undefined;
 }
 

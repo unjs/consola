@@ -8,7 +8,7 @@ export function reporterDemo(reporter) {
     reporters: [reporter],
   });
 
-  for (const type of Object.keys(consola._types).sort()) {
+  for (const type of Object.keys(consola.options.types).sort()) {
     consola[type](randomSentence());
   }
 
@@ -21,7 +21,7 @@ export function reporterDemo(reporter) {
 
   const tagged = consola.withTag("unjs").withTag("router");
 
-  for (const type of Object.keys(consola._types).sort()) {
+  for (const type of Object.keys(consola.options.types).sort()) {
     tagged[type](randomSentence());
   }
 }

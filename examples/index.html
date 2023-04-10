@@ -11,7 +11,7 @@
 
       consola.wrapAll();
 
-      for (let type of Object.keys(consola._types).sort()) {
+      for (let type of Object.keys(consola.options.types).sort()) {
         consola[type]("Open developer tools to see the magic!");
       }
 

@@ -6,8 +6,6 @@ import type {
   ConsolaReporter,
   ConsolaLogObject,
   logType,
-  LogLevel,
-  ConsolaMockFn,
   ConsolaReporterLogObject,
 } from "./types";
 import type { PromptOptions } from "./prompt";
@@ -16,17 +14,7 @@ let paused = false;
 const queue: any[] = [];
 
 export class Consola {
-  _reporters: ConsolaReporter[];
-  _types: Record<logType, ConsolaLogObject>;
-  _level: LogLevel;
-  _defaults: ConsolaLogObject;
-  _async: boolean | undefined;
-  _stdout: any;
-  _stderr: any;
-  _mockFn: ConsolaMockFn | undefined;
-  _throttle: any;
-  _throttleMin: any;
-  _prompt: typeof import("./prompt").prompt | undefined;
+  options: ConsolaOptions;
 
   _lastLogSerialized: any;
   _lastLog: any;
@@ -34,36 +22,36 @@ export class Consola {
   _lastLogCount: any;
   _throttleTimeout: any;
 
-  options: ConsolaOptions;
-
   constructor(options: Partial<ConsolaOptions> = {}) {
-    this.options = options;
+    const types = options.types || Types;
+    this.options = {
+      // Defaults
+      throttle: 1000,
+      throttleMin: 5,
+      // User
+      ...options,
+      // Overrides, Normalizations and Clones
+      defaults: { ...options.defaults },
+      level: normalizeLogLevel(options.level, types),
+      reporters: [...(options.reporters || [])],
+      types,
+    };
 
-    this._reporters = options.reporters || [];
-    this._types = options.types || Types;
-    this._level = normalizeLogLevel(options.level, this._types);
-    this._defaults = options.defaults || {};
-    this._async = options.async !== undefined ? options.async : undefined;
-    this._stdout = options.stdout;
-    this._stderr = options.stderr;
-    this._mockFn = options.mockFn;
-    this._throttle = options.throttle || 1000;
-    this._throttleMin = options.throttleMin || 5;
-    this._prompt = options.prompt;
+    console.log("this.options", this.options);
 
     // Create logger functions for current instance
-    for (const type in this._types) {
+    for (const type in types) {
       const defaults: ConsolaLogObject = {
         type: type as logType,
-        ...this._types[type as logType],
-        ...this._defaults,
+        ...types[type as logType],
+        ...this.options.defaults,
       };
       (this as any)[type] = this._wrapLogFn(defaults);
       (this as any)[type].raw = this._wrapLogFn(defaults, true);
     }
 
     // Use _mockFn if is set
-    if (this._mockFn) {
+    if (this.options.mockFn) {
       this.mockTypes();
     }
 
@@ -76,11 +64,15 @@ export class Consola {
   }
 
   get level() {
-    return this._level;
+    return this.options.level;
   }
 
   set level(level) {
-    this._level = normalizeLogLevel(level, this._types);
+    this.options.level = normalizeLogLevel(
+      level,
+      this.options.types,
+      this.options.level
+    );
   }
 
   get stdout() {
@@ -94,56 +86,56 @@ export class Consola {
   }
 
   prompt<T extends PromptOptions>(message: string, opts: T) {
-    if (!this._prompt) {
+    if (!this.options.prompt) {
       throw new Error("prompt is not supported!");
     }
-    return this._prompt<any, any, T>(message, opts);
+    return this.options.prompt<any, any, T>(message, opts);
   }
 
-  create(options: ConsolaOptions): ConsolaInstance {
+  create(options: Partial<ConsolaOptions>): ConsolaInstance {
     return new Consola({
-      reporters: this._reporters,
-      level: this.level,
-      types: this._types,
-      defaults: this._defaults,
-      stdout: this._stdout,
-      stderr: this._stderr,
-      mockFn: this._mockFn,
+      ...this.options,
       ...options,
     }) as ConsolaInstance;
   }
 
   withDefaults(defaults: ConsolaLogObject): ConsolaInstance {
     return this.create({
-      defaults: { ...this._defaults, ...defaults },
+      ...this.options,
+      defaults: {
+        ...this.options.defaults,
+        ...defaults,
+      },
     });
   }
 
   withTag(tag: string): ConsolaInstance {
     return this.withDefaults({
-      tag: this._defaults.tag ? this._defaults.tag + ":" + tag : tag,
+      tag: this.options.defaults.tag
+        ? this.options.defaults.tag + ":" + tag
+        : tag,
     });
   }
 
   addReporter(reporter: ConsolaReporter) {
-    this._reporters.push(reporter);
+    this.options.reporters.push(reporter);
     return this;
   }
 
   removeReporter(reporter: ConsolaReporter) {
     if (reporter) {
-      const i = this._reporters.indexOf(reporter);
+      const i = this.options.reporters.indexOf(reporter);
       if (i >= 0) {
-        return this._reporters.splice(i, 1);
+        return this.options.reporters.splice(i, 1);
       }
     } else {
-      this._reporters.splice(0);
+      this.options.reporters.splice(0);
     }
     return this;
   }
 
   setReporters(reporters: ConsolaReporter[]) {
-    this._reporters = Array.isArray(reporters) ? reporters : [reporters];
+    this.options.reporters = Array.isArray(reporters) ? reporters : [reporters];
     return this;
   }
 
@@ -158,7 +150,7 @@ export class Consola {
   }
 
   wrapConsole() {
-    for (const type in this._types) {
+    for (const type in this.options.types) {
       // Backup original value
       if (!(console as any)["__" + type]) {
         // eslint-disable-line no-console
@@ -170,7 +162,7 @@ export class Consola {
   }
 
   restoreConsole() {
-    for (const type in this._types) {
+    for (const type in this.options.types) {
       // Restore if backup is available
       if ((console as any)["__" + type]) {
         // eslint-disable-line no-console
@@ -232,15 +224,15 @@ export class Consola {
   }
 
   mockTypes(mockFn?: (type: string, currentType: any) => any) {
-    this._mockFn = mockFn || this._mockFn;
+    const _mockFn = mockFn || this.options.mockFn;
 
-    if (typeof this._mockFn !== "function") {
+    if (typeof _mockFn !== "function") {
       return;
     }
 
-    for (const type in this._types) {
+    for (const type in this.options.types) {
       (this as any)[type] =
-        this._mockFn(type as logType, (this as any)._types[type]) ||
+        _mockFn(type as logType, (this as any)._types[type]) ||
         (this as any)[type];
       (this as any)[type].raw = (this as any)[type];
     }
@@ -258,7 +250,7 @@ export class Consola {
 
   _logFn(defaults: ConsolaLogObject, args: any[], isRaw?: boolean) {
     if (((defaults.level as number) || 0) > this.level) {
-      return this._async ? Promise.resolve(false) : false;
+      return this.options.async ? Promise.resolve(false) : false;
     }
 
     // Construct a new log object
@@ -302,7 +294,7 @@ export class Consola {
      *  we don't want to log a duplicate
      */
     const resolveLog = (newLog = false) => {
-      const repeated = this._lastLogCount - this._throttleMin;
+      const repeated = this._lastLogCount - this.options.throttleMin;
       if (this._lastLog && repeated > 0) {
         const args = [...this._lastLog.args];
         if (repeated > 1) {
@@ -315,7 +307,7 @@ export class Consola {
       // Log
       if (newLog) {
         this._lastLog = logObj;
-        if (this._async) {
+        if (this.options.async) {
           return this._logAsync(logObj as ConsolaReporterLogObject);
         } else {
           this._log(logObj as ConsolaReporterLogObject);
@@ -329,7 +321,7 @@ export class Consola {
       ? (logObj.date as any) - this._lastLogTime
       : 0;
     this._lastLogTime = logObj.date;
-    if (diffTime < this._throttle) {
+    if (diffTime < this.options.throttle) {
       try {
         const serializedLog = JSON.stringify([
           logObj.type,
@@ -340,9 +332,12 @@ export class Consola {
         this._lastLogSerialized = serializedLog;
         if (isSameLog) {
           this._lastLogCount++;
-          if (this._lastLogCount > this._throttleMin) {
+          if (this._lastLogCount > this.options.throttleMin) {
             // Auto-resolve when throttle is timed out
-            this._throttleTimeout = setTimeout(resolveLog, this._throttle);
+            this._throttleTimeout = setTimeout(
+              resolveLog,
+              this.options.throttle
+            );
             return; // SPAM!
           }
         }
@@ -355,7 +350,7 @@ export class Consola {
   }
 
   _log(logObj: ConsolaReporterLogObject) {
-    for (const reporter of this._reporters) {
+    for (const reporter of this.options.reporters) {
       reporter.log(logObj, {
         async: false,
         stdout: this.stdout,
@@ -366,7 +361,7 @@ export class Consola {
 
   _logAsync(logObj: ConsolaReporterLogObject) {
     return Promise.all(
-      this._reporters.map((reporter) =>
+      this.options.reporters.map((reporter) =>
         reporter.log(logObj, {
           async: true,
           stdout: this.stdout,
