@@ -198,13 +198,6 @@ Choose between one of the built-in reporters or bring in your own one.
 
 By default `FancyReporter` is registered for modern terminals or `BasicReporter` will be used if running in limited environments such as CIs.
 
-Available reporters:
-
-- [BasicReporter](./src/reporters/basic.ts)
-- [FancyReporter](./src/reporters/fancy.ts)
-- [JSONReporter](./src/reporters/json.ts)
-- [WinstonReporter](./src/reporters/winston.ts)
-
 ### Creating your own reporter
 
 A reporter (class or object) exposes `log(logObj)` method.
