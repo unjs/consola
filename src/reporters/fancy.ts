@@ -3,7 +3,7 @@ import { mainSymbols } from "figures";
 import * as colors from "colorette";
 import { parseStack } from "../utils/error";
 import { TYPE_COLOR_MAP, LEVEL_COLOR_MAP } from "../utils/fancy";
-import { LogObject } from "../types";
+import { FormatOptions, LogObject } from "../types";
 import BasicReporter from "./basic";
 
 const DEFAULTS = {
@@ -24,10 +24,6 @@ const TYPE_ICONS = {
 };
 
 export default class FancyReporter extends BasicReporter {
-  constructor(options: Partial<typeof DEFAULTS>) {
-    super({ ...DEFAULTS, ...options });
-  }
-
   formatStack(stack: string) {
     return (
       "\n" +
@@ -43,11 +39,11 @@ export default class FancyReporter extends BasicReporter {
     );
   }
 
-  formatType(logObj: LogObject, isBadge: boolean) {
+  formatType(logObj: LogObject, isBadge: boolean, opts: FormatOptions) {
     const typeColor =
       (TYPE_COLOR_MAP as any)[logObj.type] ||
       (LEVEL_COLOR_MAP as any)[logObj.level] ||
-      (this.options as any).secondaryColor;
+      "gray";
 
     if (isBadge) {
       return getBgColor(typeColor)(
@@ -62,20 +58,22 @@ export default class FancyReporter extends BasicReporter {
     return _type ? getColor(typeColor)(_type) : "";
   }
 
-  formatLogObj(logObj: LogObject, opts: { width: number }) {
-    const [message, ...additional] = this.formatArgs(logObj.args).split("\n");
+  formatLogObj(logObj: LogObject, opts: FormatOptions) {
+    const [message, ...additional] = this.formatArgs(logObj.args, opts).split(
+      "\n"
+    );
 
     const isBadge =
       typeof (logObj as any).badge !== "undefined"
         ? Boolean((logObj as any).badge)
         : logObj.level < 2;
 
-    const secondaryColor = getColor((this.options as any).secondaryColor);
+    const secondaryColor = getColor("gray");
 
-    const date = this.formatDate(logObj.date);
+    const date = this.formatDate(logObj.date, opts);
     const coloredDate = date && secondaryColor(date);
 
-    const type = this.formatType(logObj, isBadge);
+    const type = this.formatType(logObj, isBadge, opts);
 
     const tag = logObj.tag ? secondaryColor(logObj.tag) : "";
 
@@ -86,10 +84,11 @@ export default class FancyReporter extends BasicReporter {
     let line;
     const left = this.filterAndJoin([type, formattedMessage]);
     const right = this.filterAndJoin([tag, coloredDate]);
-    const space = opts.width - stringWidth(left) - stringWidth(right) - 2;
+    const space =
+      (opts.columns || 0) - stringWidth(left) - stringWidth(right) - 2;
 
     line =
-      space > 0 && opts.width >= 80
+      space > 0 && (opts.columns || 0) >= 80
         ? left + " ".repeat(space) + right
         : `[ ${right} ] ${left}`;
 

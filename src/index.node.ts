@@ -1,12 +1,14 @@
 import { isDebug, isTest, isCI } from "std-env";
 import { LogLevels, LogLevel } from "./constants";
-import type { ConsolaOptions } from "./consola";
+import type { ConsolaOptions } from "./types";
 import { BasicReporter, FancyReporter } from "./reporters";
-import { createConsola as _createConsola } from "./consola";
+import { ConsolaInstance, createConsola as _createConsola } from "./consola";
 
 export * from "./index.shared";
 
-export function createConsola(options: Partial<ConsolaOptions> = {}) {
+export function createConsola(
+  options: Partial<ConsolaOptions> = {}
+): ConsolaInstance {
   // Log level
   let level = _getDefaultLogLevel();
   if (process.env.CONSOLA_LEVEL) {
@@ -17,9 +19,11 @@ export function createConsola(options: Partial<ConsolaOptions> = {}) {
   const consola = _createConsola({
     level: level as LogLevel,
     defaults: { level },
+    stdout: process.stdout,
+    stderr: process.stderr,
     prompt: (...args) => import("./prompt").then((m) => m.prompt(...args)),
     reporters: options.reporters || [
-      isCI || isTest ? new BasicReporter({}) : new FancyReporter({}),
+      isCI || isTest ? new BasicReporter() : new FancyReporter(),
     ],
     ...options,
   });

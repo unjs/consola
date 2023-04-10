@@ -16,6 +16,9 @@ devDependencies:
   colorette:
     specifier: ^2.0.19
     version: 2.0.19
+  defu:
+    specifier: ^6.1.2
+    version: 6.1.2
   eslint:
     specifier: ^8.37.0
     version: 8.37.0

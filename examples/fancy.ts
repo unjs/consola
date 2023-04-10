@@ -1,4 +1,4 @@
 import { FancyReporter } from "../src/reporters";
 import { reporterDemo } from "./utils";
 
-reporterDemo(new FancyReporter({}));
+reporterDemo(new FancyReporter());

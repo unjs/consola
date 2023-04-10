@@ -1,23 +1,16 @@
+import { defu } from "defu";
 import { LogTypes, LogType, LogLevel } from "./constants";
 import { isLogObj } from "./utils/index";
-import type { ConsolaReporter, InputLogObject, LogObject } from "./types";
+import type {
+  ConsolaReporter,
+  InputLogObject,
+  LogObject,
+  ConsolaOptions,
+} from "./types";
 import type { PromptOptions } from "./prompt";
 
 let paused = false;
 const queue: any[] = [];
-
-export interface ConsolaOptions {
-  reporters: ConsolaReporter[];
-  types: Record<LogType, InputLogObject>;
-  level: LogLevel;
-  defaults: InputLogObject;
-  throttle: number;
-  throttleMin: number;
-  stdout?: NodeJS.WritableStream;
-  stderr?: NodeJS.WritableStream;
-  mockFn?: (type: LogType, defaults: InputLogObject) => (...args: any) => void;
-  prompt?: typeof import("./prompt").prompt | undefined;
-}
 
 export class Consola {
   options: ConsolaOptions;
@@ -33,18 +26,24 @@ export class Consola {
   constructor(options: Partial<ConsolaOptions> = {}) {
     // Options
     const types = options.types || LogTypes;
-    this.options = {
-      // Defaults
-      throttle: 1000,
-      throttleMin: 5,
-      // User
-      ...options,
-      // Overrides, Normalizations and Clones
-      defaults: { ...options.defaults },
-      level: _normalizeLogLevel(options.level, types),
-      reporters: [...(options.reporters || [])],
-      types,
-    };
+    this.options = defu(
+      <ConsolaOptions>{
+        ...options,
+        defaults: { ...options.defaults },
+        level: _normalizeLogLevel(options.level, types),
+        reporters: [...(options.reporters || [])],
+      },
+      <ConsolaOptions>{
+        types: LogTypes,
+        throttle: 1000,
+        throttleMin: 5,
+        formatOptions: {
+          date: true,
+          colors: false,
+          compact: true,
+        },
+      }
+    );
 
     // Create logger functions for current instance
     for (const type in types) {
@@ -353,8 +352,7 @@ export class Consola {
   _log(logObj: LogObject) {
     for (const reporter of this.options.reporters) {
       reporter.log(logObj, {
-        stdout: this.stdout,
-        stderr: this.stderr,
+        options: this.options,
       });
     }
   }

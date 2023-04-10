@@ -1,6 +1,6 @@
 import BrowserReporter from "./reporters/browser";
 import { createConsola as _createConsola } from "./consola";
-import type { ConsolaOptions } from "./consola";
+import type { ConsolaOptions } from "./types";
 
 export * from "./index.shared";
 

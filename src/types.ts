@@ -1,5 +1,25 @@
-import { InspectOptions } from "node:util";
 import type { LogLevel, LogType } from "./constants";
+
+export interface ConsolaOptions {
+  reporters: ConsolaReporter[];
+  types: Record<LogType, InputLogObject>;
+  level: LogLevel;
+  defaults: InputLogObject;
+  throttle: number;
+  throttleMin: number;
+  stdout?: NodeJS.WriteStream;
+  stderr?: NodeJS.WriteStream;
+  mockFn?: (type: LogType, defaults: InputLogObject) => (...args: any) => void;
+  prompt?: typeof import("./prompt").prompt | undefined;
+  formatOptions: FormatOptions;
+}
+
+export interface FormatOptions {
+  columns?: number;
+  date?: boolean;
+  colors?: boolean;
+  compact?: boolean;
+}
 
 export interface InputLogObject {
   level?: LogLevel;
@@ -23,14 +43,7 @@ export interface ConsolaReporter {
   log: (
     logObj: LogObject,
     ctx: {
-      stdout: NodeJS.WritableStream;
-      stderr: NodeJS.WritableStream;
+      options: ConsolaOptions;
     }
   ) => void;
-}
-
-export interface BasicReporterOptions {
-  dateFormat?: string;
-  formatOptions?: InspectOptions;
-  secondaryColor?: string;
 }
