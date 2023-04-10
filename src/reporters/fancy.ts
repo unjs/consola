@@ -88,7 +88,9 @@ export default class FancyReporter extends BasicReporter {
     const space = opts.width - stringWidth(left) - stringWidth(right) - 2;
 
     line =
-      space > 0 && opts.width >= 80 ? left + " ".repeat(space) + right : left;
+      space > 0 && opts.width >= 80
+        ? left + " ".repeat(space) + right
+        : `[ ${right} ] ${left}`;
 
     line += additional.length > 0 ? "\n" + additional.join("\n") : "";
 
