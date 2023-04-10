@@ -19,6 +19,7 @@ const TYPE_ICONS = {
   success: mainSymbols.tick,
   debug: mainSymbols.pointerSmall,
   trace: mainSymbols.pointerSmall,
+  fail: mainSymbols.cross,
   log: "",
 };
 

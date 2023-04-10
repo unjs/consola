@@ -7,6 +7,7 @@ export type LogLevelLiteral =
   | "log"
   | "info"
   | "success"
+  | "fail"
   | "debug"
   | "trace"
   | "silent"
@@ -15,18 +16,23 @@ export type LogLevelLiteral =
 export type LogLevel = number; // Built-in:  0 | 1 | 2 | 3 | 4 | 5;
 
 export type logType =
+  // 0
   | "silent"
   | "fatal"
   | "error"
+  // 1
   | "warn"
+  // 2
   | "log"
+  // 3
   | "info"
   | "success"
+  | "ready"
+  | "start"
+  // Verbose
   | "debug"
   | "trace"
-  | "verbose"
-  | "ready"
-  | "start";
+  | "verbose";
 
 export interface ConsolaLogObject {
   level?: LogLevel | LogLevelLiteral;

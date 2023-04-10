@@ -1,5 +1,6 @@
 export const TYPE_COLOR_MAP = {
   info: "cyan",
+  fail: "red",
 };
 
 export const LEVEL_COLOR_MAP = {

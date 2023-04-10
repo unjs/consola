@@ -5,6 +5,7 @@ export const LogLevels = {
   Log: 2,
   Info: 3,
   Success: 3,
+  Fail: 3,
   Debug: 4,
   Trace: 5,
   Silent: Number.NEGATIVE_INFINITY,

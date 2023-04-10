@@ -19,6 +19,7 @@ export const Types: Record<string, ConsolaLogObject> = {
   warn: {
     level: LogLevels.Warn,
   },
+
   // Level 2
   log: {
     level: LogLevels.Log,
@@ -31,24 +32,28 @@ export const Types: Record<string, ConsolaLogObject> = {
   success: {
     level: LogLevels.Success,
   },
-  // Level 4
-  debug: {
-    level: LogLevels.Debug,
+  fail: {
+    level: LogLevels.Fail,
   },
-  // Level 5
-  trace: {
-    level: LogLevels.Trace,
-  },
-  // Verbose
-  verbose: {
-    level: LogLevels.Trace,
-  },
-
-  // Legacy
   ready: {
     level: LogLevels.Info,
   },
   start: {
     level: LogLevels.Info,
+  },
+
+  // Level 4
+  debug: {
+    level: LogLevels.Debug,
+  },
+
+  // Level 5
+  trace: {
+    level: LogLevels.Trace,
+  },
+
+  // Verbose
+  verbose: {
+    level: LogLevels.Verbose,
   },
 };
