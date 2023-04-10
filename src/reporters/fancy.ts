@@ -94,6 +94,11 @@ export default class FancyReporter extends BasicReporter {
 
     line += additional.length > 0 ? "\n" + additional.join("\n") : "";
 
+    if (logObj.type === "trace") {
+      const _err = new Error("Trace: " + logObj.message);
+      line += this.formatStack(_err.stack || "");
+    }
+
     return isBadge ? "\n" + line + "\n" : line;
   }
 }
