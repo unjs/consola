@@ -1,4 +1,4 @@
 export { Consola } from "./consola";
-export { Types } from "./log.types";
-export { LogLevels } from "./log.levels";
+export { LogLevels, LogTypes } from "./constants";
+export type { LogLevel, LogType } from "./constants";
 export { isLogObj } from "./utils";

@@ -1,25 +1,5 @@
 import { InspectOptions } from "node:util";
-
-export type LogLevel = number; // Built-in:  0 | 1 | 2 | 3 | 4 | 5;
-
-export type LogType =
-  // 0
-  | "silent"
-  | "fatal"
-  | "error"
-  // 1
-  | "warn"
-  // 2
-  | "log"
-  // 3
-  | "info"
-  | "success"
-  | "ready"
-  | "start"
-  // Verbose
-  | "debug"
-  | "trace"
-  | "verbose";
+import type { LogLevel, LogType } from "./constants";
 
 export interface ConsolaLogObject {
   level?: LogLevel | LogType;

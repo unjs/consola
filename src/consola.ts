@@ -1,11 +1,9 @@
-import { normalizeLogLevel } from "./log.levels";
-import { Types } from "./log.types";
+import { LogTypes, LogType } from "./constants";
 import { isLogObj } from "./utils/index";
 import type {
   ConsolaOptions,
   ConsolaReporter,
   ConsolaLogObject,
-  LogType,
   ConsolaReporterLogObject,
 } from "./types";
 import type { PromptOptions } from "./prompt";
@@ -26,7 +24,7 @@ export class Consola {
 
   constructor(options: Partial<ConsolaOptions> = {}) {
     // Options
-    const types = options.types || Types;
+    const types = options.types || LogTypes;
     this.options = {
       // Defaults
       throttle: 1000,
@@ -35,7 +33,7 @@ export class Consola {
       ...options,
       // Overrides, Normalizations and Clones
       defaults: { ...options.defaults },
-      level: normalizeLogLevel(options.level, types),
+      level: _normalizeLogLevel(options.level, types),
       reporters: [...(options.reporters || [])],
       types,
     };
@@ -65,7 +63,7 @@ export class Consola {
   }
 
   set level(level) {
-    this.options.level = normalizeLogLevel(
+    this.options.level = _normalizeLogLevel(
       level,
       this.options.types,
       this.options.level
@@ -351,6 +349,19 @@ export class Consola {
       });
     }
   }
+}
+
+function _normalizeLogLevel(input: any, types: any = {}, defaultLevel = 3) {
+  if (input === undefined) {
+    return defaultLevel;
+  }
+  if (typeof input === "number") {
+    return input;
+  }
+  if (types[input] && types[input].level !== undefined) {
+    return types[input].level;
+  }
+  return defaultLevel;
 }
 
 export interface ConsolaInstance extends Consola {
