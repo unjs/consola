@@ -49,8 +49,8 @@ export class Consola {
     for (const type in types) {
       const defaults: InputLogObject = {
         type: type as LogType,
-        ...types[type as LogType],
         ...this.options.defaults,
+        ...types[type as LogType],
       };
       (this as any)[type] = this._wrapLogFn(defaults);
       (this as any)[type].raw = this._wrapLogFn(defaults, true);
