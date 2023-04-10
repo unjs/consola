@@ -18,9 +18,9 @@
   "exports": {
     ".": {
       "node": {
-        "types": "./dist/index.d.ts",
-        "require": "./lib/index.cjs",
-        "import": "./dist/index.mjs"
+        "types": "./dist/index.node.d.ts",
+        "require": "./lib/index.node.cjs",
+        "import": "./dist/index.node.mjs"
       },
       "default": {
         "types": "./dist/index.browser.d.ts",
@@ -28,13 +28,12 @@
       }
     }
   },
-  "main": "./lib/index.cjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "main": "./lib/index.node.cjs",
+  "module": "./dist/index.node.mjs",
+  "types": "./dist/index.node.d.ts",
   "files": [
     "dist",
-    "lib",
-    "types"
+    "lib"
   ],
   "scripts": {
     "build": "unbuild",
