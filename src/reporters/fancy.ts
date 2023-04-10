@@ -96,11 +96,11 @@ export default class FancyReporter extends BasicReporter {
   }
 }
 
-function getColor(color: string) {
+function getColor(color = "white") {
   return (colors as any)[color] || colors.white;
 }
 
-function getBgColor(color: string) {
+function getBgColor(color = "bgWhite") {
   return (
     (colors as any)[`bg${color[0].toUpperCase()}${color.slice(1)}`] ||
     colors.bgWhite
