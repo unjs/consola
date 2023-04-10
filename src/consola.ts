@@ -15,20 +15,6 @@ import type { PromptOptions } from "./prompt";
 let paused = false;
 const queue: any[] = [];
 
-export interface _ConsolaLoggers {
-  // Built-in log levels
-  fatal(message: ConsolaLogObject | any, ...args: any[]): void;
-  error(message: ConsolaLogObject | any, ...args: any[]): void;
-  warn(message: ConsolaLogObject | any, ...args: any[]): void;
-  log(message: ConsolaLogObject | any, ...args: any[]): void;
-  info(message: ConsolaLogObject | any, ...args: any[]): void;
-  start(message: ConsolaLogObject | any, ...args: any[]): void;
-  success(message: ConsolaLogObject | any, ...args: any[]): void;
-  ready(message: ConsolaLogObject | any, ...args: any[]): void;
-  debug(message: ConsolaLogObject | any, ...args: any[]): void;
-  trace(message: ConsolaLogObject | any, ...args: any[]): void;
-}
-
 export class Consola {
   _reporters: ConsolaReporter[];
   _types: Record<logType, ConsolaLogObject>;
@@ -114,7 +100,7 @@ export class Consola {
     return this._prompt<any, any, T>(message, opts);
   }
 
-  create(options: ConsolaOptions) {
+  create(options: ConsolaOptions): ConsolaInstance {
     return new Consola(
       Object.assign(
         {
@@ -128,16 +114,16 @@ export class Consola {
         },
         options
       )
-    );
+    ) as ConsolaInstance;
   }
 
-  withDefaults(defaults: ConsolaLogObject) {
+  withDefaults(defaults: ConsolaLogObject): ConsolaInstance {
     return this.create({
       defaults: Object.assign({}, this._defaults, defaults),
     });
   }
 
-  withTag(tag: string) {
+  withTag(tag: string): ConsolaInstance {
     return this.withDefaults({
       tag: this._defaults.tag ? this._defaults.tag + ":" + tag : tag,
     });
@@ -395,6 +381,19 @@ export class Consola {
   }
 }
 
+export interface ConsolaInstance extends Consola {
+  fatal(message: ConsolaLogObject | any, ...args: any[]): void;
+  error(message: ConsolaLogObject | any, ...args: any[]): void;
+  warn(message: ConsolaLogObject | any, ...args: any[]): void;
+  log(message: ConsolaLogObject | any, ...args: any[]): void;
+  info(message: ConsolaLogObject | any, ...args: any[]): void;
+  start(message: ConsolaLogObject | any, ...args: any[]): void;
+  success(message: ConsolaLogObject | any, ...args: any[]): void;
+  ready(message: ConsolaLogObject | any, ...args: any[]): void;
+  debug(message: ConsolaLogObject | any, ...args: any[]): void;
+  trace(message: ConsolaLogObject | any, ...args: any[]): void;
+}
+
 // Legacy support
 // @ts-expect-error
 Consola.prototype.add = Consola.prototype.addReporter;
@@ -413,6 +412,6 @@ Consola.prototype.resume = Consola.prototype.resumeLogs;
 
 export function createConsola(
   options: Partial<ConsolaOptions>
-): Consola & _ConsolaLoggers {
-  return new Consola(options) as any;
+): ConsolaInstance {
+  return new Consola(options) as ConsolaInstance;
 }
