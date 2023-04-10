@@ -16,13 +16,16 @@ const queue: any[] = [];
 export class Consola {
   options: ConsolaOptions;
 
-  _lastLogSerialized: any;
-  _lastLog: any;
-  _lastLogTime: any;
-  _lastLogCount: any;
-  _throttleTimeout: any;
+  _lastLog: {
+    serialized?: string;
+    object?: ConsolaReporterLogObject;
+    count?: number;
+    time?: Date;
+    timeout?: ReturnType<typeof setTimeout>;
+  };
 
   constructor(options: Partial<ConsolaOptions> = {}) {
+    // Options
     const types = options.types || Types;
     this.options = {
       // Defaults
@@ -36,8 +39,6 @@ export class Consola {
       reporters: [...(options.reporters || [])],
       types,
     };
-
-    console.log("this.options", this.options);
 
     // Create logger functions for current instance
     for (const type in types) {
@@ -55,12 +56,8 @@ export class Consola {
       this.mockTypes();
     }
 
-    // Keep serialized version of last log
-    this._lastLogSerialized = undefined;
-    this._lastLog = undefined;
-    this._lastLogTime = undefined;
-    this._lastLogCount = 0;
-    this._throttleTimeout = undefined;
+    // Track of last log
+    this._lastLog = {};
   }
 
   get level() {
@@ -294,19 +291,19 @@ export class Consola {
      *  we don't want to log a duplicate
      */
     const resolveLog = (newLog = false) => {
-      const repeated = this._lastLogCount - this.options.throttleMin;
-      if (this._lastLog && repeated > 0) {
-        const args = [...this._lastLog.args];
+      const repeated = (this._lastLog.count || 0) - this.options.throttleMin;
+      if (this._lastLog.object && repeated > 0) {
+        const args = [...this._lastLog.object.args];
         if (repeated > 1) {
           args.push(`(repeated ${repeated} times)`);
         }
-        this._log({ ...this._lastLog, args });
-        this._lastLogCount = 1;
+        this._log({ ...this._lastLog.object, args });
+        this._lastLog.count = 1;
       }
 
       // Log
       if (newLog) {
-        this._lastLog = logObj;
+        this._lastLog.object = logObj as ConsolaReporterLogObject;
         if (this.options.async) {
           return this._logAsync(logObj as ConsolaReporterLogObject);
         } else {
@@ -316,11 +313,12 @@ export class Consola {
     };
 
     // Throttle
-    clearTimeout(this._throttleTimeout);
-    const diffTime = this._lastLogTime
-      ? (logObj.date as any) - this._lastLogTime
-      : 0;
-    this._lastLogTime = logObj.date;
+    clearTimeout(this._lastLog.timeout);
+    const diffTime =
+      this._lastLog.time && logObj.date
+        ? logObj.date.getTime() - this._lastLog.time.getTime()
+        : 0;
+    this._lastLog.time = logObj.date;
     if (diffTime < this.options.throttle) {
       try {
         const serializedLog = JSON.stringify([
@@ -328,13 +326,13 @@ export class Consola {
           logObj.tag,
           logObj.args,
         ]);
-        const isSameLog = this._lastLogSerialized === serializedLog;
-        this._lastLogSerialized = serializedLog;
+        const isSameLog = this._lastLog.serialized === serializedLog;
+        this._lastLog.serialized = serializedLog;
         if (isSameLog) {
-          this._lastLogCount++;
-          if (this._lastLogCount > this.options.throttleMin) {
+          this._lastLog.count = (this._lastLog.count || 0) + 1;
+          if (this._lastLog.count > this.options.throttleMin) {
             // Auto-resolve when throttle is timed out
-            this._throttleTimeout = setTimeout(
+            this._lastLog.timeout = setTimeout(
               resolveLog,
               this.options.throttle
             );
