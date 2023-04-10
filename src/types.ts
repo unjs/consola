@@ -1,21 +1,8 @@
 import { InspectOptions } from "node:util";
 
-export type LogLevelLiteral =
-  | "fatal"
-  | "error"
-  | "warn"
-  | "log"
-  | "info"
-  | "success"
-  | "fail"
-  | "debug"
-  | "trace"
-  | "silent"
-  | "verbose";
-
 export type LogLevel = number; // Built-in:  0 | 1 | 2 | 3 | 4 | 5;
 
-export type logType =
+export type LogType =
   // 0
   | "silent"
   | "fatal"
@@ -35,9 +22,9 @@ export type logType =
   | "verbose";
 
 export interface ConsolaLogObject {
-  level?: LogLevel | LogLevelLiteral;
+  level?: LogLevel | LogType;
   tag?: string;
-  type?: logType;
+  type?: LogType;
   message?: string;
   additional?: string | string[];
   args?: any[];
@@ -46,7 +33,7 @@ export interface ConsolaLogObject {
 
 export interface ConsolaReporterLogObject {
   level: LogLevel;
-  type: logType;
+  type: LogType;
   tag: string;
   args: any[];
   date: Date;
@@ -55,7 +42,7 @@ export interface ConsolaReporterLogObject {
 export type ConsolaMock = (...args: any) => void;
 
 export type ConsolaMockFn = (
-  type: logType,
+  type: LogType,
   defaults: ConsolaLogObject
 ) => ConsolaMock;
 
@@ -70,7 +57,7 @@ export interface ConsolaReporter {
 
 export interface ConsolaOptions {
   reporters: ConsolaReporter[];
-  types: Record<logType, ConsolaLogObject>;
+  types: Record<LogType, ConsolaLogObject>;
   level: LogLevel;
   defaults: ConsolaLogObject;
   throttle: number;
@@ -84,50 +71,5 @@ export interface ConsolaOptions {
 export interface BasicReporterOptions {
   dateFormat?: string;
   formatOptions?: InspectOptions;
-}
-
-export declare class BasicReporter implements ConsolaReporter {
-  protected options: BasicReporterOptions;
-
-  constructor(options?: BasicReporterOptions);
-
-  public log(logObj: ConsolaReporterLogObject, args: ConsolaReporterArgs): void;
-
-  protected formatStack(stack: string): string;
-  protected formatArgs(args: any[]): string;
-  protected formatDate(date: Date): string;
-  protected filterAndJoin(arr: Array<string | undefined>): string;
-  protected formatLogObj(logObj: ConsolaReporterLogObject): string;
-}
-
-export interface FancyReporterOptions extends BasicReporterOptions {
   secondaryColor?: string;
-}
-
-export declare class FancyReporter extends BasicReporter {
-  constructor(options?: FancyReporterOptions);
-
-  protected formatType(logObj: ConsolaReporterLogObject): void;
-}
-
-export type BrowserReporterOptions = Record<string, any>;
-
-export declare class BrowserReporter implements ConsolaReporter {
-  public log(logObj: ConsolaReporterLogObject, args: ConsolaReporterArgs): void;
-}
-
-export type JSONReporterOptions = {
-  stream?: NodeJS.WritableStream;
-};
-
-export declare class JSONReporter implements ConsolaReporter {
-  constructor(options?: JSONReporterOptions);
-  public log(logObj: ConsolaReporterLogObject, args: ConsolaReporterArgs): void;
-}
-
-export type Winston = any;
-
-export declare class WinstonReporter implements ConsolaReporter {
-  constructor(logger?: Winston);
-  public log(logObj: ConsolaReporterLogObject, args: ConsolaReporterArgs): void;
 }

@@ -5,7 +5,7 @@ import type {
   ConsolaOptions,
   ConsolaReporter,
   ConsolaLogObject,
-  logType,
+  LogType,
   ConsolaReporterLogObject,
 } from "./types";
 import type { PromptOptions } from "./prompt";
@@ -43,8 +43,8 @@ export class Consola {
     // Create logger functions for current instance
     for (const type in types) {
       const defaults: ConsolaLogObject = {
-        type: type as logType,
-        ...types[type as logType],
+        type: type as LogType,
+        ...types[type as LogType],
         ...this.options.defaults,
       };
       (this as any)[type] = this._wrapLogFn(defaults);
@@ -229,7 +229,7 @@ export class Consola {
 
     for (const type in this.options.types) {
       (this as any)[type] =
-        _mockFn(type as logType, (this as any)._types[type]) ||
+        _mockFn(type as LogType, (this as any)._types[type]) ||
         (this as any)[type];
       (this as any)[type].raw = (this as any)[type];
     }
@@ -282,7 +282,7 @@ export class Consola {
     // Normalize type and tag to lowercase
     logObj.type = (
       typeof logObj.type === "string" ? logObj.type.toLowerCase() : ""
-    ) as logType;
+    ) as LogType;
     logObj.tag = typeof logObj.tag === "string" ? logObj.tag.toLowerCase() : "";
 
     // Resolve log
