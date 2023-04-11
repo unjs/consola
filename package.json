@@ -28,8 +28,7 @@
       },
       "default": {
         "types": "./dist/index.browser.d.ts",
-        "import": "./dist/index.browser.mjs",
-        "require": "./lib/index.browser.cjs"
+        "import": "./dist/index.browser.mjs"
       }
     }
   },
