@@ -23,6 +23,9 @@ const { message, stack } = new Error("Custom Error!");
 consola.error({ message, stack });
 
 // Circular object
-const a = { foo: 1 };
+const a = { foo: 1, bar: undefined as any };
 a.bar = a;
 consola.log(a);
+
+// Multiline
+consola.log("`Hello` the `JS`\n`World` and `Beyond`!");

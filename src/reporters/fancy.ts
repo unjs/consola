@@ -1,25 +1,31 @@
 import stringWidth from "string-width";
-import { mainSymbols } from "figures";
+import isUnicodeSupported from "is-unicode-supported";
 import * as colors from "colorette";
 import { parseStack } from "../utils/error";
-import { TYPE_COLOR_MAP, LEVEL_COLOR_MAP } from "../utils/fancy";
 import { FormatOptions, LogObject } from "../types";
+import { LogLevel, LogType } from "../constants";
 import BasicReporter from "./basic";
 
-const DEFAULTS = {
-  formatOptions: {
-    date: true,
-    colors: true,
-    compact: false,
-  },
+export const TYPE_COLOR_MAP: { [k in LogType]?: string } = {
+  info: "cyan",
+  fail: "red",
 };
 
+export const LEVEL_COLOR_MAP: { [k in LogLevel]?: string } = {
+  0: "red",
+  1: "yellow",
+  2: "white",
+  3: "white",
+};
+
+const unicode = isUnicodeSupported();
+const s = (c: string, fallback: string) => (unicode ? c : fallback);
 const TYPE_ICONS = {
-  info: mainSymbols.info,
-  success: mainSymbols.tick,
-  debug: mainSymbols.pointerSmall,
-  trace: mainSymbols.pointerSmall,
-  fail: mainSymbols.cross,
+  info: s("ℹ", "i"),
+  success: s("✔", "√"),
+  debug: s("⚙", "D"),
+  trace: s("⬆", "T"),
+  fail: s("✖", "×"),
   log: "",
 };
 
@@ -63,26 +69,17 @@ export default class FancyReporter extends BasicReporter {
       "\n"
     );
 
-    const isBadge =
-      typeof (logObj as any).badge !== "undefined"
-        ? Boolean((logObj as any).badge)
-        : logObj.level < 2;
-
-    const secondaryColor = getColor("gray");
+    const isBadge = (logObj as any).badge ?? logObj.level < 2;
 
     const date = this.formatDate(logObj.date, opts);
-    const coloredDate = date && secondaryColor(date);
+    const coloredDate = date && colors.gray(date);
 
     const type = this.formatType(logObj, isBadge, opts);
 
-    const tag = logObj.tag ? secondaryColor(logObj.tag) : "";
-
-    const formattedMessage = message.replace(/`([^`]+)`/g, (_, m) =>
-      colors.cyan(m)
-    );
+    const tag = logObj.tag ? colors.gray(logObj.tag) : "";
 
     let line;
-    const left = this.filterAndJoin([type, formattedMessage]);
+    const left = this.filterAndJoin([type, highlightBackticks(message)]);
     const right = this.filterAndJoin([tag, coloredDate]);
     const space =
       (opts.columns || 0) - stringWidth(left) - stringWidth(right) - 2;
@@ -92,7 +89,9 @@ export default class FancyReporter extends BasicReporter {
         ? left + " ".repeat(space) + right
         : `[ ${right} ] ${left}`;
 
-    line += additional.length > 0 ? "\n" + additional.join("\n") : "";
+    line += highlightBackticks(
+      additional.length > 0 ? "\n" + additional.join("\n") : ""
+    );
 
     if (logObj.type === "trace") {
       const _err = new Error("Trace: " + logObj.message);
@@ -101,6 +100,10 @@ export default class FancyReporter extends BasicReporter {
 
     return isBadge ? "\n" + line + "\n" : line;
   }
+}
+
+function highlightBackticks(str: string) {
+  return str.replace(/`([^`]+)`/gm, (_, m) => colors.cyan(m));
 }
 
 function getColor(color = "white") {
