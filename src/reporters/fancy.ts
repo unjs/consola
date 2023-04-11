@@ -87,14 +87,14 @@ export default class FancyReporter extends BasicReporter {
 
     let line;
     const left = this.filterAndJoin([type, highlightBackticks(message)]);
-    const right = this.filterAndJoin([tag, coloredDate]);
+    const right = this.filterAndJoin(opts.columns ? [tag, coloredDate] : [tag]);
     const space =
       (opts.columns || 0) - stringWidth(left) - stringWidth(right) - 2;
 
     line =
       space > 0 && (opts.columns || 0) >= 80
         ? left + " ".repeat(space) + right
-        : `[ ${right} ] ${left}`;
+        : (right ? `${colors.gray(`[${right}]`)} ` : "") + left;
 
     line += highlightBackticks(
       additional.length > 0 ? "\n" + additional.join("\n") : ""
