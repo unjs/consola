@@ -44,9 +44,8 @@
     "dev": "vitest",
     "lint": "eslint . && prettier -c src examples test",
     "lint:fix": "eslint . --fix && prettier -w src examples test",
-    "prerelease": "pnpm test && pnpm build && changelogen --release --prerelease --push && npm publish --tag 3x",
-    "release": "pnpm prerelease",
-    "test": "pnpm lint && pnpm build && pnpm vitest run --coverage"
+    "release": "pnpm test && pnpm build && changelogen --release --push && npm publish",
+    "test": "pnpm lint && pnpm vitest run --coverage"
   },
   "devDependencies": {
     "@clack/core": "^0.3.2",
