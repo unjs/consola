@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v3.0.1
+
+[compare changes](https://github.com/unjs/consola/compare/v3.0.0...v3.0.1)
+
+
+### 🩹 Fixes
+
+  - **utils:** Use default `stream.write` for workers support ([#173](https://github.com/unjs/consola/pull/173))
+  - Wrap `options.stdout` and `options.stderr` for wrapStd ([ab59db6](https://github.com/unjs/consola/commit/ab59db6))
+
+### 💅 Refactors
+
+  - **fancy:** More minimal badges when width cannot be determined ([ad24029](https://github.com/unjs/consola/commit/ad24029))
+
+### ❤️  Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+
 ## v3.0.0
 
 [compare changes](https://github.com/unjs/consola/compare/v2.15.2...v3.0.0)
