@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v3.0.0-5
+
+[compare changes](https://github.com/unjs/consola/compare/v3.0.0-4...v3.0.0-5)
+
+
+### 🩹 Fixes
+
+  - **fancy:** Improve colors ([99c2a4f](https://github.com/unjs/consola/commit/99c2a4f))
+
+### 💅 Refactors
+
+  - **fancy:** Better start color and icon ([5a01d53](https://github.com/unjs/consola/commit/5a01d53))
+
+### ❤️  Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+
 ## v3.0.0-4
 
 [compare changes](https://github.com/unjs/consola/compare/v3.0.0-3...v3.0.0-4)
