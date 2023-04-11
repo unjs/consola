@@ -6,16 +6,15 @@ All notable changes to this project will be documented in this file. See [standa
 
 [compare changes](https://github.com/unjs/consola/compare/v3.0.0-4...v3.0.0-5)
 
-
 ### 🩹 Fixes
 
-  - **fancy:** Improve colors ([99c2a4f](https://github.com/unjs/consola/commit/99c2a4f))
+- **fancy:** Improve colors ([99c2a4f](https://github.com/unjs/consola/commit/99c2a4f))
 
 ### 💅 Refactors
 
-  - **fancy:** Better start color and icon ([5a01d53](https://github.com/unjs/consola/commit/5a01d53))
+- **fancy:** Better start color and icon ([5a01d53](https://github.com/unjs/consola/commit/5a01d53))
 
-### ❤️  Contributors
+### ❤️ Contributors
 
 - Pooya Parsa ([@pi0](http://github.com/pi0))
 
@@ -23,55 +22,54 @@ All notable changes to this project will be documented in this file. See [standa
 
 [compare changes](https://github.com/unjs/consola/compare/v3.0.0-3...v3.0.0-4)
 
-
 ### 🚀 Enhancements
 
-  - `consola.fail` log level ([#153](https://github.com/unjs/consola/pull/153))
-  - Pass `formatOptions` and other options to reporters ([d77286a](https://github.com/unjs/consola/commit/d77286a))
-  - Show stack trace with `consola.trace` ([#151](https://github.com/unjs/consola/pull/151))
+- `consola.fail` log level ([#153](https://github.com/unjs/consola/pull/153))
+- Pass `formatOptions` and other options to reporters ([d77286a](https://github.com/unjs/consola/commit/d77286a))
+- Show stack trace with `consola.trace` ([#151](https://github.com/unjs/consola/pull/151))
 
 ### 🩹 Fixes
 
-  - Type consola instance with built-in type functions ([1a4b893](https://github.com/unjs/consola/commit/1a4b893))
-  - Default value for color format utils ([ec9be78](https://github.com/unjs/consola/commit/ec9be78))
-  - **fancy:** Show time and tag on right when width cannot be determined ([#128](https://github.com/unjs/consola/pull/128))
-  - Pass level from `CONSOLA_LEVEL` to the `defaults` ([#129](https://github.com/unjs/consola/pull/129))
-  - **consola:** Type defaults overrides generic defaults ([d3d3c05](https://github.com/unjs/consola/commit/d3d3c05))
+- Type consola instance with built-in type functions ([1a4b893](https://github.com/unjs/consola/commit/1a4b893))
+- Default value for color format utils ([ec9be78](https://github.com/unjs/consola/commit/ec9be78))
+- **fancy:** Show time and tag on right when width cannot be determined ([#128](https://github.com/unjs/consola/pull/128))
+- Pass level from `CONSOLA_LEVEL` to the `defaults` ([#129](https://github.com/unjs/consola/pull/129))
+- **consola:** Type defaults overrides generic defaults ([d3d3c05](https://github.com/unjs/consola/commit/d3d3c05))
 
 ### 💅 Refactors
 
-  - Drop `json` and `winston` reporters ([5af0e99](https://github.com/unjs/consola/commit/5af0e99))
-  - Move all options to `consola.options` without duplication ([2d31ef4](https://github.com/unjs/consola/commit/2d31ef4))
-  - Move spam logic into `_lastLog` object ([cabd04f](https://github.com/unjs/consola/commit/cabd04f))
-  - Remove global `async` option ([edd1bb9](https://github.com/unjs/consola/commit/edd1bb9))
-  - **types:** Merge `LogTypeLiteral` and `logtype` types to `LogType` ([da1bc73](https://github.com/unjs/consola/commit/da1bc73))
-  - ⚠️  Move log levels and types to constants ([514f5b3](https://github.com/unjs/consola/commit/514f5b3))
-  - Use `index.node.ts` for main build ([b92d23b](https://github.com/unjs/consola/commit/b92d23b))
-  - Improve types  and exports ([b380d21](https://github.com/unjs/consola/commit/b380d21))
-  - Improve fancy reporter ([bc90db8](https://github.com/unjs/consola/commit/bc90db8))
-  - Revert back to `dist/index.*` for bw compatibility ([98e300f](https://github.com/unjs/consola/commit/98e300f))
+- Drop `json` and `winston` reporters ([5af0e99](https://github.com/unjs/consola/commit/5af0e99))
+- Move all options to `consola.options` without duplication ([2d31ef4](https://github.com/unjs/consola/commit/2d31ef4))
+- Move spam logic into `_lastLog` object ([cabd04f](https://github.com/unjs/consola/commit/cabd04f))
+- Remove global `async` option ([edd1bb9](https://github.com/unjs/consola/commit/edd1bb9))
+- **types:** Merge `LogTypeLiteral` and `logtype` types to `LogType` ([da1bc73](https://github.com/unjs/consola/commit/da1bc73))
+- ⚠️ Move log levels and types to constants ([514f5b3](https://github.com/unjs/consola/commit/514f5b3))
+- Use `index.node.ts` for main build ([b92d23b](https://github.com/unjs/consola/commit/b92d23b))
+- Improve types and exports ([b380d21](https://github.com/unjs/consola/commit/b380d21))
+- Improve fancy reporter ([bc90db8](https://github.com/unjs/consola/commit/bc90db8))
+- Revert back to `dist/index.*` for bw compatibility ([98e300f](https://github.com/unjs/consola/commit/98e300f))
 
 ### 📖 Documentation
 
-  - Fix links to the source files ([#172](https://github.com/unjs/consola/pull/172))
+- Fix links to the source files ([#172](https://github.com/unjs/consola/pull/172))
 
 ### 🏡 Chore
 
-  - Fix import in examples ([c4fff18](https://github.com/unjs/consola/commit/c4fff18))
+- Fix import in examples ([c4fff18](https://github.com/unjs/consola/commit/c4fff18))
 
 ### ✅ Tests
 
-  - Update test ([64fa81d](https://github.com/unjs/consola/commit/64fa81d))
+- Update test ([64fa81d](https://github.com/unjs/consola/commit/64fa81d))
 
 ### 🎨 Styles
 
-  - Prefer object spread instead of `Object.assign` ([c03268a](https://github.com/unjs/consola/commit/c03268a))
+- Prefer object spread instead of `Object.assign` ([c03268a](https://github.com/unjs/consola/commit/c03268a))
 
-#### ⚠️  Breaking Changes
+#### ⚠️ Breaking Changes
 
-  - ⚠️  Move log levels and types to constants ([514f5b3](https://github.com/unjs/consola/commit/514f5b3))
+- ⚠️ Move log levels and types to constants ([514f5b3](https://github.com/unjs/consola/commit/514f5b3))
 
-### ❤️  Contributors
+### ❤️ Contributors
 
 - Pooya Parsa ([@pi0](http://github.com/pi0))
 - With-heart ([@with-heart](http://github.com/with-heart))
@@ -80,20 +78,19 @@ All notable changes to this project will be documented in this file. See [standa
 
 [compare changes](https://github.com/unjs/consola/compare/v3.0.0-2...v3.0.0-3)
 
-
 ### 💅 Refactors
 
-  - Remove `globalThis` caching ([4e7b909](https://github.com/unjs/consola/commit/4e7b909))
+- Remove `globalThis` caching ([4e7b909](https://github.com/unjs/consola/commit/4e7b909))
 
 ### 📦 Build
 
-  - Use backward compatible cjs wrapper for default export ([e2e6aa6](https://github.com/unjs/consola/commit/e2e6aa6))
+- Use backward compatible cjs wrapper for default export ([e2e6aa6](https://github.com/unjs/consola/commit/e2e6aa6))
 
 ### 🏡 Chore
 
-  - Update shared exports ([8fc0fdd](https://github.com/unjs/consola/commit/8fc0fdd))
+- Update shared exports ([8fc0fdd](https://github.com/unjs/consola/commit/8fc0fdd))
 
-### ❤️  Contributors
+### ❤️ Contributors
 
 - Pooya Parsa ([@pi0](http://github.com/pi0))
 
@@ -101,19 +98,18 @@ All notable changes to this project will be documented in this file. See [standa
 
 [compare changes](https://github.com/unjs/consola/compare/v3.0.0-1...v3.0.0-2)
 
-
 ### 🚀 Enhancements
 
-  - `consola.prompt` util ([#170](https://github.com/unjs/consola/pull/170))
+- `consola.prompt` util ([#170](https://github.com/unjs/consola/pull/170))
 
 ### 🏡 Chore
 
-  - Rename dist-tag to 3.x ([3e8f1e0](https://github.com/unjs/consola/commit/3e8f1e0))
-  - Update readme ([85bbe3a](https://github.com/unjs/consola/commit/85bbe3a))
-  - Update badges ([cf7c6e5](https://github.com/unjs/consola/commit/cf7c6e5))
-  - Update badges ([566ff68](https://github.com/unjs/consola/commit/566ff68))
+- Rename dist-tag to 3.x ([3e8f1e0](https://github.com/unjs/consola/commit/3e8f1e0))
+- Update readme ([85bbe3a](https://github.com/unjs/consola/commit/85bbe3a))
+- Update badges ([cf7c6e5](https://github.com/unjs/consola/commit/cf7c6e5))
+- Update badges ([566ff68](https://github.com/unjs/consola/commit/566ff68))
 
-### ❤️  Contributors
+### ❤️ Contributors
 
 - Pooya Parsa ([@pi0](http://github.com/pi0))
 
