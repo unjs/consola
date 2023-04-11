@@ -4,7 +4,7 @@ import * as colors from "colorette";
 import { parseStack } from "../utils/error";
 import { FormatOptions, LogObject } from "../types";
 import { LogLevel, LogType } from "../constants";
-import BasicReporter from "./basic";
+import { BasicReporter } from "./basic";
 
 export const TYPE_COLOR_MAP: { [k in LogType]?: string } = {
   info: "cyan",
@@ -35,7 +35,7 @@ const TYPE_ICONS: { [k in LogType]?: string } = {
   log: "",
 };
 
-export default class FancyReporter extends BasicReporter {
+export class FancyReporter extends BasicReporter {
   formatStack(stack: string) {
     return (
       "\n" +

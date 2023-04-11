@@ -1,7 +1,8 @@
 import { isDebug, isTest, isCI } from "std-env";
 import { LogLevels, LogLevel } from "./constants";
 import type { ConsolaOptions } from "./types";
-import { BasicReporter, FancyReporter } from "./reporters";
+import { BasicReporter } from "./reporters/basic";
+import { FancyReporter } from "./reporters/fancy";
 import { ConsolaInstance, createConsola as _createConsola } from "./consola";
 
 export * from "./index.shared";

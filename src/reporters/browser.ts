@@ -1,6 +1,6 @@
 import { LogObject } from "../types";
 
-export default class BrowserReporter {
+export class BrowserReporter {
   options: any;
   defaultColor: string;
   levelColorMap: Record<number, string>;

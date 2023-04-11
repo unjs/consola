@@ -10,7 +10,7 @@ import { writeStream } from "../utils/stream";
 
 const bracket = (x: string) => (x ? `[${x}]` : "");
 
-export default class BasicReporter implements ConsolaReporter {
+export class BasicReporter implements ConsolaReporter {
   formatStack(stack: string, opts: FormatOptions) {
     return "  " + parseStack(stack).join("\n  ");
   }
