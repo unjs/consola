@@ -27,19 +27,19 @@
 Using npm:
 
 ```bash
-npm i consola@3x
+npm i consola
 ```
 
 Using yarn:
 
 ```bash
-yarn add consola@3x
+yarn add consola
 ```
 
 Using pnpm:
 
 ```bash
-pnpm i consola@3x
+pnpm i consola
 ```
 
 ## Getting Started
@@ -63,7 +63,7 @@ await consola.prompt("Deploy to the production?", {
 
 Will display in the terminal:
 
-<img width="642" alt="image" src="https://user-images.githubusercontent.com/5158436/231028834-868bb4da-8d2e-487e-be31-851eaeffb915.png">
+<img width="760" alt="image" src="https://user-images.githubusercontent.com/5158436/231029244-abc79f48-ca16-4eaa-b592-7abd271ecb1f.png">
 
 ## Methods
 
