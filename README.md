@@ -46,10 +46,10 @@ pnpm i consola
 
 ```js
 // ESM
-import { consola } from "consola";
+import { consola, createConsola } from "consola";
 
 // CommonJS
-const { consola } = require("consola");
+const { consola, createConsola } = require("consola");
 
 consola.info("Using consola 3.0.0");
 consola.start("Building project...");
