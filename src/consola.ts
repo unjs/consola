@@ -77,16 +77,6 @@ export class Consola {
     );
   }
 
-  get stdout() {
-    // @ts-ignore
-    return this._stdout || console._stdout; // eslint-disable-line no-console
-  }
-
-  get stderr() {
-    // @ts-ignore
-    return this._stderr || console._stderr; // eslint-disable-line no-console
-  }
-
   prompt<T extends PromptOptions>(message: string, opts?: T) {
     if (!this.options.prompt) {
       throw new Error("prompt is not supported!");
@@ -175,11 +165,11 @@ export class Consola {
   }
 
   wrapStd() {
-    this._wrapStream(this.stdout, "log");
-    this._wrapStream(this.stderr, "log");
+    this._wrapStream(this.options.stdout, "log");
+    this._wrapStream(this.options.stderr, "log");
   }
 
-  _wrapStream(stream: NodeJS.WritableStream, type: string) {
+  _wrapStream(stream: NodeJS.WriteStream | undefined, type: string) {
     if (!stream) {
       return;
     }
@@ -196,11 +186,11 @@ export class Consola {
   }
 
   restoreStd() {
-    this._restoreStream(this.stdout);
-    this._restoreStream(this.stderr);
+    this._restoreStream(this.options.stdout);
+    this._restoreStream(this.options.stderr);
   }
 
-  _restoreStream(stream: NodeJS.WritableStream) {
+  _restoreStream(stream?: NodeJS.WriteStream) {
     if (!stream) {
       return;
     }
