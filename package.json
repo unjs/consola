@@ -10,7 +10,11 @@
     "cli",
     "universal",
     "unified",
-    "winston"
+    "prompt",
+    "clack",
+    "format",
+    "error",
+    "stacktrace"
   ],
   "repository": "unjs/consola",
   "license": "MIT",
@@ -19,12 +23,13 @@
     ".": {
       "node": {
         "types": "./dist/index.d.ts",
-        "require": "./lib/index.cjs",
-        "import": "./dist/index.mjs"
+        "import": "./dist/index.mjs",
+        "require": "./lib/index.cjs"
       },
       "default": {
         "types": "./dist/index.browser.d.ts",
-        "import": "./dist/index.browser.mjs"
+        "import": "./dist/index.browser.mjs",
+        "require": "./lib/index.browser.cjs"
       }
     }
   },
