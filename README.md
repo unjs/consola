@@ -51,16 +51,19 @@ import { consola } from "consola";
 // CommonJS
 const { consola } = require("consola");
 
-// See types section for all available types
-
-consola.success("Built!");
-consola.info("Reporter: Some info");
-consola.error(new Error("Foo"));
+consola.info("Using consola 3.0.0");
+consola.start("Building project...");
+consola.warn("A new version of consola is available: 3.0.1");
+consola.success("Project built!");
+consola.error(new Error("This is an example error. Everything is fine!"));
+await consola.prompt("Deploy to the production?", {
+  type: "confirm",
+});
 ```
 
 Will display in the terminal:
 
-![Screenshot 2020-01-28 at 14 15 15](https://user-images.githubusercontent.com/904724/73267133-af6b2f00-41d8-11ea-9f16-4a8243d19c43.png)
+<img width="642" alt="image" src="https://user-images.githubusercontent.com/5158436/231028834-868bb4da-8d2e-487e-be31-851eaeffb915.png">
 
 ## Methods
 
@@ -72,7 +75,7 @@ Example: `consola.info('Message')`
 
 A list of available types can be found [here](./src/types.ts).
 
-### `await prompt(message, { type })`
+#### `await prompt(message, { type })`
 
 Show an input prompt. Type can either of `text`, `confirm`, `select` or `multiselect`.
 
