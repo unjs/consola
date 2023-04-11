@@ -9,23 +9,29 @@ import BasicReporter from "./basic";
 export const TYPE_COLOR_MAP: { [k in LogType]?: string } = {
   info: "cyan",
   fail: "red",
+  success: "green",
+  ready: "green",
+  start: "yellow",
 };
 
 export const LEVEL_COLOR_MAP: { [k in LogLevel]?: string } = {
   0: "red",
   1: "yellow",
-  2: "white",
-  3: "white",
 };
 
 const unicode = isUnicodeSupported();
 const s = (c: string, fallback: string) => (unicode ? c : fallback);
-const TYPE_ICONS = {
+const TYPE_ICONS: { [k in LogType]?: string } = {
+  error: s("✖", "×"),
+  fatal: s("✖", "×"),
+  ready: s("✔", "√"),
+  warn: s("⚠", "‼"),
   info: s("ℹ", "i"),
   success: s("✔", "√"),
   debug: s("⚙", "D"),
-  trace: s("⬆", "T"),
+  trace: s("→", "→"),
   fail: s("✖", "×"),
+  start: s("⚙", "S"),
   log: "",
 };
 
@@ -61,6 +67,7 @@ export default class FancyReporter extends BasicReporter {
       typeof (TYPE_ICONS as any)[logObj.type] === "string"
         ? (TYPE_ICONS as any)[logObj.type]
         : (logObj as any).icon || logObj.type;
+
     return _type ? getColor(typeColor)(_type) : "";
   }
 
