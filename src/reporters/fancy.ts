@@ -11,7 +11,7 @@ export const TYPE_COLOR_MAP: { [k in LogType]?: string } = {
   fail: "red",
   success: "green",
   ready: "green",
-  start: "yellow",
+  start: "magenta",
 };
 
 export const LEVEL_COLOR_MAP: { [k in LogLevel]?: string } = {
@@ -31,7 +31,7 @@ const TYPE_ICONS: { [k in LogType]?: string } = {
   debug: s("⚙", "D"),
   trace: s("→", "→"),
   fail: s("✖", "×"),
-  start: s("⚙", "S"),
+  start: s("◐", "o"),
   log: "",
 };
 

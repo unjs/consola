@@ -28,6 +28,10 @@ async function main() {
       { value: "gh-action", label: "GitHub Action" },
     ],
   });
+
+  await consola.start("Creating project...");
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  await consola.success("Project created!");
 }
 
 main();
