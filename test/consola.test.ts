@@ -1,10 +1,5 @@
 import { describe, test, expect } from "vitest";
-import {
-  ConsolaReporter,
-  LogLevels,
-  LogObject,
-  createConsola,
-} from "../src/index.node";
+import { ConsolaReporter, LogLevels, LogObject, createConsola } from "../src";
 
 describe("consola", () => {
   test("can set level", () => {

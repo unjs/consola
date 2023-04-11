@@ -1,5 +1,5 @@
 import { FancyReporter } from "../../src/reporters";
-import { createConsola } from "../../src/index.node";
+import { createConsola } from "../../src";
 import { randomSentence } from "./sentence";
 
 export function reporterDemo(reporter) {
