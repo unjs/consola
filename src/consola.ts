@@ -87,7 +87,7 @@ export class Consola {
     return this._stderr || console._stderr; // eslint-disable-line no-console
   }
 
-  prompt<T extends PromptOptions>(message: string, opts: T) {
+  prompt<T extends PromptOptions>(message: string, opts?: T) {
     if (!this.options.prompt) {
       throw new Error("prompt is not supported!");
     }
