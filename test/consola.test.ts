@@ -49,12 +49,13 @@ describe("consola", () => {
 
     const consola = createConsola({
       throttle: 100,
+      level: LogLevels.info,
       reporters: [TestReporter],
     });
     for (let i = 0; i < 10; i++) {
       consola.log("SPAM");
     }
-    await wait(200);
+    await wait(300);
     expect(logs.length).toBe(7);
     // 6 + Last one indicating it repeated 4
     expect(logs[logs.length - 1].args).toEqual(["SPAM", "(repeated 4 times)"]);
