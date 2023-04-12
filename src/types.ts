@@ -27,6 +27,8 @@ export interface InputLogObject {
   type?: LogType;
   message?: string;
   additional?: string | string[];
+  progress?: number;
+  overwrite?: boolean;
   args?: any[];
   date?: Date;
 }

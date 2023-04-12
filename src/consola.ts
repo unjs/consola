@@ -284,6 +284,15 @@ export class Consola {
       logObj.args!.push("\n" + logObj.additional.join("\n"));
       delete logObj.additional;
     }
+    if (logObj.progress) {
+      let progress = 0;
+      if (typeof logObj.progress === 'number' && !Number.isNaN(logObj.progress)) {
+        progress = Math.floor(logObj.progress * 100);
+        progress = progress < 0 ? 0 : progress;
+        progress = progress > 100 ? 100 : progress;
+      }
+      logObj.args!.unshift(`[${progress}/100] ${progress}%`);
+    }
 
     // Normalize type and tag to lowercase
     logObj.type = (

@@ -53,7 +53,8 @@ export default class BasicReporter implements ConsolaReporter {
     });
 
     return writeStream(
-      line + "\n",
+      line,
+      // line + "\n",
       logObj.level < 2
         ? ctx.options.stderr || process.stderr
         : ctx.options.stdout || process.stdout
