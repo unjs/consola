@@ -52,8 +52,14 @@ export class Consola {
         ...this.options.defaults,
         ...types[type as LogType],
       };
-      (this as any)[type] = this._wrapLogFn(defaults);
-      (this as any)[type].raw = this._wrapLogFn(defaults, true);
+      // @ts-expect-error
+      (this as unknown as ConsolaInstance)[type as LogType] =
+        this._wrapLogFn(defaults);
+      // @ts-expect-error
+      (this as unknown as ConsolaInstance)[type].raw = this._wrapLogFn(
+        defaults,
+        true
+      );
     }
 
     // Use _mockFn if is set
@@ -149,7 +155,9 @@ export class Consola {
         (console as any)["__" + type] = (console as any)[type]; // eslint-disable-line no-console
       }
       // Override
-      (console as any)[type] = (this as any)[type].raw; // eslint-disable-line no-console
+      (console as any)[type] = (this as unknown as ConsolaInstance)[
+        type as LogType
+      ].raw; // eslint-disable-line no-console
     }
   }
 
@@ -169,7 +177,7 @@ export class Consola {
     this._wrapStream(this.options.stderr, "log");
   }
 
-  _wrapStream(stream: NodeJS.WriteStream | undefined, type: string) {
+  _wrapStream(stream: NodeJS.WriteStream | undefined, type: LogType) {
     if (!stream) {
       return;
     }
@@ -181,7 +189,7 @@ export class Consola {
 
     // Override
     (stream as any).write = (data: any) => {
-      (this as any)[type].raw(String(data).trim());
+      (this as unknown as ConsolaInstance)[type].raw(String(data).trim());
     };
   }
 
@@ -223,10 +231,12 @@ export class Consola {
     }
 
     for (const type in this.options.types) {
-      (this as any)[type] =
-        _mockFn(type as LogType, (this as any).options.types[type]) ||
-        (this as any)[type];
-      (this as any)[type].raw = (this as any)[type];
+      (this as unknown as ConsolaInstance)[type as LogType] =
+        _mockFn(type as LogType, this.options.types[type as LogType]) ||
+        (this as unknown as ConsolaInstance)[type as LogType];
+      (this as unknown as ConsolaInstance)[type as LogType].raw = (
+        this as unknown as ConsolaInstance
+      )[type as LogType];
     }
   }
 
@@ -365,8 +375,11 @@ function _normalizeLogLevel(
   return defaultLevel;
 }
 
-export type ConsolaInstance = Consola &
-  Record<LogType, (message: InputLogObject | any, ...args: any[]) => void>;
+export interface LogFn {
+  (message: InputLogObject | any, ...args: any[]): void;
+  raw: (...args: any[]) => void;
+}
+export type ConsolaInstance = Consola & Record<LogType, LogFn>;
 
 // Legacy support
 // @ts-expect-error
