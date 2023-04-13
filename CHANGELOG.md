@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v3.0.2
+
+[compare changes](https://github.com/unjs/consola/compare/v3.0.1...v3.0.2)
+
+
+### 🩹 Fixes
+
+  - **`mockTypes`:** Mock on `options.typs` ([f9d86b6](https://github.com/unjs/consola/commit/f9d86b6))
+  - Type `.raw` for types ([dfb976f](https://github.com/unjs/consola/commit/dfb976f))
+
+### 💅 Refactors
+
+  - Use individual named exports of reporters ([57bb579](https://github.com/unjs/consola/commit/57bb579))
+
+### 🏡 Chore
+
+  - Add `codecov.yml` ([1f50123](https://github.com/unjs/consola/commit/1f50123))
+  - Update readme ([5a4708d](https://github.com/unjs/consola/commit/5a4708d))
+  - Fix mock example ([4dadfb3](https://github.com/unjs/consola/commit/4dadfb3))
+
+### ❤️  Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+
 ## v3.0.1
 
 [compare changes](https://github.com/unjs/consola/compare/v3.0.0...v3.0.1)
