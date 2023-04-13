@@ -2,7 +2,9 @@ import { consola } from "./utils";
 
 function mockFn(type) {
   if (type === "info") {
-    return () => this.log("INFO INFO INFO");
+    return function () {
+      this.log("INFO INFO INFO");
+    };
   }
 }
 
