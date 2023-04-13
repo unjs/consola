@@ -224,7 +224,7 @@ export class Consola {
 
     for (const type in this.options.types) {
       (this as any)[type] =
-        _mockFn(type as LogType, (this as any)._types[type]) ||
+        _mockFn(type as LogType, (this as any).options.types[type]) ||
         (this as any)[type];
       (this as any)[type].raw = (this as any)[type];
     }
