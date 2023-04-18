@@ -199,9 +199,9 @@ Extra fields:
 
 Choose between one of the built-in reporters or bring in your own one.
 
-By default `FancyReporter` is registered for modern terminals or `BasicReporter` will be used if running in limited environments such as CIs.
+Consola uses a fancy colored reporter by default and fallsback to a basic reporter if running in a testing or CI environment detected using [unjs/std-env](https://github.com/unjs/std-env).
 
-### Creating your own reporter
+### Creating a custom reporter
 
 A reporter (class or object) exposes `log(logObj)` method.
 To get more info about how to write your own reporter, take a look into the linked implementations above.
@@ -219,13 +219,17 @@ Consola has a global instance and is recommended to use everywhere.
 In case more control is needed, create a new instance.
 
 ```js
-import consola from "consola";
+import { createConsola } from "consola";
 
-const logger = consola.create({
+const logger = createConsola({
   // level: 4,
-  defaults: {
-    additionalColor: "white",
-  },
+  // fancy: true | false
+  // formatOptions: {
+  //     columns: 80,
+  //     colors: false,
+  //     compact: false,
+  //     date: false,
+  // },
 });
 ```
 
