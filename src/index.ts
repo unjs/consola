@@ -8,7 +8,7 @@ import { ConsolaInstance, createConsola as _createConsola } from "./consola";
 export * from "./index.shared";
 
 export function createConsola(
-  options: Partial<ConsolaOptions> & { fancy?: boolean } = {}
+  options: Partial<ConsolaOptions & { fancy: boolean }> = {}
 ): ConsolaInstance {
   // Log level
   let level = _getDefaultLogLevel();
