@@ -65,7 +65,7 @@ Will display in the terminal:
 
 <img width="760" alt="image" src="https://user-images.githubusercontent.com/5158436/231029244-abc79f48-ca16-4eaa-b592-7abd271ecb1f.png">
 
-Smaller core builds: (You can use base builds without fancy reporter to save ~1/5 of the bundle size)
+You can use smaller core builds without fancy reporter to save 80% of the bundle size:
 
 ```ts
 import { consola, createConsola } from "consola/basic";
