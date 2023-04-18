@@ -1,10 +1,11 @@
-import { createConsola } from "../../src";
+import { ConsolaOptions, createConsola } from "../../src";
 import { randomSentence } from "./sentence";
 
-export function reporterDemo(reporter) {
+export function reporterDemo(
+  opts: Partial<ConsolaOptions & { fancy: boolean }>
+) {
   const consola = createConsola({
-    level: 5,
-    reporters: [reporter],
+    ...opts,
   });
 
   for (const type of Object.keys(consola.options.types).sort()) {
