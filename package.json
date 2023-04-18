@@ -30,14 +30,36 @@
         "types": "./dist/index.browser.d.ts",
         "import": "./dist/index.browser.mjs"
       }
+    },
+    "./browser": {
+      "types": "./dist/index.browser.d.ts",
+      "import": "./dist/index.browser.mjs"
+    },
+    "./basic": {
+      "node": {
+        "types": "./dist/index.basic.d.ts",
+        "import": "./dist/index.basic.mjs",
+        "require": "./dist/index.basic.cjs"
+      },
+      "default": {
+        "types": "./dist/index.browser.d.ts",
+        "import": "./dist/index.browser.mjs"
+      }
+    },
+    "./core": {
+      "types": "./dist/index.core.d.ts",
+      "import": "./dist/index.core.mjs",
+      "require": "./dist/index.core.cjs"
     }
   },
   "main": "./lib/index.cjs",
   "module": "./dist/index.mjs",
+  "browser": "./dist/index.browser.mjs",
   "types": "./dist/index.d.ts",
   "files": [
     "dist",
-    "lib"
+    "lib",
+    "*.d.ts"
   ],
   "scripts": {
     "build": "unbuild",

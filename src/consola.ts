@@ -398,7 +398,7 @@ Consola.prototype.pause = Consola.prototype.pauseLogs;
 Consola.prototype.resume = Consola.prototype.resumeLogs;
 
 export function createConsola(
-  options: Partial<ConsolaOptions>
+  options: Partial<ConsolaOptions> = {}
 ): ConsolaInstance {
   return new Consola(options) as ConsolaInstance;
 }
