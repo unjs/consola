@@ -1,4 +1,3 @@
-import { FancyReporter } from "../../src/reporters";
 import { createConsola } from "../../src";
 import { randomSentence } from "./sentence";
 
