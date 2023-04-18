@@ -8,7 +8,7 @@ import { ConsolaInstance, createConsola as _createConsola } from "./consola";
 export * from "./index.shared";
 
 export function createConsola(
-  options: Partial<ConsolaOptions> & { basic?: boolean } = {}
+  options: Partial<ConsolaOptions> & { fancy?: boolean } = {}
 ): ConsolaInstance {
   // Log level
   let level = _getDefaultLogLevel();
@@ -24,9 +24,9 @@ export function createConsola(
     stderr: process.stderr,
     prompt: (...args) => import("./prompt").then((m) => m.prompt(...args)),
     reporters: options.reporters || [
-      isCI || isTest || options.basic
-        ? new BasicReporter()
-        : new FancyReporter(),
+      options.fancy ?? !(isCI || isTest)
+        ? new FancyReporter()
+        : new BasicReporter(),
     ],
     ...options,
   });
