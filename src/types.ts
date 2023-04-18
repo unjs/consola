@@ -14,11 +14,15 @@ export interface ConsolaOptions {
   formatOptions: FormatOptions;
 }
 
+/**
+ * @see https://nodejs.org/api/util.html#util_util_inspect_object_showhidden_depth_colors
+ */
 export interface FormatOptions {
   columns?: number;
   date?: boolean;
   colors?: boolean;
-  compact?: boolean;
+  compact?: boolean | number;
+  [key: string]: any;
 }
 
 export interface InputLogObject {
