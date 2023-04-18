@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v3.1.0
+
+[compare changes](https://github.com/unjs/consola/compare/v3.0.2...v3.1.0)
+
+
+### 🚀 Enhancements
+
+  - Support `fancy` option for `createConsola` and improve docs ([#177](https://github.com/unjs/consola/pull/177))
+  - `/basic`, `/core` and `/browser` subpath exports ([#178](https://github.com/unjs/consola/pull/178))
+
+### 🏡 Chore
+
+  - Add json example ([943992d](https://github.com/unjs/consola/commit/943992d))
+  - Update the docs ([a952bc2](https://github.com/unjs/consola/commit/a952bc2))
+
+### ❤️  Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+
 ## v3.0.2
 
 [compare changes](https://github.com/unjs/consola/compare/v3.0.1...v3.0.2)
