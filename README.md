@@ -73,15 +73,13 @@ import { consola, createConsola } from "consola/browser";
 import { createConsola } from "consola/core";
 ```
 
-## Methods
+## Consola Methods
 
 #### `<type>(logObject)` `<type>(args...)`
 
 Log to all reporters.
 
 Example: `consola.info('Message')`
-
-A list of available types can be found [here](./src/types.ts).
 
 #### `await prompt(message, { type })`
 
@@ -174,52 +172,57 @@ consola.mockTypes((typeName) => typeName === "fatal" && jest.fn());
 **NOTE:** Any instance of consola that inherits the mocked instance, will apply provided callback again.
 This way, mocking works for `withTag` scoped loggers without need to extra efforts.
 
-## Fields
+## Custom Reporters
 
-#### `reporters`
+Consola ships with 3 built-in reporters out of the box. A fancy colored reporter by default and fallsback to a basic reporter if running in a testing or CI environment detected using [unjs/std-env](https://github.com/unjs/std-env) and a basic browser reporter.
 
-An array of active reporters.
+You can create a new reporter object that implements `{ log(logObject): () => { } }` interface.
 
-#### `level`
+**Example:** Simple JSON reporter
 
-The level to display logs. Any logs at or above this level will be displayed.
-List of available levels [here](./src/types.ts).
+```ts
+import { createConsola } from "consola";
 
-You can set the log level using the `CONSOLA_LEVEL` environment variable, which must have the numeric log level as its value.
+const consola = createConsola({
+  reporters: [
+    {
+      log: (logObj) => {
+        console.log(JSON.stringify(logObj));
+      },
+    },
+  ],
+});
 
-## `logObject`
+// Prints {"date":"2023-04-18T12:43:38.693Z","args":["foo bar"],"type":"log","level":2,"tag":""}
+consola.log("foo bar");
+```
 
-The `logObject` is a free-to-extend object which will be passed to reporters.
+## Log Level
 
-Standard fields:
+Consola only shows logs with configured log level or below. (Default is `3`)
 
-- `message`
-- `additional`
-- `args`
-- `date`
-- `tag`
+Available log levels:
 
-Extra fields:
+- `0`: Fatal and Error
+- `1`: Warnings
+- `2`: Normal logs
+- `3`: Informational logs, success, fail, ready, start, ...
+- `4`: Debug logs
+- `5`: Trace logs
+- `-999`: Silent
+- `+999`: Verbose logs
 
-- `badge`
+You can set the log level by either:
 
-## Reporters
+- Passing `level` option to `createConsola`
+- Setting `consola.level` on instance
+- Using the `CONSOLA_LEVEL` environment variable (not supported for browser and core builds).
 
-Choose between one of the built-in reporters or bring in your own one.
+## Log Types
 
-Consola uses a fancy colored reporter by default and fallsback to a basic reporter if running in a testing or CI environment detected using [unjs/std-env](https://github.com/unjs/std-env).
+Log types are exposed as `consola.[type](...)` and each is a preset of styles and log level.
 
-### Creating a custom reporter
-
-A reporter (class or object) exposes `log(logObj)` method.
-To get more info about how to write your own reporter, take a look into the linked implementations above.
-
-## Types
-
-Types are used to actually log messages to the reporters.
-Each type is attached to a _logging level_.
-
-A list of all available default types is [here](./src/types.ts).
+A list of all available built-in types is [available here](./src/constants.ts).
 
 ## Creating a new instance
 
