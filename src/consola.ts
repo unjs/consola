@@ -23,6 +23,8 @@ export class Consola {
     timeout?: ReturnType<typeof setTimeout>;
   };
 
+  _mockFn?: ConsolaOptions["mockFn"];
+
   constructor(options: Partial<ConsolaOptions> = {}) {
     // Options
     const types = options.types || LogTypes;
@@ -91,10 +93,16 @@ export class Consola {
   }
 
   create(options: Partial<ConsolaOptions>): ConsolaInstance {
-    return new Consola({
+    const instance = new Consola({
       ...this.options,
       ...options,
     }) as ConsolaInstance;
+
+    if (this._mockFn) {
+      instance.mockTypes(this._mockFn);
+    }
+
+    return instance;
   }
 
   withDefaults(defaults: InputLogObject): ConsolaInstance {
@@ -223,14 +231,17 @@ export class Consola {
     }
   }
 
-  mockTypes(mockFn?: (type: string, currentType: any) => any) {
+  mockTypes(mockFn?: ConsolaOptions["mockFn"]) {
     const _mockFn = mockFn || this.options.mockFn;
+
+    this._mockFn = _mockFn;
 
     if (typeof _mockFn !== "function") {
       return;
     }
 
     for (const type in this.options.types) {
+      // @ts-expect-error
       (this as unknown as ConsolaInstance)[type as LogType] =
         _mockFn(type as LogType, this.options.types[type as LogType]) ||
         (this as unknown as ConsolaInstance)[type as LogType];

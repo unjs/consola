@@ -3,7 +3,7 @@ import { consola } from "./utils";
 function mockFn(type) {
   if (type === "info") {
     return function () {
-      this.log("INFO INFO INFO");
+      this.log("(mocked fn with info tag)");
     };
   }
 }
