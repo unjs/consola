@@ -296,11 +296,10 @@ export class Consola {
       delete logObj.additional;
     }
 
-    // Normalize type and tag to lowercase
+    // Normalize type to lowercase
     logObj.type = (
       typeof logObj.type === "string" ? logObj.type.toLowerCase() : "log"
     ) as LogType;
-    logObj.tag = typeof logObj.tag === "string" ? logObj.tag.toLowerCase() : "";
 
     // Resolve log
     /**
