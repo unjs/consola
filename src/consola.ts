@@ -300,6 +300,7 @@ export class Consola {
     logObj.type = (
       typeof logObj.type === "string" ? logObj.type.toLowerCase() : "log"
     ) as LogType;
+    logObj.tag = typeof logObj.tag === "string" ? logObj.tag : "";
 
     // Resolve log
     /**
