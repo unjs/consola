@@ -86,7 +86,7 @@ export class FancyReporter extends BasicReporter {
     const tag = logObj.tag ? colors.gray(logObj.tag) : "";
 
     let line;
-    const left = this.filterAndJoin([type, highlightBackticks(message)]);
+    const left = this.filterAndJoin([type, characterFormat(message)]);
     const right = this.filterAndJoin(opts.columns ? [tag, coloredDate] : [tag]);
     const space =
       (opts.columns || 0) - stringWidth(left) - stringWidth(right) - 2;
@@ -96,7 +96,7 @@ export class FancyReporter extends BasicReporter {
         ? left + " ".repeat(space) + right
         : (right ? `${colors.gray(`[${right}]`)} ` : "") + left;
 
-    line += highlightBackticks(
+    line += characterFormat(
       additional.length > 0 ? "\n" + additional.join("\n") : ""
     );
 
@@ -109,8 +109,12 @@ export class FancyReporter extends BasicReporter {
   }
 }
 
-function highlightBackticks(str: string) {
-  return str.replace(/`([^`]+)`/gm, (_, m) => colors.cyan(m));
+function characterFormat(str: string) {
+  return str
+    // highlight backticks
+    .replace(/`([^`]+)`/gm, (_, m) => colors.cyan(m))
+    // underline underscores
+    .replace(/_([^_]+)_/gm, (_, m) => colors.underline(m));
 }
 
 function getColor(color = "white") {
