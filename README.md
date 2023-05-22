@@ -59,6 +59,9 @@ consola.error(new Error("This is an example error. Everything is fine!"));
 await consola.prompt("Deploy to the production?", {
   type: "confirm",
 });
+
+// formatting with colorette
+consola.log("Text as `monospace` and _underline_ or `(underline,cyan)both`!")
 ```
 
 Will display in the terminal:
