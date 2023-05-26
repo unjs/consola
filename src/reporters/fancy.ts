@@ -110,13 +110,17 @@ export class FancyReporter extends BasicReporter {
 }
 
 function characterFormat(str: string) {
-  return str
-    // eslint-disable-next-line unicorn/no-array-reduce
-    .replace(/`\(([^)]*)\)([^`]+)`/gm, (_, f, m) => f.split(',').reduce((p: string, c: string) => getColor(c)(p), m))
-    // highlight backticks
-    .replace(/`([^`]+)`/gm, (_, m) => colors.cyan(m))
-    // underline underscores
-    .replace(/_([^_]+)_/gm, (_, m) => colors.underline(m));
+  return (
+    str
+      .replace(/`\(([^)]*)\)([^`]+)`/gm, (_, f, m) =>
+        // eslint-disable-next-line unicorn/no-array-reduce
+        f.split(',').reduce((p: string, c: string) => getColor(c)(p), m)
+      )
+      // highlight backticks
+      .replace(/`([^`]+)`/gm, (_, m) => colors.cyan(m))
+      // underline underscores
+      .replace(/_([^_]+)_/gm, (_, m) => colors.underline(m))
+  );
 }
 
 function getColor(color = "white") {
