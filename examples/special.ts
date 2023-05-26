@@ -20,10 +20,6 @@ consola.log("We can `monospace` keyword using grave accent charachter!");
 
 consola.log("We can also _underline_ words!");
 
-consola.log("We can also do `(bgGreen)special` highlight");
-
-consola.log("How about `(yellow,underline)chaining` them?");
-
 // Nonstandard error
 const { message, stack } = new Error("Custom Error!");
 consola.error({ message, stack });
