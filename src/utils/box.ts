@@ -1,5 +1,4 @@
 import { defu } from "defu";
-import type { Colorette } from "colorette";
 import { stripAnsi } from "./string";
 
 export interface BoxyBorderStyle {
@@ -139,18 +138,25 @@ export interface BoxyOpts {
      * The border color
      * @default 'white'
      */
-    color?: Exclude<
-      keyof Colorette,
-      | `bg${string}`
-      | "italic"
-      | "underline"
-      | "inverse"
-      | "hidden"
-      | "strikethrough"
-      | "bold"
-      | "dim"
-      | "reset"
-    >;
+    color?:
+      | "black"
+      | "red"
+      | "green"
+      | "yellow"
+      | "blue"
+      | "magenta"
+      | "cyan"
+      | "white"
+      | "gray"
+      | "blackBright"
+      | "redBright"
+      | "greenBright"
+      | "yellowBright"
+      | "blueBright"
+      | "magentaBright"
+      | "cyanBright"
+      | "whiteBright";
+
     /**
      * The border style
      * @default 'solid'
@@ -215,10 +221,12 @@ export const boxy = async (text: string, opts?: BoxyOpts) => {
 
   // Set the color of the border
   const colorette = await import("colorette");
+
   for (const key in presetChars) {
-    presetChars[key as keyof typeof presetChars] = colorette[
-      border.color as keyof Colorette
-    ](presetChars[key as keyof typeof presetChars]);
+    // @ts-expect-error - TS doesn't like this
+    presetChars[key as keyof typeof presetChars] = colorette[border.color](
+      presetChars[key as keyof typeof presetChars]
+    );
   }
 
   const paddingOffset = padding % 2 === 0 ? padding : padding + 1;

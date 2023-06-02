@@ -93,11 +93,11 @@ export class Consola {
     return this.options.prompt<any, any, T>(message, opts);
   }
 
-  box(text: string, opts?: BoxyOpts) {
-    if (!this.options.box) {
-      throw new Error("box is not supported!");
+  banner(text: string, opts?: BoxyOpts) {
+    if (!this.options.banner) {
+      throw new Error("banner is not supported!");
     }
-    return this.options.box(text, opts);
+    return this.options.banner(text, opts);
   }
 
   create(options: Partial<ConsolaOptions>): ConsolaInstance {

@@ -2,9 +2,9 @@ import { cyanBright } from "colorette";
 import { consola } from "./utils";
 
 async function main() {
-  await consola.box(`I am the default box`);
+  await consola.banner(`I am the default banner`);
 
-  await consola.box(`I am a box with different options`, {
+  await consola.banner(`I am a banner with different options`, {
     title: "Box with options",
     padding: 1,
     border: {
@@ -13,7 +13,7 @@ async function main() {
     },
   });
 
-  await consola.box(
+  await consola.banner(
     `${cyanBright("v1.0.2")} → ${cyanBright(
       "v2.0.2"
     )}.\n\nRun "npm install -g consola" to update`,

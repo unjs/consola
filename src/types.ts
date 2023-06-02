@@ -11,7 +11,7 @@ export interface ConsolaOptions {
   stderr?: NodeJS.WriteStream;
   mockFn?: (type: LogType, defaults: InputLogObject) => (...args: any) => void;
   prompt?: typeof import("./prompt").prompt | undefined;
-  box?: typeof import("./box").default | undefined;
+  banner?: typeof import("./banner").default | undefined;
   formatOptions: FormatOptions;
 }
 
