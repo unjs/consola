@@ -4,7 +4,6 @@ import type { ConsolaOptions } from "./types";
 import { BasicReporter } from "./reporters/basic";
 import { FancyReporter } from "./reporters/fancy";
 import { ConsolaInstance, createConsola as _createConsola } from "./consola";
-
 export * from "./index.shared";
 
 export function createConsola(
@@ -23,6 +22,7 @@ export function createConsola(
     stdout: process.stdout,
     stderr: process.stderr,
     prompt: (...args) => import("./prompt").then((m) => m.prompt(...args)),
+    box: (...args) => import("./box").then((m) => m.default(...args)),
     reporters: options.reporters || [
       options.fancy ?? !(isCI || isTest)
         ? new FancyReporter()

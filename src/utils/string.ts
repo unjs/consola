@@ -1,3 +1,11 @@
+const ansiRegex = [
+  "[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)",
+  "(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-nq-uy=><~]))",
+].join("|");
+
+export const stripAnsi = (text: string) =>
+  text.replace(new RegExp(ansiRegex, "g"), "");
+
 export function centerAlign(str: string, len: number, space = " ") {
   const free = len - str.length;
   if (free <= 0) {
