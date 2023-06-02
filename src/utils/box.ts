@@ -74,7 +74,7 @@ const roundedPreset: BoxyBorderStyle = {
   v: "│",
 };
 
-const singlePreset: BoxyBorderStyle = {
+const singleThickPreset: BoxyBorderStyle = {
   tl: "┏",
   tr: "┓",
   bl: "┗",
@@ -124,7 +124,7 @@ const stylePreset = {
   double: doublePreset,
   "double-single": doubleSinglePreset,
   "double-single-rounded": doubleSingleRoundedPreset,
-  single: singlePreset,
+  "single-thick": singleThickPreset,
   "single-double": singleDoublePreset,
   "single-double-rounded": singleDoubleRoundedPreset,
   rounded: roundedPreset,
@@ -167,7 +167,7 @@ export interface BoxyOpts {
      * }
      * ```
      */
-    style?: BoxyBorderStyle | keyof typeof stylePreset | "random";
+    style?: BoxyBorderStyle | keyof typeof stylePreset;
   };
   /**
    * The vertical alignment of the text
@@ -186,12 +186,6 @@ export interface BoxyOpts {
    */
   padding?: number;
 }
-
-const randomPreset = () => {
-  const keys = Object.keys(stylePreset);
-  const randomKey = keys[Math.floor(Math.random() * keys.length)];
-  return stylePreset[randomKey as keyof typeof stylePreset];
-};
 
 export const boxy = async (text: string, opts?: BoxyOpts) => {
   const defaultOpts = defu(opts || {}, {
@@ -216,9 +210,7 @@ export const boxy = async (text: string, opts?: BoxyOpts) => {
   // Get the characters for the box
   const presetChars =
     typeof border.style === "string"
-      ? border.style === "random"
-        ? randomPreset()
-        : stylePreset[border.style as keyof typeof stylePreset]
+      ? stylePreset[border.style as keyof typeof stylePreset]
       : border.style;
 
   // Set the color of the border
