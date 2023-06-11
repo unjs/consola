@@ -41,6 +41,8 @@ type inferPromptReturnType<T extends PromptOptions> = T extends TextOptions
   ? string
   : T extends ConfirmOptions
   ? boolean
+  : T extends SelectOptions
+  ? string
   : string[];
 
 export async function prompt<
