@@ -89,7 +89,8 @@ export class Consola {
     if (!this.options.prompt) {
       throw new Error("prompt is not supported!");
     }
-    return this.options.prompt<any, any, T>(message, opts);
+
+    return this.options.prompt<T>(message, opts);
   }
 
   create(options: Partial<ConsolaOptions>): ConsolaInstance {

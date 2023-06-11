@@ -21,7 +21,7 @@ export type ConfirmOptions = {
 export type SelectOptions = {
   type: "select";
   initial?: string;
-  options: (SelectOption | string)[];
+  options: (string | SelectOption)[];
 };
 
 export type MultiSelectOptions = {
@@ -42,14 +42,12 @@ type inferPromptReturnType<T extends PromptOptions> = T extends TextOptions
   : T extends ConfirmOptions
   ? boolean
   : T extends SelectOptions
-  ? string
-  : string[];
+  ? T["options"][number]
+  : T extends MultiSelectOptions
+  ? T["options"]
+  : unknown;
 
-export async function prompt<
-  _ = any,
-  __ = any,
-  T extends PromptOptions = TextOptions
->(
+export async function prompt<T extends PromptOptions = TextOptions>(
   message: string,
   opts: PromptOptions = {}
 ): Promise<inferPromptReturnType<T>> {
