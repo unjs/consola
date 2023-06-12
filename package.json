@@ -85,7 +85,7 @@
     "sentencer": "^0.2.1",
     "sisteransi": "^1.0.5",
     "std-env": "^3.3.2",
-    "string-width": "^5.1.2",
+    "string-width": "^6.1.0",
     "typescript": "^5.0.4",
     "unbuild": "^1.2.1",
     "vitest": "^0.30.1",
