@@ -57,14 +57,18 @@ const S_ERROR = s("■", "x");
 const symbol = (state: State) => {
   switch (state) {
     case "initial":
-    case "active":
+    case "active": {
       return color.cyan(S_STEP_ACTIVE);
-    case "cancel":
+    }
+    case "cancel": {
       return color.red(S_STEP_CANCEL);
-    case "error":
+    }
+    case "error": {
       return color.yellow(S_STEP_ERROR);
-    case "submit":
+    }
+    case "submit": {
       return color.green(S_STEP_SUBMIT);
+    }
   }
 };
 
@@ -89,27 +93,31 @@ export const text = (opts: TextOptions) => {
         ? color.inverse(opts.placeholder[0]) +
           color.dim(opts.placeholder.slice(1))
         : color.inverse(color.hidden("_"));
-      const value = !this.value ? placeholder : this.valueWithCursor;
+      const value = this.value ? this.valueWithCursor : placeholder;
 
       switch (this.state) {
-        case "error":
+        case "error": {
           return `${title.trim()}\n${color.yellow(
             S_BAR
           )} ${value}\n${color.yellow(S_BAR_END)} ${color.yellow(
             this.error
           )}\n`;
-        case "submit":
+        }
+        case "submit": {
           return `${title}${color.gray(S_BAR)} ${color.dim(
             this.value || opts.placeholder
           )}`;
-        case "cancel":
+        }
+        case "cancel": {
           return `${title}${color.gray(S_BAR)} ${color.strikethrough(
             color.dim(this.value ?? "")
           )}${this.value?.trim() ? "\n" + color.gray(S_BAR) : ""}`;
-        default:
+        }
+        default: {
           return `${title}${color.cyan(S_BAR)} ${value}\n${color.cyan(
             S_BAR_END
           )}\n`;
+        }
       }
     },
   }).prompt() as Promise<string | symbol>;
@@ -132,22 +140,26 @@ export const password = (opts: PasswordOptions) => {
       const masked = this.masked;
 
       switch (this.state) {
-        case "error":
+        case "error": {
           return `${title.trim()}\n${color.yellow(
             S_BAR
           )} ${masked}\n${color.yellow(S_BAR_END)} ${color.yellow(
             this.error
           )}\n`;
-        case "submit":
+        }
+        case "submit": {
           return `${title}${color.gray(S_BAR)} ${color.dim(masked)}`;
-        case "cancel":
+        }
+        case "cancel": {
           return `${title}${color.gray(S_BAR)} ${color.strikethrough(
             color.dim(masked ?? "")
           )}${masked ? "\n" + color.gray(S_BAR) : ""}`;
-        default:
+        }
+        default: {
           return `${title}${color.cyan(S_BAR)} ${value}\n${color.cyan(
             S_BAR_END
           )}\n`;
+        }
       }
     },
   }).prompt() as Promise<string | symbol>;
@@ -173,21 +185,23 @@ export const confirm = (opts: ConfirmOptions) => {
       const value = this.value ? active : inactive;
 
       switch (this.state) {
-        case "submit":
+        case "submit": {
           return `${title}${color.gray(S_BAR)} ${color.dim(value)}`;
-        case "cancel":
+        }
+        case "cancel": {
           return `${title}${color.gray(S_BAR)} ${color.strikethrough(
             color.dim(value)
           )}\n${color.gray(S_BAR)}`;
+        }
         default: {
           return `${title}${color.cyan(S_BAR)} ${
             this.value
               ? `${color.green(S_RADIO_ACTIVE)} ${active}`
               : `${color.dim(S_RADIO_INACTIVE)} ${color.dim(active)}`
           } ${color.dim("/")} ${
-            !this.value
-              ? `${color.green(S_RADIO_ACTIVE)} ${inactive}`
-              : `${color.dim(S_RADIO_INACTIVE)} ${color.dim(inactive)}`
+            this.value
+              ? `${color.dim(S_RADIO_INACTIVE)} ${color.dim(inactive)}`
+              : `${color.green(S_RADIO_ACTIVE)} ${inactive}`
           }\n${color.cyan(S_BAR_END)}\n`;
         }
       }
@@ -241,16 +255,18 @@ export const select = <Options extends Option<Value>[], Value>(
       }\n`;
 
       switch (this.state) {
-        case "submit":
+        case "submit": {
           return `${title}${color.gray(S_BAR)} ${opt(
             this.options[this.cursor],
             "selected"
           )}`;
-        case "cancel":
+        }
+        case "cancel": {
           return `${title}${color.gray(S_BAR)} ${opt(
             this.options[this.cursor],
             "cancelled"
           )}\n${color.gray(S_BAR)}`;
+        }
         default: {
           return `${title}${color.cyan(S_BAR)} ${this.options
             .map((option, i) =>
@@ -302,17 +318,19 @@ export const selectKey = <
       }\n`;
 
       switch (this.state) {
-        case "submit":
+        case "submit": {
           return `${title}${color.gray(S_BAR)} ${opt(
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             this.options.find((opt) => opt.value === this.value)!,
             "selected"
           )}`;
-        case "cancel":
+        }
+        case "cancel": {
           return `${title}${color.gray(S_BAR)} ${opt(
             this.options[0],
             "cancelled"
           )}\n${color.gray(S_BAR)}`;
+        }
         default: {
           return `${title}${color.cyan(S_BAR)} ${this.options
             .map((option, i) =>
