@@ -34,7 +34,7 @@ export class BrowserReporter {
     const consoleLogFn = this._getLogFn(logObj.level);
 
     // Type
-    const type = logObj.type !== "log" ? logObj.type : "";
+    const type = logObj.type === "log" ? "" : logObj.type;
 
     // Tag
     const tag = logObj.tag || "";
