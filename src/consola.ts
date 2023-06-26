@@ -89,7 +89,6 @@ export class Consola {
     if (!this.options.prompt) {
       throw new Error("prompt is not supported!");
     }
-
     return this.options.prompt<any, any, T>(message, opts);
   }
 
@@ -414,6 +413,3 @@ export function createConsola(
 ): ConsolaInstance {
   return new Consola(options) as ConsolaInstance;
 }
-
-const consola = {} as Consola;
-const r = await consola.prompt("test", { type: "text" });
