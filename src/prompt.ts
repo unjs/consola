@@ -47,7 +47,11 @@ type inferPromptReturnType<T extends PromptOptions> = T extends TextOptions
   ? T["options"]
   : unknown;
 
-export async function prompt<T extends PromptOptions = TextOptions>(
+export async function prompt<
+  _ = any,
+  __ = any,
+  T extends PromptOptions = TextOptions
+>(
   message: string,
   opts: PromptOptions = {}
 ): Promise<inferPromptReturnType<T>> {
