@@ -47,13 +47,17 @@ export function align(
   space = " "
 ) {
   switch (alignment) {
-    case "left":
+    case "left": {
       return leftAlign(str, len, space);
-    case "right":
+    }
+    case "right": {
       return rightAlign(str, len, space);
-    case "center":
+    }
+    case "center": {
       return centerAlign(str, len, space);
-    default:
+    }
+    default: {
       return str;
+    }
   }
 }
