@@ -35,7 +35,7 @@ export class Consola {
         level: _normalizeLogLevel(options.level, types),
         reporters: [...(options.reporters || [])],
       },
-      <ConsolaOptions>{
+      <Partial<ConsolaOptions>>{
         types: LogTypes,
         throttle: 1000,
         throttleMin: 5,
