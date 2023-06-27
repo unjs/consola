@@ -1,6 +1,6 @@
 import { defu } from "defu";
 import { LogTypes, LogType, LogLevel } from "./constants";
-import { isLogObj } from "./utils/index";
+import { isLogObj } from "./utils/log";
 import type {
   ConsolaReporter,
   InputLogObject,

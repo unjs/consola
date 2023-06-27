@@ -5,7 +5,7 @@ import { BasicReporter } from "./reporters/basic";
 import { FancyReporter } from "./reporters/fancy";
 import { ConsolaInstance, createConsola as _createConsola } from "./consola";
 
-export * from "./index.shared";
+export * from "./shared";
 
 export function createConsola(
   options: Partial<ConsolaOptions & { fancy: boolean }> = {}

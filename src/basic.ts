@@ -3,7 +3,7 @@ import type { ConsolaOptions } from "./types";
 import { BasicReporter } from "./reporters/basic";
 import { ConsolaInstance, createConsola as _createConsola } from "./consola";
 
-export * from "./index.shared";
+export * from "./shared";
 
 export function createConsola(
   options: Partial<ConsolaOptions & { fancy: boolean }> = {}
