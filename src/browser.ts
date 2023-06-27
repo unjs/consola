@@ -2,7 +2,7 @@ import { BrowserReporter } from "./reporters/browser";
 import { createConsola as _createConsola } from "./consola";
 import type { ConsolaOptions } from "./types";
 
-export * from "./index.shared";
+export * from "./shared";
 
 export function createConsola(options: Partial<ConsolaOptions> = {}) {
   const consola = _createConsola({
