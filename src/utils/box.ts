@@ -254,7 +254,7 @@ export function box(text: string, _opts: BoxOpts = {}) {
 
   // Top line
   if (opts.style.marginTop > 0) {
-    boxLines.push("\n".repeat(opts.style.marginTop));
+    boxLines.push("".repeat(opts.style.marginTop));
   }
   // Include the title if it exists with borders
   if (opts.title) {
@@ -310,7 +310,7 @@ export function box(text: string, _opts: BoxOpts = {}) {
     }`
   );
   if (opts.style.marginBottom > 0) {
-    boxLines.push("\n".repeat(opts.style.marginBottom));
+    boxLines.push("".repeat(opts.style.marginBottom));
   }
 
   return boxLines.join("\n");
