@@ -282,6 +282,23 @@ describe("your-consola-mock-test", () => {
 }
 ```
 
+## Console Utils
+
+```ts
+// ESM
+import {
+  stripAnsi,
+  centerAlign,
+  rightAlign,
+  leftAlign,
+  align,
+  box,
+} from "consola/utils";
+
+// CommonJS
+const { stripAnsi } = require("consola/utils");
+```
+
 ## License
 
 MIT
