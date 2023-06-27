@@ -17,9 +17,6 @@ devDependencies:
   changelogen:
     specifier: ^0.5.3
     version: 0.5.3
-  colorette:
-    specifier: ^2.0.20
-    version: 2.0.20
   defu:
     specifier: ^6.1.2
     version: 6.1.2

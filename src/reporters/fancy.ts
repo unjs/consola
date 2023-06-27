@@ -1,6 +1,6 @@
 import stringWidth from "string-width";
 import isUnicodeSupported from "is-unicode-supported";
-import * as colors from "colorette";
+import { colors } from "../utils/color";
 import { parseStack } from "../utils/error";
 import { FormatOptions, LogObject } from "../types";
 import { LogLevel, LogType } from "../constants";
@@ -79,12 +79,12 @@ export class FancyReporter extends BasicReporter {
 
     if (logObj.type === "box") {
       return box(
-        highlightBackticks(
+        characterFormat(
           message + (additional.length > 0 ? "\n" + additional.join("\n") : "")
         ),
         {
           title: logObj.title
-            ? highlightBackticks(logObj.title as string)
+            ? characterFormat(logObj.title as string)
             : undefined,
           style: logObj.style as BoxOpts["style"],
         }

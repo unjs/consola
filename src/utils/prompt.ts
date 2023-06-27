@@ -1,8 +1,7 @@
 /**
- * Based on @clak/propmts (MIT - Copyright (c) Nate Moore - Check LICENSE)
+ * Based on https://github.com/natemoo-re/clack
+ * Read LICENSE file for more information
  * https://github.com/natemoo-re/clack/blob/593f93d06c1a53c8424e9aaf0c1c63fbf6975527/packages/prompts/src/index.ts
- *
- * Forked to use custom symbols and colors
  */
 
 import {
@@ -20,9 +19,9 @@ import {
 
 import isUnicodeSupported from "is-unicode-supported";
 
-import * as color from "colorette";
-
 import { cursor, erase } from "sisteransi";
+
+import { colors as color } from "./color";
 
 export { isCancel } from "@clack/core";
 
