@@ -129,7 +129,7 @@ function characterFormat(str: string) {
       // highlight backticks
       .replace(/`([^`]+)`/gm, (_, m) => colors.cyan(m))
       // underline underscores
-      .replace(/_([^_]+)_/gm, (_, m) => colors.underline(m))
+      .replace(/\s+_([^_]+)_\s+/gm, (_, m) => ` ${colors.underline(m)} `)
   );
 }
 
