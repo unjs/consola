@@ -293,6 +293,9 @@ import {
   leftAlign,
   align,
   box,
+  colors,
+  getColor,
+  colorize,
 } from "consola/utils";
 
 // CommonJS
