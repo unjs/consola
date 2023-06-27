@@ -1,4 +1,4 @@
-import * as colorette from "colorette";
+import { getColor } from "./color";
 import { stripAnsi } from "./string";
 
 export type BoxBorderStyle = {
@@ -226,8 +226,7 @@ export function box(text: string, _opts: BoxOpts = {}) {
   const boxLines = [];
 
   // Get the characters for the box and colorize
-  const _color: (text: string) => string =
-    (colorette as any)[opts.style.borderColor] || ((text: string) => text);
+  const _color = getColor(opts.style.borderColor);
   const borderStyle = {
     ...(typeof opts.style.borderStyle === "string"
       ? boxStylePresets[
