@@ -79,7 +79,7 @@ const boxStylePresets: Record<string, BoxBorderStyle> = {
     h: "─",
     v: "║",
   },
-  SingleThick: {
+  singleThick: {
     tl: "┏",
     tr: "┓",
     bl: "┗",
