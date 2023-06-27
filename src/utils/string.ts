@@ -3,9 +3,9 @@ const ansiRegex = [
   "(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-nq-uy=><~]))",
 ].join("|");
 
-export const stripAnsi = (text: string) => {
+export function stripAnsi(text: string) {
   return text.replace(new RegExp(ansiRegex, "g"), "");
-};
+}
 
 export function centerAlign(str: string, len: number, space = " ") {
   const free = len - str.length;

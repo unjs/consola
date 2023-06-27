@@ -1,1 +1,9 @@
-export { box } from "./utils/box";
+export * from "./utils/box";
+
+export {
+  stripAnsi,
+  centerAlign,
+  rightAlign,
+  leftAlign,
+  align,
+} from "./utils/string";
