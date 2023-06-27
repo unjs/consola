@@ -14,7 +14,7 @@ function main() {
   });
 
   consola.box({
-    title: "Update available!",
+    title: "Update available for `consola`",
     message: `\`v1.0.2\` → \`v2.0.0\`\n\nRun \`npm install -g consola\` to update`,
     style: {
       padding: 2,

@@ -78,10 +78,17 @@ export class FancyReporter extends BasicReporter {
     );
 
     if (logObj.type === "box") {
-      return box(highlightBackticks(message), {
-        title: logObj.title as string,
-        style: logObj.style as BoxOpts["style"],
-      });
+      return box(
+        highlightBackticks(
+          message + (additional.length > 0 ? "\n" + additional.join("\n") : "")
+        ),
+        {
+          title: logObj.title
+            ? highlightBackticks(logObj.title as string)
+            : undefined,
+          style: logObj.style as BoxOpts["style"],
+        }
+      );
     }
 
     const date = this.formatDate(logObj.date, opts);
