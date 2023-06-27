@@ -166,6 +166,24 @@ export type BoxStyle = {
    * @default 2
    */
   padding: number;
+
+  /**
+   * The left margin of the box
+   * @default 1
+   */
+  marginLeft: number;
+
+  /**
+   * The top margin of the box
+   * @default 1
+   */
+  marginTop: number;
+
+  /**
+   * The top margin of the box
+   * @default 1
+   */
+  marginBottom: number;
 };
 
 /**
@@ -187,6 +205,9 @@ const defaultStyle: BoxStyle = {
   borderStyle: "solid",
   valign: "center",
   padding: 2,
+  marginLeft: 1,
+  marginTop: 1,
+  marginBottom: 1,
 };
 
 export function box(text: string, _opts: BoxOpts = {}) {
@@ -228,7 +249,13 @@ export function box(text: string, _opts: BoxOpts = {}) {
     Math.max(...textLines.map((line) => line.length)) + paddingOffset;
   const widthOffset = width + paddingOffset;
 
+  const leftSpace =
+    opts.style.marginLeft > 0 ? " ".repeat(opts.style.marginLeft) : "";
+
   // Top line
+  if (opts.style.marginTop > 0) {
+    boxLines.push("\n".repeat(opts.style.marginTop));
+  }
   // Include the title if it exists with borders
   if (opts.title) {
     const left = borderStyle.h.repeat(
@@ -241,11 +268,13 @@ export function box(text: string, _opts: BoxOpts = {}) {
         paddingOffset
     );
     boxLines.push(
-      `${borderStyle.tl}${left}${opts.title}${right}${borderStyle.tr}`
+      `${leftSpace}${borderStyle.tl}${left}${opts.title}${right}${borderStyle.tr}`
     );
   } else {
     boxLines.push(
-      `${borderStyle.tl}${borderStyle.h.repeat(widthOffset)}${borderStyle.tr}`
+      `${leftSpace}${borderStyle.tl}${borderStyle.h.repeat(widthOffset)}${
+        borderStyle.tr
+      }`
     );
   }
 
@@ -261,21 +290,28 @@ export function box(text: string, _opts: BoxOpts = {}) {
     if (i < valignOffset || i >= valignOffset + textLines.length) {
       // Empty line
       boxLines.push(
-        `${borderStyle.v}${" ".repeat(widthOffset)}${borderStyle.v}`
+        `${leftSpace}${borderStyle.v}${" ".repeat(widthOffset)}${borderStyle.v}`
       );
     } else {
       // Text line
       const line = textLines[i - valignOffset];
       const left = " ".repeat(paddingOffset);
       const right = " ".repeat(width - stripAnsi(line).length);
-      boxLines.push(`${borderStyle.v}${left}${line}${right}${borderStyle.v}`);
+      boxLines.push(
+        `${leftSpace}${borderStyle.v}${left}${line}${right}${borderStyle.v}`
+      );
     }
   }
 
   // Bottom line
   boxLines.push(
-    `${borderStyle.bl}${borderStyle.h.repeat(widthOffset)}${borderStyle.br}`
+    `${leftSpace}${borderStyle.bl}${borderStyle.h.repeat(widthOffset)}${
+      borderStyle.br
+    }`
   );
+  if (opts.style.marginBottom > 0) {
+    boxLines.push("\n".repeat(opts.style.marginBottom));
+  }
 
   return boxLines.join("\n");
 }
