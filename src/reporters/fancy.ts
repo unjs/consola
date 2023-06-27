@@ -4,7 +4,7 @@ import * as colors from "colorette";
 import { parseStack } from "../utils/error";
 import { FormatOptions, LogObject } from "../types";
 import { LogLevel, LogType } from "../constants";
-import { box } from "../utils/box";
+import { BoxOpts, box } from "../utils/box";
 import { BasicReporter } from "./basic";
 
 export const TYPE_COLOR_MAP: { [k in LogType]?: string } = {
@@ -79,14 +79,15 @@ export class FancyReporter extends BasicReporter {
 
     if (logObj.type === "box") {
       return box(highlightBackticks(message), {
-        ...(logObj as any),
+        title: logObj.title as string,
+        style: logObj.style as BoxOpts["style"],
       });
     }
 
     const date = this.formatDate(logObj.date, opts);
     const coloredDate = date && colors.gray(date);
 
-    const isBadge = logObj.badge ?? logObj.level < 2;
+    const isBadge = (logObj.badge as boolean) ?? logObj.level < 2;
     const type = this.formatType(logObj, isBadge, opts);
 
     const tag = logObj.tag ? colors.gray(logObj.tag) : "";
@@ -111,11 +112,7 @@ export class FancyReporter extends BasicReporter {
       line += this.formatStack(_err.stack || "");
     }
 
-    if (isBadge) {
-      return "\n" + line + "\n";
-    }
-
-    return line;
+    return isBadge ? "\n" + line + "\n" : line;
   }
 }
 

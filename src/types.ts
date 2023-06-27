@@ -22,7 +22,7 @@ export interface FormatOptions {
   date?: boolean;
   colors?: boolean;
   compact?: boolean | number;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface InputLogObject {
@@ -41,7 +41,7 @@ export interface LogObject extends InputLogObject {
   tag: string;
   args: any[];
   date: Date;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 export interface ConsolaReporter {

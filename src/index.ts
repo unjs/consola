@@ -4,6 +4,7 @@ import type { ConsolaOptions } from "./types";
 import { BasicReporter } from "./reporters/basic";
 import { FancyReporter } from "./reporters/fancy";
 import { ConsolaInstance, createConsola as _createConsola } from "./consola";
+
 export * from "./index.shared";
 
 export function createConsola(

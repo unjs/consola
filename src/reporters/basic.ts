@@ -39,8 +39,7 @@ export class BasicReporter implements ConsolaReporter {
   formatLogObj(logObj: LogObject, opts: FormatOptions) {
     const message = this.formatArgs(logObj.args, opts);
 
-    const isBox = logObj.type === "box";
-    if (isBox) {
+    if (logObj.type === "box") {
       return (
         "\n" +
         [
@@ -49,7 +48,7 @@ export class BasicReporter implements ConsolaReporter {
           ...message.split("\n"),
         ]
           .filter(Boolean)
-          .map((l) => " | " + l)
+          .map((l) => " > " + l)
           .join("\n") +
         "\n"
       );

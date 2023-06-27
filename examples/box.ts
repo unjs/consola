@@ -5,21 +5,25 @@ function main() {
   consola.box(`I am the default banner`);
 
   consola.box({
-    message: `I am a banner with different options`,
     title: "Box with options",
-    padding: 1,
-    borderColor: "magenta",
-    borderStyle: "double-single-rounded",
+    message: `I am a banner with different options`,
+    style: {
+      padding: 1,
+      borderColor: "magenta",
+      borderStyle: "double-single-rounded",
+    },
   });
 
   consola.box({
+    title: "Update available!",
     message: `${cyanBright("v1.0.2")} → ${cyanBright(
       "v2.0.2"
     )}.\n\nRun \`npm install -g consola\` to update`,
-    title: "Update available!",
-    padding: 2,
-    borderColor: "yellow",
-    borderStyle: "rounded",
+    style: {
+      padding: 2,
+      borderColor: "yellow",
+      borderStyle: "rounded",
+    },
   });
 }
 

@@ -1,7 +1,7 @@
 import * as colorette from "colorette";
 import { stripAnsi } from "./string";
 
-export interface BoxBorderStyle {
+export type BoxBorderStyle = {
   /**
    * Top left corner
    * @example `┌`
@@ -44,7 +44,7 @@ export interface BoxBorderStyle {
    * @example `║`
    */
   v: string;
-}
+};
 
 const boxStylePresets: Record<string, BoxBorderStyle> = {
   solid: {
@@ -113,17 +113,7 @@ const boxStylePresets: Record<string, BoxBorderStyle> = {
   },
 };
 
-/**
- * The border options of the box
- */
-export interface BoxOpts {
-  /**
-   * Title that will be displayed on top of the box
-   * @example 'Hello World'
-   * @example 'Hello {name}'
-   */
-  title?: string;
-
+export type BoxStyle = {
   /**
    * The border color
    * @default 'white'
@@ -176,17 +166,37 @@ export interface BoxOpts {
    * @default 2
    */
   padding: number;
-}
+};
 
-const defaultOptions: BoxOpts = {
+/**
+ * The border options of the box
+ */
+export type BoxOpts = {
+  /**
+   * Title that will be displayed on top of the box
+   * @example 'Hello World'
+   * @example 'Hello {name}'
+   */
+  title?: string;
+
+  style?: BoxStyle;
+};
+
+const defaultStyle: BoxStyle = {
   borderColor: "white",
   borderStyle: "solid",
   valign: "center",
   padding: 2,
 };
 
-export function box(text: string, _opts?: Partial<BoxOpts>) {
-  const opts = { ...defaultOptions, ..._opts };
+export function box(text: string, _opts: BoxOpts = {}) {
+  const opts = {
+    ..._opts,
+    style: {
+      ...defaultStyle,
+      ..._opts.style,
+    },
+  };
 
   // Split the text into lines
   const textLines = text.split("\n");
@@ -194,21 +204,25 @@ export function box(text: string, _opts?: Partial<BoxOpts>) {
   // Create the box
   const boxLines = [];
 
-  // Get the characters for the box
-  const borderStyle =
-    typeof opts.borderStyle === "string"
-      ? boxStylePresets[opts.borderStyle as keyof typeof boxStylePresets]
-      : opts.borderStyle;
-
-  // for (const key in presetChars) {
-  //   presetChars[key as keyof typeof presetChars] = colorette[opts.borderColor](
-  //     presetChars[key as keyof typeof presetChars]
-  //   );
-  // }
+  // Get the characters for the box and colorize
+  const _color: (text: string) => string =
+    (colorette as any)[opts.style.borderColor] || ((text: string) => text);
+  const borderStyle = {
+    ...(typeof opts.style.borderStyle === "string"
+      ? boxStylePresets[opts.style.borderStyle as keyof typeof boxStylePresets]
+      : opts.style.borderStyle),
+  };
+  if (_color) {
+    for (const key in borderStyle) {
+      borderStyle[key as keyof typeof borderStyle] = _color(
+        borderStyle[key as keyof typeof borderStyle]
+      );
+    }
+  }
 
   // Calculate the width and height of the box
   const paddingOffset =
-    opts.padding % 2 === 0 ? opts.padding : opts.padding + 1;
+    opts.style.padding % 2 === 0 ? opts.style.padding : opts.style.padding + 1;
   const height = textLines.length + paddingOffset;
   const width =
     Math.max(...textLines.map((line) => line.length)) + paddingOffset;
@@ -237,9 +251,9 @@ export function box(text: string, _opts?: Partial<BoxOpts>) {
 
   // Middle lines
   const valignOffset =
-    opts.valign === "center"
+    opts.style.valign === "center"
       ? Math.floor((height - textLines.length) / 2)
-      : opts.valign === "top" // eslint-disable-line unicorn/no-nested-ternary
+      : opts.style.valign === "top" // eslint-disable-line unicorn/no-nested-ternary
       ? height - textLines.length - paddingOffset
       : height - textLines.length;
 
