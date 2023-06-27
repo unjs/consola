@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v3.2.0
+
+[compare changes](https://github.com/unjs/consola/compare/v3.1.0...v3.2.0)
+
+
+### 🚀 Enhancements
+
+  - **fancy:** Support underlining ([#191](https://github.com/unjs/consola/pull/191))
+  - `consola.box` ([#193](https://github.com/unjs/consola/pull/193))
+  - `consola/utils` subpath export ([#199](https://github.com/unjs/consola/pull/199))
+  - Color utils ([#200](https://github.com/unjs/consola/pull/200))
+
+### 🩹 Fixes
+
+  - Inherit mocks ([#183](https://github.com/unjs/consola/pull/183))
+  - Correct and improve return types for single and multi select prompts ([#197](https://github.com/unjs/consola/pull/197))
+  - Preserve tag casing ([#190](https://github.com/unjs/consola/pull/190))
+
+### 🏡 Chore
+
+  - Update prompt example ([#196](https://github.com/unjs/consola/pull/196))
+  - Lint code ([d424218](https://github.com/unjs/consola/commit/d424218))
+  - Update dependencies ([dabb705](https://github.com/unjs/consola/commit/dabb705))
+
+### ❤️  Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+- Christian Preston ([@cpreston321](http://github.com/cpreston321))
+- Leex ([@jsonleex](http://github.com/jsonleex))
+- Inesh Bose 
+- Damian Głowala
+
 ## v3.1.0
 
 [compare changes](https://github.com/unjs/consola/compare/v3.0.2...v3.1.0)
