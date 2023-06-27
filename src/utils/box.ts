@@ -254,7 +254,7 @@ export const boxy = async (text: string, opts?: BoxyOpts) => {
   const valignOffset =
     valign === "center"
       ? Math.floor((height - lines.length) / 2)
-      : valign === "top"
+      : valign === "top" // eslint-disable-line unicorn/no-nested-ternary
       ? height - lines.length - paddingOffset
       : height - lines.length;
 
