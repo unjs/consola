@@ -63,7 +63,7 @@ const boxStylePresets: Record<string, BoxBorderStyle> = {
     h: "═",
     v: "║",
   },
-  "double-single": {
+  doubleSingle: {
     tl: "╓",
     tr: "╖",
     bl: "╙",
@@ -71,7 +71,7 @@ const boxStylePresets: Record<string, BoxBorderStyle> = {
     h: "─",
     v: "║",
   },
-  "double-single-rounded": {
+  doubleSingleRounded: {
     tl: "╭",
     tr: "╮",
     bl: "╰",
@@ -79,7 +79,7 @@ const boxStylePresets: Record<string, BoxBorderStyle> = {
     h: "─",
     v: "║",
   },
-  "single-thick": {
+  SingleThick: {
     tl: "┏",
     tr: "┓",
     bl: "┗",
@@ -87,7 +87,7 @@ const boxStylePresets: Record<string, BoxBorderStyle> = {
     h: "━",
     v: "┃",
   },
-  "single-double": {
+  singleDouble: {
     tl: "╒",
     tr: "╕",
     bl: "╘",
@@ -95,7 +95,7 @@ const boxStylePresets: Record<string, BoxBorderStyle> = {
     h: "═",
     v: "│",
   },
-  "single-double-rounded": {
+  singleDoubleRounded: {
     tl: "╭",
     tr: "╮",
     bl: "╰",
@@ -202,7 +202,7 @@ export type BoxOpts = {
 
 const defaultStyle: BoxStyle = {
   borderColor: "white",
-  borderStyle: "solid",
+  borderStyle: "rounded",
   valign: "center",
   padding: 2,
   marginLeft: 1,
@@ -230,7 +230,9 @@ export function box(text: string, _opts: BoxOpts = {}) {
     (colorette as any)[opts.style.borderColor] || ((text: string) => text);
   const borderStyle = {
     ...(typeof opts.style.borderStyle === "string"
-      ? boxStylePresets[opts.style.borderStyle as keyof typeof boxStylePresets]
+      ? boxStylePresets[
+          opts.style.borderStyle as keyof typeof boxStylePresets
+        ] || boxStylePresets.solid
       : opts.style.borderStyle),
   };
   if (_color) {
