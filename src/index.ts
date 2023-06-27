@@ -22,7 +22,6 @@ export function createConsola(
     stdout: process.stdout,
     stderr: process.stderr,
     prompt: (...args) => import("./prompt").then((m) => m.prompt(...args)),
-    banner: (...args) => import("./banner").then((m) => m.default(...args)),
     reporters: options.reporters || [
       options.fancy ?? !(isCI || isTest)
         ? new FancyReporter()

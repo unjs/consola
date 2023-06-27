@@ -11,7 +11,6 @@ export interface ConsolaOptions {
   stderr?: NodeJS.WriteStream;
   mockFn?: (type: LogType, defaults: InputLogObject) => (...args: any) => void;
   prompt?: typeof import("./prompt").prompt | undefined;
-  banner?: typeof import("./banner").default | undefined;
   formatOptions: FormatOptions;
 }
 
@@ -42,6 +41,7 @@ export interface LogObject extends InputLogObject {
   tag: string;
   args: any[];
   date: Date;
+  [key: string]: any;
 }
 
 export interface ConsolaReporter {

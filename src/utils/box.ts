@@ -1,7 +1,7 @@
-import { defu } from "defu";
+import * as colorette from "colorette";
 import { stripAnsi } from "./string";
 
-export interface BoxyBorderStyle {
+export interface BoxBorderStyle {
   /**
    * Top left corner
    * @example `┌`
@@ -46,235 +46,222 @@ export interface BoxyBorderStyle {
   v: string;
 }
 
-const solidPreset: BoxyBorderStyle = {
-  tl: "┌",
-  tr: "┐",
-  bl: "└",
-  br: "┘",
-  h: "─",
-  v: "│",
+const boxStylePresets: Record<string, BoxBorderStyle> = {
+  solid: {
+    tl: "┌",
+    tr: "┐",
+    bl: "└",
+    br: "┘",
+    h: "─",
+    v: "│",
+  },
+  double: {
+    tl: "╔",
+    tr: "╗",
+    bl: "╚",
+    br: "╝",
+    h: "═",
+    v: "║",
+  },
+  "double-single": {
+    tl: "╓",
+    tr: "╖",
+    bl: "╙",
+    br: "╜",
+    h: "─",
+    v: "║",
+  },
+  "double-single-rounded": {
+    tl: "╭",
+    tr: "╮",
+    bl: "╰",
+    br: "╯",
+    h: "─",
+    v: "║",
+  },
+  "single-thick": {
+    tl: "┏",
+    tr: "┓",
+    bl: "┗",
+    br: "┛",
+    h: "━",
+    v: "┃",
+  },
+  "single-double": {
+    tl: "╒",
+    tr: "╕",
+    bl: "╘",
+    br: "╛",
+    h: "═",
+    v: "│",
+  },
+  "single-double-rounded": {
+    tl: "╭",
+    tr: "╮",
+    bl: "╰",
+    br: "╯",
+    h: "═",
+    v: "│",
+  },
+  rounded: {
+    tl: "╭",
+    tr: "╮",
+    bl: "╰",
+    br: "╯",
+    h: "─",
+    v: "│",
+  },
 };
 
-const doublePreset: BoxyBorderStyle = {
-  tl: "╔",
-  tr: "╗",
-  bl: "╚",
-  br: "╝",
-  h: "═",
-  v: "║",
-};
-
-const roundedPreset: BoxyBorderStyle = {
-  tl: "╭",
-  tr: "╮",
-  bl: "╰",
-  br: "╯",
-  h: "─",
-  v: "│",
-};
-
-const singleThickPreset: BoxyBorderStyle = {
-  tl: "┏",
-  tr: "┓",
-  bl: "┗",
-  br: "┛",
-  h: "━",
-  v: "┃",
-};
-
-const doubleSinglePreset: BoxyBorderStyle = {
-  tl: "╓",
-  tr: "╖",
-  bl: "╙",
-  br: "╜",
-  h: "─",
-  v: "║",
-};
-
-const singleDoublePreset: BoxyBorderStyle = {
-  tl: "╒",
-  tr: "╕",
-  bl: "╘",
-  br: "╛",
-  h: "═",
-  v: "│",
-};
-
-const doubleSingleRoundedPreset: BoxyBorderStyle = {
-  tl: "╭",
-  tr: "╮",
-  bl: "╰",
-  br: "╯",
-  h: "─",
-  v: "║",
-};
-
-const singleDoubleRoundedPreset: BoxyBorderStyle = {
-  tl: "╭",
-  tr: "╮",
-  bl: "╰",
-  br: "╯",
-  h: "═",
-  v: "│",
-};
-
-const stylePreset = {
-  solid: solidPreset,
-  double: doublePreset,
-  "double-single": doubleSinglePreset,
-  "double-single-rounded": doubleSingleRoundedPreset,
-  "single-thick": singleThickPreset,
-  "single-double": singleDoublePreset,
-  "single-double-rounded": singleDoubleRoundedPreset,
-  rounded: roundedPreset,
-};
-
-export interface BoxyOpts {
-  /**
-   * The border options of the box
-   */
-  border?: {
-    /**
-     * The border color
-     * @default 'white'
-     */
-    color?:
-      | "black"
-      | "red"
-      | "green"
-      | "yellow"
-      | "blue"
-      | "magenta"
-      | "cyan"
-      | "white"
-      | "gray"
-      | "blackBright"
-      | "redBright"
-      | "greenBright"
-      | "yellowBright"
-      | "blueBright"
-      | "magentaBright"
-      | "cyanBright"
-      | "whiteBright";
-
-    /**
-     * The border style
-     * @default 'solid'
-     * @example 'single-double-rounded'
-     * @example
-     * ```ts
-     * {
-     *   tl: '┌',
-     *   tr: '┐',
-     *   bl: '└',
-     *   br: '┘',
-     *   h: '─',
-     *   v: '│',
-     * }
-     * ```
-     */
-    style?: BoxyBorderStyle | keyof typeof stylePreset;
-  };
-  /**
-   * The vertical alignment of the text
-   * @default 'center'
-   */
-  valign?: "top" | "center" | "bottom";
+/**
+ * The border options of the box
+ */
+export interface BoxOpts {
   /**
    * Title that will be displayed on top of the box
    * @example 'Hello World'
    * @example 'Hello {name}'
    */
   title?: string;
+
+  /**
+   * The border color
+   * @default 'white'
+   */
+  borderColor:
+    | "black"
+    | "red"
+    | "green"
+    | "yellow"
+    | "blue"
+    | "magenta"
+    | "cyan"
+    | "white"
+    | "gray"
+    | "blackBright"
+    | "redBright"
+    | "greenBright"
+    | "yellowBright"
+    | "blueBright"
+    | "magentaBright"
+    | "cyanBright"
+    | "whiteBright";
+
+  /**
+   * The border style
+   * @default 'solid'
+   * @example 'single-double-rounded'
+   * @example
+   * ```ts
+   * {
+   *   tl: '┌',
+   *   tr: '┐',
+   *   bl: '└',
+   *   br: '┘',
+   *   h: '─',
+   *   v: '│',
+   * }
+   * ```
+   */
+  borderStyle: BoxBorderStyle | keyof typeof boxStylePresets;
+
+  /**
+   * The vertical alignment of the text
+   * @default 'center'
+   */
+  valign: "top" | "center" | "bottom";
+
   /**
    * The padding of the box
    * @default 2
    */
-  padding?: number;
+  padding: number;
 }
 
-export const boxy = async (text: string, opts?: BoxyOpts) => {
-  const defaultOpts = defu(opts || {}, {
-    title: undefined,
-    border: {
-      color: "white",
-      style: "solid",
-    },
-    valign: "center",
-    padding: 2,
-  });
+const defaultOptions: BoxOpts = {
+  borderColor: "white",
+  borderStyle: "solid",
+  valign: "center",
+  padding: 2,
+};
 
-  const title = defaultOpts.title ? ` ${defaultOpts.title} ` : undefined;
-  const { border, valign, padding } = defaultOpts;
-
-  // Create the box
-  const box = [];
+export function box(text: string, _opts?: Partial<BoxOpts>) {
+  const opts = { ...defaultOptions, ..._opts };
 
   // Split the text into lines
-  const lines = text.split("\n");
+  const textLines = text.split("\n");
+
+  // Create the box
+  const boxLines = [];
 
   // Get the characters for the box
-  const presetChars =
-    typeof border.style === "string"
-      ? stylePreset[border.style as keyof typeof stylePreset]
-      : border.style;
+  const borderStyle =
+    typeof opts.borderStyle === "string"
+      ? boxStylePresets[opts.borderStyle as keyof typeof boxStylePresets]
+      : opts.borderStyle;
 
-  // Set the color of the border
-  const colorette = await import("colorette");
+  // for (const key in presetChars) {
+  //   presetChars[key as keyof typeof presetChars] = colorette[opts.borderColor](
+  //     presetChars[key as keyof typeof presetChars]
+  //   );
+  // }
 
-  for (const key in presetChars) {
-    // @ts-expect-error - TS doesn't like this
-    presetChars[key as keyof typeof presetChars] = colorette[border.color](
-      presetChars[key as keyof typeof presetChars]
-    );
-  }
-
-  const paddingOffset = padding % 2 === 0 ? padding : padding + 1;
-  const height = lines.length + paddingOffset;
-  const width = Math.max(...lines.map((line) => line.length)) + paddingOffset;
+  // Calculate the width and height of the box
+  const paddingOffset =
+    opts.padding % 2 === 0 ? opts.padding : opts.padding + 1;
+  const height = textLines.length + paddingOffset;
+  const width =
+    Math.max(...textLines.map((line) => line.length)) + paddingOffset;
   const widthOffset = width + paddingOffset;
 
   // Top line
   // Include the title if it exists with borders
-  if (title) {
-    const left = presetChars.h.repeat(
-      Math.floor((width - stripAnsi(title).length) / 2)
+  if (opts.title) {
+    const left = borderStyle.h.repeat(
+      Math.floor((width - stripAnsi(opts.title).length) / 2)
     );
-    const right = presetChars.h.repeat(
-      width - stripAnsi(title).length - stripAnsi(left).length + paddingOffset
+    const right = borderStyle.h.repeat(
+      width -
+        stripAnsi(opts.title).length -
+        stripAnsi(left).length +
+        paddingOffset
     );
-    box.push(`${presetChars.tl}${left}${title}${right}${presetChars.tr}`);
+    boxLines.push(
+      `${borderStyle.tl}${left}${opts.title}${right}${borderStyle.tr}`
+    );
   } else {
-    box.push(
-      `${presetChars.tl}${presetChars.h.repeat(widthOffset)}${presetChars.tr}`
+    boxLines.push(
+      `${borderStyle.tl}${borderStyle.h.repeat(widthOffset)}${borderStyle.tr}`
     );
   }
 
   // Middle lines
   const valignOffset =
-    valign === "center"
-      ? Math.floor((height - lines.length) / 2)
-      : valign === "top" // eslint-disable-line unicorn/no-nested-ternary
-      ? height - lines.length - paddingOffset
-      : height - lines.length;
+    opts.valign === "center"
+      ? Math.floor((height - textLines.length) / 2)
+      : opts.valign === "top" // eslint-disable-line unicorn/no-nested-ternary
+      ? height - textLines.length - paddingOffset
+      : height - textLines.length;
 
   for (let i = 0; i < height; i++) {
-    if (i < valignOffset || i >= valignOffset + lines.length) {
+    if (i < valignOffset || i >= valignOffset + textLines.length) {
       // Empty line
-      box.push(`${presetChars.v}${" ".repeat(widthOffset)}${presetChars.v}`);
+      boxLines.push(
+        `${borderStyle.v}${" ".repeat(widthOffset)}${borderStyle.v}`
+      );
     } else {
       // Text line
-      const line = lines[i - valignOffset];
+      const line = textLines[i - valignOffset];
       const left = " ".repeat(paddingOffset);
       const right = " ".repeat(width - stripAnsi(line).length);
-      box.push(`${presetChars.v}${left}${line}${right}${presetChars.v}`);
+      boxLines.push(`${borderStyle.v}${left}${line}${right}${borderStyle.v}`);
     }
   }
 
   // Bottom line
-  box.push(
-    `${presetChars.bl}${presetChars.h.repeat(widthOffset)}${presetChars.br}`
+  boxLines.push(
+    `${borderStyle.bl}${borderStyle.h.repeat(widthOffset)}${borderStyle.br}`
   );
 
-  return box.join("\n");
-};
+  return boxLines.join("\n");
+}

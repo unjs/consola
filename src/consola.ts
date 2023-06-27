@@ -8,7 +8,6 @@ import type {
   ConsolaOptions,
 } from "./types";
 import type { PromptOptions } from "./prompt";
-import type { BoxyOpts } from "./utils/box";
 
 let paused = false;
 const queue: any[] = [];
@@ -91,13 +90,6 @@ export class Consola {
       throw new Error("prompt is not supported!");
     }
     return this.options.prompt<any, any, T>(message, opts);
-  }
-
-  banner(text: string, opts?: BoxyOpts) {
-    if (!this.options.banner) {
-      throw new Error("banner is not supported!");
-    }
-    return this.options.banner(text, opts);
   }
 
   create(options: Partial<ConsolaOptions>): ConsolaInstance {

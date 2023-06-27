@@ -2,8 +2,8 @@ import { formatWithOptions } from "node:util";
 import type {
   LogObject,
   ConsolaReporter,
-  ConsolaOptions,
   FormatOptions,
+  ConsolaOptions,
 } from "../types";
 import { parseStack } from "../utils/error";
 import { writeStream } from "../utils/stream";
@@ -38,6 +38,22 @@ export class BasicReporter implements ConsolaReporter {
 
   formatLogObj(logObj: LogObject, opts: FormatOptions) {
     const message = this.formatArgs(logObj.args, opts);
+
+    const isBox = logObj.type === "box";
+    if (isBox) {
+      return (
+        "\n" +
+        [
+          bracket(logObj.tag),
+          logObj.title && logObj.title,
+          ...message.split("\n"),
+        ]
+          .filter(Boolean)
+          .map((l) => " | " + l)
+          .join("\n") +
+        "\n"
+      );
+    }
 
     return this.filterAndJoin([
       bracket(logObj.type),

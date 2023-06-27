@@ -34,6 +34,7 @@ export type LogType =
   | "fail"
   | "ready"
   | "start"
+  | "box"
   // Verbose
   | "debug"
   | "trace"
@@ -77,6 +78,9 @@ export const LogTypes: Record<LogType, Partial<LogObject>> = {
     level: LogLevels.info,
   },
   start: {
+    level: LogLevels.info,
+  },
+  box: {
     level: LogLevels.info,
   },
 
