@@ -1,4 +1,3 @@
-import { cyanBright } from "colorette";
 import { consola } from "./utils";
 
 function main() {
@@ -16,9 +15,7 @@ function main() {
 
   consola.box({
     title: "Update available!",
-    message: `${cyanBright("v1.0.2")} → ${cyanBright(
-      "v2.0.2"
-    )}.\n\nRun \`npm install -g consola\` to update`,
+    message: `\`v1.0.2\` → \`v2.0.0\`\n\nRun \`npm install -g consola\` to update`,
     style: {
       padding: 2,
       borderColor: "yellow",
