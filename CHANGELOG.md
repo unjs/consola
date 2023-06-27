@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v3.2.1
+
+[compare changes](https://github.com/unjs/consola/compare/v3.2.0...v3.2.1)
+
+
+### 🩹 Fixes
+
+  - **box:** Fix preset naming for `singleThick` ([#201](https://github.com/unjs/consola/pull/201))
+  - **fancy:** Style underscore with surrounding spaces ([#203](https://github.com/unjs/consola/pull/203))
+
+### ❤️  Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+- Christian Preston ([@cpreston321](http://github.com/cpreston321))
+
 ## v3.2.0
 
 [compare changes](https://github.com/unjs/consola/compare/v3.1.0...v3.2.0)
