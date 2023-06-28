@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v3.2.2
+
+[compare changes](https://github.com/unjs/consola/compare/v3.2.1...v3.2.2)
+
+
+### 🩹 Fixes
+
+  - **fancy:** Add node 14 compatibility ([#204](https://github.com/unjs/consola/pull/204))
+
+### 📦 Build
+
+  - **pkg:** Add supported engines field ([#179](https://github.com/unjs/consola/pull/179))
+
+### ❤️  Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+
 ## v3.2.1
 
 [compare changes](https://github.com/unjs/consola/compare/v3.2.0...v3.2.1)
