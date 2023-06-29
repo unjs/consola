@@ -22,6 +22,10 @@ consola.log(
   "We can also _underline_ words but not_this or this should_not_be_underlined!"
 );
 
+consola.log("We can also do `(bgGreen)special` highlight");
+
+consola.log("How about `(yellow,underline)chaining` them?");
+
 // Nonstandard error
 const { message, stack } = new Error("Custom Error!");
 consola.error({ message, stack });

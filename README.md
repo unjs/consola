@@ -60,6 +60,9 @@ consola.box("I am a simple box");
 await consola.prompt("Deploy to the production?", {
   type: "confirm",
 });
+
+// formatting with colorette
+consola.log("Text as `monospace` and _underline_ or `(underline,cyan)both`!")
 ```
 
 Will display in the terminal:
