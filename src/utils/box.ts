@@ -197,7 +197,7 @@ export type BoxOpts = {
    */
   title?: string;
 
-  style?: BoxStyle;
+  style?: Partial<BoxStyle>;
 };
 
 const defaultStyle: BoxStyle = {
