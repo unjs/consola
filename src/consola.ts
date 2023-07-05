@@ -44,7 +44,7 @@ export class Consola {
           colors: false,
           compact: true,
         },
-      }
+      },
     );
 
     // Create logger functions for current instance
@@ -60,7 +60,7 @@ export class Consola {
       // @ts-expect-error
       (this as unknown as ConsolaInstance)[type].raw = this._wrapLogFn(
         defaults,
-        true
+        true,
       );
     }
 
@@ -81,7 +81,7 @@ export class Consola {
     this.options.level = _normalizeLogLevel(
       level,
       this.options.types,
-      this.options.level
+      this.options.level,
     );
   }
 
@@ -347,7 +347,7 @@ export class Consola {
             // Auto-resolve when throttle is timed out
             this._lastLog.timeout = setTimeout(
               resolveLog,
-              this.options.throttle
+              this.options.throttle,
             );
             return; // SPAM!
           }
@@ -372,7 +372,7 @@ export class Consola {
 function _normalizeLogLevel(
   input: LogLevel | LogType | undefined,
   types: any = {},
-  defaultLevel = 3
+  defaultLevel = 3,
 ) {
   if (input === undefined) {
     return defaultLevel;
@@ -409,7 +409,7 @@ Consola.prototype.pause = Consola.prototype.pauseLogs;
 Consola.prototype.resume = Consola.prototype.resumeLogs;
 
 export function createConsola(
-  options: Partial<ConsolaOptions> = {}
+  options: Partial<ConsolaOptions> = {},
 ): ConsolaInstance {
   return new Consola(options) as ConsolaInstance;
 }

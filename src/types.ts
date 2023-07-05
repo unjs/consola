@@ -49,6 +49,6 @@ export interface ConsolaReporter {
     logObj: LogObject,
     ctx: {
       options: ConsolaOptions;
-    }
+    },
   ) => void;
 }

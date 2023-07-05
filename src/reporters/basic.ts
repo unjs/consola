@@ -71,7 +71,7 @@ export class BasicReporter implements ConsolaReporter {
       line + "\n",
       logObj.level < 2
         ? ctx.options.stderr || process.stderr
-        : ctx.options.stdout || process.stdout
+        : ctx.options.stdout || process.stdout,
     );
   }
 }

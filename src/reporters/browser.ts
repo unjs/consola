@@ -61,7 +61,7 @@ export class BrowserReporter {
         style,
         // Empty string as style resets to default console style
         "",
-        ...logObj.args.slice(1)
+        ...logObj.args.slice(1),
       );
     } else {
       consoleLogFn(badge, style, ...logObj.args);

@@ -55,7 +55,7 @@ export class FancyReporter extends BasicReporter {
             "  " +
             line
               .replace(/^at +/, (m) => colors.gray(m))
-              .replace(/\((.+)\)/, (_, m) => `(${colors.cyan(m)})`)
+              .replace(/\((.+)\)/, (_, m) => `(${colors.cyan(m)})`),
         )
         .join("\n")
     );
@@ -69,7 +69,7 @@ export class FancyReporter extends BasicReporter {
 
     if (isBadge) {
       return getBgColor(typeColor)(
-        colors.black(` ${logObj.type.toUpperCase()} `)
+        colors.black(` ${logObj.type.toUpperCase()} `),
       );
     }
 
@@ -83,20 +83,20 @@ export class FancyReporter extends BasicReporter {
 
   formatLogObj(logObj: LogObject, opts: FormatOptions) {
     const [message, ...additional] = this.formatArgs(logObj.args, opts).split(
-      "\n"
+      "\n",
     );
 
     if (logObj.type === "box") {
       return box(
         characterFormat(
-          message + (additional.length > 0 ? "\n" + additional.join("\n") : "")
+          message + (additional.length > 0 ? "\n" + additional.join("\n") : ""),
         ),
         {
           title: logObj.title
             ? characterFormat(logObj.title as string)
             : undefined,
           style: logObj.style as BoxOpts["style"],
-        }
+        },
       );
     }
 
@@ -120,7 +120,7 @@ export class FancyReporter extends BasicReporter {
         : (right ? `${colors.gray(`[${right}]`)} ` : "") + left;
 
     line += characterFormat(
-      additional.length > 0 ? "\n" + additional.join("\n") : ""
+      additional.length > 0 ? "\n" + additional.join("\n") : "",
     );
 
     if (logObj.type === "trace") {

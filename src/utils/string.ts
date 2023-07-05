@@ -45,7 +45,7 @@ export function align(
   alignment: "left" | "right" | "center",
   str: string,
   len: number,
-  space = " "
+  space = " ",
 ) {
   switch (alignment) {
     case "left": {

@@ -32,7 +32,7 @@ function replaceClose(
   replace: string,
   head = string.slice(0, Math.max(0, index)) + replace,
   tail = string.slice(Math.max(0, index + close.length)),
-  next = tail.indexOf(close)
+  next = tail.indexOf(close),
 ): string {
   return head + (next < 0 ? tail : replaceClose(next, tail, close, replace));
 }
@@ -42,7 +42,7 @@ function clearBleed(
   string: string,
   open: string,
   close: string,
-  replace: string
+  replace: string,
 ) {
   return index < 0
     ? open + string + close
@@ -53,7 +53,7 @@ function filterEmpty(
   open: string,
   close: string,
   replace = open,
-  at = open.length + 1
+  at = open.length + 1,
 ) {
   return (string: string) =>
     string || !(string === "" || string === undefined)
@@ -62,7 +62,7 @@ function filterEmpty(
           string,
           open,
           close,
-          replace
+          replace,
         )
       : "";
 }
@@ -128,7 +128,7 @@ export const colors = createColors() as Record<ColorName, ColorFunction>;
 
 export function getColor(
   color: ColorName,
-  fallback: ColorName = "reset"
+  fallback: ColorName = "reset",
 ): ColorFunction {
   return colors[color] || colors[fallback];
 }

@@ -20,7 +20,7 @@ export function compileFormat(format: string) {
   for (const arg of FORMAT_ARGS) {
     _format = _format.replace(
       new RegExp("([%-])" + arg[0], "g"),
-      "$1" + arg[1]
+      "$1" + arg[1],
     );
   }
 

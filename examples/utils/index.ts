@@ -2,7 +2,7 @@ import { ConsolaOptions, createConsola } from "../../src";
 import { randomSentence } from "./sentence";
 
 export function reporterDemo(
-  opts: Partial<ConsolaOptions & { fancy: boolean }>
+  opts: Partial<ConsolaOptions & { fancy: boolean }>,
 ) {
   const consola = createConsola({
     ...opts,

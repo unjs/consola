@@ -50,10 +50,10 @@ type inferPromptReturnType<T extends PromptOptions> = T extends TextOptions
 export async function prompt<
   _ = any,
   __ = any,
-  T extends PromptOptions = TextOptions
+  T extends PromptOptions = TextOptions,
 >(
   message: string,
-  opts: PromptOptions = {}
+  opts: PromptOptions = {},
 ): Promise<inferPromptReturnType<T>> {
   if (!opts.type || opts.type === "text") {
     return (await text({
@@ -75,7 +75,7 @@ export async function prompt<
     return (await select({
       message,
       options: opts.options.map((o) =>
-        typeof o === "string" ? { value: o, label: o } : o
+        typeof o === "string" ? { value: o, label: o } : o,
       ),
     })) as any;
   }
@@ -84,7 +84,7 @@ export async function prompt<
     return (await multiselect({
       message,
       options: opts.options.map((o) =>
-        typeof o === "string" ? { value: o, label: o } : o
+        typeof o === "string" ? { value: o, label: o } : o,
       ),
       required: opts.required,
     })) as any;

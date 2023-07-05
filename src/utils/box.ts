@@ -237,7 +237,7 @@ export function box(text: string, _opts: BoxOpts = {}) {
   if (_color) {
     for (const key in borderStyle) {
       borderStyle[key as keyof typeof borderStyle] = _color(
-        borderStyle[key as keyof typeof borderStyle]
+        borderStyle[key as keyof typeof borderStyle],
       );
     }
   }
@@ -260,22 +260,22 @@ export function box(text: string, _opts: BoxOpts = {}) {
   // Include the title if it exists with borders
   if (opts.title) {
     const left = borderStyle.h.repeat(
-      Math.floor((width - stripAnsi(opts.title).length) / 2)
+      Math.floor((width - stripAnsi(opts.title).length) / 2),
     );
     const right = borderStyle.h.repeat(
       width -
         stripAnsi(opts.title).length -
         stripAnsi(left).length +
-        paddingOffset
+        paddingOffset,
     );
     boxLines.push(
-      `${leftSpace}${borderStyle.tl}${left}${opts.title}${right}${borderStyle.tr}`
+      `${leftSpace}${borderStyle.tl}${left}${opts.title}${right}${borderStyle.tr}`,
     );
   } else {
     boxLines.push(
       `${leftSpace}${borderStyle.tl}${borderStyle.h.repeat(widthOffset)}${
         borderStyle.tr
-      }`
+      }`,
     );
   }
 
@@ -291,7 +291,9 @@ export function box(text: string, _opts: BoxOpts = {}) {
     if (i < valignOffset || i >= valignOffset + textLines.length) {
       // Empty line
       boxLines.push(
-        `${leftSpace}${borderStyle.v}${" ".repeat(widthOffset)}${borderStyle.v}`
+        `${leftSpace}${borderStyle.v}${" ".repeat(widthOffset)}${
+          borderStyle.v
+        }`,
       );
     } else {
       // Text line
@@ -299,7 +301,7 @@ export function box(text: string, _opts: BoxOpts = {}) {
       const left = " ".repeat(paddingOffset);
       const right = " ".repeat(width - stripAnsi(line).length);
       boxLines.push(
-        `${leftSpace}${borderStyle.v}${left}${line}${right}${borderStyle.v}`
+        `${leftSpace}${borderStyle.v}${left}${line}${right}${borderStyle.v}`,
       );
     }
   }
@@ -308,7 +310,7 @@ export function box(text: string, _opts: BoxOpts = {}) {
   boxLines.push(
     `${leftSpace}${borderStyle.bl}${borderStyle.h.repeat(widthOffset)}${
       borderStyle.br
-    }`
+    }`,
   );
   if (opts.style.marginBottom > 0) {
     boxLines.push("".repeat(opts.style.marginBottom));

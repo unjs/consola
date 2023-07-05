@@ -97,24 +97,24 @@ export const text = (opts: TextOptions) => {
       switch (this.state) {
         case "error": {
           return `${title.trim()}\n${color.yellow(
-            S_BAR
+            S_BAR,
           )} ${value}\n${color.yellow(S_BAR_END)} ${color.yellow(
-            this.error
+            this.error,
           )}\n`;
         }
         case "submit": {
           return `${title}${color.gray(S_BAR)} ${color.dim(
-            this.value || opts.placeholder
+            this.value || opts.placeholder,
           )}`;
         }
         case "cancel": {
           return `${title}${color.gray(S_BAR)} ${color.strikethrough(
-            color.dim(this.value ?? "")
+            color.dim(this.value ?? ""),
           )}${this.value?.trim() ? "\n" + color.gray(S_BAR) : ""}`;
         }
         default: {
           return `${title}${color.cyan(S_BAR)} ${value}\n${color.cyan(
-            S_BAR_END
+            S_BAR_END,
           )}\n`;
         }
       }
@@ -141,9 +141,9 @@ export const password = (opts: PasswordOptions) => {
       switch (this.state) {
         case "error": {
           return `${title.trim()}\n${color.yellow(
-            S_BAR
+            S_BAR,
           )} ${masked}\n${color.yellow(S_BAR_END)} ${color.yellow(
-            this.error
+            this.error,
           )}\n`;
         }
         case "submit": {
@@ -151,12 +151,12 @@ export const password = (opts: PasswordOptions) => {
         }
         case "cancel": {
           return `${title}${color.gray(S_BAR)} ${color.strikethrough(
-            color.dim(masked ?? "")
+            color.dim(masked ?? ""),
           )}${masked ? "\n" + color.gray(S_BAR) : ""}`;
         }
         default: {
           return `${title}${color.cyan(S_BAR)} ${value}\n${color.cyan(
-            S_BAR_END
+            S_BAR_END,
           )}\n`;
         }
       }
@@ -189,7 +189,7 @@ export const confirm = (opts: ConfirmOptions) => {
         }
         case "cancel": {
           return `${title}${color.gray(S_BAR)} ${color.strikethrough(
-            color.dim(value)
+            color.dim(value),
           )}\n${color.gray(S_BAR)}`;
         }
         default: {
@@ -221,11 +221,11 @@ export interface SelectOptions<Options extends Option<Value>[], Value> {
 }
 
 export const select = <Options extends Option<Value>[], Value>(
-  opts: SelectOptions<Options, Value>
+  opts: SelectOptions<Options, Value>,
 ) => {
   const opt = (
     option: Option<Value>,
-    state: "inactive" | "active" | "selected" | "cancelled"
+    state: "inactive" | "active" | "selected" | "cancelled",
   ) => {
     const label = option.label ?? String(option.value);
     switch (state) {
@@ -257,19 +257,19 @@ export const select = <Options extends Option<Value>[], Value>(
         case "submit": {
           return `${title}${color.gray(S_BAR)} ${opt(
             this.options[this.cursor],
-            "selected"
+            "selected",
           )}`;
         }
         case "cancel": {
           return `${title}${color.gray(S_BAR)} ${opt(
             this.options[this.cursor],
-            "cancelled"
+            "cancelled",
           )}\n${color.gray(S_BAR)}`;
         }
         default: {
           return `${title}${color.cyan(S_BAR)} ${this.options
             .map((option, i) =>
-              opt(option, i === this.cursor ? "active" : "inactive")
+              opt(option, i === this.cursor ? "active" : "inactive"),
             )
             .join(`\n${color.cyan(S_BAR)}  `)}\n${color.cyan(S_BAR_END)}\n`;
         }
@@ -280,13 +280,13 @@ export const select = <Options extends Option<Value>[], Value>(
 
 export const selectKey = <
   Options extends Option<Value>[],
-  Value extends string
+  Value extends string,
 >(
-  opts: SelectOptions<Options, Value>
+  opts: SelectOptions<Options, Value>,
 ) => {
   const opt = (
     option: Option<Value>,
-    state: "inactive" | "active" | "selected" | "cancelled" = "inactive"
+    state: "inactive" | "active" | "selected" | "cancelled" = "inactive",
   ) => {
     const label = option.label ?? String(option.value);
     switch (state) {
@@ -304,7 +304,7 @@ export const selectKey = <
       // No default
     }
     return `${color.gray(
-      color.bgWhite(color.inverse(` ${option.value} `))
+      color.bgWhite(color.inverse(` ${option.value} `)),
     )} ${label} ${option.hint ? color.dim(`(${option.hint})`) : ""}`;
   };
 
@@ -321,19 +321,19 @@ export const selectKey = <
           return `${title}${color.gray(S_BAR)} ${opt(
             // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             this.options.find((opt) => opt.value === this.value)!,
-            "selected"
+            "selected",
           )}`;
         }
         case "cancel": {
           return `${title}${color.gray(S_BAR)} ${opt(
             this.options[0],
-            "cancelled"
+            "cancelled",
           )}\n${color.gray(S_BAR)}`;
         }
         default: {
           return `${title}${color.cyan(S_BAR)} ${this.options
             .map((option, i) =>
-              opt(option, i === this.cursor ? "active" : "inactive")
+              opt(option, i === this.cursor ? "active" : "inactive"),
             )
             .join(`\n${color.cyan(S_BAR)}  `)}\n${color.cyan(S_BAR_END)}\n`;
         }
@@ -350,7 +350,7 @@ export interface MultiSelectOptions<Options extends Option<Value>[], Value> {
   cursorAt?: Value;
 }
 export const multiselect = <Options extends Option<Value>[], Value>(
-  opts: MultiSelectOptions<Options, Value>
+  opts: MultiSelectOptions<Options, Value>,
 ) => {
   const opt = (
     option: Option<Value>,
@@ -360,7 +360,7 @@ export const multiselect = <Options extends Option<Value>[], Value>(
       | "selected"
       | "active-selected"
       | "submitted"
-      | "cancelled"
+      | "cancelled",
   ) => {
     const label = option.label ?? String(option.value);
     switch (state) {
@@ -398,11 +398,11 @@ export const multiselect = <Options extends Option<Value>[], Value>(
         return `Please select at least one option.\n${color.reset(
           color.dim(
             `Press ${color.gray(
-              color.bgWhite(color.inverse(" space "))
+              color.bgWhite(color.inverse(" space ")),
             )} to select, ${color.gray(
-              color.bgWhite(color.inverse(" enter "))
-            )} to submit`
-          )
+              color.bgWhite(color.inverse(" enter ")),
+            )} to submit`,
+          ),
         )}`;
       }
     },
@@ -435,7 +435,7 @@ export const multiselect = <Options extends Option<Value>[], Value>(
             .map((ln, i) =>
               i === 0
                 ? `${color.yellow(S_BAR_END)} ${color.yellow(ln)}`
-                : `   ${ln}`
+                : `   ${ln}`,
             )
             .join("\n");
           return (
@@ -482,7 +482,7 @@ export const multiselect = <Options extends Option<Value>[], Value>(
 
 export interface GroupMultiSelectOptions<
   Options extends Option<Value>[],
-  Value
+  Value,
 > {
   message: string;
   options: Record<string, Options>;
@@ -491,7 +491,7 @@ export interface GroupMultiSelectOptions<
   cursorAt?: Value;
 }
 export const groupMultiselect = <Options extends Option<Value>[], Value>(
-  opts: GroupMultiSelectOptions<Options, Value>
+  opts: GroupMultiSelectOptions<Options, Value>,
 ) => {
   const opt = (
     option: Option<Value>,
@@ -504,7 +504,7 @@ export const groupMultiselect = <Options extends Option<Value>[], Value>(
       | "group-active-selected"
       | "submitted"
       | "cancelled",
-    options: Option<Value>[] = []
+    options: Option<Value>[] = [],
   ) => {
     const label = option.label ?? String(option.value);
     const isItem = typeof (option as any).group === "string";
@@ -524,12 +524,12 @@ export const groupMultiselect = <Options extends Option<Value>[], Value>(
       }
       case "group-active-selected": {
         return `${prefix}${color.green(S_CHECKBOX_SELECTED)} ${color.dim(
-          label
+          label,
         )}`;
       }
       case "selected": {
         return `${color.dim(prefix)}${color.green(
-          S_CHECKBOX_SELECTED
+          S_CHECKBOX_SELECTED,
         )} ${color.dim(label)}`;
       }
       case "cancelled": {
@@ -537,7 +537,7 @@ export const groupMultiselect = <Options extends Option<Value>[], Value>(
       }
       case "active-selected": {
         return `${color.dim(prefix)}${color.green(
-          S_CHECKBOX_SELECTED
+          S_CHECKBOX_SELECTED,
         )} ${label} ${option.hint ? color.dim(`(${option.hint})`) : ""}`;
       }
       case "submitted": {
@@ -546,7 +546,7 @@ export const groupMultiselect = <Options extends Option<Value>[], Value>(
       // No default
     }
     return `${color.dim(prefix)}${color.dim(S_CHECKBOX_INACTIVE)} ${color.dim(
-      label
+      label,
     )}`;
   };
 
@@ -560,11 +560,11 @@ export const groupMultiselect = <Options extends Option<Value>[], Value>(
         return `Please select at least one option.\n${color.reset(
           color.dim(
             `Press ${color.gray(
-              color.bgWhite(color.inverse(" space "))
+              color.bgWhite(color.inverse(" space ")),
             )} to select, ${color.gray(
-              color.bgWhite(color.inverse(" enter "))
-            )} to submit`
-          )
+              color.bgWhite(color.inverse(" enter ")),
+            )} to submit`,
+          ),
         )}`;
       }
     },
@@ -595,7 +595,7 @@ export const groupMultiselect = <Options extends Option<Value>[], Value>(
             .map((ln, i) =>
               i === 0
                 ? `${color.yellow(S_BAR_END)} ${color.yellow(ln)}`
-                : `   ${ln}`
+                : `   ${ln}`,
             )
             .join("\n");
           return `${title}${color.yellow(S_BAR)} ${this.options
@@ -613,7 +613,7 @@ export const groupMultiselect = <Options extends Option<Value>[], Value>(
                 return opt(
                   option,
                   selected ? "group-active-selected" : "group-active",
-                  options
+                  options,
                 );
               }
               if (active && selected) {
@@ -642,7 +642,7 @@ export const groupMultiselect = <Options extends Option<Value>[], Value>(
                 return opt(
                   option,
                   selected ? "group-active-selected" : "group-active",
-                  options
+                  options,
                 );
               }
               if (active && selected) {
@@ -670,24 +670,24 @@ export const note = (message = "", title = "") => {
         ln = strip(ln);
         return ln.length > sum ? ln.length : sum;
       }, 0),
-      strip(title).length
+      strip(title).length,
     ) + 2;
   const msg = lines
     .map(
       (ln) =>
         `${color.gray(S_BAR)} ${color.dim(ln)}${" ".repeat(
-          len - strip(ln).length
-        )}${color.gray(S_BAR)}`
+          len - strip(ln).length,
+        )}${color.gray(S_BAR)}`,
     )
     .join("\n");
   process.stdout.write(
     `${color.gray(S_BAR)}\n${color.green(S_STEP_SUBMIT)} ${color.reset(
-      title
+      title,
     )} ${color.gray(
-      S_BAR_H.repeat(Math.max(len - title.length - 1, 1)) + S_CORNER_TOP_RIGHT
+      S_BAR_H.repeat(Math.max(len - title.length - 1, 1)) + S_CORNER_TOP_RIGHT,
     )}\n${msg}\n${color.gray(
-      S_CONNECT_LEFT + S_BAR_H.repeat(len + 2) + S_CORNER_BOTTOM_RIGHT
-    )}\n`
+      S_CONNECT_LEFT + S_BAR_H.repeat(len + 2) + S_CORNER_BOTTOM_RIGHT,
+    )}\n`,
   );
 };
 
@@ -701,7 +701,7 @@ export const intro = (title = "") => {
 
 export const outro = (message = "") => {
   process.stdout.write(
-    `${color.gray(S_BAR)}\n${color.gray(S_BAR_END)} ${message}\n\n`
+    `${color.gray(S_BAR)}\n${color.gray(S_BAR_END)} ${message}\n\n`,
   );
 };
 
@@ -711,14 +711,14 @@ export type LogMessageOptions = {
 export const log = {
   message: (
     message = "",
-    { symbol = color.gray(S_BAR) }: LogMessageOptions = {}
+    { symbol = color.gray(S_BAR) }: LogMessageOptions = {},
   ) => {
     const parts = [`${color.gray(S_BAR)}`];
     if (message) {
       const [firstLine, ...lines] = message.split("\n");
       parts.push(
         `${symbol} ${firstLine}`,
-        ...lines.map((ln) => `${color.gray(S_BAR)} ${ln}`)
+        ...lines.map((ln) => `${color.gray(S_BAR)} ${ln}`),
       );
     }
     process.stdout.write(`${parts.join("\n")}\n`);
@@ -755,7 +755,7 @@ export const spinner = () => {
       message = message.replace(/\.?\.?\.$/, "");
       unblock = block();
       process.stdout.write(
-        `${color.gray(S_BAR)}\n${color.magenta("○")} ${message}\n`
+        `${color.gray(S_BAR)}\n${color.magenta("○")} ${message}\n`,
       );
       let i = 0;
       let dot = 0;
@@ -765,7 +765,7 @@ export const spinner = () => {
         process.stdout.write(
           `${color.magenta(frame)} ${message}${
             Math.floor(dot) >= 1 ? ".".repeat(Math.floor(dot)).slice(0, 3) : ""
-          }   \n`
+          }   \n`,
         );
         i = i === frames.length - 1 ? 0 : i + 1;
         dot = dot === frames.length ? 0 : dot + 0.125;
@@ -776,7 +776,7 @@ export const spinner = () => {
       process.stdout.write(erase.down(2));
       clearInterval(loop);
       process.stdout.write(
-        `${color.gray(S_BAR)}\n${color.green(S_STEP_SUBMIT)} ${message}\n`
+        `${color.gray(S_BAR)}\n${color.green(S_STEP_SUBMIT)} ${message}\n`,
       );
       unblock();
     },
@@ -825,7 +825,7 @@ export type PromptGroup<T> = {
  */
 export const group = async <T>(
   prompts: PromptGroup<T>,
-  opts?: PromptGroupOptions<T>
+  opts?: PromptGroupOptions<T>,
 ): Promise<Prettify<PromptGroupAwaitedReturn<T>>> => {
   const results = {} as any;
   const promptNames = Object.keys(prompts);
