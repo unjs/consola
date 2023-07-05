@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v3.2.3
+
+[compare changes](https://github.com/unjs/consola/compare/v3.2.2...v3.2.3)
+
+
+### 🩹 Fixes
+
+  - **types:** Partial style options for `box` ([#210](https://github.com/unjs/consola/pull/210))
+  - **types:** Add backward compatible declarations ([e46733b](https://github.com/unjs/consola/commit/e46733b))
+
+### 🏡 Chore
+
+  - Remove extra `await` in `spinner` example ([#211](https://github.com/unjs/consola/pull/211))
+  - Add autofix ci ([b3aa049](https://github.com/unjs/consola/commit/b3aa049))
+  - Update prettier ([9a4b67e](https://github.com/unjs/consola/commit/9a4b67e))
+
+### ❤️  Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+- Alexander Topalo <topaloalexander@gmail.com>
+- Estéban ([@Barbapapazes](http://github.com/Barbapapazes))
+
 ## v3.2.2
 
 [compare changes](https://github.com/unjs/consola/compare/v3.2.1...v3.2.2)
