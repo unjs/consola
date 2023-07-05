@@ -1,1 +1,1 @@
-export * from "./dist/index.basic";
+export * from "./dist/basic";

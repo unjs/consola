@@ -1,1 +1,1 @@
-export * from "./dist/index.browser";
+export * from "./dist/browser";
