@@ -1,4 +1,4 @@
-import { type ColorName, getColor, ColorFunction } from "./color";
+import { type ColorName, getColor } from "./color";
 
 export type TreeItemObject = {
   /**
