@@ -6,6 +6,7 @@ import { FormatOptions, LogObject } from "../types";
 import { LogLevel, LogType } from "../constants";
 import { BoxOpts, box } from "../utils/box";
 import { stripAnsi } from "../utils";
+import { tree } from "../utils/tree";
 import { BasicReporter } from "./basic";
 
 export const TYPE_COLOR_MAP: { [k in LogType]?: string } = {
@@ -98,6 +99,10 @@ export class FancyReporter extends BasicReporter {
           style: logObj.style as BoxOpts["style"],
         },
       );
+    }
+
+    if (logObj.type === "tree") {
+      return tree(logObj.args[0], logObj.args[1]);
     }
 
     const date = this.formatDate(logObj.date, opts);
