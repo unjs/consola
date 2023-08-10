@@ -68,7 +68,7 @@ function buildTree(items: TreeItem[], options?: TreeOptions): string {
       if (item.children) {
         const tree = buildTree(item.children, {
           ...options,
-          prefix: `${options?.prefix}${isLast ? '  ' : '│  '}`,
+          prefix: `${options?.prefix}${isLast ? "  " : "│  "}`,
         });
 
         logs += tree;

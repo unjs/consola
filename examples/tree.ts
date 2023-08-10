@@ -50,7 +50,7 @@ function main() {
   consola.tree([
     {
       text: "format",
-      color: "red"
+      color: "red",
     },
     {
       text: "consola",
@@ -67,6 +67,7 @@ function main() {
             {
               text: "test",
               color: "magenta",
+              children: ["nice tree"],
             },
           ],
         },
