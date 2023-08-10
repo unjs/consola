@@ -25,13 +25,13 @@ export type TreeOptions = {
   prefix?: string;
 };
 
-export function tree(items: TreeItem[], options?: TreeOptions): string {
+export function formatTree(items: TreeItem[], options?: TreeOptions): string {
   options = {
     prefix: "  ",
     ...options,
   };
 
-  const tree = formatTree(items, options);
+  const tree = buildTree(items, options);
   if (options && options.color) {
     const colorize = getColor(options.color);
     return colorize(tree);
@@ -40,12 +40,13 @@ export function tree(items: TreeItem[], options?: TreeOptions): string {
   return tree;
 }
 
-function formatTree(items: TreeItem[], options?: TreeOptions): string {
+function buildTree(items: TreeItem[], options?: TreeOptions): string {
   let logs = "";
 
   const total = items.length - 1;
-  for (const item of items) {
-    const isLast = items.indexOf(item) === total;
+  for (let i = 0; i <= total; i++) {
+    const item = items[i];
+    const isLast = i === total;
     const prefix = isLast ? `${options?.prefix}└─` : `${options?.prefix}├─`;
 
     if (typeof item === "string") {
@@ -67,6 +68,6 @@ function formatTree(items: TreeItem[], options?: TreeOptions): string {
   return logs;
 }
 
-function buildLog(prefix: string, text: string) {
-  return prefix + text + "\n";
+function buildLog(prefix: string, text: string): string {
+  return `${prefix}${text}\n`;
 }
