@@ -6,6 +6,10 @@ export type TreeItemObject = {
    */
   text: string;
   /**
+   * Children of the item
+   */
+  children?: TreeItem[];
+  /**
    * Color of the item
    */
   color?: ColorName;
@@ -52,17 +56,24 @@ function buildTree(items: TreeItem[], options?: TreeOptions): string {
     if (typeof item === "string") {
       const log = buildLog(prefix, item);
       logs += log;
-      continue;
-    }
+    } else {
+      const log = buildLog(prefix, item.text);
+      if (item.color) {
+        const colorize = getColor(item.color);
+        logs += colorize(log);
+      } else {
+        logs += log;
+      }
 
-    const log = buildLog(prefix, item.text);
-    if (item.color) {
-      const colorize = getColor(item.color);
-      logs += colorize(log);
-      continue;
-    }
+      if (item.children) {
+        const tree = buildTree(item.children, {
+          ...options,
+          prefix: `${options?.prefix}${isLast ? '  ' : '│  '}`,
+        });
 
-    logs += log;
+        logs += tree;
+      }
+    }
   }
 
   return logs;

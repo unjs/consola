@@ -45,6 +45,39 @@ function main() {
       color: "gray",
     },
   );
+
+  // Deep tree
+  consola.tree([
+    {
+      text: "format",
+      color: "red"
+    },
+    {
+      text: "consola",
+      color: "yellow",
+      children: [
+        {
+          text: "logger",
+          color: "green",
+          children: [
+            {
+              text: "reporter",
+              color: "cyan",
+            },
+            {
+              text: "test",
+              color: "magenta",
+            },
+          ],
+        },
+        {
+          text: "reporter",
+          color: "bold",
+        },
+        "test",
+      ],
+    },
+  ]);
 }
 
 main();
