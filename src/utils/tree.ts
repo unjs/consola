@@ -31,12 +31,13 @@ export function tree(items: TreeItem[], options?: TreeOptions): string {
     ...options,
   };
 
+  const tree = formatTree(items, options);
   if (options && options.color) {
     const colorize = getColor(options.color);
-    return colorize(formatTree(items, options));
+    return colorize(tree);
   }
 
-  return formatTree(items, options);
+  return tree;
 }
 
 function formatTree(items: TreeItem[], options?: TreeOptions): string {
@@ -53,14 +54,14 @@ function formatTree(items: TreeItem[], options?: TreeOptions): string {
       continue;
     }
 
-    let color: ColorFunction | null = null;
+    const log = buildLog(prefix, item.text);
     if (item.color) {
-      color = getColor(item.color);
+      const colorize = getColor(item.color);
+      logs += colorize(log);
+      continue;
     }
 
-    const log = buildLog(prefix, item.text);
-    const coloredLog = color ? color(log) : log;
-    logs += coloredLog;
+    logs += log;
   }
 
   return logs;
