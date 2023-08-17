@@ -64,7 +64,7 @@ await consola.prompt("Deploy to the production?", {
 
 Will display in the terminal:
 
-<img width="760" alt="image" src="https://user-images.githubusercontent.com/5158436/231029244-abc79f48-ca16-4eaa-b592-7abd271ecb1f.png">
+![consola-screenshot](https://github.com/unjs/consola/assets/904724/0e511ee6-2543-43ab-9eda-152f07134d94)
 
 You can use smaller core builds without fancy reporter to save 80% of the bundle size:
 
