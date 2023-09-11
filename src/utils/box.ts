@@ -259,6 +259,7 @@ export function box(text: string, _opts: BoxOpts = {}) {
   }
   // Include the title if it exists with borders
   if (opts.title) {
+    const title = _color ? _color(opts.title) : opts.title
     const left = borderStyle.h.repeat(
       Math.floor((width - stripAnsi(opts.title).length) / 2),
     );
@@ -269,7 +270,7 @@ export function box(text: string, _opts: BoxOpts = {}) {
         paddingOffset,
     );
     boxLines.push(
-      `${leftSpace}${borderStyle.tl}${left}${opts.title}${right}${borderStyle.tr}`,
+      `${leftSpace}${borderStyle.tl}${left}${title}${right}${borderStyle.tr}`,
     );
   } else {
     boxLines.push(
