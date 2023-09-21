@@ -28,12 +28,14 @@
       },
       "default": {
         "types": "./dist/browser.d.ts",
-        "import": "./dist/browser.mjs"
+        "import": "./dist/browser.mjs",
+        "require": "./dist/browser.mjs"
       }
     },
     "./browser": {
       "types": "./dist/browser.d.ts",
-      "import": "./dist/browser.mjs"
+      "import": "./dist/browser.mjs",
+      "require": "./dist/browser.mjs"
     },
     "./basic": {
       "node": {
@@ -43,7 +45,8 @@
       },
       "default": {
         "types": "./dist/browser.d.ts",
-        "import": "./dist/browser.mjs"
+        "import": "./dist/browser.mjs",
+        "require": "./dist/browser.mjs"
       }
     },
     "./core": {
