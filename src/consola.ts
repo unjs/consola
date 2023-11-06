@@ -352,7 +352,7 @@ export class Consola {
             return; // SPAM!
           }
         }
-      } catch {
+      } catch (e) {
         // Circular References
       }
     }
