@@ -101,10 +101,6 @@ export class FancyReporter extends BasicReporter {
       );
     }
 
-    if (logObj.type === "tree") {
-      return formatTree(logObj.args[0], logObj.args[1]);
-    }
-
     const date = this.formatDate(logObj.date, opts);
     const coloredDate = date && colors.gray(date);
 

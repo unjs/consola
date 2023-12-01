@@ -8,7 +8,6 @@ import type {
   ConsolaOptions,
 } from "./types";
 import type { PromptOptions } from "./prompt";
-import { TreeItem, TreeOptions } from "./utils/tree";
 
 let paused = false;
 const queue: any[] = [];
@@ -391,13 +390,8 @@ export interface LogFn {
   (message: InputLogObject | any, ...args: any[]): void;
   raw: (...args: any[]) => void;
 }
-export interface LogTreeFn {
-  (items: TreeItem[], options?: TreeOptions): void;
-  raw: (...args: any[]) => void;
-}
-export type ConsolaInstance = Consola &
-  Record<Exclude<LogType, "tree">, LogFn> &
-  Record<"tree", LogTreeFn>;
+
+export type ConsolaInstance = Consola & Record<LogType, LogFn>;
 
 // Legacy support
 // @ts-expect-error

@@ -19,11 +19,8 @@ export const LogLevels: Record<LogType, number> = {
   ready: 3,
   start: 3,
   box: 3,
-  tree: 3,
 
   debug: 4,
-
-  trace: 5,
 
   verbose: Number.POSITIVE_INFINITY,
 };
@@ -44,7 +41,6 @@ export type LogType =
   | "ready"
   | "start"
   | "box"
-  | "tree"
   // Verbose
   | "debug"
   | "trace"
@@ -91,9 +87,6 @@ export const LogTypes: Record<LogType, Partial<LogObject>> = {
     level: LogLevels.info,
   },
   box: {
-    level: LogLevels.info,
-  },
-  tree: {
     level: LogLevels.info,
   },
 
