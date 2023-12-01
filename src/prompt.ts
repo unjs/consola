@@ -42,7 +42,9 @@ type inferPromptReturnType<T extends PromptOptions> = T extends TextOptions
   : T extends ConfirmOptions
     ? boolean
     : T extends SelectOptions
-      ? T["options"][number]
+      ? T["options"][number] extends SelectOption
+        ? T["options"][number]["value"]
+        : T["options"][number]
       : T extends MultiSelectOptions
         ? T["options"]
         : unknown;
