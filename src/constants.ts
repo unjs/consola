@@ -22,6 +22,8 @@ export const LogLevels: Record<LogType, number> = {
 
   debug: 4,
 
+  trace: 5,
+
   verbose: Number.POSITIVE_INFINITY,
 };
 

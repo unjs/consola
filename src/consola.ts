@@ -390,7 +390,6 @@ export interface LogFn {
   (message: InputLogObject | any, ...args: any[]): void;
   raw: (...args: any[]) => void;
 }
-
 export type ConsolaInstance = Consola & Record<LogType, LogFn>;
 
 // Legacy support

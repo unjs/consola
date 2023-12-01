@@ -6,7 +6,6 @@ import { FormatOptions, LogObject } from "../types";
 import { LogLevel, LogType } from "../constants";
 import { BoxOpts, box } from "../utils/box";
 import { stripAnsi } from "../utils";
-import { formatTree } from "../utils/tree";
 import { BasicReporter } from "./basic";
 
 export const TYPE_COLOR_MAP: { [k in LogType]?: string } = {
