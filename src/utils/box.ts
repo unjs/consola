@@ -285,8 +285,8 @@ export function box(text: string, _opts: BoxOpts = {}) {
     opts.style.valign === "center"
       ? Math.floor((height - textLines.length) / 2)
       : opts.style.valign === "top" // eslint-disable-line unicorn/no-nested-ternary
-      ? height - textLines.length - paddingOffset
-      : height - textLines.length;
+        ? height - textLines.length - paddingOffset
+        : height - textLines.length;
 
   for (let i = 0; i < height; i++) {
     if (i < valignOffset || i >= valignOffset + textLines.length) {
