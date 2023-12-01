@@ -26,8 +26,8 @@ export type SelectOptions = {
 
 export type MultiSelectOptions = {
   type: "multiselect";
-  initial?: string;
-  options: string[] | SelectOption[];
+  initial?: string[];
+  options: (string | SelectOption)[];
   required?: boolean;
 };
 
@@ -79,6 +79,7 @@ export async function prompt<
       options: opts.options.map((o) =>
         typeof o === "string" ? { value: o, label: o } : o,
       ),
+      initialValue: opts.initial,
     })) as any;
   }
 
@@ -89,6 +90,7 @@ export async function prompt<
         typeof o === "string" ? { value: o, label: o } : o,
       ),
       required: opts.required,
+      initialValues: opts.initial,
     })) as any;
   }
 

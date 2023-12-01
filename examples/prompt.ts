@@ -13,10 +13,11 @@ async function main() {
   const projectType = await consola.prompt("Pick a project type.", {
     type: "select",
     options: [
-      "TypeScript",
+      "JavaScript",
       "TypeScript",
       { label: "CoffeeScript", value: "CoffeeScript", hint: "oh no" },
     ],
+    initial: "TypeScript",
   });
 
   const tools = await consola.prompt("Select additional tools.", {
@@ -27,6 +28,7 @@ async function main() {
       { value: "prettier", label: "Prettier" },
       { value: "gh-action", label: "GitHub Action" },
     ],
+    initial: ["eslint", "prettier"],
   });
 
   consola.start("Creating project...");

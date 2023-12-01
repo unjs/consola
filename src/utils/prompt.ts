@@ -748,7 +748,7 @@ const frames = unicode ? ["◒", "◐", "◓", "◑"] : ["•", "o", "O", "0"];
 
 export const spinner = () => {
   let unblock: () => void;
-  let loop: NodeJS.Timer;
+  let loop: NodeJS.Timeout;
   const delay = unicode ? 80 : 120;
   return {
     start(message = "") {
