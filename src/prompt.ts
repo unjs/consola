@@ -40,12 +40,12 @@ export type PromptOptions =
 type inferPromptReturnType<T extends PromptOptions> = T extends TextOptions
   ? string
   : T extends ConfirmOptions
-  ? boolean
-  : T extends SelectOptions
-  ? T["options"][number]
-  : T extends MultiSelectOptions
-  ? T["options"]
-  : unknown;
+    ? boolean
+    : T extends SelectOptions
+      ? T["options"][number]
+      : T extends MultiSelectOptions
+        ? T["options"]
+        : unknown;
 
 export async function prompt<
   _ = any,

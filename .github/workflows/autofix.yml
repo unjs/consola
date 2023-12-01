@@ -1,9 +1,9 @@
-name: autofix.ci  # needed to securely identify the workflow
+name: autofix.ci # needed to securely identify the workflow
 
 on:
   pull_request:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 permissions:
   contents: read
@@ -23,4 +23,4 @@ jobs:
         run: pnpm run lint:fix
       - uses: autofix-ci/action@bee19d72e71787c12ca0f29de72f2833e437e4c9
         with:
-          commit-message: 'chore: apply automated lint fixes'
+          commit-message: "chore: apply automated lint fixes"
