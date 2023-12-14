@@ -1,4 +1,5 @@
 import { type ColorName, colorize } from "./color";
+import { log } from "./prompt";
 
 export type TreeItemObject = {
   /**
@@ -31,11 +32,22 @@ export type TreeOptions = {
    * @default "  "
    */
   prefix?: string;
+  /**
+   * Limit the depth of tree
+   */
+  depth?: number;
+  /**
+   * Ellipsis of the tree
+   *
+   * @default "..."
+   */
+  ellipsis?: string
 };
 
 export function formatTree(items: TreeItem[], options?: TreeOptions): string {
   options = {
     prefix: "  ",
+    ellipsis: "...",
     ...options,
   };
 
@@ -49,14 +61,24 @@ export function formatTree(items: TreeItem[], options?: TreeOptions): string {
 
 function _buildTree(items: TreeItem[], options?: TreeOptions): string[] {
   const chunks: string[] = [];
-
   const total = items.length - 1;
   for (let i = 0; i <= total; i++) {
     const item = items[i];
+    const isItemString = typeof item === "string";
+    const isLimit = options?.depth != null && options.depth <= 0;
+    if (isLimit) {
+      const ellipsis = `${options.prefix}${options.ellipsis}\n`;
+      return [
+        isItemString
+          ? ellipsis
+          : (item.color
+          ? colorize(item.color, ellipsis)
+          : ellipsis),
+      ];
+    }
     const isLast = i === total;
     const prefix = isLast ? `${options?.prefix}└─` : `${options?.prefix}├─`;
-
-    if (typeof item === "string") {
+    if (isItemString) {
       chunks.push(`${prefix}${item}\n`);
     } else {
       const log = `${prefix}${item.text}\n`;
@@ -65,6 +87,7 @@ function _buildTree(items: TreeItem[], options?: TreeOptions): string[] {
       if (item.children) {
         const _tree = _buildTree(item.children, {
           ...options,
+          depth: options?.depth ? options.depth - 1 : Number.POSITIVE_INFINITY,
           prefix: `${options?.prefix}${isLast ? "  " : "│  "}`,
         });
         chunks.push(..._tree);

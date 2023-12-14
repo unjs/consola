@@ -84,6 +84,83 @@ function main() {
       },
     ]),
   );
+
+  // Deep tree with max depth
+  consola.log(
+    formatTree([
+      {
+        text: "format",
+        color: "red",
+      },
+      {
+        text: "consola",
+        color: "yellow",
+        children: [
+          {
+            text: "logger",
+            color: "green",
+            children: [
+              {
+                text: "reporter",
+                color: "cyan",
+              },
+              {
+                text: "test",
+                color: "magenta",
+                children: ["nice tree"],
+              },
+            ],
+          },
+          {
+            text: "reporter",
+            color: "bold",
+          },
+          "test",
+        ],
+      },
+    ], {
+      depth: 2
+    }),
+  );
+
+  // Indicate the ellipsis
+  consola.log(
+    formatTree([
+      {
+        text: "format",
+        color: "red",
+      },
+      {
+        text: "consola",
+        color: "yellow",
+        children: [
+          {
+            text: "logger",
+            color: "green",
+            children: [
+              {
+                text: "reporter",
+                color: "cyan",
+              },
+              {
+                text: "test",
+                color: "magenta",
+                children: ["nice tree"],
+              },
+            ],
+          },
+          {
+            text: "reporter",
+            color: "bold",
+          },
+          "test",
+        ],
+      },
+    ], {
+      depth: 2,
+      ellipsis: '---'
+    }),
+  );
 }
 
 main();
