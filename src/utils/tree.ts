@@ -86,7 +86,7 @@ function _buildTree(items: TreeItem[], options?: TreeOptions): string[] {
       if (item.children) {
         const _tree = _buildTree(item.children, {
           ...options,
-          depth: options?.depth ? options.depth - 1 : Number.POSITIVE_INFINITY,
+          depth: options?.depth == null ? undefined : options.depth - 1,
           prefix: `${options?.prefix}${isLast ? "  " : "│  "}`,
         });
         chunks.push(..._tree);
