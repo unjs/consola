@@ -1,5 +1,4 @@
 import { type ColorName, colorize } from "./color";
-import { log } from "./prompt";
 
 export type TreeItemObject = {
   /**
