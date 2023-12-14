@@ -31,10 +31,12 @@ export type TreeOptions = {
    * @default "  "
    */
   prefix?: string;
+
   /**
-   * Limit the depth of tree
+   * The max depth of tree
    */
-  depth?: number;
+  maxDepth?: number;
+
   /**
    * Ellipsis of the tree
    *
@@ -64,7 +66,7 @@ function _buildTree(items: TreeItem[], options?: TreeOptions): string[] {
   for (let i = 0; i <= total; i++) {
     const item = items[i];
     const isItemString = typeof item === "string";
-    const isLimit = options?.depth != null && options.depth <= 0;
+    const isLimit = options?.maxDepth != null && options.maxDepth <= 0;
     if (isLimit) {
       const ellipsis = `${options.prefix}${options.ellipsis}\n`;
       return [
@@ -86,7 +88,7 @@ function _buildTree(items: TreeItem[], options?: TreeOptions): string[] {
       if (item.children) {
         const _tree = _buildTree(item.children, {
           ...options,
-          depth: options?.depth == null ? undefined : options.depth - 1,
+          maxDepth: options?.maxDepth == null ? undefined : options.maxDepth - 1,
           prefix: `${options?.prefix}${isLast ? "  " : "│  "}`,
         });
         chunks.push(..._tree);

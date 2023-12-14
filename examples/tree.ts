@@ -119,7 +119,7 @@ function main() {
         ],
       },
     ], {
-      depth: 2
+      maxDepth: 2
     }),
   );
 
@@ -157,7 +157,7 @@ function main() {
         ],
       },
     ], {
-      depth: 2,
+      maxDepth: 2,
       ellipsis: '---'
     }),
   );
