@@ -228,7 +228,7 @@ A list of all available built-in types is [available here](./src/constants.ts).
 ## Raw output
 
 Objects sent to reporter by logging them could be an issue when using conflicting key (esp. `args`).
-To enforce the object to be fully threaded with conflict, you can use the `raw` method chained to any log type.
+To enforce the object to be fully shown, you can use the `raw` method chained to any log type.
 
 ```js
 consola.log({ args: ['foo']});
