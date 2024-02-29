@@ -78,17 +78,17 @@
     "test": "pnpm lint && pnpm vitest run --coverage"
   },
   "devDependencies": {
-    "@clack/core": "^0.3.3",
-    "@types/node": "^20.11.5",
+    "@clack/core": "^0.3.4",
+    "@types/node": "^20.11.24",
     "@vitest/coverage-v8": "^0.34.6",
     "changelogen": "^0.5.5",
     "defu": "^6.1.4",
-    "eslint": "^8.56.0",
+    "eslint": "^8.57.0",
     "eslint-config-unjs": "^0.2.1",
     "is-unicode-supported": "^2.0.0",
     "jiti": "^1.21.0",
     "lodash": "^4.17.21",
-    "prettier": "^3.2.4",
+    "prettier": "^3.2.5",
     "sentencer": "^0.2.1",
     "sisteransi": "^1.0.5",
     "std-env": "^3.7.0",
@@ -100,5 +100,5 @@
   "engines": {
     "node": "^14.18.0 || >=16.10.0"
   },
-  "packageManager": "pnpm@8.14.3"
+  "packageManager": "pnpm@8.15.4"
 }
