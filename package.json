@@ -79,7 +79,7 @@
   },
   "devDependencies": {
     "@clack/core": "^0.3.4",
-    "@types/node": "^20.11.24",
+    "@types/node": "^20.11.28",
     "@vitest/coverage-v8": "^0.34.6",
     "changelogen": "^0.5.5",
     "defu": "^6.1.4",
@@ -93,7 +93,7 @@
     "sisteransi": "^1.0.5",
     "std-env": "^3.7.0",
     "string-width": "^7.1.0",
-    "typescript": "^5.3.3",
+    "typescript": "^5.4.2",
     "unbuild": "^2.0.0",
     "vitest": "^0.34.6"
   },
