@@ -6,6 +6,21 @@ async function main() {
   consola.info("Using consola 3.0.0");
   consola.start("Building project...");
   consola.success("Project built!");
+  consola.progress({
+    message: "progress.",
+    overwrite: true,
+    progress: 0.1
+  });
+  consola.progress({
+    message: "progress..",
+    overwrite: true,
+    progress: 0.2
+  });
+  consola.progress({
+    message: "progress...",
+    overwrite: false,
+    progress: 1
+  });
   await consola.prompt("Deploy to the production?", {
     type: "confirm",
   });

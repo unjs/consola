@@ -14,6 +14,7 @@ export const TYPE_COLOR_MAP: { [k in LogType]?: string } = {
   success: "green",
   ready: "green",
   start: "magenta",
+  progress: "blue",
 };
 
 export const LEVEL_COLOR_MAP: { [k in LogLevel]?: string } = {
@@ -34,6 +35,7 @@ const TYPE_ICONS: { [k in LogType]?: string } = {
   trace: s("→", "→"),
   fail: s("✖", "×"),
   start: s("◐", "o"),
+  progress: s("※", "※"),
   log: "",
 };
 
@@ -128,7 +130,13 @@ export class FancyReporter extends BasicReporter {
       line += this.formatStack(_err.stack || "");
     }
 
-    return isBadge ? "\n" + line + "\n" : line;
+    const prefix = logObj.type === 'progress' ?
+      "\r" : logObj.overwrite ? '\r' : "";
+    const postfix = logObj.overwrite ? "" : "\n";
+
+    line = prefix + line + postfix;
+    line = isBadge ? "\n" + line + "\n" : line;
+    return line;
   }
 }
 
