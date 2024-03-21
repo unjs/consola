@@ -56,7 +56,7 @@ export async function prompt<
 >(
   message: string,
   opts: PromptOptions = {},
-): Promise<inferPromptReturnType<T>> {
+): Promise<inferPromptReturnType<T> | symbol> {
   if (!opts.type || opts.type === "text") {
     return (await text({
       message,
