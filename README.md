@@ -225,6 +225,17 @@ Log types are exposed as `consola.[type](...)` and each is a preset of styles an
 
 A list of all available built-in types is [available here](./src/constants.ts).
 
+## Raw output
+
+Objects sent to reporter by logging them could lead to unexcepted output when object is close to internal object structure ([see how consola consider object as non-conflictual](https://github.com/unjs/consola/blob/ce2b368f43813aa95e54d6124425b1c6badc087e/src/utils/log.ts#L5)).
+To enforce the object to be interpreted, you can use the `raw` method chained to any log type. 
+
+See [examples/raw.ts](./examples/raw.ts).
+
+> [!NOTE]  
+> As his usage is mostly for an advanced usage of consola and for debugging, the `raw` method could be change in future
+
+
 ## Creating a new instance
 
 Consola has a global instance and is recommended to use everywhere.
