@@ -9,7 +9,7 @@ import * as tty from "node:tty";
 // TODO: Migrate to std-env
 const {
   env = {},
-  argv = [],
+  argv = ["--color"],
   platform = "",
 } = typeof process === "undefined" ? {} : process;
 const isDisabled = "NO_COLOR" in env || argv.includes("--no-color");
