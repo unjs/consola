@@ -152,13 +152,19 @@ Mock all types. Useful for using with tests.
 The first argument passed to `mockTypes` should be a callback function accepting `(typeName, type)` and returning the mocked value:
 
 ```js
+// Jest
 consola.mockTypes((typeName, type) => jest.fn());
+// Vitest
+consola.mockTypes((typeName, type) => vi.fn());
 ```
 
 Please note that with the example above, everything is mocked independently for each type. If you need one mocked fn create it outside:
 
 ```js
+// Jest
 const fn = jest.fn();
+// Vitest
+const fn = vi.fn();
 consola.mockTypes(() => fn);
 ```
 
@@ -167,7 +173,10 @@ If callback function returns a _falsy_ value, that type won't be mocked.
 For example if you just need to mock `consola.fatal`:
 
 ```js
+// Jest
 consola.mockTypes((typeName) => typeName === "fatal" && jest.fn());
+// Vitest
+consola.mockTypes((typeName) => typeName === "fatal" && vi.fn());
 ```
 
 **NOTE:** Any instance of consola that inherits the mocked instance, will apply provided callback again.
@@ -260,7 +269,10 @@ describe("your-consola-mock-test", () => {
   beforeEach(() => {
     // Re-mock consola before each test call to remove
     // calls from before
+    // Jest
     consola.mockTypes(() => jest.fn());
+    // Vitest
+    consola.mockTypes(() => vi.fn());
   });
 
   test("your test", async () => {
