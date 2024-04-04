@@ -200,6 +200,9 @@ export type BoxOpts = {
   style?: Partial<BoxStyle>;
 };
 
+/**
+ * The default style applied to a box if no custom style is specified. See {@link BoxStyle}.
+ */
 const defaultStyle: BoxStyle = {
   borderColor: "white",
   borderStyle: "rounded",
@@ -210,6 +213,12 @@ const defaultStyle: BoxStyle = {
   marginBottom: 1,
 };
 
+/**
+ * Creates a styled box with text content, customisable via options.
+ * @param {string} text - The text to display in the box.
+ * @param {BoxOpts} [_opts={}] - Optional settings for the appearance and behaviour of the box. See {@link BoxOpts}.
+ * @returns {string} The formatted box as a string, ready for printing or logging.
+ */
 export function box(text: string, _opts: BoxOpts = {}) {
   const opts = {
     ..._opts,

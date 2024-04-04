@@ -33,6 +33,18 @@ export type TreeOptions = {
   prefix?: string;
 };
 
+/**
+ * Formats a hierarchical list of items into a string representing a tree structure.
+ * Each item in the tree can be a simple string or an object defining the text of the item,
+ * optional children, and colour. The tree structure can be customised with options
+ * Specify the overall colour and the prefix used for indentation and tree lines.
+ * 
+ * @param {TreeItem[]} items - An array of items to include in the tree. Each item can be
+ * either a string or an object with `text', `children' and `colour' properties.
+ * @param {TreeOptions} [options] - Optional settings to customise the appearance of the tree, including
+ * the colour of the tree text and the prefix for branches. See {@link TreeOptions}.
+ * @returns {string} The formatted tree as a string, ready for printing to the console or elsewhere.
+ */
 export function formatTree(items: TreeItem[], options?: TreeOptions): string {
   options = {
     prefix: "  ",

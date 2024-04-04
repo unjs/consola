@@ -26,6 +26,12 @@ import { colors as color } from "./color";
 export { isCancel } from "@clack/core";
 
 const unicode = isUnicodeSupported();
+/**
+ * Checks if the environment supports Unicode and selects symbols accordingly.
+ * @param {string} c - The preferred unicode symbol.
+ * @param {string} fallback - The fallback symbol if Unicode is not supported.
+ * @returns {string} The selected symbol based on Unicode support.
+ */
 const s = (c: string, fallback: string) => (unicode ? c : fallback);
 const S_STEP_ACTIVE = s("❯", ">");
 const S_STEP_CANCEL = s("■", "x");
@@ -72,12 +78,44 @@ const symbol = (state: State) => {
 };
 
 export interface TextOptions {
+  /**
+   * The primary message to display for the prompt.
+   */
   message: string;
+
+  /**
+   * A placeholder string that is displayed in the input field when it is empty. It disappears when the user starts typing.
+   * @optional
+   */
   placeholder?: string;
+
+  /**
+   * The primary message to display for the prompt.
+   * A default value for the input field.This value will be returned if the user does not enter a value.
+   * @optional
+   */
   defaultValue?: string;
+
+  /**
+   * An initial value that appears in the input field. Unlike `defaultValue`, it can be edited or removed by the user.
+   * @optional
+   */
   initialValue?: string;
+
+  /**
+   * A function to validate the input. If the input is not valid, this function should return a string message.
+   * The prompt will continue until a valid value is entered or the prompt is aborted.
+   * @param {string} value - The current value of the input field.
+   * @returns {string | void} A string with an error message if validation fails or `void` if the input is valid.
+   * optional
+   */
   validate?: (value: string) => string | void;
 }
+/**
+ * Provides text input functionality with customisable options.
+ * @param {TextOptions} opts - Options to customise the text prompt. See {@link TextOptions}.
+ * @returns {Promise<string | symbol>} A promise that resolves to the user input or a symbol for special cases.
+ */
 export const text = (opts: TextOptions) => {
   return new TextPrompt({
     validate: opts.validate,
@@ -123,10 +161,30 @@ export const text = (opts: TextOptions) => {
 };
 
 export interface PasswordOptions {
+  /**
+   * The message to be displayed above the input field.
+   */
   message: string;
+
+  /**
+   * A character that masks the user's input, hiding the text they type.
+   * @optional
+   */
   mask?: string;
+
+  /**
+    * A function to validate the input. Returns an error message if the input fails validation.
+    * @param {string} value - The current value of the input field.
+    * @returns {string | void} An error message if the input fails validation, or `void` if the input is valid.
+    * @optional
+    */
   validate?: (value: string) => string | void;
 }
+/**
+ * Provides password input functionality with customisable options, including input masking.
+ * @param {PasswordOptions} opts - Options to customise the password prompt. See {@link PasswordOptions}.
+ * @returns {Promise<string | symbol>} A promise that resolves to the user input or a symbol for special cases.
+ */
 export const password = (opts: PasswordOptions) => {
   return new PasswordPrompt({
     validate: opts.validate,
@@ -165,11 +223,34 @@ export const password = (opts: PasswordOptions) => {
 };
 
 export interface ConfirmOptions {
+  /**
+   * The primary message to display for the prompt.
+   */
   message: string;
+
+  /**
+   * The text to display for the active/affirmative choice.
+   * @optional
+   */
   active?: string;
+
+  /**
+   * Text to display for the inactive/negative choice.
+   * @optional
+   */
   inactive?: string;
+
+  /**
+   * The initial selection value.
+   * @optional
+   */
   initialValue?: boolean;
 }
+/**
+ * Provides a confirmation prompt with customisable options.
+ * @param {ConfirmOptions} opts - Options to customise the confirmation prompt. See {@link ConfirmOptions}.
+ * @returns {Promise<boolean | symbol>} A promise that resolves to the user's choice, or a symbol for special cases.
+ */
 export const confirm = (opts: ConfirmOptions) => {
   const active = opts.active ?? "Yes";
   const inactive = opts.inactive ?? "No";
@@ -197,8 +278,7 @@ export const confirm = (opts: ConfirmOptions) => {
             this.value
               ? `${color.green(S_RADIO_ACTIVE)} ${active}`
               : `${color.dim(S_RADIO_INACTIVE)} ${color.dim(active)}`
-          } ${color.dim("/")} ${
-            this.value
+            } ${color.dim("/")} ${this.value
               ? `${color.dim(S_RADIO_INACTIVE)} ${color.dim(inactive)}`
               : `${color.green(S_RADIO_ACTIVE)} ${inactive}`
           }\n${color.cyan(S_BAR_END)}\n`;
@@ -208,18 +288,45 @@ export const confirm = (opts: ConfirmOptions) => {
   }).prompt() as Promise<boolean | symbol>;
 };
 
+/**
+ * A generic type for option values in a select prompt, supporting both primitive and complex types.
+ */
 type Primitive = Readonly<string | boolean | number>;
 
+/**
+ * Defines the structure of an option in a select prompt.
+ */
 type Option<Value> = Value extends Primitive
-  ? { value: Value; label?: string; hint?: string }
-  : { value: Value; label: string; hint?: string };
+  ? { value: Value; label?: string; hint?: string } // For primitive types
+  : { value: Value; label: string; hint?: string }; // For complex types
 
+/**
+ * Options for configuring the select prompt.
+ * @template Options - An array of option objects. See {@link Option}.
+ * @template Value - The type of option value. See {@link Option}.
+ */
 export interface SelectOptions<Options extends Option<Value>[], Value> {
+  /**
+   * The primary message to display at the prompt.
+   */
   message: string;
+
+  /**
+   * The list of options from which the user can choose. See {@link Option}.
+   */
   options: Options;
+
+  /**
+   * The initial value selected in the prompt. See {@link Value}.
+   * @optional
+   */
   initialValue?: Value;
 }
-
+/**
+ * Provides a select prompt functionality where the user can choose from a list of options.
+ * @param {SelectOptions<Options, Value>} opts - Options to customise the select prompt. See {@link SelectOptions}.
+ * @returns {Promise<Value | Symbol>} A promise that resolves to the selected value or a symbol for special cases. See {@link Value}.
+ */
 export const select = <Options extends Option<Value>[], Value>(
   opts: SelectOptions<Options, Value>,
 ) => {
@@ -278,6 +385,12 @@ export const select = <Options extends Option<Value>[], Value>(
   }).prompt() as Promise<Value | symbol>;
 };
 
+/**
+ * Provides a prompt that allows the user to select an option by pressing a key. 
+ * This is useful for scenarios where each option is associated with a specific key.
+ * @param {SelectOptions<Options, Value>} opts - Configuration options for the select key prompt. See {@link SelectOptions}.
+ * @returns {Promise<Value | Symbol>} A promise that resolves to the value of the selected option, or a symbol for special cases such as abort. See {@link Value}.
+ */
 export const selectKey = <
   Options extends Option<Value>[],
   Value extends string,
@@ -312,9 +425,8 @@ export const selectKey = <
     options: opts.options,
     initialValue: opts.initialValue,
     render() {
-      const title = `${color.gray(S_BAR)}\n${symbol(this.state)} ${
-        opts.message
-      }\n`;
+      const title = `${color.gray(S_BAR)}\n${symbol(this.state)} ${opts.message
+        }\n`;
 
       switch (this.state) {
         case "submit": {
@@ -343,12 +455,39 @@ export const selectKey = <
 };
 
 export interface MultiSelectOptions<Options extends Option<Value>[], Value> {
+  /**
+  * The primary message to be displayed above the multi-select list.
+  */
   message: string;
+
+  /**
+   * The list of options from which users can select multiple items. See {@link Option}.
+   */
   options: Options;
+
+  /**
+   * An array of values representing the options initially selected in the prompt. See {@link Value}.
+   * @optional
+   */
   initialValues?: Value[];
+
+  /**
+   * Specifies whether at least one selection is required before submitting.
+   * @optional
+   */
   required?: boolean;
+
+  /**
+   * The value of the option on which the cursor is initially placed when the command prompt opens. See {@link Value}.
+   * @optional
+   */
   cursorAt?: Value;
 }
+/**
+ * Provides multi-select prompt functionality where the user can select multiple options from a list.
+ * @param {MultiSelectOptions<Options, Value>} opts - Options to customise the multi-select prompt. See {@link MultiSelectOptions}.
+ * @returns {Promise<Value[] | Symbol>} A promise that resolves to an array of selected values, or a symbol for special cases.
+ */
 export const multiselect = <Options extends Option<Value>[], Value>(
   opts: MultiSelectOptions<Options, Value>,
 ) => {
@@ -484,10 +623,33 @@ export interface GroupMultiSelectOptions<
   Options extends Option<Value>[],
   Value,
 > {
+  /**
+   * The primary message to be displayed above the group multi-select list.
+   */
   message: string;
+
+  /**
+   * An object containing groups of options. Each key represents a group name,
+   * and the associated value is an array of options within that group. See {@link Option}.
+   */
   options: Record<string, Options>;
+
+  /**
+   * An array of values representing the initially selected options across all groups. See {@link Value}.
+   * @optional
+   */
   initialValues?: Value[];
+
+  /**
+   * Specifies whether at least one selection is required before submission is allowed.
+   * @optional
+   */
   required?: boolean;
+
+  /**
+   * The value of the option on which the cursor will initially appear when the command prompt opens. See {@link Value}.
+   * @optional
+   */
   cursorAt?: Value;
 }
 export const groupMultiselect = <Options extends Option<Value>[], Value>(
@@ -661,6 +823,15 @@ export const groupMultiselect = <Options extends Option<Value>[], Value>(
 };
 
 const strip = (str: string) => str.replace(ansiRegex(), "");
+
+/**
+ * Displays a formatted note in the console, with an optional title. The note is visually distinguished
+ * from regular console output with ANSI colour codes and styles to make it stand out. The function calculates
+ * the length of the longest line to ensure the note is properly aligned and framed.
+ *
+ * @param {string} [message=""] - The main text of the note. Supports multiline strings.
+ * @param {string} [title=""] - An optional title for the note. If provided, it'll be displayed above the message.
+ */
 export const note = (message = "", title = "") => {
   const lines = `\n${message}\n`.split("\n");
   const len =
@@ -691,14 +862,36 @@ export const note = (message = "", title = "") => {
   );
 };
 
+/**
+ * Prints an abort message to the console. This is typically used to indicate
+ * that a process or operation has been cancelled. The message is coloured for
+ * for emphasis and visual differentiation.
+ * 
+ * @param {string} [message=""] - The cancellation message to display. This parameter
+ * is optional; if omitted, the default styling will be used without a specific message.
+ */
 export const cancel = (message = "") => {
   process.stdout.write(`${color.gray(S_BAR_END)} ${color.red(message)}\n\n`);
 };
 
+/**
+ * Prints an introductory message to the console. This function is used to
+ * Display a title or short message at the beginning of a script or application.
+ * framed by a specified bar character for visual distinction.
+ * 
+ * @param {string} [title=""] - The title or message to display. This parameter is optional; if omitted, only the framing bar will be printed.
+ */
 export const intro = (title = "") => {
   process.stdout.write(`${color.gray(S_BAR_START)} ${title}\n`);
 };
 
+/**
+ * Prints a closing message to the console. Similar to the `intro` function,
+ * `outro' is designed to indicate the end of a script or application execution
+ * with a framed message for clear visual separation from the rest of the console output.
+ * 
+ * @param {string} [message=""] - The final message to display. This parameter is optional; if omitted, only the border will be printed.
+ */
 export const outro = (message = "") => {
   process.stdout.write(
     `${color.gray(S_BAR)}\n${color.gray(S_BAR_END)} ${message}\n\n`,
@@ -706,9 +899,22 @@ export const outro = (message = "") => {
 };
 
 export type LogMessageOptions = {
+  /**
+   * A custom icon to be placed in front of the log message. This allows visual differentiation
+   * log messages based on their importance or category (e.g. info, error).
+   * @optional
+   */
   symbol?: string;
 };
+/**
+ * Logs a message to the console, with support for different types of messages (info, success, warning, error).
+ */
 export const log = {
+  /**
+   * Logs an message, prefixed with a gray bar.
+   * @param {string} message - The message to log.
+   * @param {LogMessageOptions} [opts] - Optional settings for the log message. See {@link LogMessageOptions}.
+   */
   message: (
     message = "",
     { symbol = color.gray(S_BAR) }: LogMessageOptions = {},
@@ -723,22 +929,42 @@ export const log = {
     }
     process.stdout.write(`${parts.join("\n")}\n`);
   },
+  /**
+   * Logs an information message, prefixed with a blue info icon.
+   * @param {string} message - The message to log.
+   */
   info: (message: string) => {
     log.message(message, { symbol: color.blue(S_INFO) });
   },
+  /**
+   * Logs a success message, preceded by a green check symbol.
+   * @param {string} message - The message to log.
+   */
   success: (message: string) => {
     log.message(message, { symbol: color.green(S_SUCCESS) });
   },
+  /**
+   * Logs a step message, typically used to indicate a step in a process, preceded by a green submit symbol.
+   * @param {string} message - The message to log.
+   */
   step: (message: string) => {
     log.message(message, { symbol: color.green(S_STEP_SUBMIT) });
   },
+  /**
+   * Logs a warning message, preceded by a yellow warning icon.
+   * @param {string} message - The message to log.
+   */
   warn: (message: string) => {
     log.message(message, { symbol: color.yellow(S_WARN) });
   },
-  /** alias for `log.warn()`. */
+  /** alias for `log.warn()`. See {@link log.warn}. */
   warning: (message: string) => {
     log.warn(message);
   },
+  /**
+   * Logs an error message, preceded by a red error icon.
+   * @param {string} message - The message to log.
+   */
   error: (message: string) => {
     log.message(message, { symbol: color.red(S_ERROR) });
   },
@@ -746,6 +972,10 @@ export const log = {
 
 const frames = unicode ? ["◒", "◐", "◓", "◑"] : ["•", "o", "O", "0"];
 
+/**
+ * Displays an animated spinner with a message, with functionality to start and stop the animation.
+ * @returns an object with `start` and `stop` methods to control the spinner.
+ */
 export const spinner = () => {
   let unblock: () => void;
   let loop: NodeJS.Timeout;
@@ -820,8 +1050,10 @@ export type PromptGroup<T> = {
 };
 
 /**
- * Define a group of prompts to be displayed
- * and return a results of objects within the group
+ * Groups multiple prompts together so that they can be displayed and resolved in sequence.
+ * @param {PromptGroup<T>} prompts - The prompts to display in the group. See {@link PromptGroup}.
+ * @param {PromptGroupOptions<T>} [opts] - Optional settings for the prompt group. See {@link PromptGroupOptions}.
+ * @returns {Promise<Prettify<PromptGroupAwaitedReturn<T>>>} A promise that resolves to an object containing the results of each prompt in the group.
  */
 export const group = async <T>(
   prompts: PromptGroup<T>,
