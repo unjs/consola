@@ -783,6 +783,75 @@ export const spinner = () => {
   };
 };
 
+const S_PROGRESS_FILLED = s("█", "#");
+const S_PROGRESS_UNFILLED = s("░", ".");
+
+export interface ProgressOptions {
+  message?: string;
+  width?: number;
+  showPercentage?: boolean;
+}
+
+const percentage = (current: number) => `${Math.floor(current * 100)}%`;
+const progressBar = (filled: number, unfilled: number) =>
+  `${S_PROGRESS_FILLED.repeat(filled)}${S_PROGRESS_UNFILLED.repeat(unfilled)}`;
+const filledCount = (current: number, total: number) =>
+  Math.floor(current * total);
+const unfilledCount = (current: number, total: number) =>
+  total - filledCount(current, total);
+const progressContent = (
+  filled: number,
+  unfilled: number,
+  message: string,
+  showPercentage: boolean,
+) => {
+  const p = showPercentage
+    ? ` ${percentage(filled / (filled + unfilled))}`
+    : "";
+  const separator = message ? ` ${symbol("active")} ` : "";
+  return `${color.gray(progressBar(filled, unfilled))} ${p}${separator}${message}`;
+};
+
+export function progress(options: ProgressOptions = {}) {
+  const {
+    message: initialMessage = "",
+    width = 25,
+    showPercentage = false,
+  } = options;
+  return {
+    start({ message = initialMessage }: Pick<ProgressOptions, "message">) {
+      const content = progressContent(0, width, message, showPercentage);
+      process.stdout.write(content);
+    },
+
+    update(
+      value: number,
+      { message = initialMessage }: Pick<ProgressOptions, "message"> = {},
+    ) {
+      value = Math.min(Math.max(value, 0), 1);
+      const ratio = Math.min(Math.max(value, 0), 1);
+      const filled = filledCount(ratio, width);
+      const unfilled = unfilledCount(ratio, width);
+      const content = progressContent(
+        filled,
+        unfilled,
+        message,
+        showPercentage,
+      );
+      process.stdout.write(cursor.move(-999, 0));
+      process.stdout.write(content);
+    },
+
+    stop({ message = initialMessage }: Pick<ProgressOptions, "message"> = {}) {
+      process.stdout.write(erase.line);
+      const content = progressContent(width, 0, message, showPercentage);
+      process.stdout.write(cursor.move(-999, 0));
+      process.stdout.write(content);
+      process.stdout.write("\n");
+    },
+  };
+}
+
 // Adapted from https://github.com/chalk/ansi-regex
 // @see LICENSE
 function ansiRegex() {
