@@ -1,5 +1,5 @@
-import { consola } from "./utils";
 import { spinner } from "../src/utils/prompt";
+import { consola } from "./utils";
 
 async function main() {
   const name = await consola.prompt("What is your name?", {

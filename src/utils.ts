@@ -7,3 +7,4 @@ export {
   leftAlign,
   align,
 } from "./utils/string";
+export { spinner } from "./utils/prompt";
