@@ -23,6 +23,8 @@ import { cursor, erase } from "sisteransi";
 
 import { colors as color } from "./color";
 
+export { isCancel } from "@clack/core";
+
 const unicode = isUnicodeSupported();
 /**
  * Checks if the environment supports Unicode and selects symbols accordingly.
