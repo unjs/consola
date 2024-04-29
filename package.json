@@ -16,7 +16,10 @@
     "error",
     "stacktrace"
   ],
-  "repository": "unjs/consola",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unjs/consola.git"
+  },
   "license": "MIT",
   "type": "module",
   "exports": {
