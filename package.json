@@ -80,7 +80,7 @@
   "devDependencies": {
     "@clack/core": "^0.3.4",
     "@types/node": "^20.12.7",
-    "@vitest/coverage-v8": "^0.34.6",
+    "@vitest/coverage-v8": "^1.6.0",
     "changelogen": "^0.5.5",
     "defu": "^6.1.4",
     "eslint": "^8.57.0",
@@ -95,7 +95,7 @@
     "string-width": "^7.1.0",
     "typescript": "^5.4.5",
     "unbuild": "^2.0.0",
-    "vitest": "^0.34.6"
+    "vitest": "^1.6.0"
   },
   "engines": {
     "node": "^14.18.0 || >=16.10.0"
