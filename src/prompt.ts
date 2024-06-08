@@ -6,7 +6,7 @@ type SelectOption = {
   hint?: string;
 };
 
-export type TextOptions = {
+export type TextPromptOptions = {
   /**
    * Specifies the prompt type as text.
    * @optional
@@ -33,7 +33,7 @@ export type TextOptions = {
   initial?: string;
 };
 
-export type ConfirmOptions = {
+export type ConfirmPromptOptions = {
   /**
    * Specifies the prompt type as confirm.
    */
@@ -46,7 +46,7 @@ export type ConfirmOptions = {
   initial?: boolean;
 };
 
-export type SelectOptions = {
+export type SelectPromptOptions = {
   /**
    * Specifies the prompt type as select.
    */
@@ -90,22 +90,23 @@ export type MultiSelectOptions = {
  * Defines a combined type for all prompt options.
  */
 export type PromptOptions =
-  | TextOptions
-  | ConfirmOptions
-  | SelectOptions
+  | TextPromptOptions
+  | ConfirmPromptOptions
+  | SelectPromptOptions
   | MultiSelectOptions;
 
-type inferPromptReturnType<T extends PromptOptions> = T extends TextOptions
-  ? string
-  : T extends ConfirmOptions
-    ? boolean
-    : T extends SelectOptions
-      ? T["options"][number] extends SelectOption
-        ? T["options"][number]["value"]
-        : T["options"][number]
-      : T extends MultiSelectOptions
-        ? T["options"]
-        : unknown;
+type inferPromptReturnType<T extends PromptOptions> =
+  T extends TextPromptOptions
+    ? string
+    : T extends ConfirmPromptOptions
+      ? boolean
+      : T extends SelectPromptOptions
+        ? T["options"][number] extends SelectOption
+          ? T["options"][number]["value"]
+          : T["options"][number]
+        : T extends MultiSelectOptions
+          ? T["options"]
+          : unknown;
 
 /**
  * Asynchronously prompts the user for input based on specified options.
@@ -118,7 +119,7 @@ type inferPromptReturnType<T extends PromptOptions> = T extends TextOptions
 export async function prompt<
   _ = any,
   __ = any,
-  T extends PromptOptions = TextOptions,
+  T extends PromptOptions = TextPromptOptions,
 >(
   message: string,
   opts: PromptOptions = {},
