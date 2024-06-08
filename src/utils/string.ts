@@ -7,7 +7,7 @@ const ansiRegex = [
  * Removes ANSI escape codes from a given string. This is particularly useful for
  * processing text that contains formatting codes, such as colours or styles, so that the
  * the raw text without any visual formatting.
- * 
+ *
  * @param {string} text - The text string from which to strip the ANSI escape codes.
  * @returns {string} The text without ANSI escape codes.
  */
@@ -18,7 +18,7 @@ export function stripAnsi(text: string) {
 /**
  * Centers a string within a specified total width, padding it with spaces or another specified character.
  * If the string is longer than the total width, it is returned as is.
- * 
+ *
  * @param {string} str - The string to centre.
  * @param {number} len - The total width in which to centre the string.
  * @param {string} [space=" "] - The character to use for padding. Defaults to a space.
@@ -41,7 +41,7 @@ export function centerAlign(str: string, len: number, space = " ") {
 /**
  * Right-justifies a string within a given total width, padding it with whitespace or another specified character.
  * If the string is longer than the total width, it is returned as is.
- * 
+ *
  * @param {string} str - The string to right-justify.
  * @param {number} len - The total width to align the string.
  * @param {string} [space=" "] - The character to use for padding. Defaults to a space.
@@ -62,7 +62,7 @@ export function rightAlign(str: string, len: number, space = " ") {
 /**
  * Left-aligns a string within a given total width, padding it with whitespace or another specified character on the right.
  * If the string is longer than the total width, it is returned as is.
- * 
+ *
  * @param {string} str - The string to align left.
  * @param {number} len - The total width to align the string.
  * @param {string} [space=" "] - The character to use for padding. Defaults to a space.
@@ -79,7 +79,7 @@ export function leftAlign(str: string, len: number, space = " ") {
 /**
  * Aligns a string (left, right, or centre) within a given total width, padding it with spaces or another specified character.
  * If the string is longer than the total width, it is returned as is. This function acts as a wrapper for individual alignment functions.
- * 
+ *
  * @param {"left" | "right" | "centre"} alignment - The desired alignment of the string.
  * @param {string} str - The string to align.
  * @param {number} len - The total width in which to align the string.

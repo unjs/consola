@@ -36,7 +36,7 @@ export function createConsola(
 /**
  * Creates and exports a standard instance of Consola with the default configuration.
  * This instance can be used directly for logging throughout the application.
- * 
+ *
  * @type {ConsolaInstance} consola - The default instance of Consola.
  */
 export const consola = createConsola();

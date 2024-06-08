@@ -38,7 +38,7 @@ export type TreeOptions = {
  * Each item in the tree can be a simple string or an object defining the text of the item,
  * optional children, and colour. The tree structure can be customised with options
  * Specify the overall colour and the prefix used for indentation and tree lines.
- * 
+ *
  * @param {TreeItem[]} items - An array of items to include in the tree. Each item can be
  * either a string or an object with `text', `children' and `colour' properties.
  * @param {TreeOptions} [options] - Optional settings to customise the appearance of the tree, including

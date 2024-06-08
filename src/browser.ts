@@ -29,7 +29,7 @@ export function createConsola(options: Partial<ConsolaOptions> = {}) {
 /**
  * A standard Consola instance created with browser-specific configurations.
  * This instance can be used throughout a browser-based project.
- * 
+ *
  * @type {ConsolaInstance} consola - The default browser-configured Consola instance.
  */
 export const consola = createConsola();

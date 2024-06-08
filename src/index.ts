@@ -54,7 +54,7 @@ function _getDefaultLogLevel() {
 /**
  * A default instance of Consola, created and configured for immediate use.
  * This instance is configured based on the execution environment and the options provided.
- * 
+ *
  * @type {ConsolaInstance} consola - The default Consola instance, ready to use.
  */
 export const consola = createConsola();

@@ -2,7 +2,7 @@ import { LogObject } from "./types";
 
 /**
  * Defines the level of logs as specific numbers or special number types.
- * 
+ *
  * @type {0 | 1 | 2 | 3 | 4 | 5 | (number & {})} LogLevel - Represents the log level.
  * @default 0 - Represents the default log level.
  */
@@ -11,7 +11,7 @@ export type LogLevel = 0 | 1 | 2 | 3 | 4 | 5 | (number & {});
 
 /**
  * A mapping of `LogType` to its corresponding numeric log level.
- * 
+ *
  * @type {Record<LogType, number>} LogLevels - key-value pairs of log types to their numeric levels. See {@link LogType}.
  */
 export const LogLevels: Record<LogType, number> = {
@@ -40,7 +40,7 @@ export const LogLevels: Record<LogType, number> = {
 
 /**
  * Lists the types of log messages supported by the system.
- * 
+ *
  * @type {"silent" | "fatal" | "error" | "warn" | "log" | "info" | "success" | "fail" | "ready" | "start" | "box" | "debug" | "trace" | "verbose"} LogType - Represents the specific type of log message.
  */
 export type LogType =
@@ -66,7 +66,7 @@ export type LogType =
 
 /**
  * Maps `LogType` to a `Partial<LogObject>`, primarily defining the log level.
- * 
+ *
  * @type {Record<LogType, Partial<LogObject>>} LogTypes - key-value pairs of log types to partial log objects, specifying log levels. See {@link LogType} and {@link LogObject}.
  */
 export const LogTypes: Record<LogType, Partial<LogObject>> = {

@@ -1,7 +1,7 @@
 /**
  * Writes data to a specified NodeJS writable stream. This function supports streams that have a custom
  * `__write' method, and will fall back to the default `write' method if `__write' is not present.
- * 
+ *
  * @param {any} data - The data to write to the stream. This can be a string, a buffer, or any data type
  * supported by the stream's `write' or `__write' method.
  * @param {NodeJS.WriteStream} stream - The writable stream to write the data to. This stream

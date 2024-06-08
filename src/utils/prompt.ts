@@ -173,11 +173,11 @@ export interface PasswordOptions {
   mask?: string;
 
   /**
-    * A function to validate the input. Returns an error message if the input fails validation.
-    * @param {string} value - The current value of the input field.
-    * @returns {string | void} An error message if the input fails validation, or `void` if the input is valid.
-    * @optional
-    */
+   * A function to validate the input. Returns an error message if the input fails validation.
+   * @param {string} value - The current value of the input field.
+   * @returns {string | void} An error message if the input fails validation, or `void` if the input is valid.
+   * @optional
+   */
   validate?: (value: string) => string | void;
 }
 /**
@@ -278,7 +278,8 @@ export const confirm = (opts: ConfirmOptions) => {
             this.value
               ? `${color.green(S_RADIO_ACTIVE)} ${active}`
               : `${color.dim(S_RADIO_INACTIVE)} ${color.dim(active)}`
-            } ${color.dim("/")} ${this.value
+          } ${color.dim("/")} ${
+            this.value
               ? `${color.dim(S_RADIO_INACTIVE)} ${color.dim(inactive)}`
               : `${color.green(S_RADIO_ACTIVE)} ${inactive}`
           }\n${color.cyan(S_BAR_END)}\n`;
@@ -386,7 +387,7 @@ export const select = <Options extends Option<Value>[], Value>(
 };
 
 /**
- * Provides a prompt that allows the user to select an option by pressing a key. 
+ * Provides a prompt that allows the user to select an option by pressing a key.
  * This is useful for scenarios where each option is associated with a specific key.
  * @param {SelectOptions<Options, Value>} opts - Configuration options for the select key prompt. See {@link SelectOptions}.
  * @returns {Promise<Value | Symbol>} A promise that resolves to the value of the selected option, or a symbol for special cases such as abort. See {@link Value}.
@@ -425,8 +426,9 @@ export const selectKey = <
     options: opts.options,
     initialValue: opts.initialValue,
     render() {
-      const title = `${color.gray(S_BAR)}\n${symbol(this.state)} ${opts.message
-        }\n`;
+      const title = `${color.gray(S_BAR)}\n${symbol(this.state)} ${
+        opts.message
+      }\n`;
 
       switch (this.state) {
         case "submit": {
@@ -455,8 +457,8 @@ export const selectKey = <
 
 export interface MultiSelectOptions<Options extends Option<Value>[], Value> {
   /**
-  * The primary message to be displayed above the multi-select list.
-  */
+   * The primary message to be displayed above the multi-select list.
+   */
   message: string;
 
   /**
@@ -865,7 +867,7 @@ export const note = (message = "", title = "") => {
  * Prints an abort message to the console. This is typically used to indicate
  * that a process or operation has been cancelled. The message is coloured for
  * for emphasis and visual differentiation.
- * 
+ *
  * @param {string} [message=""] - The cancellation message to display. This parameter
  * is optional; if omitted, the default styling will be used without a specific message.
  */
@@ -877,7 +879,7 @@ export const cancel = (message = "") => {
  * Prints an introductory message to the console. This function is used to
  * Display a title or short message at the beginning of a script or application.
  * framed by a specified bar character for visual distinction.
- * 
+ *
  * @param {string} [title=""] - The title or message to display. This parameter is optional; if omitted, only the framing bar will be printed.
  */
 export const intro = (title = "") => {
@@ -888,7 +890,7 @@ export const intro = (title = "") => {
  * Prints a closing message to the console. Similar to the `intro` function,
  * `outro' is designed to indicate the end of a script or application execution
  * with a framed message for clear visual separation from the rest of the console output.
- * 
+ *
  * @param {string} [message=""] - The final message to display. This parameter is optional; if omitted, only the border will be printed.
  */
 export const outro = (message = "") => {

@@ -33,7 +33,7 @@ export class Consola {
 
   /**
    * Creates an instance of Consola with specified options or defaults.
-   * 
+   *
    * @param {Partial<ConsolaOptions>} [options={}] - Configuration options for the Consola instance.
    */
   constructor(options: Partial<ConsolaOptions> = {}) {
@@ -86,7 +86,7 @@ export class Consola {
 
   /**
    * Gets the current log level of the Consola instance.
-   * 
+   *
    * @returns {number} The current log level.
    */
   get level() {
@@ -95,7 +95,7 @@ export class Consola {
 
   /**
    * Sets the minimum log level that will be output by the instance.
-   * 
+   *
    * @param {number} level - The new log level to set.
    */
   set level(level) {
@@ -109,7 +109,7 @@ export class Consola {
   /**
    * Displays a prompt to the user and returns the response.
    * Throw an error if `prompt` is not supported by the current configuration.
-   * 
+   *
    * @template T
    * @param {string} message - The message to display in the prompt.
    * @param {T} [opts] - Optional options for the prompt. See {@link PromptOptions}.
@@ -124,7 +124,7 @@ export class Consola {
 
   /**
    * Creates a new instance of Consola, inheriting options from the current instance, with possible overrides.
-   * 
+   *
    * @param {Partial<ConsolaOptions>} options - Optional overrides for the new instance. See {@link ConsolaOptions}.
    * @returns {ConsolaInstance} A new Consola instance. See {@link ConsolaInstance}.
    */
@@ -143,7 +143,7 @@ export class Consola {
 
   /**
    * Creates a new Consola instance with the specified default log object properties.
-   * 
+   *
    * @param {InputLogObject} defaults - Default properties to include in any log from the new instance. See {@link InputLogObject}.
    * @returns {ConsolaInstance} A new Consola instance. See {@link ConsolaInstance}.
    */
@@ -159,7 +159,7 @@ export class Consola {
 
   /**
    * Creates a new Consola instance with a specified tag, which will be included in every log.
-   * 
+   *
    * @param {string} tag - The tag to include in each log of the new instance.
    * @returns {ConsolaInstance} A new Consola instance. See {@link ConsolaInstance}.
    */
@@ -174,7 +174,7 @@ export class Consola {
   /**
    * Adds a custom reporter to the Consola instance.
    * Reporters will be called for each log message, depending on their implementation and log level.
-   * 
+   *
    * @param {ConsolaReporter} reporter - The reporter to add. See {@link ConsolaReporter}.
    * @returns {Consola} The current Consola instance.
    */
@@ -186,7 +186,7 @@ export class Consola {
   /**
    * Removes a custom reporter from the Consola instance.
    * If no reporter is specified, all reporters will be removed.
-   * 
+   *
    * @param {ConsolaReporter} reporter - The reporter to remove. See {@link ConsolaReporter}.
    * @returns {Consola} The current Consola instance.
    */
@@ -204,7 +204,7 @@ export class Consola {
 
   /**
    * Replaces all reporters of the Consola instance with the specified array of reporters.
-   * 
+   *
    * @param {ConsolaReporter[]} reporters - The new reporters to set. See {@link ConsolaReporter}.
    * @returns {Consola} The current Consola instance.
    */
@@ -317,7 +317,7 @@ export class Consola {
 
   /**
    * Replaces logging methods with mocks if a mock function is provided.
-   * 
+   *
    * @param {ConsolaOptions["mockFn"]} mockFn - The function to use for mocking logging methods. See {@link ConsolaOptions["mockFn"]}.
    */
   mockTypes(mockFn?: ConsolaOptions["mockFn"]) {
@@ -498,7 +498,7 @@ Consola.prototype.resume = Consola.prototype.resumeLogs;
 
 /**
  * Utility for creating a new Consola instance with optional configuration.
- * 
+ *
  * @param {Partial<ConsolaOptions>} [options={}] - Optional configuration options for the new Consola instance. See {@link ConsolaOptions}.
  * @returns {ConsolaInstance} A new instance of Consola. See {@link ConsolaInstance}.
  */

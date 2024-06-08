@@ -124,7 +124,7 @@ export type ColorName = keyof typeof colorDefs;
 export type ColorFunction = (text: string | number) => string;
 
 /**
- * Creates an object that maps colour names to their respective colour functions, 
+ * Creates an object that maps colour names to their respective colour functions,
  * based on whether or not colour support is enabled.
  * @param {boolean} [useColor=isColorSupported] - Specifies whether to use colour functions or fallback to plain strings.
  * @returns {Record<ColorName, ColorFunction>} An object where keys are colour names and values are functions to apply those colours. See {@link ColorFunction}.
