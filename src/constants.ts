@@ -25,6 +25,7 @@ export const LogLevels: Record<LogType, number> = {
   trace: 5,
 
   verbose: Number.POSITIVE_INFINITY,
+  progress: 3,
 };
 
 export type LogType =
@@ -46,7 +47,8 @@ export type LogType =
   // Verbose
   | "debug"
   | "trace"
-  | "verbose";
+  | "verbose"
+  | "progress";
 
 export const LogTypes: Record<LogType, Partial<LogObject>> = {
   // Silent
@@ -106,4 +108,8 @@ export const LogTypes: Record<LogType, Partial<LogObject>> = {
   verbose: {
     level: LogLevels.verbose,
   },
+
+  progress: {
+    level: LogLevels.progress,
+  }
 };
