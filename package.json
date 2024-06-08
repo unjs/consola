@@ -79,23 +79,23 @@
   },
   "devDependencies": {
     "@clack/core": "^0.3.4",
-    "@types/node": "^20.12.7",
-    "@vitest/coverage-v8": "^0.34.6",
+    "@types/node": "^20.14.2",
+    "@vitest/coverage-v8": "^1.6.0",
     "changelogen": "^0.5.5",
     "defu": "^6.1.4",
-    "eslint": "^8.57.0",
-    "eslint-config-unjs": "^0.2.1",
+    "eslint": "^9.4.0",
+    "eslint-config-unjs": "^0.3.2",
     "is-unicode-supported": "^2.0.0",
-    "jiti": "^1.21.0",
+    "jiti": "^1.21.3",
     "lodash": "^4.17.21",
-    "prettier": "^3.2.5",
+    "prettier": "^3.3.1",
     "sentencer": "^0.2.1",
     "sisteransi": "^1.0.5",
     "std-env": "^3.7.0",
     "string-width": "^7.1.0",
     "typescript": "^5.4.5",
     "unbuild": "^2.0.0",
-    "vitest": "^0.34.6"
+    "vitest": "^1.6.0"
   },
   "engines": {
     "node": "^14.18.0 || >=16.10.0"
