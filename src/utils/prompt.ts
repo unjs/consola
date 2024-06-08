@@ -319,7 +319,6 @@ export const selectKey = <
       switch (this.state) {
         case "submit": {
           return `${title}${color.gray(S_BAR)} ${opt(
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             this.options.find((opt) => opt.value === this.value)!,
             "selected",
           )}`;
@@ -787,8 +786,8 @@ export const spinner = () => {
 // @see LICENSE
 function ansiRegex() {
   const pattern = [
-    "[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)",
-    "(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-nq-uy=><~]))",
+    String.raw`[\u001B\u009B][[\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\d\/#&.:=?%@~_]+)*|[a-zA-Z\d]+(?:;[-a-zA-Z\d\/#&.:=?%@~_]*)*)?\u0007)`,
+    String.raw`(?:(?:\d{1,4}(?:;\d{0,4})*)?[\dA-PR-TZcf-nq-uy=><~]))`,
   ].join("|");
 
   return new RegExp(pattern, "g");

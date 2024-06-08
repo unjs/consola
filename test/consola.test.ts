@@ -53,7 +53,7 @@ describe("consola", () => {
     await wait(300);
     expect(logs.length).toBe(7);
     // 6 + Last one indicating it repeated 4
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
     expect(logs.at(-1)!.args).toEqual(["SPAM", "(repeated 4 times)"]);
   });
 });

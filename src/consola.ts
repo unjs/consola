@@ -159,13 +159,12 @@ export class Consola {
     for (const type in this.options.types) {
       // Backup original value
       if (!(console as any)["__" + type]) {
-        // eslint-disable-line no-console
-        (console as any)["__" + type] = (console as any)[type]; // eslint-disable-line no-console
+        (console as any)["__" + type] = (console as any)[type];
       }
       // Override
       (console as any)[type] = (this as unknown as ConsolaInstance)[
         type as LogType
-      ].raw; // eslint-disable-line no-console
+      ].raw;
     }
   }
 
@@ -173,9 +172,8 @@ export class Consola {
     for (const type in this.options.types) {
       // Restore if backup is available
       if ((console as any)["__" + type]) {
-        // eslint-disable-line no-console
-        (console as any)[type] = (console as any)["__" + type]; // eslint-disable-line no-console
-        delete (console as any)["__" + type]; // eslint-disable-line no-console
+        (console as any)[type] = (console as any)["__" + type];
+        delete (console as any)["__" + type];
       }
     }
   }
@@ -283,7 +281,6 @@ export class Consola {
 
     // Aliases
     if (logObj.message) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       logObj.args!.unshift(logObj.message);
       delete logObj.message;
     }
@@ -291,7 +288,7 @@ export class Consola {
       if (!Array.isArray(logObj.additional)) {
         logObj.additional = logObj.additional.split("\n");
       }
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
       logObj.args!.push("\n" + logObj.additional.join("\n"));
       delete logObj.additional;
     }

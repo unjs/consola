@@ -278,7 +278,7 @@ describe("your-consola-mock-test", () => {
 
 ```js
 {
-  virtualConsole: new jsdom.VirtualConsole().sendTo(consola);
+  new jsdom.VirtualConsole().sendTo(consola);
 }
 ```
 
