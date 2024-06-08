@@ -7,6 +7,13 @@ import { ConsolaInstance, createConsola as _createConsola } from "./consola";
 
 export * from "./shared";
 
+/**
+ * Factory function to create a new Consola instance tailored for use in different environments.
+ * It automatically adjusts logging levels based on environment variables and execution context.
+ *
+ * @param {Partial<ConsolaOptions & { fancy: boolean }>} [options={}] - Optional configuration options. See {@link ConsolaOptions}.
+ * @returns {ConsolaInstance} A new Consola instance with configurations based on the given options and the execution environment.
+ */
 export function createConsola(
   options: Partial<ConsolaOptions & { fancy: boolean }> = {},
 ): ConsolaInstance {
@@ -44,6 +51,12 @@ function _getDefaultLogLevel() {
   return LogLevels.info;
 }
 
+/**
+ * A default instance of Consola, created and configured for immediate use.
+ * This instance is configured based on the execution environment and the options provided.
+ * 
+ * @type {ConsolaInstance} consola - The default Consola instance, ready to use.
+ */
 export const consola = createConsola();
 
 export default consola;
