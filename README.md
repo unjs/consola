@@ -314,6 +314,20 @@ import {
 const { stripAnsi } = require("consola/utils");
 ```
 
+## Raw logging methods
+
+Objects sent to the reporter could lead to unexpected output when object is close to internal object structure containing either `message` or `args` props. To enforce the object to be interpreted as pure object, you can use the `raw` method chained to any log type.
+
+**Example:**
+
+```js
+// Prints "hello"
+consola.log({ message: "hello" });
+
+// Prints "{ message: 'hello' }"
+consola.log.raw({ message: "hello" });
+```
+
 ## License
 
 MIT
