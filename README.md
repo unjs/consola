@@ -328,9 +328,6 @@ consola.log({ message: "hello" });
 consola.log.raw({ message: "hello" });
 ```
 
-> [!NOTE]
-> As his usage is mostly for an advanced usage of consola and for debugging, the `raw` method could be change in future.
-
 ## License
 
 MIT
