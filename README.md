@@ -308,6 +308,7 @@ import {
   colors,
   getColor,
   colorize,
+  spinner,
 } from "consola/utils";
 
 // CommonJS

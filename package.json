@@ -78,7 +78,6 @@
     "test": "pnpm lint && pnpm vitest run --coverage"
   },
   "devDependencies": {
-    "@clack/core": "^0.3.4",
     "@types/node": "^20.14.2",
     "@vitest/coverage-v8": "^1.6.0",
     "changelogen": "^0.5.5",
@@ -100,5 +99,8 @@
   "engines": {
     "node": "^14.18.0 || >=16.10.0"
   },
-  "packageManager": "pnpm@9.3.0"
+  "packageManager": "pnpm@9.3.0",
+  "dependencies": {
+    "@clack/core": "^0.3.4"
+  }
 }

@@ -7,10 +7,11 @@ settings:
 importers:
 
   .:
-    devDependencies:
+    dependencies:
       '@clack/core':
         specifier: ^0.3.4
         version: 0.3.4
+    devDependencies:
       '@types/node':
         specifier: ^20.14.2
         version: 20.14.2
