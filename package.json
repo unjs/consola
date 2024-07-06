@@ -78,11 +78,12 @@
     "test": "pnpm lint && pnpm vitest run --coverage"
   },
   "devDependencies": {
-    "@types/node": "^20.14.2",
+    "@clack/core": "^0.3.4",
+    "@types/node": "^20.14.9",
     "@vitest/coverage-v8": "^1.6.0",
     "changelogen": "^0.5.5",
     "defu": "^6.1.4",
-    "eslint": "^9.4.0",
+    "eslint": "^9.6.0",
     "eslint-config-unjs": "^0.3.2",
     "is-unicode-supported": "^2.0.0",
     "jiti": "^1.21.6",
@@ -91,16 +92,16 @@
     "sentencer": "^0.2.1",
     "sisteransi": "^1.0.5",
     "std-env": "^3.7.0",
-    "string-width": "^7.1.0",
-    "typescript": "^5.4.5",
+    "string-width": "^7.2.0",
+    "typescript": "^5.5.3",
     "unbuild": "^2.0.0",
     "vitest": "^1.6.0"
   },
   "engines": {
     "node": "^14.18.0 || >=16.10.0"
   },
-  "packageManager": "pnpm@9.3.0",
   "dependencies": {
     "@clack/core": "^0.3.4"
-  }
+  },
+  "packageManager": "pnpm@9.4.0"
 }
