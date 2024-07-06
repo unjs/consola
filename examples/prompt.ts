@@ -1,3 +1,4 @@
+import { spinner } from "../src/utils";
 import { consola } from "./utils";
 
 async function main() {
@@ -31,9 +32,10 @@ async function main() {
     initial: ["eslint", "prettier"],
   });
 
-  consola.start("Creating project...");
+  const spin = spinner();
+  spin.start("Creating project...");
   await new Promise((resolve) => setTimeout(resolve, 1000));
-  consola.success("Project created!");
+  spin.stop("Project created!");
 }
 
 main();

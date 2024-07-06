@@ -1,9 +1,10 @@
-import { consola } from "./utils";
+import { spinner } from "../src/utils";
 
 async function main() {
-  consola.start("Creating project...");
+  const spin = spinner();
+  spin.start("Creating project...");
   await new Promise((resolve) => setTimeout(resolve, 1000));
-  consola.success("Project created!");
+  spin.stop("Project created!");
 }
 
 main();
