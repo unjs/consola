@@ -79,7 +79,7 @@
   },
   "devDependencies": {
     "@clack/core": "^0.3.4",
-    "@types/node": "^20.14.9",
+    "@types/node": "^20.14.10",
     "@vitest/coverage-v8": "^1.6.0",
     "changelogen": "^0.5.5",
     "defu": "^6.1.4",
@@ -100,5 +100,5 @@
   "engines": {
     "node": "^14.18.0 || >=16.10.0"
   },
-  "packageManager": "pnpm@9.4.0"
+  "packageManager": "pnpm@9.5.0"
 }
