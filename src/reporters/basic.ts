@@ -15,10 +15,21 @@ export class BasicReporter implements ConsolaReporter {
     return "  " + parseStack(stack).join("\n  ");
   }
 
+  formatError(err: any, opts: FormatOptions): string {
+    const { isCausedError = false } = opts;
+    const prefix = isCausedError ? "Caused by: " : "";
+    const message = err.message ?? formatWithOptions(opts, err);
+    const stack = err.stack ? this.formatStack(err.stack, opts) : "";
+    const causedError = err.cause
+      ? "\n\n" + this.formatError(err.cause, { ...opts, isCausedError: true })
+      : "";
+    return prefix + message + "\n" + stack + causedError;
+  }
+
   formatArgs(args: any[], opts: FormatOptions) {
     const _args = args.map((arg) => {
       if (arg && typeof arg.stack === "string") {
-        return arg.message + "\n" + this.formatStack(arg.stack, opts);
+        return this.formatError(arg, opts);
       }
       return arg;
     });
