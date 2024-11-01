@@ -33,8 +33,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       jiti:
-        specifier: ^1.21.6
-        version: 1.21.6
+        specifier: ^2.4.0
+        version: 2.4.0
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -1493,6 +1493,10 @@ packages:
 
   jiti@1.21.6:
     resolution: {integrity: sha512-2yTgeWTWzMWkHu6Jp9NKgePDaYHbntiwvYuuJLbbN9vl7DC9DvXKOB2BC3ZZ92D3cvV/aflH0osDfwpHepQ53w==}
+    hasBin: true
+
+  jiti@2.4.0:
+    resolution: {integrity: sha512-H5UpaUI+aHOqZXlYOaFP/8AzKsg+guWu+Pr3Y8i7+Y3zr1aXAvCvTAQ1RxSc6oVD8R8c7brgNtTVP91E7upH/g==}
     hasBin: true
 
   js-tokens@4.0.0:
@@ -3919,6 +3923,8 @@ snapshots:
       istanbul-lib-report: 3.0.1
 
   jiti@1.21.6: {}
+
+  jiti@2.4.0: {}
 
   js-tokens@4.0.0: {}
 
