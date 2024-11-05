@@ -79,7 +79,7 @@
   },
   "devDependencies": {
     "@clack/core": "^0.3.4",
-    "@types/node": "^20.14.10",
+    "@types/node": "^22.9.0",
     "@vitest/coverage-v8": "^1.6.0",
     "changelogen": "^0.5.5",
     "defu": "^6.1.4",
