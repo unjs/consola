@@ -6,7 +6,6 @@ import { LogObject } from "./types";
  * @type {0 | 1 | 2 | 3 | 4 | 5 | (number & {})} LogLevel - Represents the log level.
  * @default 0 - Represents the default log level.
  */
-// eslint-disable-next-line @typescript-eslint/ban-types
 export type LogLevel = 0 | 1 | 2 | 3 | 4 | 5 | (number & {});
 
 /**

@@ -31,7 +31,7 @@ export function createConsola(
     stderr: process.stderr,
     prompt: (...args) => import("./prompt").then((m) => m.prompt(...args)),
     reporters: options.reporters || [
-      options.fancy ?? !(isCI || isTest)
+      (options.fancy ?? !(isCI || isTest))
         ? new FancyReporter()
         : new BasicReporter(),
     ],
