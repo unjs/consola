@@ -7,4 +7,3 @@ consola.log({ message: "hello" });
 consola.log('consola.log.raw({ message: "hello" })');
 // Prints "{ message: 'hello' }"
 consola.log.raw({ message: "hello" });
-``;

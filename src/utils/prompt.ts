@@ -1039,7 +1039,6 @@ export interface PromptGroupOptions<T> {
   }) => void;
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 type Prettify<T> = {} & {
   [P in keyof T]: T[P];
 };
