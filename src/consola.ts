@@ -193,7 +193,7 @@ export class Consola {
   removeReporter(reporter: ConsolaReporter) {
     if (reporter) {
       const i = this.options.reporters.indexOf(reporter);
-      if (i >= 0) {
+      if (i !== -1) {
         return this.options.reporters.splice(i, 1);
       }
     } else {
