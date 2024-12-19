@@ -6,7 +6,7 @@ type SelectOption = {
   hint?: string;
 };
 
-const kCancel = Symbol.for("cancel");
+export const kCancel = Symbol.for("cancel");
 
 export type PromptCommonOptions = {
   /**
