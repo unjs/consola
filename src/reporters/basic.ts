@@ -12,18 +12,21 @@ const bracket = (x: string) => (x ? `[${x}]` : "");
 
 export class BasicReporter implements ConsolaReporter {
   formatStack(stack: string, opts: FormatOptions) {
-    return "  " + parseStack(stack).join("\n  ");
+    const indent = "  ".repeat((opts?.errorLevel || 0) + 1);
+    return indent + parseStack(stack).join(`\n${indent}`);
   }
 
   formatError(err: any, opts: FormatOptions): string {
-    const { isCausedError = false } = opts;
-    const prefix = isCausedError ? "Caused by: " : "";
     const message = err.message ?? formatWithOptions(opts, err);
     const stack = err.stack ? this.formatStack(err.stack, opts) : "";
+
+    const level = opts?.errorLevel || 0;
+    const causedPrefix = level > 0 ? `${"  ".repeat(level)}[cause]: ` : "";
     const causedError = err.cause
-      ? "\n\n" + this.formatError(err.cause, { ...opts, isCausedError: true })
+      ? "\n\n" + this.formatError(err.cause, { ...opts, errorLevel: level + 1 })
       : "";
-    return prefix + message + "\n" + stack + causedError;
+
+    return causedPrefix + message + "\n" + stack + causedError;
   }
 
   formatArgs(args: any[], opts: FormatOptions) {

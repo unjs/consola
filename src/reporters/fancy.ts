@@ -46,9 +46,10 @@ function stringWidth(str: string) {
 }
 
 export class FancyReporter extends BasicReporter {
-  formatStack(stack: string) {
+  formatStack(stack: string, opts: FormatOptions) {
+    const indent = "  ".repeat((opts?.errorLevel || 0) + 1);
     return (
-      "\n" +
+      `\n${indent}` +
       parseStack(stack)
         .map(
           (line) =>
@@ -57,7 +58,7 @@ export class FancyReporter extends BasicReporter {
               .replace(/^at +/, (m) => colors.gray(m))
               .replace(/\((.+)\)/, (_, m) => `(${colors.cyan(m)})`),
         )
-        .join("\n")
+        .join(`\n${indent}`)
     );
   }
 
