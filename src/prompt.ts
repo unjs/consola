@@ -164,22 +164,27 @@ export async function prompt<
     }
 
     switch (opts.cancel) {
-      case "reject":
+      case "reject": {
         const error = new Error("Prompt cancelled.");
         error.name = "ConsolaPromptCancelledError";
         if (Error.captureStackTrace) {
           Error.captureStackTrace(error, prompt);
         }
         throw error;
-      case "undefined":
+      }
+      case "undefined": {
         return undefined;
-      case "null":
+      }
+      case "null": {
         return null;
-      case "symbol":
+      }
+      case "symbol": {
         return kCancel;
+      }
       default:
-      case "default":
+      case "default": {
         return (opts as TextPromptOptions).default ?? opts.initial;
+      }
     }
   };
 
