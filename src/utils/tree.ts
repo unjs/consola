@@ -42,7 +42,7 @@ export type TreeOptions = {
    *
    * @default "..."
    */
-  ellipsis?: string
+  ellipsis?: string;
 };
 
 /**
@@ -84,9 +84,9 @@ function _buildTree(items: TreeItem[], options?: TreeOptions): string[] {
       return [
         isItemString
           ? ellipsis
-          : (item.color
-          ? colorize(item.color, ellipsis)
-          : ellipsis),
+          : item.color
+            ? colorize(item.color, ellipsis)
+            : ellipsis,
       ];
     }
     const isLast = i === total;
@@ -100,7 +100,8 @@ function _buildTree(items: TreeItem[], options?: TreeOptions): string[] {
       if (item.children) {
         const _tree = _buildTree(item.children, {
           ...options,
-          maxDepth: options?.maxDepth == null ? undefined : options.maxDepth - 1,
+          maxDepth:
+            options?.maxDepth == null ? undefined : options.maxDepth - 1,
           prefix: `${options?.prefix}${isLast ? "  " : "│  "}`,
         });
         chunks.push(..._tree);
