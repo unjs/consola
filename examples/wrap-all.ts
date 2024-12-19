@@ -1,7 +1,7 @@
 import { consola } from "./utils";
 
 function foo() {
-  console.info("console foo"); // eslint-disable-line no-console
+  console.info("console foo");
   process.stderr.write("called from stderr\n");
 }
 

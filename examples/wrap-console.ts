@@ -1,12 +1,12 @@
 import { consola } from "./utils";
 
 function foo() {
-  console.info("foo"); // eslint-disable-line no-console
-  console.warn("foo warn"); // eslint-disable-line no-console
+  console.info("foo");
+  console.warn("foo warn");
 }
 
 function _trace() {
-  console.trace("foobar"); // eslint-disable-line no-console
+  console.trace("foobar");
 }
 function trace() {
   _trace();

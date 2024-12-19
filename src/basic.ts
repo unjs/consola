@@ -5,6 +5,12 @@ import { ConsolaInstance, createConsola as _createConsola } from "./consola";
 
 export * from "./shared";
 
+/**
+ * Factory function to create a new Consola instance
+ *
+ * @param {Partial<ConsolaOptions & { fancy: boolean }>} [options={}] - Optional configuration options. See {@link ConsolaOptions}.
+ * @returns {ConsolaInstance} A new Consola instance configured with the given options.
+ */
 export function createConsola(
   options: Partial<ConsolaOptions & { fancy: boolean }> = {},
 ): ConsolaInstance {
@@ -27,6 +33,12 @@ export function createConsola(
   return consola;
 }
 
+/**
+ * Creates and exports a standard instance of Consola with the default configuration.
+ * This instance can be used directly for logging throughout the application.
+ *
+ * @type {ConsolaInstance} consola - The default instance of Consola.
+ */
 export const consola = createConsola();
 
 export default consola;

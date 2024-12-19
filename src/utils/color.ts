@@ -21,6 +21,11 @@ const isCompatibleTerminal =
 const isCI =
   "CI" in env &&
   ("GITHUB_ACTIONS" in env || "GITLAB_CI" in env || "CIRCLECI" in env);
+
+/**
+ * Determines support for terminal colours based on the environment and capabilities of the terminal.
+ * @type {boolean} isColorSupported - Indicates whether colour support is enabled in the terminal.
+ */
 const isColorSupported =
   !isDisabled &&
   (isForced || (isWindows && !isDumbTerminal) || isCompatibleTerminal || isCI);
@@ -118,14 +123,29 @@ const colorDefs = {
 export type ColorName = keyof typeof colorDefs;
 export type ColorFunction = (text: string | number) => string;
 
+/**
+ * Creates an object that maps colour names to their respective colour functions,
+ * based on whether or not colour support is enabled.
+ * @param {boolean} [useColor=isColorSupported] - Specifies whether to use colour functions or fallback to plain strings.
+ * @returns {Record<ColorName, ColorFunction>} An object where keys are colour names and values are functions to apply those colours. See {@link ColorFunction}.
+ */
 function createColors(useColor = isColorSupported) {
   return useColor
     ? colorDefs
     : Object.fromEntries(Object.keys(colorDefs).map((key) => [key, String]));
 }
 
+/**
+ * An object containing functions for colouring text. Each function corresponds to a terminal colour. See {@link ColorName} for available colours.
+ */
 export const colors = createColors() as Record<ColorName, ColorFunction>;
 
+/**
+ * Gets a colour function by name, with an option for a fallback colour if the requested colour is not found.
+ * @param {ColorName} color - The name of the colour function to get. See {@link ColorName}.
+ * @param {ColorName} [fallback="reset"] - The name of the fallback colour function if the requested colour is not found. See {@link ColorName}.
+ * @returns {ColorFunction} The colour function that corresponds to the requested colour, or the fallback colour function. See {@link ColorFunction}.
+ */
 export function getColor(
   color: ColorName,
   fallback: ColorName = "reset",
@@ -133,6 +153,12 @@ export function getColor(
   return colors[color] || colors[fallback];
 }
 
+/**
+ * Applies a specified colour to a given text string or number.
+ * @param {ColorName} color - The colour to apply. See {@link ColorName}.
+ * @param {string | number} text - The text to colour.
+ * @returns {string} The coloured text.
+ */
 export function colorize(color: ColorName, text: string | number): string {
   return getColor(color)(text);
 }

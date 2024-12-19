@@ -12,6 +12,12 @@ import type { PromptOptions } from "./prompt";
 let paused = false;
 const queue: any[] = [];
 
+/**
+ * Consola class for logging management with support for pause/resume, mocking and customisable reporting.
+ * Provides flexible logging capabilities including level-based logging, custom reporters and integration options.
+ *
+ * @class Consola
+ */
 export class Consola {
   options: ConsolaOptions;
 
@@ -25,6 +31,11 @@ export class Consola {
 
   _mockFn?: ConsolaOptions["mockFn"];
 
+  /**
+   * Creates an instance of Consola with specified options or defaults.
+   *
+   * @param {Partial<ConsolaOptions>} [options={}] - Configuration options for the Consola instance.
+   */
   constructor(options: Partial<ConsolaOptions> = {}) {
     // Options
     const types = options.types || LogTypes;
@@ -73,10 +84,20 @@ export class Consola {
     this._lastLog = {};
   }
 
+  /**
+   * Gets the current log level of the Consola instance.
+   *
+   * @returns {number} The current log level.
+   */
   get level() {
     return this.options.level;
   }
 
+  /**
+   * Sets the minimum log level that will be output by the instance.
+   *
+   * @param {number} level - The new log level to set.
+   */
   set level(level) {
     this.options.level = _normalizeLogLevel(
       level,
@@ -85,6 +106,15 @@ export class Consola {
     );
   }
 
+  /**
+   * Displays a prompt to the user and returns the response.
+   * Throw an error if `prompt` is not supported by the current configuration.
+   *
+   * @template T
+   * @param {string} message - The message to display in the prompt.
+   * @param {T} [opts] - Optional options for the prompt. See {@link PromptOptions}.
+   * @returns {promise<T>} A promise that infer with the prompt options. See {@link PromptOptions}.
+   */
   prompt<T extends PromptOptions>(message: string, opts?: T) {
     if (!this.options.prompt) {
       throw new Error("prompt is not supported!");
@@ -92,6 +122,12 @@ export class Consola {
     return this.options.prompt<any, any, T>(message, opts);
   }
 
+  /**
+   * Creates a new instance of Consola, inheriting options from the current instance, with possible overrides.
+   *
+   * @param {Partial<ConsolaOptions>} options - Optional overrides for the new instance. See {@link ConsolaOptions}.
+   * @returns {ConsolaInstance} A new Consola instance. See {@link ConsolaInstance}.
+   */
   create(options: Partial<ConsolaOptions>): ConsolaInstance {
     const instance = new Consola({
       ...this.options,
@@ -105,6 +141,12 @@ export class Consola {
     return instance;
   }
 
+  /**
+   * Creates a new Consola instance with the specified default log object properties.
+   *
+   * @param {InputLogObject} defaults - Default properties to include in any log from the new instance. See {@link InputLogObject}.
+   * @returns {ConsolaInstance} A new Consola instance. See {@link ConsolaInstance}.
+   */
   withDefaults(defaults: InputLogObject): ConsolaInstance {
     return this.create({
       ...this.options,
@@ -115,6 +157,12 @@ export class Consola {
     });
   }
 
+  /**
+   * Creates a new Consola instance with a specified tag, which will be included in every log.
+   *
+   * @param {string} tag - The tag to include in each log of the new instance.
+   * @returns {ConsolaInstance} A new Consola instance. See {@link ConsolaInstance}.
+   */
   withTag(tag: string): ConsolaInstance {
     return this.withDefaults({
       tag: this.options.defaults.tag
@@ -123,15 +171,29 @@ export class Consola {
     });
   }
 
+  /**
+   * Adds a custom reporter to the Consola instance.
+   * Reporters will be called for each log message, depending on their implementation and log level.
+   *
+   * @param {ConsolaReporter} reporter - The reporter to add. See {@link ConsolaReporter}.
+   * @returns {Consola} The current Consola instance.
+   */
   addReporter(reporter: ConsolaReporter) {
     this.options.reporters.push(reporter);
     return this;
   }
 
+  /**
+   * Removes a custom reporter from the Consola instance.
+   * If no reporter is specified, all reporters will be removed.
+   *
+   * @param {ConsolaReporter} reporter - The reporter to remove. See {@link ConsolaReporter}.
+   * @returns {Consola} The current Consola instance.
+   */
   removeReporter(reporter: ConsolaReporter) {
     if (reporter) {
       const i = this.options.reporters.indexOf(reporter);
-      if (i >= 0) {
+      if (i !== -1) {
         return this.options.reporters.splice(i, 1);
       }
     } else {
@@ -140,6 +202,12 @@ export class Consola {
     return this;
   }
 
+  /**
+   * Replaces all reporters of the Consola instance with the specified array of reporters.
+   *
+   * @param {ConsolaReporter[]} reporters - The new reporters to set. See {@link ConsolaReporter}.
+   * @returns {Consola} The current Consola instance.
+   */
   setReporters(reporters: ConsolaReporter[]) {
     this.options.reporters = Array.isArray(reporters) ? reporters : [reporters];
     return this;
@@ -155,31 +223,38 @@ export class Consola {
     this.restoreStd();
   }
 
+  /**
+   * Overrides console methods with Consola logging methods for consistent logging.
+   */
   wrapConsole() {
     for (const type in this.options.types) {
       // Backup original value
       if (!(console as any)["__" + type]) {
-        // eslint-disable-line no-console
-        (console as any)["__" + type] = (console as any)[type]; // eslint-disable-line no-console
+        (console as any)["__" + type] = (console as any)[type];
       }
       // Override
       (console as any)[type] = (this as unknown as ConsolaInstance)[
         type as LogType
-      ].raw; // eslint-disable-line no-console
+      ].raw;
     }
   }
 
+  /**
+   * Restores the original console methods, removing Consola overrides.
+   */
   restoreConsole() {
     for (const type in this.options.types) {
       // Restore if backup is available
       if ((console as any)["__" + type]) {
-        // eslint-disable-line no-console
-        (console as any)[type] = (console as any)["__" + type]; // eslint-disable-line no-console
-        delete (console as any)["__" + type]; // eslint-disable-line no-console
+        (console as any)[type] = (console as any)["__" + type];
+        delete (console as any)["__" + type];
       }
     }
   }
 
+  /**
+   * Overrides standard output and error streams to redirect them through Consola.
+   */
   wrapStd() {
     this._wrapStream(this.options.stdout, "log");
     this._wrapStream(this.options.stderr, "log");
@@ -201,6 +276,9 @@ export class Consola {
     };
   }
 
+  /**
+   * Restores the original standard output and error streams, removing the Consola redirection.
+   */
   restoreStd() {
     this._restoreStream(this.options.stdout);
     this._restoreStream(this.options.stderr);
@@ -217,10 +295,16 @@ export class Consola {
     }
   }
 
+  /**
+   * Pauses logging, queues incoming logs until resumed.
+   */
   pauseLogs() {
     paused = true;
   }
 
+  /**
+   * Resumes logging, processing any queued logs.
+   */
   resumeLogs() {
     paused = false;
 
@@ -231,6 +315,11 @@ export class Consola {
     }
   }
 
+  /**
+   * Replaces logging methods with mocks if a mock function is provided.
+   *
+   * @param {ConsolaOptions["mockFn"]} mockFn - The function to use for mocking logging methods. See {@link ConsolaOptions["mockFn"]}.
+   */
   mockTypes(mockFn?: ConsolaOptions["mockFn"]) {
     const _mockFn = mockFn || this.options.mockFn;
 
@@ -283,7 +372,6 @@ export class Consola {
 
     // Aliases
     if (logObj.message) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       logObj.args!.unshift(logObj.message);
       delete logObj.message;
     }
@@ -291,7 +379,7 @@ export class Consola {
       if (!Array.isArray(logObj.additional)) {
         logObj.additional = logObj.additional.split("\n");
       }
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
       logObj.args!.push("\n" + logObj.additional.join("\n"));
       delete logObj.additional;
     }
@@ -408,6 +496,12 @@ Consola.prototype.pause = Consola.prototype.pauseLogs;
 // @ts-expect-error
 Consola.prototype.resume = Consola.prototype.resumeLogs;
 
+/**
+ * Utility for creating a new Consola instance with optional configuration.
+ *
+ * @param {Partial<ConsolaOptions>} [options={}] - Optional configuration options for the new Consola instance. See {@link ConsolaOptions}.
+ * @returns {ConsolaInstance} A new instance of Consola. See {@link ConsolaInstance}.
+ */
 export function createConsola(
   options: Partial<ConsolaOptions> = {},
 ): ConsolaInstance {
