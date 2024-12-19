@@ -84,9 +84,10 @@ function _buildTree(items: TreeItem[], options?: TreeOptions): string[] {
       return [
         isItemString
           ? ellipsis
-          : item.color
+          :
+            (item.color
             ? colorize(item.color, ellipsis)
-            : ellipsis,
+            : ellipsis), // prettier-ignore
       ];
     }
     const isLast = i === total;
