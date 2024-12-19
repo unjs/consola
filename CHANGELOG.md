@@ -2,6 +2,78 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v3.3.0
+
+[compare changes](https://github.com/unjs/consola/compare/v3.2.3...v3.3.0)
+
+### 🚀 Enhancements
+
+- **utils:** `formatTree` utility ([#223](https://github.com/unjs/consola/pull/223))
+- Export prompt option types ([#301](https://github.com/unjs/consola/pull/301))
+- Support report error `cause` ([#308](https://github.com/unjs/consola/pull/308))
+- **prompt:** Configurable cancel strategy ([#325](https://github.com/unjs/consola/pull/325))
+- **formatTree:** Support max depth ([#267](https://github.com/unjs/consola/pull/267))
+
+### 🩹 Fixes
+
+- Use `initial` in `select` and `multiselect` prompts ([#232](https://github.com/unjs/consola/pull/232))
+- Make box title color same as border ([#236](https://github.com/unjs/consola/pull/236))
+
+### 📖 Documentation
+
+- Update screenshot ([205d9c8](https://github.com/unjs/consola/commit/205d9c8))
+- Add vitest ([#182](https://github.com/unjs/consola/pull/182))
+- Add note about raw method ([#271](https://github.com/unjs/consola/pull/271))
+- Add jsdocs for utils functions ([#286](https://github.com/unjs/consola/pull/286))
+- Add jsdocs for top-level functions ([#288](https://github.com/unjs/consola/pull/288))
+
+### 📦 Build
+
+- Fix subpath types ([#265](https://github.com/unjs/consola/pull/265))
+- Add `require` condition for browser builds ([#243](https://github.com/unjs/consola/pull/243))
+
+### 🌊 Types
+
+- Fix prompt with `select` type return value type ([#238](https://github.com/unjs/consola/pull/238))
+
+### 🏡 Chore
+
+- Update dependencies ([68b36c7](https://github.com/unjs/consola/commit/68b36c7))
+- Update dependencies ([dff1ef8](https://github.com/unjs/consola/commit/dff1ef8))
+- Update eslint to v9 ([238d677](https://github.com/unjs/consola/commit/238d677))
+- Lint ([985a786](https://github.com/unjs/consola/commit/985a786))
+- Update pnpm to v9 ([61adfbe](https://github.com/unjs/consola/commit/61adfbe))
+- Update ci scripts ([9545b65](https://github.com/unjs/consola/commit/9545b65))
+- Apply automated updates ([df0e555](https://github.com/unjs/consola/commit/df0e555))
+- Update dependencies ([e851525](https://github.com/unjs/consola/commit/e851525))
+- Fix lint issues ([8238844](https://github.com/unjs/consola/commit/8238844))
+- Update deps ([093d966](https://github.com/unjs/consola/commit/093d966))
+- Lint ([64cd547](https://github.com/unjs/consola/commit/64cd547))
+- Update clack/core ([e2aa5c9](https://github.com/unjs/consola/commit/e2aa5c9))
+
+### 🎨 Styles
+
+- Format repo ([899173f](https://github.com/unjs/consola/commit/899173f))
+
+### 🤖 CI
+
+- Use conventional commit for autofix ([#217](https://github.com/unjs/consola/pull/217))
+
+### ❤️ Contributors
+
+- Guo ([@Plumbiu](http://github.com/Plumbiu))
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+- Kongmoumou ([@kongmoumou](http://github.com/kongmoumou))
+- Max ([@onmax](http://github.com/onmax))
+- Michel EDIGHOFFER <edimitchel@gmail.com>
+- Sébastien Chopin ([@atinux](http://github.com/atinux))
+- Estéban <e.soubiran25@gmail.com>
+- Nozomu Ikuta ([@nozomuikuta](http://github.com/nozomuikuta))
+- Maxim Molochkov ([@klaseca](http://github.com/klaseca))
+- Xjccc ([@xjccc](http://github.com/xjccc))
+- Gangan ([@shinGangan](http://github.com/shinGangan))
+- Daniel Roe ([@danielroe](http://github.com/danielroe))
+
 ## v3.2.3
 
 [compare changes](https://github.com/unjs/consola/compare/v3.2.2...v3.2.3)
