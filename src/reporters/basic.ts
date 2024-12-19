@@ -12,13 +12,27 @@ const bracket = (x: string) => (x ? `[${x}]` : "");
 
 export class BasicReporter implements ConsolaReporter {
   formatStack(stack: string, opts: FormatOptions) {
-    return "  " + parseStack(stack).join("\n  ");
+    const indent = "  ".repeat((opts?.errorLevel || 0) + 1);
+    return indent + parseStack(stack).join(`\n${indent}`);
+  }
+
+  formatError(err: any, opts: FormatOptions): string {
+    const message = err.message ?? formatWithOptions(opts, err);
+    const stack = err.stack ? this.formatStack(err.stack, opts) : "";
+
+    const level = opts?.errorLevel || 0;
+    const causedPrefix = level > 0 ? `${"  ".repeat(level)}[cause]: ` : "";
+    const causedError = err.cause
+      ? "\n\n" + this.formatError(err.cause, { ...opts, errorLevel: level + 1 })
+      : "";
+
+    return causedPrefix + message + "\n" + stack + causedError;
   }
 
   formatArgs(args: any[], opts: FormatOptions) {
     const _args = args.map((arg) => {
       if (arg && typeof arg.stack === "string") {
-        return arg.message + "\n" + this.formatStack(arg.stack, opts);
+        return this.formatError(arg, opts);
       }
       return arg;
     });

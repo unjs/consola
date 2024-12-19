@@ -91,6 +91,11 @@ export interface FormatOptions {
   compact?: boolean | number;
 
   /**
+   * Error cause level.
+   */
+  errorLevel?: number;
+
+  /**
    * Allows additional custom formatting options.
    */
   [key: string]: unknown;
