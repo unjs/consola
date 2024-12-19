@@ -840,7 +840,7 @@ export const note = (message = "", title = "") => {
       // eslint-disable-next-line unicorn/no-array-reduce
       lines.reduce((sum, ln) => {
         ln = strip(ln);
-        return ln.length > sum ? ln.length : sum;
+        return Math.max(ln.length, sum);
       }, 0),
       strip(title).length,
     ) + 2;
