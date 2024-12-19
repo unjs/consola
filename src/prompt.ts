@@ -6,7 +6,24 @@ type SelectOption = {
   hint?: string;
 };
 
-export type TextPromptOptions = {
+const kCancel = Symbol.for("cancel");
+
+export type PromptCommonOptions = {
+  /**
+   * Specify how to handle a cancelled prompt (e.g. by pressing Ctrl+C).
+   *
+   * Default strategy is `"default"`.
+   *
+   * - `"default"` - Resolve the promise with the `default` value or `initial` value.
+   * - `"undefined`" - Resolve the promise with `undefined`.
+   * - `"null"` - Resolve the promise with `null`.
+   * - `"symbol"` - Resolve the promise with a symbol `Symbol.for("cancel")`.
+   * - `"reject"`  - Reject the promise with an error.
+   */
+  cancel?: "reject" | "default" | "undefined" | "null" | "symbol";
+};
+
+export type TextPromptOptions = PromptCommonOptions & {
   /**
    * Specifies the prompt type as text.
    * @optional
@@ -33,7 +50,7 @@ export type TextPromptOptions = {
   initial?: string;
 };
 
-export type ConfirmPromptOptions = {
+export type ConfirmPromptOptions = PromptCommonOptions & {
   /**
    * Specifies the prompt type as confirm.
    */
@@ -46,7 +63,7 @@ export type ConfirmPromptOptions = {
   initial?: boolean;
 };
 
-export type SelectPromptOptions = {
+export type SelectPromptOptions = PromptCommonOptions & {
   /**
    * Specifies the prompt type as select.
    */
@@ -64,7 +81,7 @@ export type SelectPromptOptions = {
   options: (string | SelectOption)[];
 };
 
-export type MultiSelectOptions = {
+export type MultiSelectOptions = PromptCommonOptions & {
   /**
    * Specifies the prompt type as multiselect.
    */
@@ -108,6 +125,20 @@ type inferPromptReturnType<T extends PromptOptions> =
           ? T["options"]
           : unknown;
 
+type inferPromptCancalReturnType<T extends PromptOptions> = T extends {
+  cancel: "reject";
+}
+  ? never
+  : T extends { cancel: "default" }
+    ? inferPromptReturnType<T>
+    : T extends { cancel: "undefined" }
+      ? undefined
+      : T extends { cancel: "null" }
+        ? null
+        : T extends { cancel: "symbol" }
+          ? typeof kCancel
+          : inferPromptReturnType<T> /* default */;
+
 /**
  * Asynchronously prompts the user for input based on specified options.
  * Supports text, confirm, select and multi-select prompts.
@@ -123,7 +154,35 @@ export async function prompt<
 >(
   message: string,
   opts: PromptOptions = {},
-): Promise<inferPromptReturnType<T>> {
+): Promise<inferPromptReturnType<T> | inferPromptCancalReturnType<T>> {
+  const handleCancel = (value: unknown) => {
+    if (
+      typeof value !== "symbol" ||
+      value.toString() !== "Symbol(clack:cancel)"
+    ) {
+      return value;
+    }
+
+    switch (opts.cancel) {
+      case "reject":
+        const error = new Error("Prompt cancelled.");
+        error.name = "ConsolaPromptCancelledError";
+        if (Error.captureStackTrace) {
+          Error.captureStackTrace(error, prompt);
+        }
+        throw error;
+      case "undefined":
+        return undefined;
+      case "null":
+        return null;
+      case "symbol":
+        return kCancel;
+      default:
+      case "default":
+        return (opts as TextPromptOptions).default ?? opts.initial;
+    }
+  };
+
   if (!opts.type || opts.type === "text") {
     return (await text({
       message,
@@ -162,18 +221,4 @@ export async function prompt<
   }
 
   throw new Error(`Unknown prompt type: ${opts.type}`);
-}
-
-function handleCancel(value: any) {
-  if (
-    typeof value === "symbol" &&
-    value.toString() === "Symbol(clack:cancel)"
-  ) {
-    const error = new Error("Prompt cancelled.");
-    error.name = "ConsolaPromptCancelledError";
-    if (Error.captureStackTrace) {
-      Error.captureStackTrace(error, prompt);
-    }
-    throw error;
-  }
 }
