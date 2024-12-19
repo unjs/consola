@@ -82,9 +82,17 @@ Log to all reporters.
 
 Example: `consola.info('Message')`
 
-#### `await prompt(message, { type })`
+#### `await prompt(message, { type, cancel })`
 
 Show an input prompt. Type can either of `text`, `confirm`, `select` or `multiselect`.
+
+If prompt is canceled by user (with Ctrol+C), default value will be resolved by default. This strategy can be configured by setting `{ cancel: "..." }` option:
+
+- `"default"` - Resolve the promise with the `default` value or `initial` value.
+- `"undefined`" - Resolve the promise with `undefined`.
+- `"null"` - Resolve the promise with `null`.
+- `"symbol"` - Resolve the promise with a symbol `Symbol.for("cancel")`.
+- `"reject"` - Reject the promise with an error.
 
 See [examples/prompt.ts](./examples/prompt.ts) for usage examples.
 
