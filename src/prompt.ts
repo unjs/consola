@@ -130,14 +130,14 @@ export async function prompt<
       defaultValue: opts.default,
       placeholder: opts.placeholder,
       initialValue: opts.initial as string,
-    })) as any;
+    }).then(handleCancel)) as any;
   }
 
   if (opts.type === "confirm") {
     return (await confirm({
       message,
       initialValue: opts.initial,
-    })) as any;
+    }).then(handleCancel)) as any;
   }
 
   if (opts.type === "select") {
@@ -147,7 +147,7 @@ export async function prompt<
         typeof o === "string" ? { value: o, label: o } : o,
       ),
       initialValue: opts.initial,
-    })) as any;
+    }).then(handleCancel)) as any;
   }
 
   if (opts.type === "multiselect") {
@@ -158,8 +158,22 @@ export async function prompt<
       ),
       required: opts.required,
       initialValues: opts.initial,
-    })) as any;
+    }).then(handleCancel)) as any;
   }
 
   throw new Error(`Unknown prompt type: ${opts.type}`);
+}
+
+function handleCancel(value: any) {
+  if (
+    typeof value === "symbol" &&
+    value.toString() === "Symbol(clack:cancel)"
+  ) {
+    const error = new Error("Prompt cancelled.");
+    error.name = "ConsolaPromptCancelledError";
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(error, prompt);
+    }
+    throw error;
+  }
 }
