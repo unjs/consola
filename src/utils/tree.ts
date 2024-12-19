@@ -31,6 +31,18 @@ export type TreeOptions = {
    * @default "  "
    */
   prefix?: string;
+
+  /**
+   * The max depth of tree
+   */
+  maxDepth?: number;
+
+  /**
+   * Ellipsis of the tree
+   *
+   * @default "..."
+   */
+  ellipsis?: string;
 };
 
 /**
@@ -48,6 +60,7 @@ export type TreeOptions = {
 export function formatTree(items: TreeItem[], options?: TreeOptions): string {
   options = {
     prefix: "  ",
+    ellipsis: "...",
     ...options,
   };
 
@@ -61,14 +74,25 @@ export function formatTree(items: TreeItem[], options?: TreeOptions): string {
 
 function _buildTree(items: TreeItem[], options?: TreeOptions): string[] {
   const chunks: string[] = [];
-
   const total = items.length - 1;
   for (let i = 0; i <= total; i++) {
     const item = items[i];
+    const isItemString = typeof item === "string";
+    const isLimit = options?.maxDepth != null && options.maxDepth <= 0;
+    if (isLimit) {
+      const ellipsis = `${options.prefix}${options.ellipsis}\n`;
+      return [
+        isItemString
+          ? ellipsis
+          :
+            (item.color
+            ? colorize(item.color, ellipsis)
+            : ellipsis), // prettier-ignore
+      ];
+    }
     const isLast = i === total;
     const prefix = isLast ? `${options?.prefix}└─` : `${options?.prefix}├─`;
-
-    if (typeof item === "string") {
+    if (isItemString) {
       chunks.push(`${prefix}${item}\n`);
     } else {
       const log = `${prefix}${item.text}\n`;
@@ -77,6 +101,8 @@ function _buildTree(items: TreeItem[], options?: TreeOptions): string[] {
       if (item.children) {
         const _tree = _buildTree(item.children, {
           ...options,
+          maxDepth:
+            options?.maxDepth == null ? undefined : options.maxDepth - 1,
           prefix: `${options?.prefix}${isLast ? "  " : "│  "}`,
         });
         chunks.push(..._tree);
