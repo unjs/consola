@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v3.3.1
+
+[compare changes](https://github.com/unjs/consola/compare/v3.3.0...v3.3.1)
+
+### 🩹 Fixes
+
+- **fancy:** Fallback when`Intl` is unavailable ([#326](https://github.com/unjs/consola/pull/326))
+
+### ❤️ Contributors
+
+- Red Huang <redhuang@synology.com>
+
 ## v3.3.0
 
 [compare changes](https://github.com/unjs/consola/compare/v3.2.3...v3.3.0)
