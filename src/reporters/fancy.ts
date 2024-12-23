@@ -39,7 +39,8 @@ const TYPE_ICONS: { [k in LogType]?: string } = {
 
 function stringWidth(str: string) {
   // https://github.com/unjs/consola/issues/204
-  if (!Intl.Segmenter) {
+  const hasICU = typeof Intl === "object";
+  if (!hasICU || !Intl.Segmenter) {
     return stripAnsi(str).length;
   }
   return _stringWidth(str);
