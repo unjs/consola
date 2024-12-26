@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v3.3.2
+
+[compare changes](https://github.com/unjs/consola/compare/v3.3.1...v3.3.2)
+
+### 📦 Build
+
+- Patch `string-width` for node 14 support ([421c663](https://github.com/unjs/consola/commit/421c663))
+- Update exports for `node16` typescript resolution ([18bc852](https://github.com/unjs/consola/commit/18bc852))
+
+### ❤️ Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+
 ## v3.3.1
 
 [compare changes](https://github.com/unjs/consola/compare/v3.3.0...v3.3.1)
