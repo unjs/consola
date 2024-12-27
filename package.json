@@ -22,42 +22,77 @@
   "exports": {
     ".": {
       "node": {
-        "types": "./dist/index.d.ts",
-        "import": "./dist/index.mjs",
-        "require": "./lib/index.cjs"
+        "import": {
+          "types": "./dist/index.d.mts",
+          "default": "./dist/index.mjs"
+        },
+        "require": {
+          "types": "./dist/index.d.cts",
+          "default": "./lib/index.cjs"
+        }
       },
       "default": {
-        "types": "./dist/browser.d.ts",
-        "import": "./dist/browser.mjs",
-        "require": "./dist/browser.cjs"
+        "import": {
+          "types": "./dist/browser.d.mts",
+          "default": "./dist/browser.mjs"
+        },
+        "require": {
+          "types": "./dist/browser.d.cts",
+          "default": "./dist/browser.cjs"
+        }
       }
     },
     "./browser": {
-      "types": "./dist/browser.d.ts",
-      "import": "./dist/browser.mjs",
-      "require": "./dist/browser.cjs"
+      "import": {
+        "types": "./dist/browser.d.mts",
+        "default": "./dist/browser.mjs"
+      },
+      "require": {
+        "types": "./dist/browser.d.cts",
+        "default": "./dist/browser.cjs"
+      }
     },
     "./basic": {
       "node": {
-        "types": "./dist/basic.d.ts",
-        "import": "./dist/basic.mjs",
-        "require": "./dist/basic.cjs"
+        "import": {
+          "types": "./dist/basic.d.mts",
+          "default": "./dist/basic.mjs"
+        },
+        "require": {
+          "types": "./dist/basic.d.cts",
+          "default": "./dist/basic.cjs"
+        }
       },
       "default": {
-        "types": "./dist/browser.d.ts",
-        "import": "./dist/browser.mjs",
-        "require": "./dist/browser.cjs"
+        "import": {
+          "types": "./dist/browser.d.mts",
+          "default": "./dist/browser.mjs"
+        },
+        "require": {
+          "types": "./dist/browser.d.cts",
+          "default": "./dist/browser.cjs"
+        }
       }
     },
     "./core": {
-      "types": "./dist/core.d.ts",
-      "import": "./dist/core.mjs",
-      "require": "./dist/core.cjs"
+      "import": {
+        "types": "./dist/core.d.mts",
+        "default": "./dist/core.mjs"
+      },
+      "require": {
+        "types": "./dist/core.d.cts",
+        "default": "./dist/core.cjs"
+      }
     },
     "./utils": {
-      "types": "./dist/utils.d.ts",
-      "import": "./dist/utils.mjs",
-      "require": "./dist/utils.cjs"
+      "import": {
+        "types": "./dist/utils.d.mts",
+        "default": "./dist/utils.mjs"
+      },
+      "require": {
+        "types": "./dist/utils.d.cts",
+        "default": "./dist/utils.cjs"
+      }
     }
   },
   "main": "./lib/index.cjs",
