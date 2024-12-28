@@ -1,4 +1,4 @@
-import { text, confirm, select, multiselect } from "./utils/prompt";
+import { text, confirm, select, multiselect } from "@clack/prompts";
 
 type SelectOption = {
   label: string;
