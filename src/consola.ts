@@ -7,7 +7,7 @@ import type {
   LogObject,
   ConsolaOptions,
 } from "./types";
-import type { PromptOptions } from "./prompt";
+import type { PromptOptions, Spinner } from "./clack";
 
 let paused = false;
 const queue: any[] = [];
@@ -120,6 +120,18 @@ export class Consola {
       throw new Error("prompt is not supported!");
     }
     return this.options.prompt<any, any, T>(message, opts);
+  }
+
+  spinner(message: string): Promise<Spinner> {
+    if (!this.options.spinner) {
+      const consola = this as unknown as ConsolaInstance;
+      return Promise.resolve(<Spinner>{
+        start: (message) => consola.start(message),
+        stop: (message, _code) => consola.success(message),
+        message: (message) => consola.info(message),
+      });
+    }
+    return this.options.spinner(message);
   }
 
   /**

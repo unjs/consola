@@ -1,4 +1,5 @@
 import type { LogLevel, LogType } from "./constants";
+import type { Spinner } from "./clack";
 
 export interface ConsolaOptions {
   /**
@@ -54,7 +55,13 @@ export interface ConsolaOptions {
    * Custom prompt function to use. It can be undefined.
    * @optional
    */
-  prompt?: typeof import("./prompt").prompt | undefined;
+  prompt?: typeof import("./clack").prompt | undefined;
+
+  /**
+   * Custom spinner function to use. It can be undefined.
+   * @optional
+   */
+  spinner?: (message?: string) => Promise<Spinner>;
 
   /**
    * Configuration options for formatting log messages. See {@link FormatOptions}.

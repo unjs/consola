@@ -10,4 +10,4 @@ export type {
   MultiSelectOptions,
   SelectPromptOptions,
   TextPromptOptions,
-} from "./prompt";
+} from "./clack";

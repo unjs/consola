@@ -1,4 +1,10 @@
-import { text, confirm, select, multiselect } from "@clack/prompts";
+import {
+  text,
+  confirm,
+  select,
+  multiselect,
+  spinner as createSpinner,
+} from "@clack/prompts";
 
 type SelectOption = {
   label: string;
@@ -226,4 +232,18 @@ export async function prompt<
   }
 
   throw new Error(`Unknown prompt type: ${opts.type}`);
+}
+
+export interface Spinner {
+  start: (msg?: string) => void;
+  stop: (msg?: string, code?: number) => void;
+  message: (msg?: string) => void;
+}
+
+export function spinner(message?: string): Spinner {
+  const s = createSpinner();
+  if (message) {
+    s.start(message);
+  }
+  return s;
 }
