@@ -2,11 +2,12 @@ import _stringWidth from "string-width";
 import isUnicodeSupported from "is-unicode-supported";
 import { colors } from "../utils/color";
 import { parseStack } from "../utils/error";
-import { FormatOptions, LogObject } from "../types";
+import type { ConsolaOptions, FormatOptions, LogObject } from "../types";
 import { LogLevel, LogType } from "../constants";
 import { BoxOpts, box } from "../utils/box";
 import { stripAnsi } from "../utils";
 import { BasicReporter } from "./basic";
+import { Spinner } from "../utils/spinner";
 
 export const TYPE_COLOR_MAP: { [k in LogType]?: string } = {
   info: "cyan",
@@ -33,9 +34,11 @@ const TYPE_ICONS: { [k in LogType]?: string } = {
   debug: s("⚙", "D"),
   trace: s("→", "→"),
   fail: s("✖", "×"),
-  start: s("◐", "o"),
+  start: "",
   log: "",
 };
+
+const SPINNER_STOP_TYPES = new Set(["success", "fail", "fatal", "error"]);
 
 function stringWidth(str: string) {
   // https://github.com/unjs/consola/issues/204
@@ -47,6 +50,8 @@ function stringWidth(str: string) {
 }
 
 export class FancyReporter extends BasicReporter {
+  _spinner?: Spinner;
+
   formatStack(stack: string, opts: FormatOptions) {
     const indent = "  ".repeat((opts?.errorLevel || 0) + 1);
     return (
@@ -131,6 +136,38 @@ export class FancyReporter extends BasicReporter {
     }
 
     return isBadge ? "\n" + line + "\n" : line;
+  }
+
+  log(logObj: LogObject, ctx: { options: ConsolaOptions }) {
+    // Start spinner
+    if (logObj.type === "start") {
+      if (this._spinner) {
+        this._spinner.stop();
+      }
+      this._spinner = new Spinner(
+        this.formatLine(logObj, ctx),
+        ctx.options.stdout,
+      );
+      return;
+    }
+
+    // Spinner is active
+    if (this._spinner) {
+      if (SPINNER_STOP_TYPES.has(logObj.type)) {
+        // Stop
+        this._spinner.stop();
+        this._spinner = undefined;
+      } else {
+        // Spinner interrupted
+        this._spinner.paused = true;
+        this._spinner.offset += 1; // this.formatLine(logObj, ctx).split("\n").length;
+        super.log(logObj, ctx);
+        this._spinner.paused = false;
+        return;
+      }
+    }
+
+    return super.log(logObj, ctx);
   }
 }
 
