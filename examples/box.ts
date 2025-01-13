@@ -1,7 +1,12 @@
 import { consola } from "./utils";
+import { colors } from "../src/utils";
 
 function main() {
   consola.box(`I am the default banner`);
+
+  consola.box(
+    `${colors.red("I")} ${colors.yellowBright("am")} ${colors.yellow("the")} ${colors.green("rainbow")} ${colors.blue("banner")}`,
+  );
 
   consola.box({
     title: "Box with options",
