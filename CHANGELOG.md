@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v3.4.0
+
+[compare changes](https://github.com/unjs/consola/compare/v3.3.3...v3.4.0)
+
+### 🚀 Enhancements
+
+- Use upstream `@clack/prompts` ([#332](https://github.com/unjs/consola/pull/332))
+
+### 🩹 Fixes
+
+- Calculate box width without escape sequence chars ([#336](https://github.com/unjs/consola/pull/336))
+
+### 💅 Refactors
+
+- Keep prompt styles (cont. #332) ([#332](https://github.com/unjs/consola/issues/332))
+
+### 📦 Build
+
+- Update exports for node16 typescript resolution ([#331](https://github.com/unjs/consola/pull/331))
+
+### 🏡 Chore
+
+- Update deps ([9193d63](https://github.com/unjs/consola/commit/9193d63))
+- Apply automated updates ([fc8b9b9](https://github.com/unjs/consola/commit/fc8b9b9))
+
+### ❤️ Contributors
+
+- Pooya Parsa ([@pi0](http://github.com/pi0))
+- Yongqi <yongqi14@qq.com>
+
 ## v3.3.3
 
 [compare changes](https://github.com/unjs/consola/compare/v3.3.2...v3.3.3)
