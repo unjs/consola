@@ -11,6 +11,30 @@ export default defineBuildConfig({
         output.exports = "named";
       }
 
+      // Prompts theme
+      // https://github.com/bombshell-dev/clack/issues/36
+      options.plugins.push({
+        name: "@clack/prompts",
+        transform(code, id) {
+          if (id.endsWith("@clack/prompts/dist/index.mjs")) {
+            const replaces = [
+              ["}  $", "} $"],
+              [String.raw`"\u25C6","*"`, '"❯", ">"'],
+              [String.raw`"\u25A0","x"`, '"■", "x"'],
+              [String.raw`"\u25B2","x"`, '"▲", "x"'],
+              [String.raw`"\u25C7","o"`, '"✔", "√"'],
+              [String.raw`"\u250C","T"`, '""'],
+              [String.raw`"\u2502","|"`, '""'],
+              [String.raw`"\u2514","\u2014"`, '""'],
+            ] as const;
+            for (const [from, to] of replaces) {
+              code = code.replaceAll(from, to);
+            }
+            return code;
+          }
+        },
+      });
+
       // Node.js 14 support
       // https://github.com/unjs/consola/issues/204
       options.plugins.push({
