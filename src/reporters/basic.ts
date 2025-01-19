@@ -75,12 +75,15 @@ export class BasicReporter implements ConsolaReporter {
     ]);
   }
 
-  log(logObj: LogObject, ctx: { options: ConsolaOptions }) {
-    const line = this.formatLogObj(logObj, {
+  formatLine(logObj: LogObject, ctx: { options: ConsolaOptions }) {
+    return this.formatLogObj(logObj, {
       columns: (ctx.options.stdout as any).columns || 0,
       ...ctx.options.formatOptions,
     });
+  }
 
+  log(logObj: LogObject, ctx: { options: ConsolaOptions }) {
+    const line = this.formatLine(logObj, ctx);
     return writeStream(
       line + "\n",
       logObj.level < 2

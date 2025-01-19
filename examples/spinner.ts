@@ -1,9 +1,16 @@
 import { consola } from "./utils";
 
-async function main() {
-  consola.start("Creating project...");
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  consola.success("Project created!");
+consola.wrapAll();
+
+// consola.start("Creating project");
+consola.start("Creating project \n  Name: 123");
+
+for (let i = 0; i <= 100; i++) {
+  if (i % 25 === 0) {
+    console.log(`Random info message ${i}`);
+    // consola.info(`Random info message ${i}`);
+  }
+  await new Promise((resolve) => setTimeout(resolve, 10));
 }
 
-main();
+consola.success("Project created!");
