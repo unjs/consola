@@ -7,3 +7,4 @@ export {
   leftAlign,
   align,
 } from "./utils/string";
+export * from "./utils/tree";
