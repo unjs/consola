@@ -136,5 +136,5 @@
   "engines": {
     "node": "^14.18.0 || >=16.10.0"
   },
-  "packageManager": "pnpm@9.15.4"
+  "packageManager": "pnpm@10.6.3"
 }
