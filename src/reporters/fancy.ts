@@ -47,11 +47,11 @@ function stringWidth(str: string) {
 }
 
 export class FancyReporter extends BasicReporter {
-  formatStack(stack: string, opts: FormatOptions) {
+  formatStack(stack: string, message: string, opts?: FormatOptions) {
     const indent = "  ".repeat((opts?.errorLevel || 0) + 1);
     return (
       `\n${indent}` +
-      parseStack(stack)
+      parseStack(stack, message)
         .map(
           (line) =>
             "  " +
@@ -127,7 +127,7 @@ export class FancyReporter extends BasicReporter {
 
     if (logObj.type === "trace") {
       const _err = new Error("Trace: " + logObj.message);
-      line += this.formatStack(_err.stack || "");
+      line += this.formatStack(_err.stack || "", _err.message);
     }
 
     return isBadge ? "\n" + line + "\n" : line;

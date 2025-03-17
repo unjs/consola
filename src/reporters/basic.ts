@@ -11,14 +11,14 @@ import { writeStream } from "../utils/stream";
 const bracket = (x: string) => (x ? `[${x}]` : "");
 
 export class BasicReporter implements ConsolaReporter {
-  formatStack(stack: string, opts: FormatOptions) {
+  formatStack(stack: string, message: string, opts: FormatOptions) {
     const indent = "  ".repeat((opts?.errorLevel || 0) + 1);
-    return indent + parseStack(stack).join(`\n${indent}`);
+    return indent + parseStack(stack, message).join(`\n${indent}`);
   }
 
   formatError(err: any, opts: FormatOptions): string {
     const message = err.message ?? formatWithOptions(opts, err);
-    const stack = err.stack ? this.formatStack(err.stack, opts) : "";
+    const stack = err.stack ? this.formatStack(err.stack, message, opts) : "";
 
     const level = opts?.errorLevel || 0;
     const causedPrefix = level > 0 ? `${"  ".repeat(level)}[cause]: ` : "";
