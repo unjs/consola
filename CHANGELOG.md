@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v3.4.1
+
+[compare changes](https://github.com/unjs/consola/compare/v3.4.0...v3.4.1)
+
+### 🩹 Fixes
+
+- Remove all message lines from stack ([#356](https://github.com/unjs/consola/pull/356))
+
+### 🏡 Chore
+
+- Update ci ([#353](https://github.com/unjs/consola/pull/353))
+- Update deps ([da26f10](https://github.com/unjs/consola/commit/da26f10))
+
+### ❤️ Contributors
+
+- Pooya Parsa ([@pi0](https://github.com/pi0))
+- Nozomu Ikuta ([@nozomuikuta](https://github.com/nozomuikuta))
+
 ## v3.4.0
 
 [compare changes](https://github.com/unjs/consola/compare/v3.3.3...v3.4.0)
