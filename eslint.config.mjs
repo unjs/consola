@@ -11,4 +11,9 @@ export default unjs({
     "@typescript-eslint/no-unused-vars": 0,
     "unicorn/expiring-todo-comments": 0,
   },
+  markdown: {
+    rules: {
+      'unicorn/no-process-exit': 0,
+    }
+  }
 });

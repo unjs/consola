@@ -215,6 +215,23 @@ const consola = createConsola({
 consola.log("foo bar");
 ```
 
+**Example:** Exit on fatal errors
+
+```ts
+import { consola } from 'consola';
+
+consola.addReporter({
+  log(logObj) {
+    if(logObj.type === 'fatal') {
+      process.exit(1)
+    }
+  }
+})
+
+// Will exit on this line.
+consola.fatal("fatal error");
+```
+
 ## Log Level
 
 Consola only shows logs with configured log level or below. (Default is `3`)
