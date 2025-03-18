@@ -7,3 +7,9 @@ export {
   leftAlign,
   align,
 } from "./utils/string";
+export {
+  type TreeItemObject,
+  type TreeItem,
+  type TreeOptions,
+  formatTree,
+} from "./utils/tree";
