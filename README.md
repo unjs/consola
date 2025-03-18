@@ -199,7 +199,7 @@ You can create a new reporter object that implements `{ log(logObject): () => { 
 **Example:** Simple JSON reporter
 
 ```ts
-import { createConsola, LogLevels } from "consola";
+import { createConsola, LogTypes } from "consola";
 
 const consola = createConsola({
   reporters: [
@@ -208,7 +208,7 @@ const consola = createConsola({
         console.log(JSON.stringify(logObj));
 
         // Or any other behaviors, such as exiting on fatal errors :)
-        if(logObj.level === LogLevels.fatal) {
+        if(logObj.type === LogTypes.fatal) {
           process.exit(1)
         }
       },
