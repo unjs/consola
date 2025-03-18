@@ -221,14 +221,14 @@ Consola only shows logs with configured log level or below. (Default is `3`)
 
 Available log levels:
 
+- `-9`: Silent
 - `0`: Fatal and Error
 - `1`: Warnings
 - `2`: Normal logs
 - `3`: Informational logs, success, fail, ready, start, ...
 - `4`: Debug logs
 - `5`: Trace logs
-- `-999`: Silent
-- `+999`: Verbose logs
+- `9`: Verbose logs
 
 You can set the log level by either:
 
