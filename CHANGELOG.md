@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## v3.4.2
+
+[compare changes](https://github.com/unjs/consola/compare/v3.4.1...v3.4.2)
+
+### 🩹 Fixes
+
+- Export tree utils ([#349](https://github.com/unjs/consola/pull/349))
+- Calculate box width with the title width ([#362](https://github.com/unjs/consola/pull/362))
+
+### 🏡 Chore
+
+- Cleanup unused deps ([#361](https://github.com/unjs/consola/pull/361))
+- Update deps ([1e5f846](https://github.com/unjs/consola/commit/1e5f846))
+
+### ❤️ Contributors
+
+- Kricsleo ([@kricsleo](https://github.com/kricsleo))
+- Scott Humphries ([@sscotth](https://github.com/sscotth))
+- Pooya Parsa ([@pi0](https://github.com/pi0))
+
 ## v3.4.1
 
 [compare changes](https://github.com/unjs/consola/compare/v3.4.0...v3.4.1)
