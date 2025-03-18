@@ -8,9 +8,6 @@ importers:
 
   .:
     devDependencies:
-      '@clack/core':
-        specifier: ^0.4.1
-        version: 0.4.1
       '@clack/prompts':
         specifier: ^0.10.0
         version: 0.10.0
@@ -35,21 +32,12 @@ importers:
       is-unicode-supported:
         specifier: ^2.1.0
         version: 2.1.0
-      jiti:
-        specifier: ^2.4.2
-        version: 2.4.2
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
       prettier:
         specifier: ^3.5.3
         version: 3.5.3
       sentencer:
         specifier: ^0.2.1
         version: 0.2.1
-      sisteransi:
-        specifier: ^1.0.5
-        version: 1.0.5
       std-env:
         specifier: ^3.8.1
         version: 3.8.1
