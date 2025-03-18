@@ -14,7 +14,7 @@ export type LogLevel = 0 | 1 | 2 | 3 | 4 | 5 | (number & {});
  * @type {Record<LogType, number>} LogLevels - key-value pairs of log types to their numeric levels. See {@link LogType}.
  */
 export const LogLevels: Record<LogType, number> = {
-  silent: -9,
+  silent: -1,
 
   fatal: 0,
   error: 0,

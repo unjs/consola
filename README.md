@@ -221,7 +221,7 @@ Consola only shows logs with configured log level or below. (Default is `3`)
 
 Available log levels:
 
-- `-9`: Silent
+- `-1`: Silent
 - `0`: Fatal and Error
 - `1`: Warnings
 - `2`: Normal logs
