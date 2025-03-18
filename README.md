@@ -199,18 +199,13 @@ You can create a new reporter object that implements `{ log(logObject): () => { 
 **Example:** Simple JSON reporter
 
 ```ts
-import { createConsola, LogTypes } from "consola";
+import { createConsola } from "consola";
 
 const consola = createConsola({
   reporters: [
     {
       log: (logObj) => {
         console.log(JSON.stringify(logObj));
-
-        // Or any other behaviors, such as exiting on fatal errors :)
-        if(logObj.type === LogTypes.fatal) {
-          process.exit(1)
-        }
       },
     },
   ],
@@ -218,6 +213,23 @@ const consola = createConsola({
 
 // Prints {"date":"2023-04-18T12:43:38.693Z","args":["foo bar"],"type":"log","level":2,"tag":""}
 consola.log("foo bar");
+```
+
+**Example:** Exit on fatal errors
+
+```ts
+import { consola } from 'consola';
+
+consola.addReporter({
+  log(logObj) {
+    if(logObj.type === 'fatal') {
+      process.exit(1)
+    }
+  }
+})
+
+// Will exit on this line.
+consola.fatal("fatal error");
 ```
 
 ## Log Level
