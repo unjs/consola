@@ -9,6 +9,11 @@ function main() {
   );
 
   consola.box({
+    title: "longer title",
+    message: "short msg",
+  });
+
+  consola.box({
     title: "Box with options",
     message: `I am a banner with different options`,
     style: {
