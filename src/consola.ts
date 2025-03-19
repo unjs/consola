@@ -8,6 +8,7 @@ import type {
   ConsolaOptions,
 } from "./types";
 import type { PromptOptions } from "./prompt";
+import { matchesTag } from "./utils/filter";
 
 let paused = false;
 const queue: any[] = [];
@@ -389,6 +390,10 @@ export class Consola {
       typeof logObj.type === "string" ? logObj.type.toLowerCase() : "log"
     ) as LogType;
     logObj.tag = typeof logObj.tag === "string" ? logObj.tag : "";
+
+    if(!matchesTag(logObj.tag, process.env.DEBUG)) {
+      return false;
+    }
 
     // Resolve log
     /**
