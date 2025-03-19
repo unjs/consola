@@ -391,7 +391,7 @@ export class Consola {
     ) as LogType;
     logObj.tag = typeof logObj.tag === "string" ? logObj.tag : "";
 
-    if(!matchesTag(logObj.tag, process.env.DEBUG)) {
+    if (!matchesTag(logObj.tag, process.env.DEBUG)) {
       return false;
     }
 
