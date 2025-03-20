@@ -1,8 +1,17 @@
-export function matchesTag(tag: string, pattern: string = "*") {
-  if (pattern === "*") {
-    return true;
+const matchesCache = new Map<string, boolean>();
+
+export function matchesTag(tag: string, pattern: string) {
+  const cacheKey = `${tag}__CACHE_KEY__${pattern}`;
+  if (matchesCache.has(cacheKey)) {
+    return matchesCache.get(cacheKey);
   }
 
+  const matched = _matchesTag(tag, pattern);
+  matchesCache.set(cacheKey, matched);
+  return matched;
+}
+
+function _matchesTag(tag: string, pattern: string) {
   const templates = pattern
     .trim()
     .replaceAll(" ", ",")
