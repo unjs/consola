@@ -56,6 +56,30 @@ describe("consola", () => {
 
     expect(logs.at(-1)!.args).toEqual(["SPAM", "(repeated 4 times)"]);
   });
+
+  test("should avoid infinite loop", () => {
+    const logs: LogObject[] = [];
+    const TestReporter: ConsolaReporter = {
+      log(logObj) {
+        logs.push(logObj);
+      },
+    };
+    const consola = createConsola({
+      reporters: [TestReporter],
+    });
+
+    consola.wrapConsole();
+    const obj = {
+      get value() {
+        console.warn(obj);
+        return "anything";
+      },
+    };
+    consola.warn(obj);
+    consola.restoreConsole();
+
+    expect(logs.length).toBe(1);
+  });
 });
 
 function wait(delay) {
