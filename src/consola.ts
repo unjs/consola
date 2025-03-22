@@ -82,6 +82,10 @@ export class Consola {
 
     // Track of last log
     this._lastLog = {};
+
+    // Prevent infinite loop on logging
+    // Issue: https://github.com/unjs/consola/issues/298
+    this._logFn = _preventLoop(this._logFn).bind(this);
   }
 
   /**
@@ -472,6 +476,24 @@ function _normalizeLogLevel(
     return types[input].level;
   }
   return defaultLevel;
+}
+
+function _preventLoop<T extends (this: any, ...args: any[]) => any>(fn: T): T {
+  let doing = false;
+  return function (...args) {
+    if (doing) {
+      return false;
+    }
+    doing = true;
+    try {
+      const result = fn.apply(this, args);
+      doing = false;
+      return result;
+    } catch (error) {
+      doing = false;
+      throw error;
+    }
+  } as T;
 }
 
 export interface LogFn {
