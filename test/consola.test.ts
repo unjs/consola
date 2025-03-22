@@ -76,7 +76,7 @@ describe("consola", () => {
       },
     };
     consola.warn(obj);
-    consola.restoreAll();
+    consola.restoreConsole();
 
     expect(logs.length).toBe(1);
   });
