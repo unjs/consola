@@ -1,10 +1,5 @@
 import { text, confirm, select, multiselect } from "@clack/prompts";
-
-type SelectOption = {
-  label: string;
-  value: string;
-  hint?: string;
-};
+import type { Option } from "@clack/prompts";
 
 export const kCancel = Symbol.for("cancel");
 
@@ -63,7 +58,7 @@ export type ConfirmPromptOptions = PromptCommonOptions & {
   initial?: boolean;
 };
 
-export type SelectPromptOptions = PromptCommonOptions & {
+export type SelectPromptOptions<Value> = PromptCommonOptions & {
   /**
    * Specifies the prompt type as select.
    */
@@ -73,29 +68,29 @@ export type SelectPromptOptions = PromptCommonOptions & {
    * The initial value for the select prompt.
    * @optional
    */
-  initial?: string;
+  initial?: Value;
 
   /**
-   * The options to select from. See {@link SelectOption}.
+   * The options to select from.
    */
-  options: (string | SelectOption)[];
+  options: (string | Option<Value>)[];
 };
 
-export type MultiSelectOptions = PromptCommonOptions & {
+export type MultiSelectOptions<Value> = PromptCommonOptions & {
   /**
    * Specifies the prompt type as multiselect.
    */
   type: "multiselect";
 
   /**
-   * The options to select from. See {@link SelectOption}.
+   * The options to select from.
    */
-  initial?: string[];
+  initial?: Value[];
 
   /**
-   * The options to select from. See {@link SelectOption}.
+   * The options to select from.
    */
-  options: (string | SelectOption)[];
+  options: (string | Option<Value>)[];
 
   /**
    * Whether the prompt requires at least one selection.
@@ -106,38 +101,41 @@ export type MultiSelectOptions = PromptCommonOptions & {
 /**
  * Defines a combined type for all prompt options.
  */
-export type PromptOptions =
+export type PromptOptions<Value> =
   | TextPromptOptions
   | ConfirmPromptOptions
-  | SelectPromptOptions
-  | MultiSelectOptions;
+  | SelectPromptOptions<Value>
+  | MultiSelectOptions<Value>;
 
-type inferPromptReturnType<T extends PromptOptions> =
-  T extends TextPromptOptions
-    ? string
-    : T extends ConfirmPromptOptions
-      ? boolean
-      : T extends SelectPromptOptions
-        ? T["options"][number] extends SelectOption
-          ? T["options"][number]["value"]
-          : T["options"][number]
-        : T extends MultiSelectOptions
-          ? T["options"]
-          : unknown;
+type inferPromptReturnType<
+  T extends PromptOptions<Value>,
+  Value,
+> = T extends TextPromptOptions
+  ? string
+  : T extends ConfirmPromptOptions
+    ? boolean
+    : T extends SelectPromptOptions<Value>
+      ? Value
+      : T extends MultiSelectOptions<Value>
+        ? Value[]
+        : never;
 
-type inferPromptCancalReturnType<T extends PromptOptions> = T extends {
+type inferPromptCancalReturnType<
+  T extends PromptOptions<Value>,
+  Value,
+> = T extends {
   cancel: "reject";
 }
   ? never
   : T extends { cancel: "default" }
-    ? inferPromptReturnType<T>
+    ? inferPromptReturnType<T, Value>
     : T extends { cancel: "undefined" }
       ? undefined
       : T extends { cancel: "null" }
         ? null
         : T extends { cancel: "symbol" }
           ? typeof kCancel
-          : inferPromptReturnType<T> /* default */;
+          : inferPromptReturnType<T, Value> /* default */;
 
 /**
  * Asynchronously prompts the user for input based on specified options.
