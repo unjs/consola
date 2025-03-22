@@ -24,22 +24,9 @@
 
 ## Installation
 
-Using npm:
-
 ```bash
-npm i consola
-```
-
-Using yarn:
-
-```bash
-yarn add consola
-```
-
-Using pnpm:
-
-```bash
-pnpm i consola
+# ✨ Auto-detect (npm, yarn, pnpm, bun, deno)
+npx nypm install consola
 ```
 
 ## Getting Started
@@ -277,6 +264,17 @@ const logger = createConsola({
   //     date: false,
   // },
 });
+```
+
+## Conditions
+
+If used in [Deno](https://deno.com/) through [esm.sh](https://esm.sh), you need to specify the `conditions` to `node`. For example: 
+
+```ts
+import { consola } from 'https://esm.sh/consola@3.4.2?conditions=node'
+
+// Or use npm package directly
+import { consola } from 'npm:consola@3.4.2'
 ```
 
 ## Integrations
