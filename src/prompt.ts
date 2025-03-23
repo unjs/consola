@@ -101,41 +101,33 @@ export type MultiSelectOptions<Value> = PromptCommonOptions & {
 /**
  * Defines a combined type for all prompt options.
  */
-export type PromptOptions<Value> =
+export type PromptOptions<Value = unknown> =
   | TextPromptOptions
   | ConfirmPromptOptions
   | SelectPromptOptions<Value>
   | MultiSelectOptions<Value>;
 
-type inferPromptReturnType<
-  T extends PromptOptions<Value>,
-  Value,
-> = T extends TextPromptOptions
+type inferPromptReturnType<Type, Value> = Type extends "text"
   ? string
-  : T extends ConfirmPromptOptions
+  : Type extends "confirm"
     ? boolean
-    : T extends SelectPromptOptions<Value>
+    : Type extends "select"
       ? Value
-      : T extends MultiSelectOptions<Value>
+      : Type extends "multiselect"
         ? Value[]
-        : never;
+        : unknown;
 
-type inferPromptCancalReturnType<
-  T extends PromptOptions<Value>,
-  Value,
-> = T extends {
-  cancel: "reject";
-}
+type inferPromptCancalReturnType<Type, Value, Cancel> = Cancel extends "reject"
   ? never
-  : T extends { cancel: "default" }
-    ? inferPromptReturnType<T, Value>
-    : T extends { cancel: "undefined" }
+  : Cancel extends "default"
+    ? inferPromptReturnType<Type, Value>
+    : Cancel extends "undefined"
       ? undefined
-      : T extends { cancel: "null" }
+      : Cancel extends "null"
         ? null
-        : T extends { cancel: "symbol" }
+        : Cancel extends "symbol"
           ? typeof kCancel
-          : inferPromptReturnType<T, Value> /* default */;
+          : inferPromptReturnType<Type, Value> /* default */;
 
 /**
  * Asynchronously prompts the user for input based on specified options.
@@ -146,13 +138,16 @@ type inferPromptCancalReturnType<
  * @returns {Promise<inferPromptReturnType<T>>} - A promise that resolves with the user's response, the type of which is inferred from the options. See {@link inferPromptReturnType}.
  */
 export async function prompt<
-  _ = any,
-  __ = any,
-  T extends PromptOptions = TextPromptOptions,
+  Type = "text",
+  Value = unknown,
+  Cancel = "default",
 >(
   message: string,
-  opts: PromptOptions = {},
-): Promise<inferPromptReturnType<T> | inferPromptCancalReturnType<T>> {
+  opts: PromptOptions<Value> & { type?: Type; cancel?: Cancel } = {},
+): Promise<
+  | inferPromptReturnType<Type, Value>
+  | inferPromptCancalReturnType<Type, Value, Cancel>
+> {
   const handleCancel = (value: unknown) => {
     if (
       typeof value !== "symbol" ||
@@ -189,37 +184,37 @@ export async function prompt<
   if (!opts.type || opts.type === "text") {
     return (await text({
       message,
-      defaultValue: opts.default,
-      placeholder: opts.placeholder,
-      initialValue: opts.initial as string,
+      defaultValue: (opts as TextPromptOptions).default,
+      placeholder: (opts as TextPromptOptions).placeholder,
+      initialValue: (opts as TextPromptOptions).initial,
     }).then(handleCancel)) as any;
   }
 
   if (opts.type === "confirm") {
     return (await confirm({
       message,
-      initialValue: opts.initial,
+      initialValue: (opts as ConfirmPromptOptions).initial,
     }).then(handleCancel)) as any;
   }
 
   if (opts.type === "select") {
     return (await select({
       message,
-      options: opts.options.map((o) =>
-        typeof o === "string" ? { value: o, label: o } : o,
+      options: (opts as SelectPromptOptions<Value>).options.map((o) =>
+        typeof o === "string" ? ({ value: o, label: o } as Option<Value>) : o,
       ),
-      initialValue: opts.initial,
+      initialValue: (opts as SelectPromptOptions<Value>).initial,
     }).then(handleCancel)) as any;
   }
 
   if (opts.type === "multiselect") {
     return (await multiselect({
       message,
-      options: opts.options.map((o) =>
-        typeof o === "string" ? { value: o, label: o } : o,
+      options: (opts as MultiSelectOptions<Value>).options.map((o) =>
+        typeof o === "string" ? ({ value: o, label: o } as Option<Value>) : o,
       ),
-      required: opts.required,
-      initialValues: opts.initial,
+      required: (opts as MultiSelectOptions<Value>).required,
+      initialValues: (opts as MultiSelectOptions<Value>).initial,
     }).then(handleCancel)) as any;
   }
 
