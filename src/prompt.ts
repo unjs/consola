@@ -117,7 +117,7 @@ type inferPromptReturnType<Type, Value> = Type extends "text"
         ? Value[]
         : unknown;
 
-type inferPromptCancalReturnType<Type, Value, Cancel> = Cancel extends "reject"
+type inferPromptCancelReturnType<Type, Value, Cancel> = Cancel extends "reject"
   ? never
   : Cancel extends "default"
     ? inferPromptReturnType<Type, Value>
@@ -146,7 +146,7 @@ export async function prompt<
   opts: PromptOptions<Value> & { type?: Type; cancel?: Cancel } = {},
 ): Promise<
   | inferPromptReturnType<Type, Value>
-  | inferPromptCancalReturnType<Type, Value, Cancel>
+  | inferPromptCancelReturnType<Type, Value, Cancel>
 > {
   const handleCancel = (value: unknown) => {
     if (
