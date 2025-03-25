@@ -15,3 +15,7 @@ export function parseStack(stack: string, message: string) {
 
   return lines;
 }
+
+export function isSelfStack(stack: string) {
+  return /\(.*node_modules\/consola\/dist/.test(stack);
+}

@@ -5,7 +5,7 @@ import type {
   FormatOptions,
   ConsolaOptions,
 } from "../types";
-import { parseStack } from "../utils/error";
+import { isSelfStack, parseStack } from "../utils/error";
 import { writeStream } from "../utils/stream";
 
 const bracket = (x: string) => (x ? `[${x}]` : "");
@@ -13,7 +13,12 @@ const bracket = (x: string) => (x ? `[${x}]` : "");
 export class BasicReporter implements ConsolaReporter {
   formatStack(stack: string, message: string, opts: FormatOptions) {
     const indent = "  ".repeat((opts?.errorLevel || 0) + 1);
-    return indent + parseStack(stack, message).join(`\n${indent}`);
+    return (
+      indent +
+      parseStack(stack, message)
+        .filter((line) => !isSelfStack(line))
+        .join(`\n${indent}`)
+    );
   }
 
   formatError(err: any, opts: FormatOptions): string {
