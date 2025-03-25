@@ -15,6 +15,6 @@ describe("consola", () => {
     // @ts-expect-error should error for invalid args/date type
     assertType(consola.log({ args: "hi", date: "2025-03-25" }));
     // @ts-expect-error should error for invalid date type
-    assertType(consola.log({args: ["hi"], date: "2025-03-25"}));
+    assertType(consola.log({ args: ["hi"], date: "2025-03-25" }));
   });
 });
