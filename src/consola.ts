@@ -21,6 +21,8 @@ const queue: any[] = [];
 export class Consola {
   options: ConsolaOptions;
 
+  private indent = 0;
+
   _lastLog: {
     serialized?: string;
     object?: LogObject;
@@ -388,6 +390,15 @@ export class Consola {
     logObj.type = (
       typeof logObj.type === "string" ? logObj.type.toLowerCase() : "log"
     ) as LogType;
+
+    if (logObj.type === "group") {
+      this.indent++;
+    }
+    if (logObj.type === "groupEnd" && this.indent > 0) {
+      this.indent--;
+    }
+    logObj.indent = "indent" in logObj ? logObj.indent : this.indent;
+
     logObj.tag = typeof logObj.tag === "string" ? logObj.tag : "";
 
     // Resolve log

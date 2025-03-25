@@ -22,6 +22,8 @@ export const LogLevels: Record<LogType, number> = {
   warn: 1,
 
   log: 2,
+  group: 2,
+  groupEnd: 2,
   info: 3,
 
   success: 3,
@@ -40,7 +42,7 @@ export const LogLevels: Record<LogType, number> = {
 /**
  * Lists the types of log messages supported by the system.
  *
- * @type {"silent" | "fatal" | "error" | "warn" | "log" | "info" | "success" | "fail" | "ready" | "start" | "box" | "debug" | "trace" | "verbose"} LogType - Represents the specific type of log message.
+ * @type {"silent" | "fatal" | "error" | "warn" | "log" | "group" | "info" | "success" | "fail" | "ready" | "start" | "box" | "debug" | "trace" | "verbose"} LogType - Represents the specific type of log message.
  */
 export type LogType =
   // 0
@@ -51,6 +53,8 @@ export type LogType =
   | "warn"
   // 2
   | "log"
+  | "group"
+  | "groupEnd"
   // 3
   | "info"
   | "success"
@@ -89,6 +93,12 @@ export const LogTypes: Record<LogType, Partial<LogObject>> = {
 
   // Level 2
   log: {
+    level: LogLevels.log,
+  },
+  group: {
+    level: LogLevels.log,
+  },
+  groupEnd: {
     level: LogLevels.log,
   },
 

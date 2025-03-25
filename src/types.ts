@@ -162,6 +162,11 @@ export interface LogObject extends InputLogObject {
   tag: string;
 
   /**
+   * The indentation level of the log message, overridden if necessary.
+   */
+  indent: number;
+
+  /**
    * Additional arguments to be logged with the message, overridden if necessary.
    */
   args: any[];
