@@ -1,3 +1,4 @@
+// @ts-expect-error no types
 import { vsprintf } from "printj";
 
 // Predefined rules for replacing format arguments

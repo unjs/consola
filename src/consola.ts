@@ -474,8 +474,15 @@ function _normalizeLogLevel(
   return defaultLevel;
 }
 
+// Should match with `isLogObj()`
+type LogParam<T> = T extends { message: any } | { args: any }
+  ? T extends { stack: any }
+    ? T
+    : InputLogObject
+  : T;
+
 export interface LogFn {
-  (message: InputLogObject | any, ...args: any[]): void;
+  <T>(message: LogParam<T>, ...args: any[]): void;
   raw: (...args: any[]) => void;
 }
 export type ConsolaInstance = Consola & Record<LogType, LogFn>;
