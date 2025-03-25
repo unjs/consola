@@ -21,7 +21,7 @@ const queue: any[] = [];
 export class Consola {
   options: ConsolaOptions;
 
-  private indent = 0;
+  private groupIndentionLevel = 0;
 
   _lastLog: {
     serialized?: string;
@@ -52,6 +52,7 @@ export class Consola {
         types: LogTypes,
         throttle: 1000,
         throttleMin: 5,
+        groupIndentation: 2,
         formatOptions: {
           date: true,
           colors: false,
@@ -386,18 +387,20 @@ export class Consola {
       delete logObj.additional;
     }
 
+    // TODO: this breaks the `groupEnd`
     // Normalize type to lowercase
-    logObj.type = (
-      typeof logObj.type === "string" ? logObj.type.toLowerCase() : "log"
-    ) as LogType;
+    // logObj.type = (
+    //   typeof logObj.type === "string" ? logObj.type.toLowerCase() : "log"
+    // ) as LogType;
+    logObj.type ||= "log";
 
     if (logObj.type === "group") {
-      this.indent++;
+      this.groupIndentionLevel++;
     }
-    if (logObj.type === "groupEnd" && this.indent > 0) {
-      this.indent--;
+    if (logObj.type === "groupEnd" && this.groupIndentionLevel > 0) {
+      this.groupIndentionLevel--;
     }
-    logObj.indent = "indent" in logObj ? logObj.indent : this.indent;
+    logObj.groupIndentionLevel = "groupIndentionLevel" in logObj ? logObj.groupIndentionLevel : this.groupIndentionLevel;
 
     logObj.tag = typeof logObj.tag === "string" ? logObj.tag : "";
 
@@ -489,7 +492,13 @@ export interface LogFn {
   (message: InputLogObject | any, ...args: any[]): void;
   raw: (...args: any[]) => void;
 }
-export type ConsolaInstance = Consola & Record<LogType, LogFn>;
+export interface LogFnWithoutParams {
+  (): void;
+  raw: (...args: any[]) => void;
+}
+export type ConsolaInstance = Consola & Record<Exclude<LogType, 'groupEnd'>, LogFn> & {
+  groupEnd: LogFnWithoutParams;
+};
 
 // Legacy support
 // @ts-expect-error

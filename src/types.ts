@@ -18,6 +18,12 @@ export interface ConsolaOptions {
   level: LogLevel;
 
   /**
+   * Group indentation.
+   * @default 2
+   */
+  groupIndentation?: number | undefined;
+
+  /**
    * Default properties applied to all log messages unless overridden. See {@link InputLogObject}.
    */
   defaults: InputLogObject;
@@ -162,9 +168,9 @@ export interface LogObject extends InputLogObject {
   tag: string;
 
   /**
-   * The indentation level of the log message, overridden if necessary.
+   * Group indentation level, overridden if necessary.
    */
-  indent: number;
+  groupIndentionLevel: number;
 
   /**
    * Additional arguments to be logged with the message, overridden if necessary.
