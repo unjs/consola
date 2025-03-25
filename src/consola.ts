@@ -400,7 +400,10 @@ export class Consola {
     if (logObj.type === "groupEnd" && this.groupIndentionLevel > 0) {
       this.groupIndentionLevel--;
     }
-    logObj.groupIndentionLevel = "groupIndentionLevel" in logObj ? logObj.groupIndentionLevel : this.groupIndentionLevel;
+    logObj.groupIndentionLevel =
+      "groupIndentionLevel" in logObj
+        ? logObj.groupIndentionLevel
+        : this.groupIndentionLevel;
 
     logObj.tag = typeof logObj.tag === "string" ? logObj.tag : "";
 
@@ -496,9 +499,10 @@ export interface LogFnWithoutParams {
   (): void;
   raw: (...args: any[]) => void;
 }
-export type ConsolaInstance = Consola & Record<Exclude<LogType, 'groupEnd'>, LogFn> & {
-  groupEnd: LogFnWithoutParams;
-};
+export type ConsolaInstance = Consola &
+  Record<Exclude<LogType, "groupEnd">, LogFn> & {
+    groupEnd: LogFnWithoutParams;
+  };
 
 // Legacy support
 // @ts-expect-error
