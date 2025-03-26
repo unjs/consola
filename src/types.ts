@@ -18,12 +18,6 @@ export interface ConsolaOptions {
   level: LogLevel;
 
   /**
-   * Group indentation.
-   * @default 2
-   */
-  groupIndentation?: number | undefined;
-
-  /**
    * Default properties applied to all log messages unless overridden. See {@link InputLogObject}.
    */
   defaults: InputLogObject;
@@ -100,6 +94,12 @@ export interface FormatOptions {
    * Error cause level.
    */
   errorLevel?: number;
+
+  /**
+   * Group indentation.
+   * @default 4
+   */
+  groupIndentation?: number;
 
   /**
    * Allows additional custom formatting options.

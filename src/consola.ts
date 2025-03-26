@@ -52,7 +52,6 @@ export class Consola {
         types: LogTypes,
         throttle: 1000,
         throttleMin: 5,
-        groupIndentation: 2,
         formatOptions: {
           date: true,
           colors: false,
