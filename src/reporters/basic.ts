@@ -78,12 +78,8 @@ export class BasicReporter implements ConsolaReporter {
   }
 
   log(logObj: LogObject, ctx: { options: ConsolaOptions }) {
-    const indentionLevel =
-      logObj.type === "group"
-        ? Math.max(logObj.groupIndentionLevel - 1, 0)
-        : logObj.groupIndentionLevel;
     const groupIndentation = ctx.options.formatOptions.groupIndentation || 4;
-    const indention = indentionLevel * groupIndentation;
+    const indention = logObj.groupIndentionLevel * groupIndentation;
 
     const indentionStr = Array.from({ length: indention }, (_, idx) =>
       idx % groupIndentation ? " " : this.groupIndentionBorder,

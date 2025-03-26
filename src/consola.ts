@@ -361,9 +361,17 @@ export class Consola {
     const logObj: Partial<LogObject> = {
       date: new Date(),
       args: [],
+      groupIndentionLevel: this.groupIndentionLevel,
       ...defaults,
       level: _normalizeLogLevel(defaults.level, this.options.types),
     };
+
+    if (logObj.type === "group") {
+      this.groupIndentionLevel++;
+    } else if (logObj.type === "groupEnd") {
+      this.groupIndentionLevel = Math.max(this.groupIndentionLevel - 1, 0);
+      return false;
+    }
 
     // Consume arguments
     if (!isRaw && args.length === 1 && isLogObj(args[0])) {
@@ -386,25 +394,10 @@ export class Consola {
       delete logObj.additional;
     }
 
-    // TODO: this breaks the `groupEnd`
     // Normalize type to lowercase
-    // logObj.type = (
-    //   typeof logObj.type === "string" ? logObj.type.toLowerCase() : "log"
-    // ) as LogType;
-    logObj.type ||= "log";
-
-    if (logObj.type === "group") {
-      this.groupIndentionLevel++;
-    }
-    if (logObj.type === "groupEnd") {
-      this.groupIndentionLevel = Math.max(this.groupIndentionLevel - 1, 0);
-      return false;
-    }
-    logObj.groupIndentionLevel =
-      "groupIndentionLevel" in logObj
-        ? logObj.groupIndentionLevel
-        : this.groupIndentionLevel;
-
+    logObj.type = (
+      typeof logObj.type === "string" ? logObj.type.toLowerCase() : "log"
+    ) as LogType;
     logObj.tag = typeof logObj.tag === "string" ? logObj.tag : "";
 
     // Resolve log
@@ -499,10 +492,9 @@ export interface LogFnWithoutParams {
   (): void;
   raw: (...args: any[]) => void;
 }
-export type ConsolaInstance = Consola &
-  Record<Exclude<LogType, "groupEnd">, LogFn> & {
-    groupEnd: LogFnWithoutParams;
-  };
+export type ConsolaInstance = Consola & {
+  [K in LogType]: K extends "groupEnd" ? LogFnWithoutParams : LogFn;
+};
 
 // Legacy support
 // @ts-expect-error

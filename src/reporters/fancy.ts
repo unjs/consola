@@ -35,9 +35,8 @@ const TYPE_ICONS: { [k in LogType]?: string } = {
   trace: s("→", "→"),
   fail: s("✖", "×"),
   start: s("◐", "o"),
-  log: "",
   group: s("▼", "+"),
-  groupEnd: "",
+  log: "",
 };
 
 function stringWidth(str: string) {
