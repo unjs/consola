@@ -76,18 +76,26 @@ export class BasicReporter implements ConsolaReporter {
   }
 
   log(logObj: LogObject, ctx: { options: ConsolaOptions }) {
-    const indent =
-      (logObj.type === "group"
+    const indentionLevel =
+      logObj.type === "group"
         ? Math.max(logObj.groupIndentionLevel - 1, 0)
-        : logObj.groupIndentionLevel) *
-      (ctx.options.formatOptions.groupIndentation || 4);
+        : logObj.groupIndentionLevel;
+    const groupIndentation = ctx.options.formatOptions.groupIndentation || 4;
+    const indention = indentionLevel * groupIndentation;
+
+    const indentionStr = Array.from({ length: indention }, (_, idx) =>
+      idx % groupIndentation ? " " : "│",
+    ).join("");
 
     const line = this.formatLogObj(logObj, {
-      columns: Math.max(0, ((ctx.options.stdout as any).columns || 0) - indent),
+      columns: Math.max(
+        0,
+        ((ctx.options.stdout as any).columns || 0) - indention,
+      ),
       ...ctx.options.formatOptions,
     })
       .split("\n")
-      .map((line) => `${" ".repeat(indent)}${line}`)
+      .map((line) => `${indentionStr}${line}`)
       .join("\n");
 
     return writeStream(
