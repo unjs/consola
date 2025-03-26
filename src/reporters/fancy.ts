@@ -50,6 +50,8 @@ function stringWidth(str: string) {
 }
 
 export class FancyReporter extends BasicReporter {
+  groupIndentionBorder = getColor(TYPE_COLOR_MAP.group)("│");
+
   formatStack(stack: string, message: string, opts?: FormatOptions) {
     const indent = "  ".repeat((opts?.errorLevel || 0) + 1);
     return (

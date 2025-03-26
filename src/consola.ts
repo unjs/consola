@@ -396,8 +396,9 @@ export class Consola {
     if (logObj.type === "group") {
       this.groupIndentionLevel++;
     }
-    if (logObj.type === "groupEnd" && this.groupIndentionLevel > 0) {
-      this.groupIndentionLevel--;
+    if (logObj.type === "groupEnd") {
+      this.groupIndentionLevel = Math.max(this.groupIndentionLevel - 1, 0);
+      return false;
     }
     logObj.groupIndentionLevel =
       "groupIndentionLevel" in logObj
