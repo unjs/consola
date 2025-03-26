@@ -11,6 +11,8 @@ import { writeStream } from "../utils/stream";
 const bracket = (x: string) => (x ? `[${x}]` : "");
 
 export class BasicReporter implements ConsolaReporter {
+  groupIndentionBorder = "│";
+
   formatStack(stack: string, message: string, opts: FormatOptions) {
     const indent = "  ".repeat((opts?.errorLevel || 0) + 1);
     return indent + parseStack(stack, message).join(`\n${indent}`);
@@ -76,10 +78,23 @@ export class BasicReporter implements ConsolaReporter {
   }
 
   log(logObj: LogObject, ctx: { options: ConsolaOptions }) {
+    const groupIndentation = ctx.options.formatOptions.groupIndentation || 4;
+    const indention = logObj.groupIndentionLevel * groupIndentation;
+
+    const indentionStr = Array.from({ length: indention }, (_, idx) =>
+      idx % groupIndentation ? " " : this.groupIndentionBorder,
+    ).join("");
+
     const line = this.formatLogObj(logObj, {
-      columns: (ctx.options.stdout as any).columns || 0,
+      columns: Math.max(
+        0,
+        ((ctx.options.stdout as any).columns || 0) - indention,
+      ),
       ...ctx.options.formatOptions,
-    });
+    })
+      .split("\n")
+      .map((line) => `${indentionStr}${line}`)
+      .join("\n");
 
     return writeStream(
       line + "\n",
