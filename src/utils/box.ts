@@ -1,5 +1,5 @@
+import { stripVTControlCharacters } from 'node:util'
 import { getColor } from "./color";
-import { stripAnsi } from "./string";
 
 export type BoxBorderStyle = {
   /**
@@ -257,8 +257,8 @@ export function box(text: string, _opts: BoxOpts = {}) {
   const height = textLines.length + paddingOffset;
   const width =
     Math.max(
-      ...textLines.map((line) => stripAnsi(line).length),
-      opts.title ? stripAnsi(opts.title).length : 0,
+      ...textLines.map((line) => stripVTControlCharacters(line).length),
+      opts.title ? stripVTControlCharacters(opts.title).length : 0,
     ) + paddingOffset;
   const widthOffset = width + paddingOffset;
 
@@ -273,12 +273,12 @@ export function box(text: string, _opts: BoxOpts = {}) {
   if (opts.title) {
     const title = _color ? _color(opts.title) : opts.title;
     const left = borderStyle.h.repeat(
-      Math.floor((width - stripAnsi(opts.title).length) / 2),
+      Math.floor((width - stripVTControlCharacters(opts.title).length) / 2),
     );
     const right = borderStyle.h.repeat(
       width -
-        stripAnsi(opts.title).length -
-        stripAnsi(left).length +
+        stripVTControlCharacters(opts.title).length -
+        stripVTControlCharacters(left).length +
         paddingOffset,
     );
     boxLines.push(
@@ -312,7 +312,7 @@ export function box(text: string, _opts: BoxOpts = {}) {
       // Text line
       const line = textLines[i - valignOffset];
       const left = " ".repeat(paddingOffset);
-      const right = " ".repeat(width - stripAnsi(line).length);
+      const right = " ".repeat(width - stripVTControlCharacters(line).length);
       boxLines.push(
         `${leftSpace}${borderStyle.v}${left}${line}${right}${borderStyle.v}`,
       );

@@ -324,7 +324,6 @@ describe("your-consola-mock-test", () => {
 ```ts
 // ESM
 import {
-  stripAnsi,
   centerAlign,
   rightAlign,
   leftAlign,
@@ -336,7 +335,7 @@ import {
 } from "consola/utils";
 
 // CommonJS
-const { stripAnsi } = require("consola/utils");
+const { centerAlign } = require("consola/utils");
 ```
 
 ## Raw logging methods
