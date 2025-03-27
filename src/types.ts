@@ -67,18 +67,6 @@ export interface ConsolaOptions {
  */
 export interface FormatOptions {
   /**
-   * The maximum number of columns to output, affects formatting.
-   * @optional
-   */
-  columns?: number;
-
-  /**
-   * Whether to include timestamp information in log messages.
-   * @optional
-   */
-  date?: boolean;
-
-  /**
    * Whether to use colors in the output.
    * @optional
    */

@@ -2,11 +2,10 @@ import { vsprintf } from "printj";
 
 // Predefined rules for replacing format arguments
 const FORMAT_ARGS = [
-  ["additional", 5],
-  ["message", 4],
-  ["type", 2],
-  ["date", 1],
-  ["tag", 3],
+  ["additional", 4],
+  ["message", 3],
+  ["type", 1],
+  ["tag", 2],
 ]; // .sort((a, b) => b[0].length - a[0].length)
 
 // Caches compiled format strings for reuse
