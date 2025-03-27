@@ -1,20 +1,3 @@
-const ansiRegex = [
-  String.raw`[\u001B\u009B][[\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\d\/#&.:=?%@~_]+)*|[a-zA-Z\d]+(?:;[-a-zA-Z\d\/#&.:=?%@~_]*)*)?\u0007)`,
-  String.raw`(?:(?:\d{1,4}(?:;\d{0,4})*)?[\dA-PR-TZcf-nq-uy=><~]))`,
-].join("|");
-
-/**
- * Removes ANSI escape codes from a given string. This is particularly useful for
- * processing text that contains formatting codes, such as colours or styles, so that the
- * the raw text without any visual formatting.
- *
- * @param {string} text - The text string from which to strip the ANSI escape codes.
- * @returns {string} The text without ANSI escape codes.
- */
-export function stripAnsi(text: string) {
-  return text.replace(new RegExp(ansiRegex, "g"), "");
-}
-
 /**
  * Centers a string within a specified total width, padding it with spaces or another specified character.
  * If the string is longer than the total width, it is returned as is.
