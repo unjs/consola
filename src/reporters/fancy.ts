@@ -1,4 +1,4 @@
-import { stripVTControlCharacters } from 'node:util'
+import { stripVTControlCharacters } from "node:util";
 import _stringWidth from "string-width";
 import isUnicodeSupported from "is-unicode-supported";
 import { colors } from "../utils/color";

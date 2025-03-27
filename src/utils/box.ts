@@ -1,4 +1,4 @@
-import { stripVTControlCharacters } from 'node:util'
+import { stripVTControlCharacters } from "node:util";
 import { getColor } from "./color";
 
 export type BoxBorderStyle = {
