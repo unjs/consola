@@ -38,6 +38,9 @@ import { consola, createConsola } from "consola";
 // CommonJS
 const { consola, createConsola } = require("consola");
 
+// Deno
+import { consola, createConsola } from 'https://esm.sh/consola?conditions=node'
+
 consola.info("Using consola 3.0.0");
 consola.start("Building project...");
 consola.warn("A new version of consola is available: 3.0.1");
@@ -264,17 +267,6 @@ const logger = createConsola({
   //     date: false,
   // },
 });
-```
-
-## Conditions
-
-If used in [Deno](https://deno.com/) through [esm.sh](https://esm.sh), you need to specify the `conditions` to `node`. For example: 
-
-```ts
-import { consola } from 'https://esm.sh/consola@3.4.2?conditions=node'
-
-// Or use npm package directly
-import { consola } from 'npm:consola@3.4.2'
 ```
 
 ## Integrations
