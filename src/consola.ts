@@ -475,10 +475,10 @@ function _normalizeLogLevel(
 }
 
 // Should match with `isLogObj()`
-type LogParam<T> = T extends { message: any } | { args: any }
-  ? T extends { stack: any }
-    ? T
-    : InputLogObject
+type LogParam<T> = T extends
+  | { message: any; stack?: never; date?: Date }
+  | { args: any; stack?: never; date?: Date }
+  ? InputLogObject
   : T;
 
 export interface LogFn {
