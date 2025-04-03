@@ -29,5 +29,10 @@ export function isLogObj(arg: any) {
     return false;
   }
 
+  // 'date' field should be a Date object if present
+  if("date" in arg && !(arg.date instanceof Date)) {
+    return false;
+  }
+
   return true;
 }
