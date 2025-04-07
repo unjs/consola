@@ -93,6 +93,36 @@
         "types": "./dist/utils.d.cts",
         "default": "./dist/utils.cjs"
       }
+    },
+    "./reporters/basic": {
+      "import": {
+        "types": "./dist/reporters/basic.d.mts",
+        "default": "./dist/reporters/basic.mjs"
+      },
+      "require": {
+        "types": "./dist/reporters/basic.d.cts",
+        "default": "./dist/reporters/basic.cjs"
+      }
+    },
+    "./reporters/browser": {
+      "import": {
+        "types": "./dist/reporters/browser.d.mts",
+        "default": "./dist/reporters/browser.mjs"
+      },
+      "require": {
+        "types": "./dist/reporters/browser.d.cts",
+        "default": "./dist/reporters/browser.cjs"
+      }
+    },
+    "./reporters/fancy": {
+      "import": {
+        "types": "./dist/reporters/fancy.d.mts",
+        "default": "./dist/reporters/fancy.mjs"
+      },
+      "require": {
+        "types": "./dist/reporters/fancy.d.cts",
+        "default": "./dist/reporters/fancy.cjs"
+      }
     }
   },
   "main": "./lib/index.cjs",
