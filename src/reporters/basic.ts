@@ -7,6 +7,11 @@ import type {
 } from "../types";
 import { parseStack } from "../utils/error";
 import { writeStream } from "../utils/stream";
+import {
+  normalizeTableData,
+  normalizeTableRows,
+  calculateColumnWidths,
+} from "../utils/table";
 
 const bracket = (x: string) => (x ? `[${x}]` : "");
 
@@ -50,8 +55,71 @@ export class BasicReporter implements ConsolaReporter {
     return arr.filter(Boolean).join(" ");
   }
 
+  /**
+   * Helper function to format a single row for basic tables.
+   * @param row - The row to format.
+   * @param widths - The widths of the columns.
+   * @returns The formatted row string.
+   */
+  _formatBasicRow(row: string[], widths: number[]): string {
+    return row.map((cell, i) => cell.padEnd(widths[i] ?? 0)).join(" | ");
+  }
+
+  /**
+   * Formats data into a basic text-based table string.
+   * @param data - The data to format.
+   * @param opts - Formatting options.
+   * @returns The formatted table as a string.
+   */
+  formatTable(data: any, opts: FormatOptions): string {
+    // Use shared normalizeTableData to get consistent structure
+    const normalized = normalizeTableData(data);
+
+    if (!normalized) {
+      if (
+        data === null ||
+        data === undefined ||
+        (typeof data === "object" && Object.keys(data).length === 0) ||
+        (Array.isArray(data) && data.length === 0)
+      ) {
+        return "";
+      }
+      return this.formatArgs([data], opts);
+    }
+
+    const { head, rows } = normalized;
+
+    // Ensure rows are properly normalized (same length as headers)
+    const normalizedRows = normalizeTableRows(head, rows);
+
+    // Format each cell value
+    const formattedRows = normalizedRows.map((row) =>
+      row.map((cell) => this.formatArgs([cell], opts)),
+    );
+
+    // Calculate column widths
+    const widths = calculateColumnWidths(head, formattedRows);
+
+    // Format header and data rows
+    const header = this._formatBasicRow(head, widths);
+    const separator = widths.map((w) => "-".repeat(w)).join("-|-");
+    const dataRows = formattedRows.map((row) =>
+      this._formatBasicRow(row, widths),
+    );
+
+    return [header, separator, ...dataRows].join("\n");
+  }
+
+  /**
+   * Formats a log object for output, using the appropriate formatter for the type.
+   */
   formatLogObj(logObj: LogObject, opts: FormatOptions) {
     const message = this.formatArgs(logObj.args, opts);
+
+    if (logObj.type === "table") {
+      const data = logObj.args[0];
+      return this.formatTable(data, opts);
+    }
 
     if (logObj.type === "box") {
       return (
