@@ -33,11 +33,7 @@ export default defineBuildConfig({
             return code;
           }
         },
-      });
-
-      // Node.js 14 support
-      // https://github.com/unjs/consola/issues/204
-      options.plugins.push({
+      }, {
         name: "icu-compat",
         transform(code, id) {
           if (id.endsWith("string-width/index.js")) {
