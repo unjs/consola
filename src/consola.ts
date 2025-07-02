@@ -21,6 +21,8 @@ const queue: any[] = [];
 export class Consola {
   options: ConsolaOptions;
 
+  private groupIndentionLevel = 0;
+
   _lastLog: {
     serialized?: string;
     object?: LogObject;
@@ -359,9 +361,17 @@ export class Consola {
     const logObj: Partial<LogObject> = {
       date: new Date(),
       args: [],
+      groupIndentionLevel: this.groupIndentionLevel,
       ...defaults,
       level: _normalizeLogLevel(defaults.level, this.options.types),
     };
+
+    if (logObj.type === "group") {
+      this.groupIndentionLevel++;
+    } else if (logObj.type === "groupEnd") {
+      this.groupIndentionLevel = Math.max(this.groupIndentionLevel - 1, 0);
+      return false;
+    }
 
     // Consume arguments
     if (!isRaw && args.length === 1 && isLogObj(args[0])) {
@@ -478,7 +488,13 @@ export interface LogFn {
   (message: InputLogObject | any, ...args: any[]): void;
   raw: (...args: any[]) => void;
 }
-export type ConsolaInstance = Consola & Record<LogType, LogFn>;
+export interface LogFnWithoutParams {
+  (): void;
+  raw: (...args: any[]) => void;
+}
+export type ConsolaInstance = Consola & {
+  [K in LogType]: K extends "groupEnd" ? LogFnWithoutParams : LogFn;
+};
 
 // Legacy support
 // @ts-expect-error

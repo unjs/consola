@@ -14,6 +14,7 @@ export const TYPE_COLOR_MAP: { [k in LogType]?: string } = {
   success: "green",
   ready: "green",
   start: "magenta",
+  group: "cyan",
 };
 
 export const LEVEL_COLOR_MAP: { [k in LogLevel]?: string } = {
@@ -34,6 +35,7 @@ const TYPE_ICONS: { [k in LogType]?: string } = {
   trace: s("→", "→"),
   fail: s("✖", "×"),
   start: s("◐", "o"),
+  group: s("▼", "+"),
   log: "",
 };
 
@@ -47,6 +49,8 @@ function stringWidth(str: string) {
 }
 
 export class FancyReporter extends BasicReporter {
+  groupIndentionBorder = getColor(TYPE_COLOR_MAP.group)("│");
+
   formatStack(stack: string, message: string, opts?: FormatOptions) {
     const indent = "  ".repeat((opts?.errorLevel || 0) + 1);
     return (

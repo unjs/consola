@@ -96,6 +96,12 @@ export interface FormatOptions {
   errorLevel?: number;
 
   /**
+   * Group indentation.
+   * @default 4
+   */
+  groupIndentation?: number;
+
+  /**
    * Allows additional custom formatting options.
    */
   [key: string]: unknown;
@@ -160,6 +166,11 @@ export interface LogObject extends InputLogObject {
    * A string tag to categorise or identify the log message, overridden if necessary.
    */
   tag: string;
+
+  /**
+   * Group indentation level, overridden if necessary.
+   */
+  groupIndentionLevel: number;
 
   /**
    * Additional arguments to be logged with the message, overridden if necessary.
