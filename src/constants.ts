@@ -3,10 +3,10 @@ import { LogObject } from "./types";
 /**
  * Defines the level of logs as specific numbers or special number types.
  *
- * @type {0 | 1 | 2 | 3 | 4 | 5 | (number & {})} LogLevel - Represents the log level.
+ * @type {-1 | 0 | 1 | 2 | 3 | 4 | 5 | 9 | (number & {})} LogLevel - Represents the log level.
  * @default 0 - Represents the default log level.
  */
-export type LogLevel = 0 | 1 | 2 | 3 | 4 | 5 | (number & {});
+export type LogLevel = -1 | 0 | 1 | 2 | 3 | 4 | 5 | 9 | (number & {});
 
 /**
  * A mapping of `LogType` to its corresponding numeric log level.
@@ -14,7 +14,7 @@ export type LogLevel = 0 | 1 | 2 | 3 | 4 | 5 | (number & {});
  * @type {Record<LogType, number>} LogLevels - key-value pairs of log types to their numeric levels. See {@link LogType}.
  */
 export const LogLevels: Record<LogType, number> = {
-  silent: Number.NEGATIVE_INFINITY,
+  silent: -1,
 
   fatal: 0,
   error: 0,
@@ -34,7 +34,7 @@ export const LogLevels: Record<LogType, number> = {
 
   trace: 5,
 
-  verbose: Number.POSITIVE_INFINITY,
+  verbose: 9,
 };
 
 /**
@@ -71,7 +71,7 @@ export type LogType =
 export const LogTypes: Record<LogType, Partial<LogObject>> = {
   // Silent
   silent: {
-    level: -1,
+    level: LogLevels.silent,
   },
 
   // Level 0
