@@ -1,3 +1,5 @@
+import type { InputLogObject } from "../types";
+
 /**
  * Checks if the given argument is a simple JavaScript object.
  * @param {any} obj - The object to test.
@@ -13,7 +15,7 @@ export function isPlainObject(obj: any) {
  * @param {any} arg - The argument to check.
  * @returns {boolean} `true` if the argument is a log object according to the specified criteria, otherwise `false`.
  */
-export function isLogObj(arg: any) {
+export function isLogObj(arg: any): arg is InputLogObject {
   // Should be plain object
   if (!isPlainObject(arg)) {
     return false;
