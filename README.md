@@ -259,6 +259,35 @@ Log types are exposed as `consola.[type](...)` and each is a preset of styles an
 
 A list of all available built-in types is [available here](./src/constants.ts).
 
+## Filter logs
+
+You can filter logs by specifying the `DEBUG` environment variable, which matches against the log `tag`.
+
+Filter patterns follow these rules:
+
+- `*`: wildcast, including all logs
+- `,` or whitespace: seperator, divides multiple patterns
+- `-`: exclusion prefix, excludes the following pattern
+
+Examples: 
+
+```ts
+// index.js
+import { consola } from 'consola'
+
+consola.withTag("tag1").info("Apple");
+consola.withTag("tag2").info("Banana");
+consola.withTag("tag3").info("Cherry");
+```
+
+```bash
+DEBUG=tag1,tag2 node index.js
+# => Apple Banana
+
+DEBUG="*,-tag1" node index.js
+# => Banana Cherry
+```
+
 ## Creating a new instance
 
 Consola has a global instance and is recommended to use everywhere.
