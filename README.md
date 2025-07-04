@@ -84,7 +84,7 @@ Example: `consola.info('Message')`
 
 #### `await prompt(message, { type, cancel })`
 
-Show an input prompt. Type can either of `text`, `confirm`, `select` or `multiselect`.
+Show an input prompt. Type can either of `text`, `password`, `confirm`, `select` or `multiselect`.
 
 If prompt is canceled by user (with Ctrol+C), default value will be resolved by default. This strategy can be configured by setting `{ cancel: "..." }` option:
 
