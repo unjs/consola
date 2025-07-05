@@ -42,10 +42,6 @@ export class BasicReporter implements ConsolaReporter {
     return formatWithOptions(opts, ..._args);
   }
 
-  formatDate(date: Date, opts: FormatOptions) {
-    return opts.date ? date.toLocaleTimeString() : "";
-  }
-
   filterAndJoin(arr: any[]) {
     return arr.filter(Boolean).join(" ");
   }
@@ -76,10 +72,7 @@ export class BasicReporter implements ConsolaReporter {
   }
 
   log(logObj: LogObject, ctx: { options: ConsolaOptions }) {
-    const line = this.formatLogObj(logObj, {
-      columns: (ctx.options.stdout as any).columns || 0,
-      ...ctx.options.formatOptions,
-    });
+    const line = this.formatLogObj(logObj, ctx.options.formatOptions);
 
     return writeStream(
       line + "\n",
