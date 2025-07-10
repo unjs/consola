@@ -110,16 +110,21 @@ export class Consola {
    * Displays a prompt to the user and returns the response.
    * Throw an error if `prompt` is not supported by the current configuration.
    *
-   * @template T
+   * @template Type - The type of prompt to display.
+   * @template Value - The type of value to return from the prompt.
+   * @template Cancel - The type of value to return if the prompt is cancelled.
    * @param {string} message - The message to display in the prompt.
-   * @param {T} [opts] - Optional options for the prompt. See {@link PromptOptions}.
-   * @returns {promise<T>} A promise that infer with the prompt options. See {@link PromptOptions}.
+   * @param {PromptOptions<Value> & { type?: Type; cancel?: Cancel }} [opts] - Optional options for the prompt. See {@link PromptOptions}.
+   * @returns {promise<Value>} A promise that infer with the prompt options. See {@link PromptOptions}.
    */
-  prompt<T extends PromptOptions>(message: string, opts?: T) {
+  prompt<Type, Value, Cancel>(
+    message: string,
+    opts?: PromptOptions<Value> & { type?: Type; cancel?: Cancel },
+  ) {
     if (!this.options.prompt) {
       throw new Error("prompt is not supported!");
     }
-    return this.options.prompt<any, any, T>(message, opts);
+    return this.options.prompt<Type, Value, Cancel>(message, opts);
   }
 
   /**
