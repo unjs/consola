@@ -7,6 +7,8 @@ import { LogLevel, LogType } from "../constants";
 import { BoxOpts, box } from "../utils/box";
 import { stripAnsi } from "../utils";
 import { BasicReporter } from "./basic";
+import { createTable } from "../utils/table";
+import { parseTableArgs } from "../utils/table";
 
 export const TYPE_COLOR_MAP: { [k in LogType]?: string } = {
   info: "cyan",
@@ -87,6 +89,15 @@ export class FancyReporter extends BasicReporter {
     const [message, ...additional] = this.formatArgs(logObj.args, opts).split(
       "\n",
     );
+
+    if (logObj.type === "table") {
+      const data = logObj.args[0];
+      const { filterColumns, options: normOptions } = parseTableArgs(
+        logObj.args?.[1],
+        logObj.args?.[2],
+      );
+      return "\n" + createTable(data, filterColumns, normOptions);
+    }
 
     if (logObj.type === "box") {
       return box(
