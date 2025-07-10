@@ -4,31 +4,7 @@
  * https://github.com/jorgebucaran/colorette/blob/20fc196d07d0f87c61e0256eadd7831c79b24108/index.js
  */
 
-import * as tty from "node:tty";
-
-// TODO: Migrate to std-env
-const {
-  env = {},
-  argv = [],
-  platform = "",
-} = typeof process === "undefined" ? {} : process;
-const isDisabled = "NO_COLOR" in env || argv.includes("--no-color");
-const isForced = "FORCE_COLOR" in env || argv.includes("--color");
-const isWindows = platform === "win32";
-const isDumbTerminal = env.TERM === "dumb";
-const isCompatibleTerminal =
-  tty && tty.isatty && tty.isatty(1) && env.TERM && !isDumbTerminal;
-const isCI =
-  "CI" in env &&
-  ("GITHUB_ACTIONS" in env || "GITLAB_CI" in env || "CIRCLECI" in env);
-
-/**
- * Determines support for terminal colours based on the environment and capabilities of the terminal.
- * @type {boolean} isColorSupported - Indicates whether colour support is enabled in the terminal.
- */
-const isColorSupported =
-  !isDisabled &&
-  (isForced || (isWindows && !isDumbTerminal) || isCompatibleTerminal || isCI);
+import { isColorSupported } from "std-env";
 
 function replaceClose(
   index: number,
