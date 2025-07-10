@@ -19,9 +19,9 @@ const queue: any[] = [];
  * @class Consola
  */
 export class Consola {
-  options: ConsolaOptions;
+  private options: ConsolaOptions;
 
-  _lastLog: {
+  private _lastLog: {
     serialized?: string;
     object?: LogObject;
     count?: number;
@@ -29,7 +29,7 @@ export class Consola {
     timeout?: ReturnType<typeof setTimeout>;
   };
 
-  _mockFn?: ConsolaOptions["mockFn"];
+  private _mockFn?: ConsolaOptions["mockFn"];
 
   /**
    * Creates an instance of Consola with specified options or defaults.
@@ -260,7 +260,7 @@ export class Consola {
     this._wrapStream(this.options.stderr, "log");
   }
 
-  _wrapStream(stream: NodeJS.WriteStream | undefined, type: LogType) {
+  private _wrapStream(stream: NodeJS.WriteStream | undefined, type: LogType) {
     if (!stream) {
       return;
     }
@@ -284,7 +284,7 @@ export class Consola {
     this._restoreStream(this.options.stderr);
   }
 
-  _restoreStream(stream?: NodeJS.WriteStream) {
+  private _restoreStream(stream?: NodeJS.WriteStream) {
     if (!stream) {
       return;
     }
@@ -340,7 +340,7 @@ export class Consola {
     }
   }
 
-  _wrapLogFn(defaults: InputLogObject, isRaw?: boolean) {
+  private _wrapLogFn(defaults: InputLogObject, isRaw?: boolean) {
     return (...args: any[]) => {
       if (paused) {
         queue.push([this, defaults, args, isRaw]);
@@ -350,7 +350,7 @@ export class Consola {
     };
   }
 
-  _logFn(defaults: InputLogObject, args: any[], isRaw?: boolean) {
+  private _logFn(defaults: InputLogObject, args: any[], isRaw?: boolean) {
     if (((defaults.level as number) || 0) > this.level) {
       return false;
     }
@@ -448,7 +448,7 @@ export class Consola {
     resolveLog(true);
   }
 
-  _log(logObj: LogObject) {
+  private _log(logObj: LogObject) {
     for (const reporter of this.options.reporters) {
       reporter.log(logObj, {
         options: this.options,
