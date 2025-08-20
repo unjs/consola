@@ -23,9 +23,9 @@ export default defineBuildConfig({
               [String.raw`"\u25A0","x"`, '"■", "x"'],
               [String.raw`"\u25B2","x"`, '"▲", "x"'],
               [String.raw`"\u25C7","o"`, '"✔", "√"'],
-              [String.raw`"\u250C","T"`, '""'],
-              [String.raw`"\u2502","|"`, '""'],
-              [String.raw`"\u2514","\u2014"`, '""'],
+              [String.raw`"\u250C","T"`, '"", ""'],
+              [String.raw`"\u2502","|"`, '"", ""'],
+              [String.raw`"\u2514","\u2014"`, '"", ""'],
             ] as const;
             for (const [from, to] of replaces) {
               code = code.replaceAll(from, to);
