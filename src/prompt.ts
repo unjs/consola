@@ -1,4 +1,6 @@
 import { text, confirm, select, multiselect } from "@clack/prompts";
+import isUnicodeSupported from "is-unicode-supported";
+import { colors } from "./utils/color";
 
 type SelectOption = {
   label: string;
@@ -226,4 +228,106 @@ export async function prompt<
   }
 
   throw new Error(`Unknown prompt type: ${opts.type}`);
+}
+
+const unicode = isUnicodeSupported();
+const s = (c: string, fallback: string) => (unicode ? c : fallback);
+const S_PROGRESS_FILLED = s("█", "#");
+const S_PROGRESS_UNFILLED = s("░", ".");
+
+export interface ProgressOptions {
+  /**
+   * The initial message to display next to the progress bar.
+   * @optional
+   */
+  message?: string;
+  /**
+   * The width of the progress bar in characters.
+   * @optional
+   * @default 25
+   */
+  width?: number;
+  /**
+   * Whether to show the percentage next to the progress bar.
+   * @optional
+   * @default false
+   */
+  showPercentage?: boolean;
+}
+
+/**
+ * Creates a progress bar utility for displaying progress of long-running operations.
+ * The progress bar can be updated dynamically and supports custom messages and percentage display.
+ *
+ * @param {ProgressOptions} [options={}] - Configuration options for the progress bar. See {@link ProgressOptions}.
+ * @returns An object with methods to control the progress bar:
+ *   - `start(options)`: Initializes and displays the progress bar
+ *   - `update(value, options)`: Updates the progress bar (value between 0 and 1)
+ *   - `stop(options)`: Completes and removes the progress bar
+ *
+ * @example
+ * ```typescript
+ * const prog = progress({ showPercentage: true, width: 50 });
+ * prog.start({ message: "Loading..." });
+ *
+ * // Update progress (0 to 1)
+ * prog.update(0.5, { message: "Halfway..." });
+ *
+ * prog.stop({ message: "Done!" });
+ * ```
+ */
+export function progress(options: ProgressOptions = {}) {
+  const {
+    message: initialMessage = "",
+    width = 25,
+    showPercentage = false,
+  } = options;
+  const percentage = (current: number) => `${Math.floor(current * 100)}%`;
+  const progressBar = (filled: number, unfilled: number) =>
+    `${S_PROGRESS_FILLED.repeat(filled)}${S_PROGRESS_UNFILLED.repeat(unfilled)}`;
+  const filledCount = (current: number, total: number) =>
+    Math.floor(current * total);
+  const unfilledCount = (current: number, total: number) =>
+    total - filledCount(current, total);
+  const progressContent = (
+    filled: number,
+    unfilled: number,
+    message: string,
+    showPercentage: boolean,
+  ) => {
+    const p = showPercentage
+      ? ` ${percentage(filled / (filled + unfilled))}`
+      : "";
+    const separator = message ? " " : "";
+    return `${colors.gray(progressBar(filled, unfilled))}${p}${separator}${message}`;
+  };
+  return {
+    start({ message = initialMessage }: Pick<ProgressOptions, "message"> = {}) {
+      const content = progressContent(0, width, message, showPercentage);
+      process.stdout.write(content);
+    },
+    update(
+      value: number,
+      { message = initialMessage }: Pick<ProgressOptions, "message"> = {},
+    ) {
+      const ratio = Math.min(Math.max(value, 0), 1);
+      const filled = filledCount(ratio, width);
+      const unfilled = unfilledCount(ratio, width);
+      const content = progressContent(
+        filled,
+        unfilled,
+        message,
+        showPercentage,
+      );
+      process.stdout.write("\r");
+      process.stdout.write(content);
+    },
+    stop({ message = initialMessage }: Pick<ProgressOptions, "message"> = {}) {
+      process.stdout.write("\u001B[2K");
+      const content = progressContent(width, 0, message, showPercentage);
+      process.stdout.write("\r");
+      process.stdout.write(content);
+      process.stdout.write("\n");
+    },
+  };
 }
