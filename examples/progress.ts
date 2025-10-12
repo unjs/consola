@@ -1,4 +1,4 @@
-import { progress } from "../src";
+import { progress } from "../src/progress";
 
 function main() {
   let message = "Loading...";

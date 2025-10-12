@@ -12,4 +12,3 @@ export type {
   TextPromptOptions,
   ProgressOptions,
 } from "./prompt";
-export { progress } from "./prompt";
