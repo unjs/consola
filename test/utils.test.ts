@@ -1,5 +1,5 @@
-import { describe, test, expect, vi } from "vitest";
-import { align, box } from "../src/utils";
+import { describe, test, expect } from "vitest";
+import { align, box, stripAnsi } from "../src/utils";
 
 describe("utils", () => {
   test("can align string", () => {
@@ -29,10 +29,8 @@ describe("utils", () => {
   });
 
   test("render box string", () => {
-    vi.stubEnv("CI", "true");
-
     const str = box("F");
-    expect(str).toMatchInlineSnapshot(`
+    expect(stripAnsi(str)).toMatchInlineSnapshot(`
       "
        ╭─────╮
        │     │
@@ -43,7 +41,7 @@ describe("utils", () => {
     `);
 
     const str2 = box("✅");
-    expect(str2).toMatchInlineSnapshot(`
+    expect(stripAnsi(str2)).toMatchInlineSnapshot(`
       "
        ╭──────╮
        │      │
@@ -55,8 +53,6 @@ describe("utils", () => {
   });
 
   test("render box string with custom options", () => {
-    vi.stubEnv("CI", "true");
-
     const str = box("F", {
       title: "B",
       style: {
@@ -71,7 +67,7 @@ describe("utils", () => {
         },
       },
     });
-    expect(str).toMatchInlineSnapshot(`
+    expect(stripAnsi(str)).toMatchInlineSnapshot(`
       "
        ╓═B═══╖
        ║     ║
@@ -94,7 +90,7 @@ describe("utils", () => {
         },
       },
     });
-    expect(str2).toMatchInlineSnapshot(`
+    expect(stripAnsi(str2)).toMatchInlineSnapshot(`
       "
        ╓═✅═══╖
        ║      ║
