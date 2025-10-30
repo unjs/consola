@@ -1,11 +1,10 @@
-import _stringWidth from "string-width";
+import stringWidth from "string-width";
 import isUnicodeSupported from "is-unicode-supported";
 import { colors } from "../utils/color";
 import { parseStack } from "../utils/error";
 import { FormatOptions, LogObject } from "../types";
 import { LogLevel, LogType } from "../constants";
 import { BoxOpts, box } from "../utils/box";
-import { stripAnsi } from "../utils";
 import { BasicReporter } from "./basic";
 
 export const TYPE_COLOR_MAP: { [k in LogType]?: string } = {
@@ -36,15 +35,6 @@ const TYPE_ICONS: { [k in LogType]?: string } = {
   start: s("◐", "o"),
   log: "",
 };
-
-function stringWidth(str: string) {
-  // https://github.com/unjs/consola/issues/204
-  const hasICU = typeof Intl === "object";
-  if (!hasICU || !Intl.Segmenter) {
-    return stripAnsi(str).length;
-  }
-  return _stringWidth(str);
-}
 
 export class FancyReporter extends BasicReporter {
   formatStack(stack: string, message: string, opts?: FormatOptions) {
