@@ -1,4 +1,4 @@
-import { describe, test, expect } from "vitest";
+import { describe, test, expect, vi } from "vitest";
 import { align, box } from "../src/utils";
 
 describe("utils", () => {
@@ -29,6 +29,8 @@ describe("utils", () => {
   });
 
   test("render box string", () => {
+    vi.stubEnv("CI", "true");
+
     const str = box("F");
     expect(str).toMatchInlineSnapshot(`
       "
@@ -53,6 +55,8 @@ describe("utils", () => {
   });
 
   test("render box string with custom options", () => {
+    vi.stubEnv("CI", "true");
+
     const str = box("F", {
       title: "B",
       style: {
@@ -80,7 +84,6 @@ describe("utils", () => {
     const str2 = box("✅", {
       title: "✅",
       style: {
-        borderColor: "yellow",
         borderStyle: {
           tl: "╓",
           tr: "╖",
