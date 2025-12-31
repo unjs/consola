@@ -2,7 +2,7 @@ import _stringWidth from "string-width";
 import isUnicodeSupported from "is-unicode-supported";
 import { colors } from "../utils/color";
 import { parseStack } from "../utils/error";
-import { FormatOptions, LogObject } from "../types";
+import { FormatOptions, ReportLogObj } from "../types";
 import { LogLevel, LogType } from "../constants";
 import { BoxOpts, box } from "../utils/box";
 import { stripAnsi } from "../utils";
@@ -63,7 +63,7 @@ export class FancyReporter extends BasicReporter {
     );
   }
 
-  formatType(logObj: LogObject, isBadge: boolean, opts: FormatOptions) {
+  formatType(logObj: ReportLogObj, isBadge: boolean, opts: FormatOptions) {
     const typeColor =
       (TYPE_COLOR_MAP as any)[logObj.type] ||
       (LEVEL_COLOR_MAP as any)[logObj.level] ||
@@ -83,7 +83,7 @@ export class FancyReporter extends BasicReporter {
     return _type ? getColor(typeColor)(_type) : "";
   }
 
-  formatLogObj(logObj: LogObject, opts: FormatOptions) {
+  formatLogObj(logObj: ReportLogObj, opts: FormatOptions) {
     const [message, ...additional] = this.formatArgs(logObj.args, opts).split(
       "\n",
     );

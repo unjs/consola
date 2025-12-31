@@ -177,14 +177,22 @@ export interface LogObject extends InputLogObject {
   [key: string]: unknown;
 }
 
+/**
+ * TS's built-in Omit type does not work well with "[key: string]: unknown;"
+ */
+type _Omit<T, Keys> = {
+  [key in keyof T as key extends Keys ? never : key]: T[key];
+};
+export type ReportLogObj = _Omit<LogObject, "message" | "additional">;
+
 export interface ConsolaReporter {
   /**
    * Defines how a log message is processed and displayed by this reporter.
-   * @param logObj The LogObject containing the log information to process. See {@link LogObject}.
+   * @param logObj The LogObject containing the log information to process. See {@link ReportLogObj}.
    * @param ctx An object containing context information such as options. See {@link ConsolaOptions}.
    */
   log: (
-    logObj: LogObject,
+    logObj: ReportLogObj,
     ctx: {
       options: ConsolaOptions;
     },

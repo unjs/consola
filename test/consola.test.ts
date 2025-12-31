@@ -1,5 +1,10 @@
 import { describe, test, expect } from "vitest";
-import { ConsolaReporter, LogLevels, LogObject, createConsola } from "../src";
+import {
+  ConsolaReporter,
+  LogLevels,
+  ReportLogObj,
+  createConsola,
+} from "../src";
 
 describe("consola", () => {
   test("can set level", () => {
@@ -13,7 +18,7 @@ describe("consola", () => {
   });
 
   test("silent log level does't print logs", async () => {
-    const logs: LogObject[] = [];
+    const logs: ReportLogObj[] = [];
     const TestReporter: ConsolaReporter = {
       log(logObj) {
         logs.push(logObj);
@@ -35,7 +40,7 @@ describe("consola", () => {
   });
 
   test("can see spams without ending log", async () => {
-    const logs: LogObject[] = [];
+    const logs: ReportLogObj[] = [];
     const TestReporter: ConsolaReporter = {
       log(logObj) {
         logs.push(logObj);
@@ -58,7 +63,7 @@ describe("consola", () => {
   });
 });
 
-function wait(delay) {
+function wait(delay: number) {
   return new Promise((resolve) => {
     setTimeout(resolve, delay);
   });

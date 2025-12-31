@@ -1,6 +1,6 @@
 import { formatWithOptions } from "node:util";
 import type {
-  LogObject,
+  ReportLogObj,
   ConsolaReporter,
   FormatOptions,
   ConsolaOptions,
@@ -50,7 +50,7 @@ export class BasicReporter implements ConsolaReporter {
     return arr.filter(Boolean).join(" ");
   }
 
-  formatLogObj(logObj: LogObject, opts: FormatOptions) {
+  formatLogObj(logObj: ReportLogObj, opts: FormatOptions) {
     const message = this.formatArgs(logObj.args, opts);
 
     if (logObj.type === "box") {
@@ -75,7 +75,7 @@ export class BasicReporter implements ConsolaReporter {
     ]);
   }
 
-  log(logObj: LogObject, ctx: { options: ConsolaOptions }) {
+  log(logObj: ReportLogObj, ctx: { options: ConsolaOptions }) {
     const line = this.formatLogObj(logObj, {
       columns: (ctx.options.stdout as any).columns || 0,
       ...ctx.options.formatOptions,
