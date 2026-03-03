@@ -113,7 +113,7 @@
     "test": "pnpm lint && pnpm vitest run --coverage"
   },
   "devDependencies": {
-    "@clack/prompts": "^0.10.0",
+    "@clack/prompts": "^1.1.0",
     "@types/node": "^22.13.10",
     "@vitest/coverage-v8": "^3.0.9",
     "changelogen": "^0.6.1",
