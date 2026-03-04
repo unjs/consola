@@ -137,8 +137,8 @@ export class FancyReporter extends BasicReporter {
 function characterFormat(str: string) {
   return (
     str
-      // highlight backticks
-      .replace(/`([^`]+)`/gm, (_, m) => colors.cyan(m))
+      // highlight backticks (preserve them in output)
+      .replace(/`([^`]+)`/gm, (_, m) => colors.cyan(`\`${m}\``))
       // underline underscores
       .replace(/\s+_([^_]+)_\s+/gm, (_, m) => ` ${colors.underline(m)} `)
   );
