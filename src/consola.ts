@@ -6,6 +6,7 @@ import type {
   InputLogObject,
   LogObject,
   ConsolaOptions,
+  ReportLogObj,
 } from "./types";
 import type { PromptOptions } from "./prompt";
 
@@ -23,7 +24,7 @@ export class Consola {
 
   _lastLog: {
     serialized?: string;
-    object?: LogObject;
+    object?: ReportLogObj;
     count?: number;
     time?: Date;
     timeout?: ReturnType<typeof setTimeout>;
@@ -408,8 +409,8 @@ export class Consola {
 
       // Log
       if (newLog) {
-        this._lastLog.object = logObj as LogObject;
-        this._log(logObj as LogObject);
+        this._lastLog.object = logObj as ReportLogObj;
+        this._log(logObj as ReportLogObj);
       }
     };
 
@@ -448,7 +449,7 @@ export class Consola {
     resolveLog(true);
   }
 
-  _log(logObj: LogObject) {
+  _log(logObj: ReportLogObj) {
     for (const reporter of this.options.reporters) {
       reporter.log(logObj, {
         options: this.options,
