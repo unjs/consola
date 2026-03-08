@@ -56,11 +56,7 @@ export class BasicReporter implements ConsolaReporter {
     if (logObj.type === "box") {
       return (
         "\n" +
-        [
-          bracket(logObj.tag),
-          logObj.title && logObj.title,
-          ...message.split("\n"),
-        ]
+        [bracket(logObj.tag), logObj.title, ...message.split("\n")]
           .filter(Boolean)
           .map((l) => " > " + l)
           .join("\n") +
