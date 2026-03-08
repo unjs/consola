@@ -10,4 +10,5 @@ export type {
   MultiSelectOptions,
   SelectPromptOptions,
   TextPromptOptions,
+  ProgressOptions,
 } from "./prompt";

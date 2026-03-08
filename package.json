@@ -93,6 +93,16 @@
         "types": "./dist/utils.d.cts",
         "default": "./dist/utils.cjs"
       }
+    },
+    "./progress": {
+      "import": {
+        "types": "./dist/progress.d.mts",
+        "default": "./dist/progress.mjs"
+      },
+      "require": {
+        "types": "./dist/progress.d.cts",
+        "default": "./dist/progress.cjs"
+      }
     }
   },
   "main": "./lib/index.cjs",
