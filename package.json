@@ -110,7 +110,7 @@
     "lint": "eslint . && prettier -c src examples test",
     "lint:fix": "eslint . --fix && prettier -w src examples test",
     "release": "pnpm test && pnpm build && changelogen --release --push && npm publish",
-    "test": "pnpm lint && pnpm vitest run --coverage"
+    "test": "pnpm lint && pnpm vitest run --typecheck --coverage"
   },
   "devDependencies": {
     "@clack/prompts": "^0.10.0",
