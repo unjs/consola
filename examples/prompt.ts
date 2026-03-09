@@ -31,6 +31,10 @@ async function main() {
     initial: ["eslint", "prettier"],
   });
 
+  const password = await consola.prompt("Enter your password.", {
+    type: "password",
+  });
+
   consola.start("Creating project...");
   await new Promise((resolve) => setTimeout(resolve, 1000));
   consola.success("Project created!");

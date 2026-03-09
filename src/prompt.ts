@@ -1,4 +1,4 @@
-import { text, confirm, select, multiselect } from "@clack/prompts";
+import { text, confirm, select, multiselect, password } from "@clack/prompts";
 
 type SelectOption = {
   label: string;
@@ -103,6 +103,25 @@ export type MultiSelectOptions = PromptCommonOptions & {
   required?: boolean;
 };
 
+export type PasswordPromptOptions = PromptCommonOptions & {
+  /**
+   * Specifies the prompt type as password.
+   */
+  type: "password";
+
+  /**
+   * The mask character for the password prompt.
+   * @optional
+   */
+  mask?: string;
+
+  /**
+   * The validation function for the password prompt.
+   * @optional
+   */
+  validate?: (value: string) => string | Error | undefined;
+};
+
 /**
  * Defines a combined type for all prompt options.
  */
@@ -110,7 +129,8 @@ export type PromptOptions =
   | TextPromptOptions
   | ConfirmPromptOptions
   | SelectPromptOptions
-  | MultiSelectOptions;
+  | MultiSelectOptions
+  | PasswordPromptOptions;
 
 type inferPromptReturnType<T extends PromptOptions> =
   T extends TextPromptOptions
@@ -123,7 +143,9 @@ type inferPromptReturnType<T extends PromptOptions> =
           : T["options"][number]
         : T extends MultiSelectOptions
           ? T["options"]
-          : unknown;
+          : T extends PasswordPromptOptions
+            ? string
+            : unknown;
 
 type inferPromptCancalReturnType<T extends PromptOptions> = T extends {
   cancel: "reject";
@@ -183,7 +205,8 @@ export async function prompt<
       }
       default:
       case "default": {
-        return (opts as TextPromptOptions).default ?? opts.initial;
+        if (opts.type === "password") return undefined;
+        return (opts as TextPromptOptions).default ?? (opts as any).initial;
       }
     }
   };
@@ -222,6 +245,14 @@ export async function prompt<
       ),
       required: opts.required,
       initialValues: opts.initial,
+    }).then(handleCancel)) as any;
+  }
+
+  if (opts.type === "password") {
+    return (await password({
+      message,
+      mask: opts.mask ?? "", // default mask does not display characters.
+      validate: opts.validate,
     }).then(handleCancel)) as any;
   }
 
