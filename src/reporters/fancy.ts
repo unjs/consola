@@ -1,7 +1,7 @@
 import _stringWidth from "string-width";
 import isUnicodeSupported from "is-unicode-supported";
 import { colors } from "../utils/color";
-import { parseStack } from "../utils/error";
+import { isSelfStack, parseStack } from "../utils/error";
 import { FormatOptions, LogObject } from "../types";
 import { LogLevel, LogType } from "../constants";
 import { BoxOpts, box } from "../utils/box";
@@ -52,6 +52,7 @@ export class FancyReporter extends BasicReporter {
     return (
       `\n${indent}` +
       parseStack(stack, message)
+        .filter((line) => !isSelfStack(line))
         .map(
           (line) =>
             "  " +
