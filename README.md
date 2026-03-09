@@ -24,22 +24,9 @@
 
 ## Installation
 
-Using npm:
-
 ```bash
-npm i consola
-```
-
-Using yarn:
-
-```bash
-yarn add consola
-```
-
-Using pnpm:
-
-```bash
-pnpm i consola
+# ✨ Auto-detect (npm, yarn, pnpm, bun, deno)
+npx nypm install consola
 ```
 
 ## Getting Started
@@ -50,6 +37,9 @@ import { consola, createConsola } from "consola";
 
 // CommonJS
 const { consola, createConsola } = require("consola");
+
+// Deno
+import { consola, createConsola } from 'https://esm.sh/consola?conditions=node'
 
 consola.info("Using consola 3.0.0");
 consola.start("Building project...");
