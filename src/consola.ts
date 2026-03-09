@@ -51,7 +51,6 @@ export class Consola {
         throttle: 1000,
         throttleMin: 5,
         formatOptions: {
-          date: true,
           colors: false,
           compact: true,
         },

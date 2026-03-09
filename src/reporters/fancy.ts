@@ -1,11 +1,9 @@
-import _stringWidth from "string-width";
 import isUnicodeSupported from "is-unicode-supported";
 import { colors } from "../utils/color";
 import { parseStack } from "../utils/error";
 import { FormatOptions, LogObject } from "../types";
 import { LogLevel, LogType } from "../constants";
 import { BoxOpts, box } from "../utils/box";
-import { stripAnsi } from "../utils";
 import { BasicReporter } from "./basic";
 
 export const TYPE_COLOR_MAP: { [k in LogType]?: string } = {
@@ -36,15 +34,6 @@ const TYPE_ICONS: { [k in LogType]?: string } = {
   start: s("◐", "o"),
   log: "",
 };
-
-function stringWidth(str: string) {
-  // https://github.com/unjs/consola/issues/204
-  const hasICU = typeof Intl === "object";
-  if (!hasICU || !Intl.Segmenter) {
-    return stripAnsi(str).length;
-  }
-  return _stringWidth(str);
-}
 
 export class FancyReporter extends BasicReporter {
   formatStack(stack: string, message: string, opts?: FormatOptions) {
@@ -102,24 +91,13 @@ export class FancyReporter extends BasicReporter {
       );
     }
 
-    const date = this.formatDate(logObj.date, opts);
-    const coloredDate = date && colors.gray(date);
-
     const isBadge = (logObj.badge as boolean) ?? logObj.level < 2;
-    const type = this.formatType(logObj, isBadge, opts);
 
-    const tag = logObj.tag ? colors.gray(logObj.tag) : "";
-
-    let line;
-    const left = this.filterAndJoin([type, characterFormat(message)]);
-    const right = this.filterAndJoin(opts.columns ? [tag, coloredDate] : [tag]);
-    const space =
-      (opts.columns || 0) - stringWidth(left) - stringWidth(right) - 2;
-
-    line =
-      space > 0 && (opts.columns || 0) >= 80
-        ? left + " ".repeat(space) + right
-        : (right ? `${colors.gray(`[${right}]`)} ` : "") + left;
+    let line = this.filterAndJoin([
+      logObj.tag ? colors.gray(`[${logObj.tag}]`) : "",
+      this.formatType(logObj, isBadge, opts),
+      characterFormat(message),
+    ]);
 
     line += characterFormat(
       additional.length > 0 ? "\n" + additional.join("\n") : "",
