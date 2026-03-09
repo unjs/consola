@@ -31,9 +31,9 @@ const TYPE_ICONS: { [k in LogType]?: string } = {
   info: s("ℹ", "i"),
   success: s("✔", "√"),
   debug: s("⚙", "D"),
-  trace: s("→", "→"),
+  trace: s("➡", "→"),
   fail: s("✖", "×"),
-  start: s("◐", "o"),
+  start: s("▶", "o"),
   log: "",
 };
 
