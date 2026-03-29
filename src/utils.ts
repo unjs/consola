@@ -2,6 +2,7 @@ export * from "./utils/box";
 export * from "./utils/color";
 export {
   stripAnsi,
+  stringWidth,
   centerAlign,
   rightAlign,
   leftAlign,
