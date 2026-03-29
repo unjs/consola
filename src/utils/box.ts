@@ -1,14 +1,5 @@
-import _stringWidth from "string-width";
 import { getColor } from "./color";
-import { stripAnsi } from "./string";
-
-function stringWidth(str: string) {
-  const hasICU = typeof Intl === "object";
-  if (!hasICU || !Intl.Segmenter) {
-    return stripAnsi(str).length;
-  }
-  return _stringWidth(str);
-}
+import { stringWidth } from "./string";
 
 export type BoxBorderStyle = {
   /**
@@ -285,7 +276,7 @@ export function box(text: string, _opts: BoxOpts = {}) {
       Math.floor((width - stringWidth(opts.title)) / 2),
     );
     const right = borderStyle.h.repeat(
-      width - stringWidth(opts.title) - stripAnsi(left).length + paddingOffset,
+      width - stringWidth(opts.title) - stringWidth(left) + paddingOffset,
     );
     boxLines.push(
       `${leftSpace}${borderStyle.tl}${left}${title}${right}${borderStyle.tr}`,

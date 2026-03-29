@@ -1,3 +1,5 @@
+import _stringWidth from "string-width";
+
 const ansiRegex = [
   String.raw`[\u001B\u009B][[\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\d\/#&.:=?%@~_]+)*|[a-zA-Z\d]+(?:;[-a-zA-Z\d\/#&.:=?%@~_]*)*)?\u0007)`,
   String.raw`(?:(?:\d{1,4}(?:;\d{0,4})*)?[\dA-PR-TZcf-nq-uy=><~]))`,
@@ -13,6 +15,23 @@ const ansiRegex = [
  */
 export function stripAnsi(text: string) {
   return text.replace(new RegExp(ansiRegex, "g"), "");
+}
+
+/**
+ * Calculates the visual width of a string in terminal columns, correctly handling
+ * emoji, CJK characters, and ANSI escape codes. Falls back to stripped ANSI length
+ * when `Intl.Segmenter` is not available.
+ *
+ * @param {string} str - The string to measure.
+ * @returns {number} The visual width of the string in terminal columns.
+ */
+export function stringWidth(str: string) {
+  // https://github.com/unjs/consola/issues/204
+  const hasICU = typeof Intl === "object";
+  if (!hasICU || !Intl.Segmenter) {
+    return stripAnsi(str).length;
+  }
+  return _stringWidth(str);
 }
 
 /**
