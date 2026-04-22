@@ -1,5 +1,10 @@
+import _stringWidth from "string-width";
 import { getColor } from "./color";
 import { stripAnsi } from "./string";
+
+function stringWidth(str: string) {
+  return _stringWidth(stripAnsi(str));
+}
 
 export type BoxBorderStyle = {
   /**
@@ -255,11 +260,10 @@ export function box(text: string, _opts: BoxOpts = {}) {
   const paddingOffset =
     opts.style.padding % 2 === 0 ? opts.style.padding : opts.style.padding + 1;
   const height = textLines.length + paddingOffset;
+  const titleWidth = opts.title ? stringWidth(opts.title) : 0;
   const width =
-    Math.max(
-      ...textLines.map((line) => stripAnsi(line).length),
-      opts.title ? stripAnsi(opts.title).length : 0,
-    ) + paddingOffset;
+    Math.max(...textLines.map((line) => stringWidth(line)), titleWidth) +
+    paddingOffset;
   const widthOffset = width + paddingOffset;
 
   const leftSpace =
@@ -272,14 +276,9 @@ export function box(text: string, _opts: BoxOpts = {}) {
   // Include the title if it exists with borders
   if (opts.title) {
     const title = _color ? _color(opts.title) : opts.title;
-    const left = borderStyle.h.repeat(
-      Math.floor((width - stripAnsi(opts.title).length) / 2),
-    );
+    const left = borderStyle.h.repeat(Math.floor((width - titleWidth) / 2));
     const right = borderStyle.h.repeat(
-      width -
-        stripAnsi(opts.title).length -
-        stripAnsi(left).length +
-        paddingOffset,
+      width - titleWidth - stringWidth(left) + paddingOffset,
     );
     boxLines.push(
       `${leftSpace}${borderStyle.tl}${left}${title}${right}${borderStyle.tr}`,
@@ -312,7 +311,7 @@ export function box(text: string, _opts: BoxOpts = {}) {
       // Text line
       const line = textLines[i - valignOffset];
       const left = " ".repeat(paddingOffset);
-      const right = " ".repeat(width - stripAnsi(line).length);
+      const right = " ".repeat(width - stringWidth(line));
       boxLines.push(
         `${leftSpace}${borderStyle.v}${left}${line}${right}${borderStyle.v}`,
       );
