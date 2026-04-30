@@ -175,6 +175,22 @@ export function stringWidth(text: string): number {
       continue;
     }
 
+    // Check for keycap sequences: base char + VARIATION SELECTOR-16 + COMBINING ENCLOSING KEYCAP
+    // e.g., 1️⃣ (#️⃣, *️⃣, etc.)
+    if (i + charLen < stripped.length) {
+      const vs16Code = stripped.codePointAt(i + charLen)!;
+      const vs16Len = vs16Code > 0xff_ff ? 2 : 1;
+      if (vs16Code === 0xfe_0f && i + charLen + vs16Len < stripped.length) {
+        const keycapCode = stripped.codePointAt(i + charLen + vs16Len)!;
+        const keycapLen = keycapCode > 0xff_ff ? 2 : 1;
+        if (keycapCode === 0x20_e3) {
+          width += 2;
+          i += charLen + vs16Len + keycapLen;
+          continue;
+        }
+      }
+    }
+
     // Check for emoji sequences
     if (isEmoji(code)) {
       width += 2;
@@ -203,11 +219,16 @@ export function stringWidth(text: string): number {
         // ZWJ: consume it, then consume the next emoji (which adds no extra width)
         if (nextCode === 0x20_0d) {
           i += nextCharLen; // consume ZWJ
+          // Only consume the next code point if it's an emoji-like character
+          // (emoji, skin tone modifier, variation selector, or regional indicator)
+          // Otherwise, the ZWJ is isolated and we should not swallow the following character
           if (i < stripped.length) {
             const afterZWJ = stripped.codePointAt(i)!;
-            const afterZWJLen = afterZWJ > 0xff_ff ? 2 : 1;
-            i += afterZWJLen; // consume the emoji after ZWJ
-            // Continue to check for more ZWJ sequences or modifiers
+            if (isEmoji(afterZWJ) || isSkinToneModifier(afterZWJ) || isRegionalIndicator(afterZWJ)) {
+              const afterZWJLen = afterZWJ > 0xff_ff ? 2 : 1;
+              i += afterZWJLen; // consume the emoji after ZWJ
+              // Continue to check for more ZWJ sequences or modifiers
+            }
           }
           continue;
         }
