@@ -18,12 +18,12 @@ describe("stringWidth", () => {
   });
 
   test("ANSI escape codes have 0 width", () => {
-    const red = "\u001b[31mhello\u001b[39m";
+    const red = "\u001B[31mhello\u001B[39m";
     expect(stringWidth(red)).toBe(5);
   });
 
   test("combined emoji and ANSI", () => {
-    const redEmoji = "\u001b[31m😀\u001b[39m";
+    const redEmoji = "\u001B[31m😀\u001B[39m";
     expect(stringWidth(redEmoji)).toBe(2);
   });
 
@@ -43,6 +43,14 @@ describe("stringWidth", () => {
     expect(stringWidth("🇯🇵")).toBe(2);
     // Multiple flags
     expect(stringWidth("🇺🇸🇯🇵")).toBe(4);
+  });
+
+  test("subdivision flag emoji (tag sequences) count as width 2", () => {
+    // Scotland flag: 🏴󠁧󠁢󠁳󠁣󠁴󠁿 (black flag + tag specifiers + cancel tag)
+    expect(stringWidth("🏴󠁧󠁢󠁳󠁣󠁴󠁿")).toBe(2);
+    expect(stringWidth("hello 🏴󠁧󠁢󠁳󠁣󠁴󠁿")).toBe(8); // 5 + 1 + 2
+    // England flag
+    expect(stringWidth("🏴󠁧󠁢󠁥󠁮󠁧󠁿")).toBe(2);
   });
 
   test("emoji with skin tone modifiers count as width 2", () => {
