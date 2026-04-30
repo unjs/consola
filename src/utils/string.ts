@@ -95,6 +95,8 @@ function isZeroWidth(code: number): boolean {
     code === 0x20_0d ||
     // Word Joiner
     code === 0x20_60 ||
+    // Variation Selectors (emoji/text presentation)
+    (code >= 0xfe_00 && code <= 0xfe_0f) ||
     // Combining characters from various blocks
     (code >= 0x1a_b0 && code <= 0x1a_ff) ||
     (code >= 0x1d_c0 && code <= 0x1d_ff) ||
