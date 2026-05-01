@@ -60,6 +60,30 @@ describe("stringWidth", () => {
     // Thumbs up with skin tone
     expect(stringWidth("👍🏿")).toBe(2);
   });
+
+  test("keycap emoji sequences count as width 2", () => {
+    // Keycap digit: 1️⃣ (1 + VS16 + combining enclosing keycap)
+    expect(stringWidth("1️⃣")).toBe(2);
+    // Keycap hash: #️⃣
+    expect(stringWidth("#️⃣")).toBe(2);
+    // Keycap asterisk: *️⃣
+    expect(stringWidth("*️⃣")).toBe(2);
+    // Keycap with surrounding text
+    expect(stringWidth("hello 1️⃣")).toBe(8); // 5 + 1 + 2
+    // Multiple keycaps
+    expect(stringWidth("1️⃣2️⃣")).toBe(4);
+  });
+
+  test("variation selectors outside emoji are zero-width", () => {
+    // Variation selector after regular char should not add width
+    expect(stringWidth("a\uFE0F")).toBe(1);
+    expect(stringWidth("a\uFE0Eb")).toBe(2);
+  });
+
+  test("ZWJ followed by non-emoji does not swallow it", () => {
+    // ZWJ + regular char: ZWJ should be zero-width, char should be counted
+    expect(stringWidth("a\u200Db")).toBe(2);
+  });
 });
 
 describe("box", () => {
