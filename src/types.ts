@@ -1,4 +1,21 @@
 import type { LogLevel, LogType } from "./constants";
+import type {
+  PromptOptions,
+  TextPromptOptions,
+  inferPromptReturnType,
+  inferPromptCancalReturnType,
+} from "./prompt";
+
+/**
+ * Type for the prompt function used in ConsolaOptions.
+ * Defined inline to avoid module-level type references that cause
+ * incompatibility between `consola` and `consola/core` entry points.
+ * @see https://github.com/unjs/consola/issues/382
+ */
+export type PromptFunction = <_ = any, __ = any, T extends PromptOptions = TextPromptOptions>(
+  message: string,
+  opts?: PromptOptions,
+) => Promise<inferPromptReturnType<T> | inferPromptCancalReturnType<T>>;
 
 export interface ConsolaOptions {
   /**
@@ -54,7 +71,7 @@ export interface ConsolaOptions {
    * Custom prompt function to use. It can be undefined.
    * @optional
    */
-  prompt?: typeof import("./prompt").prompt | undefined;
+  prompt?: PromptFunction | undefined;
 
   /**
    * Configuration options for formatting log messages. See {@link FormatOptions}.
