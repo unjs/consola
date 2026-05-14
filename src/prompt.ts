@@ -112,7 +112,7 @@ export type PromptOptions =
   | SelectPromptOptions
   | MultiSelectOptions;
 
-type inferPromptReturnType<T extends PromptOptions> =
+export type inferPromptReturnType<T extends PromptOptions> =
   T extends TextPromptOptions
     ? string
     : T extends ConfirmPromptOptions
@@ -125,7 +125,7 @@ type inferPromptReturnType<T extends PromptOptions> =
           ? T["options"]
           : unknown;
 
-type inferPromptCancalReturnType<T extends PromptOptions> = T extends {
+export type inferPromptCancalReturnType<T extends PromptOptions> = T extends {
   cancel: "reject";
 }
   ? never
