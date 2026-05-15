@@ -3,7 +3,7 @@ import type {
   PromptOptions,
   TextPromptOptions,
   inferPromptReturnType,
-  inferPromptCancalReturnType,
+  inferPromptCancelReturnType,
 } from "./prompt";
 
 /**
@@ -15,7 +15,7 @@ import type {
 export type PromptFunction = <_ = any, __ = any, T extends PromptOptions = TextPromptOptions>(
   message: string,
   opts?: PromptOptions,
-) => Promise<inferPromptReturnType<T> | inferPromptCancalReturnType<T>>;
+) => Promise<inferPromptReturnType<T> | inferPromptCancelReturnType<T>>;
 
 export interface ConsolaOptions {
   /**

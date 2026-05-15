@@ -125,7 +125,7 @@ export type inferPromptReturnType<T extends PromptOptions> =
           ? T["options"]
           : unknown;
 
-export type inferPromptCancalReturnType<T extends PromptOptions> = T extends {
+export type inferPromptCancelReturnType<T extends PromptOptions> = T extends {
   cancel: "reject";
 }
   ? never
@@ -154,7 +154,7 @@ export async function prompt<
 >(
   message: string,
   opts: PromptOptions = {},
-): Promise<inferPromptReturnType<T> | inferPromptCancalReturnType<T>> {
+): Promise<inferPromptReturnType<T> | inferPromptCancelReturnType<T>> {
   const handleCancel = (value: unknown) => {
     if (
       typeof value !== "symbol" ||
