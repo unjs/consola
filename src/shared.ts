@@ -12,5 +12,5 @@ export type {
   SelectPromptOptions,
   TextPromptOptions,
   inferPromptReturnType,
-  inferPromptCancalReturnType,
+  inferPromptCancelReturnType,
 } from "./prompt";
