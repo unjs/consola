@@ -373,7 +373,11 @@ export class Consola {
     // Aliases
     if (logObj.message) {
       logObj.args!.unshift(logObj.message);
-      delete logObj.message;
+    } else if (
+      logObj.args!.length > 0 &&
+      typeof logObj.args![0] === "string"
+    ) {
+      logObj.message = logObj.args![0];
     }
     if (logObj.additional) {
       if (!Array.isArray(logObj.additional)) {
