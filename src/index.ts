@@ -4,8 +4,16 @@ import type { ConsolaOptions } from "./types";
 import { BasicReporter } from "./reporters/basic";
 import { FancyReporter } from "./reporters/fancy";
 import { ConsolaInstance, createConsola as _createConsola } from "./consola";
+import type { prompt as promptFn } from "./prompt";
 
 export * from "./shared";
+
+function createLazyPrompt(): NonNullable<ConsolaOptions["prompt"]> {
+  const lazyPrompt = ((message, opts) =>
+    import("./prompt").then((m) => m.prompt(message, opts))) as typeof promptFn;
+
+  return lazyPrompt;
+}
 
 /**
  * Factory function to create a new Consola instance tailored for use in different environments.
@@ -29,7 +37,7 @@ export function createConsola(
     defaults: { level },
     stdout: process.stdout,
     stderr: process.stderr,
-    prompt: (...args) => import("./prompt").then((m) => m.prompt(...args)),
+    prompt: createLazyPrompt(),
     reporters: options.reporters || [
       (options.fancy ?? !(isCI || isTest))
         ? new FancyReporter()
