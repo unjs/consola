@@ -184,6 +184,12 @@ export type BoxStyle = {
    * @default 1
    */
   marginBottom: number;
+
+  /**
+   * Horizontal alignment of the title on the top border
+   * @default 'center'
+   */
+  titleAlign: "left" | "center" | "right";
 };
 
 /**
@@ -211,7 +217,37 @@ const defaultStyle: BoxStyle = {
   marginLeft: 1,
   marginTop: 1,
   marginBottom: 1,
+  titleAlign: "center",
 };
+
+function getTitleBorderPadding(
+  titleLength: number,
+  width: number,
+  paddingOffset: number,
+  titleAlign: BoxStyle["titleAlign"],
+) {
+  switch (titleAlign) {
+    case "left": {
+      return {
+        left: 0,
+        right: width - titleLength + paddingOffset,
+      };
+    }
+    case "right": {
+      return {
+        left: width - titleLength + paddingOffset,
+        right: 0,
+      };
+    }
+    default: {
+      const left = Math.floor((width - titleLength) / 2);
+      return {
+        left,
+        right: width - titleLength - left + paddingOffset,
+      };
+    }
+  }
+}
 
 /**
  * Creates a styled box with text content, customisable via options.
@@ -272,15 +308,15 @@ export function box(text: string, _opts: BoxOpts = {}) {
   // Include the title if it exists with borders
   if (opts.title) {
     const title = _color ? _color(opts.title) : opts.title;
-    const left = borderStyle.h.repeat(
-      Math.floor((width - stripAnsi(opts.title).length) / 2),
+    const titleLength = stripAnsi(opts.title).length;
+    const { left: leftPadding, right: rightPadding } = getTitleBorderPadding(
+      titleLength,
+      width,
+      paddingOffset,
+      opts.style.titleAlign,
     );
-    const right = borderStyle.h.repeat(
-      width -
-        stripAnsi(opts.title).length -
-        stripAnsi(left).length +
-        paddingOffset,
-    );
+    const left = borderStyle.h.repeat(leftPadding);
+    const right = borderStyle.h.repeat(rightPadding);
     boxLines.push(
       `${leftSpace}${borderStyle.tl}${left}${title}${right}${borderStyle.tr}`,
     );
