@@ -3,6 +3,22 @@ const ansiRegex = [
   String.raw`(?:(?:\d{1,4}(?:;\d{0,4})*)?[\dA-PR-TZcf-nq-uy=><~]))`,
 ].join("|");
 
+const ansiPattern = new RegExp(ansiRegex, "g");
+
+let stripAnsiNative: ((text: string) => string) | undefined;
+
+/**
+ * Registers Node.js native VT stripping for {@link stripAnsi}.
+ * @internal
+ */
+export function setStripAnsiNative(fn: (text: string) => string) {
+  stripAnsiNative = fn;
+}
+
+function stripAnsiWithRegex(text: string) {
+  return text.replace(ansiPattern, "");
+}
+
 /**
  * Removes ANSI escape codes from a given string. This is particularly useful for
  * processing text that contains formatting codes, such as colours or styles, so that the
@@ -12,7 +28,7 @@ const ansiRegex = [
  * @returns {string} The text without ANSI escape codes.
  */
 export function stripAnsi(text: string) {
-  return text.replace(new RegExp(ansiRegex, "g"), "");
+  return stripAnsiNative ? stripAnsiNative(text) : stripAnsiWithRegex(text);
 }
 
 /**

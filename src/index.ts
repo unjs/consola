@@ -1,4 +1,5 @@
 import { isDebug, isTest, isCI } from "std-env";
+import "./utils/strip-ansi.node.ts";
 import { LogLevels, LogLevel } from "./constants";
 import type { ConsolaOptions } from "./types";
 import { BasicReporter } from "./reporters/basic";
