@@ -107,3 +107,43 @@ export function align(
     }
   }
 }
+
+/**
+ * Calculates the visual display width of a string, accounting for wide characters
+ * such as CJK ideographs (Chinese, Japanese, Korean) and emoji.
+ *
+ * In most terminals, wide characters occupy 2 columns while regular characters
+ * occupy 1 column. This function uses Unicode range checks to determine width.
+ *
+ * @param {string} text - The text whose visual width to calculate.
+ * @returns {number} The visual width of the text in terminal columns.
+ */
+export function visualWidth(text: string) {
+  let width = 0;
+  for (const char of text) {
+    const code = char.codePointAt(0);
+    if (code === undefined) continue;
+    // Wide characters: CJK, Hangul, Katakana/Hiragana, emoji, etc.
+    if (
+      (code >= 0x1100 && code <= 0x115F) || // Hangul Jamo
+      (code >= 0x2E80 && code <= 0x303E) || // CJK Radicals / CJK Symbols
+      (code >= 0x3040 && code <= 0x33FF) || // Hiragana/Katakana/CJK Compat
+      (code >= 0x3400 && code <= 0x4DBF) || // CJK Unified Extension A
+      (code >= 0x4E00 && code <= 0x9FFF) || // CJK Unified
+      (code >= 0xA000 && code <= 0xA4CF) || // Yi
+      (code >= 0xAC00 && code <= 0xD7AF) || // Hangul Syllables
+      (code >= 0xF900 && code <= 0xFAFF) || // CJK Compatibility Ideographs
+      (code >= 0xFE10 && code <= 0xFE6F) || // Vertical Forms / CJK Compat Forms
+      (code >= 0xFF01 && code <= 0xFF60) || // Fullwidth Forms
+      (code >= 0xFFE0 && code <= 0xFFE6) || // Fullwidth Signs
+      (code >= 0x1F000 && code <= 0x1FFFF) || // Emoji supplement
+      (code >= 0x20000 && code <= 0x3FFFF) || // CJK Extension B+
+      code >= 0xE0100 // variation selectors supplement
+    ) {
+      width += 2;
+    } else {
+      width += 1;
+    }
+  }
+  return width;
+}

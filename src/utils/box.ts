@@ -1,5 +1,5 @@
 import { getColor } from "./color";
-import { stripAnsi } from "./string";
+import { stripAnsi, visualWidth } from "./string";
 
 export type BoxBorderStyle = {
   /**
@@ -257,8 +257,8 @@ export function box(text: string, _opts: BoxOpts = {}) {
   const height = textLines.length + paddingOffset;
   const width =
     Math.max(
-      ...textLines.map((line) => stripAnsi(line).length),
-      opts.title ? stripAnsi(opts.title).length : 0,
+      ...textLines.map((line) => visualWidth(stripAnsi(line))),
+      opts.title ? visualWidth(stripAnsi(opts.title)) : 0,
     ) + paddingOffset;
   const widthOffset = width + paddingOffset;
 
@@ -273,11 +273,11 @@ export function box(text: string, _opts: BoxOpts = {}) {
   if (opts.title) {
     const title = _color ? _color(opts.title) : opts.title;
     const left = borderStyle.h.repeat(
-      Math.floor((width - stripAnsi(opts.title).length) / 2),
+      Math.floor((width - visualWidth(stripAnsi(opts.title))) / 2),
     );
     const right = borderStyle.h.repeat(
       width -
-        stripAnsi(opts.title).length -
+        visualWidth(stripAnsi(opts.title)) -
         stripAnsi(left).length +
         paddingOffset,
     );
@@ -312,7 +312,7 @@ export function box(text: string, _opts: BoxOpts = {}) {
       // Text line
       const line = textLines[i - valignOffset];
       const left = " ".repeat(paddingOffset);
-      const right = " ".repeat(width - stripAnsi(line).length);
+      const right = " ".repeat(width - visualWidth(stripAnsi(line)));
       boxLines.push(
         `${leftSpace}${borderStyle.v}${left}${line}${right}${borderStyle.v}`,
       );
