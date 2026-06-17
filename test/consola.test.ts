@@ -56,6 +56,37 @@ describe("consola", () => {
 
     expect(logs.at(-1)!.args).toEqual(["SPAM", "(repeated 4 times)"]);
   });
+
+  test("resumeLogs preserves isRaw on queued .raw() calls", async () => {
+    const logs: LogObject[] = [];
+    const TestReporter: ConsolaReporter = {
+      log(logObj) {
+        logs.push(logObj);
+      },
+    };
+
+    const consola = createConsola({
+      throttle: 0,
+      level: LogLevels.info,
+      reporters: [TestReporter],
+    });
+
+    consola.pauseLogs();
+    consola.warn.raw({ some: "data" });
+    consola.resumeLogs();
+
+    await wait(50);
+
+    expect(logs).toHaveLength(1);
+    // A non-raw warn would treat the single object arg as the LogObject
+    // itself (via isLogObj) and drop into logObj.message / logObj.additional.
+    // The raw path keeps it on args[0]. Asserting both ensures the regression
+    // can never sneak back in without changing this expectation.
+    expect(logs[0].args).toEqual([{ some: "data" }]);
+    expect(
+      (logs[0] as unknown as { message?: unknown }).message,
+    ).toBeUndefined();
+  });
 });
 
 function wait(delay) {
