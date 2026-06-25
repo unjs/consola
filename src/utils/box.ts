@@ -184,6 +184,12 @@ export type BoxStyle = {
    * @default 1
    */
   marginBottom: number;
+
+  /**
+   * The horizontal alignment of the title
+   * @default 'center'
+   */
+  titleAlign: "left" | "center" | "right";
 };
 
 /**
@@ -211,6 +217,7 @@ const defaultStyle: BoxStyle = {
   marginLeft: 1,
   marginTop: 1,
   marginBottom: 1,
+  titleAlign: "center",
 };
 
 /**
@@ -272,15 +279,19 @@ export function box(text: string, _opts: BoxOpts = {}) {
   // Include the title if it exists with borders
   if (opts.title) {
     const title = _color ? _color(opts.title) : opts.title;
-    const left = borderStyle.h.repeat(
-      Math.floor((width - stripAnsi(opts.title).length) / 2),
-    );
-    const right = borderStyle.h.repeat(
-      width -
-        stripAnsi(opts.title).length -
-        stripAnsi(left).length +
-        paddingOffset,
-    );
+    const titleLen = stripAnsi(opts.title).length;
+    const totalFill = width - titleLen + paddingOffset;
+    let leftCount: number;
+    if (opts.style.titleAlign === "left") {
+      leftCount = 0;
+    } else if (opts.style.titleAlign === "right") {
+      leftCount = totalFill;
+    } else {
+      leftCount = Math.floor(totalFill / 2);
+    }
+    const rightCount = totalFill - leftCount;
+    const left = borderStyle.h.repeat(leftCount);
+    const right = borderStyle.h.repeat(rightCount);
     boxLines.push(
       `${leftSpace}${borderStyle.tl}${left}${title}${right}${borderStyle.tr}`,
     );
