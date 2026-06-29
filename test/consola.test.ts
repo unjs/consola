@@ -56,6 +56,27 @@ describe("consola", () => {
 
     expect(logs.at(-1)!.args).toEqual(["SPAM", "(repeated 4 times)"]);
   });
+
+  test("preserves raw logs queued while paused", () => {
+    const logs: LogObject[] = [];
+    const TestReporter: ConsolaReporter = {
+      log(logObj) {
+        logs.push(logObj);
+      },
+    };
+
+    const consola = createConsola({
+      level: LogLevels.info,
+      reporters: [TestReporter],
+    });
+
+    consola.pauseLogs();
+    consola.warn.raw({ message: "raw warning" });
+    consola.resumeLogs();
+
+    expect(logs).toHaveLength(1);
+    expect(logs[0].args).toEqual([{ message: "raw warning" }]);
+  });
 });
 
 function wait(delay) {
