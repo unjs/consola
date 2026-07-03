@@ -1,5 +1,6 @@
 import { describe, test, expect } from "vitest";
 import { ConsolaReporter, LogLevels, LogObject, createConsola } from "../src";
+import { FancyReporter } from "../src/reporters/fancy";
 
 describe("consola", () => {
   test("can set level", () => {
@@ -55,6 +56,30 @@ describe("consola", () => {
     // 6 + Last one indicating it repeated 4
 
     expect(logs.at(-1)!.args).toEqual(["SPAM", "(repeated 4 times)"]);
+  });
+
+  test("fancy reporter preserves markdown code fences", () => {
+    const reporter = new FancyReporter();
+    const message = [
+      "```html",
+      "<div>hello</div>",
+      "```",
+      "```html",
+      "<div>hello</div>",
+      "```",
+    ].join("\n");
+
+    const output = reporter.formatLogObj(
+      {
+        type: "log",
+        level: LogLevels.log,
+        date: new Date(),
+        args: [message],
+      },
+      {},
+    );
+
+    expect(output.match(/```html\n<div>hello<\/div>\n```/g)).toHaveLength(2);
   });
 });
 
