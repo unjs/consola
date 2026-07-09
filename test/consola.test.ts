@@ -12,7 +12,7 @@ describe("consola", () => {
     }
   });
 
-  test("silent log level does't print logs", async () => {
+  test("silent log level doesn't print logs", async () => {
     const logs: LogObject[] = [];
     const TestReporter: ConsolaReporter = {
       log(logObj) {
