@@ -441,7 +441,8 @@ export class Consola {
           }
         }
       } catch {
-        // Circular References
+        // Circular References - prevent stale serialized comparisons
+        this._lastLog.serialized = undefined;
       }
     }
 
