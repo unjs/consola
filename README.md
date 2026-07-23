@@ -74,6 +74,12 @@ import { consola, createConsola } from "consola/browser";
 import { createConsola } from "consola/core";
 ```
 
+When typing values that come from the main `consola` entry (for example `useLogger()` from Nuxt kit), import types from `"consola"` — not `"consola/core"`. The `/core` build is a separate lightweight entry; its types are not always assignable to the main package types.
+
+```ts
+import type { ConsolaInstance } from "consola";
+```
+
 ## Consola Methods
 
 #### `<type>(logObject)` `<type>(args...)`
