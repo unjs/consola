@@ -98,7 +98,7 @@
   "main": "./lib/index.cjs",
   "module": "./dist/index.mjs",
   "browser": "./dist/browser.mjs",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/index.d.mts",
   "files": [
     "dist",
     "lib",
