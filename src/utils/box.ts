@@ -197,6 +197,12 @@ export type BoxOpts = {
    */
   title?: string;
 
+  /**
+   * The horizontal alignment of the title
+   * @default 'center'
+   */
+  titleAlign?: "left" | "center" | "right";
+
   style?: Partial<BoxStyle>;
 };
 
@@ -272,15 +278,17 @@ export function box(text: string, _opts: BoxOpts = {}) {
   // Include the title if it exists with borders
   if (opts.title) {
     const title = _color ? _color(opts.title) : opts.title;
-    const left = borderStyle.h.repeat(
-      Math.floor((width - stripAnsi(opts.title).length) / 2),
-    );
-    const right = borderStyle.h.repeat(
-      width -
-        stripAnsi(opts.title).length -
-        stripAnsi(left).length +
-        paddingOffset,
-    );
+    const titleWidth = stripAnsi(opts.title).length;
+    const availableWidth = width - titleWidth + paddingOffset;
+    let leftWidth = Math.floor((width - titleWidth) / 2);
+    if (opts.titleAlign === "left") {
+      leftWidth = 0;
+    } else if (opts.titleAlign === "right") {
+      leftWidth = availableWidth;
+    }
+    const rightWidth = availableWidth - leftWidth;
+    const left = borderStyle.h.repeat(leftWidth);
+    const right = borderStyle.h.repeat(rightWidth);
     boxLines.push(
       `${leftSpace}${borderStyle.tl}${left}${title}${right}${borderStyle.tr}`,
     );
