@@ -57,6 +57,11 @@ consola.warn("A new version of consola is available: 3.0.1");
 consola.success("Project built!");
 consola.error(new Error("This is an example error. Everything is fine!"));
 consola.box("I am a simple box");
+consola.box({
+  title: "Notice",
+  titleAlign: "left",
+  message: "I am a box with a left-aligned title",
+});
 await consola.prompt("Deploy to the production?", {
   type: "confirm",
 });

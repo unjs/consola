@@ -97,6 +97,7 @@ export class FancyReporter extends BasicReporter {
           title: logObj.title
             ? characterFormat(logObj.title as string)
             : undefined,
+          titleAlign: logObj.titleAlign as BoxOpts["titleAlign"],
           style: logObj.style as BoxOpts["style"],
         },
       );

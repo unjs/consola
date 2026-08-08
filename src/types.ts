@@ -127,6 +127,12 @@ export interface InputLogObject {
   message?: string;
 
   /**
+   * The horizontal alignment of the box title.
+   * @optional
+   */
+  titleAlign?: "left" | "center" | "right";
+
+  /**
    * Additional text or texts to be logged with the message.
    * @optional
    */
