@@ -1,5 +1,7 @@
 import { describe, test, expect } from "vitest";
 import { ConsolaReporter, LogLevels, LogObject, createConsola } from "../src";
+import { FancyReporter } from "../src/reporters/fancy";
+import { stripAnsi } from "../src/utils/string";
 
 describe("consola", () => {
   test("can set level", () => {
@@ -55,6 +57,31 @@ describe("consola", () => {
     // 6 + Last one indicating it repeated 4
 
     expect(logs.at(-1)!.args).toEqual(["SPAM", "(repeated 4 times)"]);
+  });
+
+  test("fancy reporter aligns right-side content across log types (#394)", () => {
+    const reporter = new FancyReporter();
+    const opts = { columns: 120, date: true };
+
+    const lines = ["info", "success", "start"].map((type) => {
+      const logObj: LogObject = {
+        type,
+        level: 3,
+        tag: "",
+        args: ["test message"],
+        date: new Date("2025-01-01T00:00:00.000Z"),
+      } as any;
+      return reporter.formatLogObj(logObj, opts as any);
+    });
+
+    // Extract the position of the date string in each line
+    const positions = lines.map((line) => {
+      return stripAnsi(line).lastIndexOf("12:00:00 AM");
+    });
+
+    // All positions must be equal (right-aligned)
+    expect(positions[0]).toBe(positions[1]);
+    expect(positions[1]).toBe(positions[2]);
   });
 });
 
