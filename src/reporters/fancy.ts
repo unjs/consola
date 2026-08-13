@@ -113,8 +113,24 @@ export class FancyReporter extends BasicReporter {
     let line;
     const left = this.filterAndJoin([type, characterFormat(message)]);
     const right = this.filterAndJoin(opts.columns ? [tag, coloredDate] : [tag]);
+
+    // string-width reports some consola icons (ℹ ✔ ✖ ⚠) as width 2
+    // (East Asian Ambiguous) but they render as width 1 in most terminals.
+    // Other icons (◐ →) are correctly reported as width 1. This inconsistency
+    // causes the right-aligned date/tag to be misaligned between log types.
+    // Correct the discrepancy by subtracting the overestimate.
+    // https://github.com/unjs/consola/issues/394
+    const typeStripped = stripAnsi(type);
+    const iconWidthDiff = typeStripped
+      ? stringWidth(typeStripped) - typeStripped.length
+      : 0;
+
     const space =
-      (opts.columns || 0) - stringWidth(left) - stringWidth(right) - 2;
+      (opts.columns || 0) -
+      stringWidth(left) -
+      stringWidth(right) -
+      2 +
+      iconWidthDiff;
 
     line =
       space > 0 && (opts.columns || 0) >= 80
