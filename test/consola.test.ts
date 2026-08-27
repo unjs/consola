@@ -56,6 +56,54 @@ describe("consola", () => {
 
     expect(logs.at(-1)!.args).toEqual(["SPAM", "(repeated 4 times)"]);
   });
+
+  test("resumeLogs preserves the raw flag of queued logs", () => {
+    const logs: LogObject[] = [];
+    const TestReporter: ConsolaReporter = {
+      log(logObj) {
+        logs.push(logObj);
+      },
+    };
+
+    const consola = createConsola({
+      level: LogLevels.info,
+      reporters: [TestReporter],
+    });
+
+    // reference: a raw log object logged while not paused is passed through as an argument
+    consola.log.raw({ message: "hello" });
+
+    consola.pauseLogs();
+    consola.log.raw({ message: "hello" });
+    consola.resumeLogs();
+
+    expect(logs.length).toBe(2);
+    expect(logs[1].args).toEqual(logs[0].args);
+    expect(logs[1].args).toEqual([{ message: "hello" }]);
+  });
+
+  test("resumeLogs still merges non-raw log objects of queued logs", () => {
+    const logs: LogObject[] = [];
+    const TestReporter: ConsolaReporter = {
+      log(logObj) {
+        logs.push(logObj);
+      },
+    };
+
+    const consola = createConsola({
+      level: LogLevels.info,
+      reporters: [TestReporter],
+    });
+
+    consola.pauseLogs();
+    consola.log({ message: "hello" });
+    consola.resumeLogs();
+
+    expect(logs.length).toBe(1);
+    // a non-raw single log object is merged into the log object, so `message`
+    // becomes the first argument rather than staying a plain argument
+    expect(logs[0].args).toEqual(["hello"]);
+  });
 });
 
 function wait(delay) {
