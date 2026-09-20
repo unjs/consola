@@ -130,7 +130,7 @@ export class FancyReporter extends BasicReporter {
       line += this.formatStack(_err.stack || "", _err.message);
     }
 
-    return isBadge ? "\n" + line + "\n" : line;
+    return isBadge && !opts.compact ? "\n" + line + "\n" : line;
   }
 }
 
