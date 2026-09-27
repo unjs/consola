@@ -311,7 +311,7 @@ export class Consola {
     // Process queue
     const _queue = queue.splice(0);
     for (const item of _queue) {
-      item[0]._logFn(item[1], item[2]);
+      item[0]._logFn(item[1], item[2], item[3]);
     }
   }
 

@@ -56,6 +56,28 @@ describe("consola", () => {
 
     expect(logs.at(-1)!.args).toEqual(["SPAM", "(repeated 4 times)"]);
   });
+
+  test("resumeLogs preserves isRaw flag for queued .raw() calls", () => {
+    const logs: LogObject[] = [];
+    const TestReporter: ConsolaReporter = {
+      log(logObj) {
+        logs.push(logObj);
+      },
+    };
+
+    const consola = createConsola({
+      level: LogLevels.log,
+      reporters: [TestReporter],
+    });
+
+    consola.pauseLogs();
+    consola.log.raw({ message: "hello" });
+    expect(logs.length).toBe(0);
+
+    consola.resumeLogs();
+    expect(logs.length).toBe(1);
+    expect(logs[0].args).toEqual([{ message: "hello" }]);
+  });
 });
 
 function wait(delay) {
