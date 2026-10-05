@@ -56,6 +56,42 @@ describe("consola", () => {
 
     expect(logs.at(-1)!.args).toEqual(["SPAM", "(repeated 4 times)"]);
   });
+
+  test("withTag composes the parent tag and the new tag", () => {
+    const logs: LogObject[] = [];
+    const TestReporter: ConsolaReporter = {
+      log(logObj) {
+        logs.push(logObj);
+      },
+    };
+
+    const consola = createConsola({
+      throttle: 0,
+      level: LogLevels.info,
+      reporters: [TestReporter],
+    });
+    consola.withTag("parent").withTag("child").log("scoped");
+
+    expect(logs.at(-1)!.tag).toBe("parent:child");
+  });
+
+  test("withScope is an alias of withTag", () => {
+    const logs: LogObject[] = [];
+    const TestReporter: ConsolaReporter = {
+      log(logObj) {
+        logs.push(logObj);
+      },
+    };
+
+    const consola = createConsola({
+      throttle: 0,
+      level: LogLevels.info,
+      reporters: [TestReporter],
+    });
+    consola.withScope("scope").log("scoped");
+
+    expect(logs.at(-1)!.tag).toBe("scope");
+  });
 });
 
 function wait(delay) {

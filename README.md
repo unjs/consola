@@ -128,6 +128,8 @@ Create a new `Consola` instance with provided defaults
 
 Create a new `Consola` instance with that tag.
 
+If the instance already has a tag, the new tag is appended to it with a `:` separator (`parent` + `child` becomes `parent:child`).
+
 #### `wrapConsole()` `restoreConsole()`
 
 Globally redirect all `console.log`, etc calls to consola handlers.
