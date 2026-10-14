@@ -319,6 +319,62 @@ describe("your-consola-mock-test", () => {
 }
 ```
 
+### With OpenTelemetry (Node.js)
+
+Use a custom reporter to forward logs to an OpenTelemetry logger. Your application configures the SDK and exporter separately from Consola. This example requires Node.js 20.6 or newer and uses the experimental OpenTelemetry Logs packages at version `0.223.0`:
+
+```bash
+npm install @opentelemetry/api-logs@0.223.0 @opentelemetry/sdk-logs@0.223.0 @opentelemetry/exporter-logs-otlp-http@0.223.0
+```
+
+```js
+import { formatWithOptions } from "node:util";
+import { createConsola } from "consola";
+import { SeverityNumber } from "@opentelemetry/api-logs";
+import {
+  LoggerProvider,
+  BatchLogRecordProcessor,
+} from "@opentelemetry/sdk-logs";
+import { OTLPLogExporter } from "@opentelemetry/exporter-logs-otlp-http";
+
+const provider = new LoggerProvider({
+  processors: [
+    new BatchLogRecordProcessor({ exporter: new OTLPLogExporter() }),
+  ],
+});
+const logger = provider.getLogger("consola");
+const severities = {
+  fatal: SeverityNumber.FATAL,
+  error: SeverityNumber.ERROR,
+  warn: SeverityNumber.WARN,
+  debug: SeverityNumber.DEBUG,
+  trace: SeverityNumber.TRACE,
+  verbose: SeverityNumber.TRACE,
+};
+
+const consola = createConsola({
+  reporters: [
+    {
+      log(logObj) {
+        logger.emit({
+          body: formatWithOptions({ colors: false }, ...logObj.args),
+          severityNumber: severities[logObj.type] ?? SeverityNumber.INFO,
+          severityText: logObj.type,
+          timestamp: logObj.date,
+          attributes: { "consola.tag": logObj.tag },
+        });
+      },
+    },
+  ],
+});
+
+consola.withTag("app").info("Hello %s", "world");
+```
+
+The exporter defaults to `http://localhost:4318/v1/logs`. Set `OTEL_EXPORTER_OTLP_LOGS_ENDPOINT` to your collector's full logs URL, including `/v1/logs`; see the [exporter's configuration](https://www.npmjs.com/package/@opentelemetry/exporter-logs-otlp-http/v/0.223.0) for more options. If your application already configures an OpenTelemetry logger provider, reuse it instead of creating another one.
+
+The reporter maps Consola's built-in types to OpenTelemetry severities; informational types such as `log`, `success`, and `fail` use `INFO`. Consola's level filtering and throttling still apply. After the application's final log, await `provider.shutdown()` during graceful shutdown to flush buffered records. Keep OpenTelemetry diagnostic logging separate from this reporter to avoid a logging loop when wrapping the console.
+
 ## Console Utils
 
 ```ts
