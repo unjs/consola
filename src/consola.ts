@@ -190,11 +190,11 @@ export class Consola {
    * @param {ConsolaReporter} reporter - The reporter to remove. See {@link ConsolaReporter}.
    * @returns {Consola} The current Consola instance.
    */
-  removeReporter(reporter: ConsolaReporter) {
+  removeReporter(reporter?: ConsolaReporter) {
     if (reporter) {
       const i = this.options.reporters.indexOf(reporter);
       if (i !== -1) {
-        return this.options.reporters.splice(i, 1);
+        this.options.reporters.splice(i, 1);
       }
     } else {
       this.options.reporters.splice(0);
