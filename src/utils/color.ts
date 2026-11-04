@@ -24,12 +24,12 @@ const isCI =
 
 /**
  * Determines support for terminal colours based on the environment and capabilities of the terminal.
- * @type {boolean} isColorSupported - Indicates whether colour support is enabled in the terminal.
+ * Forced colors and supported CI environments still override stream detection.
  */
 const isColorSupported = (fd: number) =>
   !isDisabled &&
   (isForced ||
-    (isWindows && !isDumbTerminal) ||
+    (isWindows && tty.isatty(fd) && !isDumbTerminal) ||
     isCompatibleTerminal(fd) ||
     isCI);
 
