@@ -16,19 +16,22 @@ const isDisabled = "NO_COLOR" in env || argv.includes("--no-color");
 const isForced = "FORCE_COLOR" in env || argv.includes("--color");
 const isWindows = platform === "win32";
 const isDumbTerminal = env.TERM === "dumb";
-const isCompatibleTerminal =
-  tty && tty.isatty && tty.isatty(1) && env.TERM && !isDumbTerminal;
+const isCompatibleTerminal = (fd: number) =>
+  tty && tty.isatty && tty.isatty(fd) && env.TERM && !isDumbTerminal;
 const isCI =
   "CI" in env &&
   ("GITHUB_ACTIONS" in env || "GITLAB_CI" in env || "CIRCLECI" in env);
 
 /**
  * Determines support for terminal colours based on the environment and capabilities of the terminal.
- * @type {boolean} isColorSupported - Indicates whether colour support is enabled in the terminal.
+ * Forced colors and supported CI environments still override stream detection.
  */
-const isColorSupported =
+const isColorSupported = (fd: number) =>
   !isDisabled &&
-  (isForced || (isWindows && !isDumbTerminal) || isCompatibleTerminal || isCI);
+  (isForced ||
+    (isWindows && tty.isatty(fd) && !isDumbTerminal) ||
+    isCompatibleTerminal(fd) ||
+    isCI);
 
 function replaceClose(
   index: number,
@@ -129,7 +132,7 @@ export type ColorFunction = (text: string | number) => string;
  * @param {boolean} [useColor=isColorSupported] - Specifies whether to use colour functions or fallback to plain strings.
  * @returns {Record<ColorName, ColorFunction>} An object where keys are colour names and values are functions to apply those colours. See {@link ColorFunction}.
  */
-function createColors(useColor = isColorSupported) {
+function createColors(useColor = isColorSupported(1)) {
   return useColor
     ? colorDefs
     : Object.fromEntries(Object.keys(colorDefs).map((key) => [key, String]));
@@ -139,6 +142,11 @@ function createColors(useColor = isColorSupported) {
  * An object containing functions for colouring text. Each function corresponds to a terminal colour. See {@link ColorName} for available colours.
  */
 export const colors = createColors() as Record<ColorName, ColorFunction>;
+
+export const stderrColors = createColors(isColorSupported(2)) as Record<
+  ColorName,
+  ColorFunction
+>;
 
 /**
  * Gets a colour function by name, with an option for a fallback colour if the requested colour is not found.

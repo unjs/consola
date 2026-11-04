@@ -219,7 +219,7 @@ const defaultStyle: BoxStyle = {
  * @param {BoxOpts} [_opts={}] - Optional settings for the appearance and behaviour of the box. See {@link BoxOpts}.
  * @returns {string} The formatted box as a string, ready for printing or logging.
  */
-export function box(text: string, _opts: BoxOpts = {}) {
+export function box(text: string, _opts: BoxOpts = {}, color = getColor) {
   const opts = {
     ..._opts,
     style: {
@@ -235,7 +235,7 @@ export function box(text: string, _opts: BoxOpts = {}) {
   const boxLines = [];
 
   // Get the characters for the box and colorize
-  const _color = getColor(opts.style.borderColor);
+  const _color = color(opts.style.borderColor);
   const borderStyle = {
     ...(typeof opts.style.borderStyle === "string"
       ? boxStylePresets[

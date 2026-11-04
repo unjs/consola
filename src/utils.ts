@@ -1,5 +1,11 @@
 export * from "./utils/box";
-export * from "./utils/color";
+export {
+  colors,
+  getColor,
+  colorize,
+  type ColorName,
+  type ColorFunction,
+} from "./utils/color";
 export {
   stripAnsi,
   centerAlign,
