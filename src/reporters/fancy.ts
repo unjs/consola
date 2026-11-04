@@ -1,8 +1,10 @@
+import { formatWithOptions } from "node:util";
 import _stringWidth from "string-width";
 import isUnicodeSupported from "is-unicode-supported";
-import { colors } from "../utils/color";
+import { colors, stderrColors } from "../utils/color";
+import { writeStream } from "../utils/stream";
 import { parseStack } from "../utils/error";
-import { FormatOptions, LogObject } from "../types";
+import { ConsolaOptions, FormatOptions, LogObject } from "../types";
 import { LogLevel, LogType } from "../constants";
 import { BoxOpts, box } from "../utils/box";
 import { stripAnsi } from "../utils";
@@ -47,7 +49,42 @@ function stringWidth(str: string) {
 }
 
 export class FancyReporter extends BasicReporter {
-  formatStack(stack: string, message: string, opts?: FormatOptions) {
+  log(logObj: LogObject, ctx: { options: ConsolaOptions }) {
+    const isStderr = logObj.level < 2;
+    const stream = isStderr
+      ? ctx.options.stderr || process.stderr
+      : ctx.options.stdout || process.stdout;
+    const line = this.formatLogObj(
+      logObj,
+      {
+        columns: stream.columns || 0,
+        ...ctx.options.formatOptions,
+      },
+      isStderr ? stderrColors : colors,
+    );
+    return writeStream(line + "\n", stream);
+  }
+
+  formatError(err: any, opts: FormatOptions, palette = colors): string {
+    const message = err.message ?? formatWithOptions(opts, err);
+    const stack = err.stack
+      ? this.formatStack(err.stack, message, opts, palette)
+      : "";
+    const level = opts?.errorLevel || 0;
+    const causedPrefix = level > 0 ? `${"  ".repeat(level)}[cause]: ` : "";
+    const causedError = err.cause
+      ? "\n\n" +
+        this.formatError(err.cause, { ...opts, errorLevel: level + 1 }, palette)
+      : "";
+    return causedPrefix + message + "\n" + stack + causedError;
+  }
+
+  formatStack(
+    stack: string,
+    message: string,
+    opts?: FormatOptions,
+    palette = colors,
+  ) {
     const indent = "  ".repeat((opts?.errorLevel || 0) + 1);
     return (
       `\n${indent}` +
@@ -56,23 +93,29 @@ export class FancyReporter extends BasicReporter {
           (line) =>
             "  " +
             line
-              .replace(/^at +/, (m) => colors.gray(m))
-              .replace(/\((.+)\)/, (_, m) => `(${colors.cyan(m)})`),
+              .replace(/^at +/, (m) => palette.gray(m))
+              .replace(/\((.+)\)/, (_, m) => `(${palette.cyan(m)})`),
         )
         .join(`\n${indent}`)
     );
   }
 
-  formatType(logObj: LogObject, isBadge: boolean, opts: FormatOptions) {
+  formatType(
+    logObj: LogObject,
+    isBadge: boolean,
+    opts: FormatOptions,
+    palette = colors,
+  ) {
     const typeColor =
       (TYPE_COLOR_MAP as any)[logObj.type] ||
       (LEVEL_COLOR_MAP as any)[logObj.level] ||
       "gray";
 
     if (isBadge) {
-      return getBgColor(typeColor)(
-        colors.black(` ${logObj.type.toUpperCase()} `),
-      );
+      return getBgColor(
+        typeColor,
+        palette,
+      )(palette.black(` ${logObj.type.toUpperCase()} `));
     }
 
     const _type =
@@ -80,38 +123,43 @@ export class FancyReporter extends BasicReporter {
         ? (TYPE_ICONS as any)[logObj.type]
         : (logObj as any).icon || logObj.type;
 
-    return _type ? getColor(typeColor)(_type) : "";
+    return _type ? getColor(typeColor, palette)(_type) : "";
   }
 
-  formatLogObj(logObj: LogObject, opts: FormatOptions) {
-    const [message, ...additional] = this.formatArgs(logObj.args, opts).split(
-      "\n",
+  formatLogObj(logObj: LogObject, opts: FormatOptions, palette = colors) {
+    const args = logObj.args.map((arg) =>
+      arg && typeof arg.stack === "string"
+        ? this.formatError(arg, opts, palette)
+        : arg,
     );
+    const [message, ...additional] = this.formatArgs(args, opts).split("\n");
 
     if (logObj.type === "box") {
       return box(
         characterFormat(
           message + (additional.length > 0 ? "\n" + additional.join("\n") : ""),
+          palette,
         ),
         {
           title: logObj.title
-            ? characterFormat(logObj.title as string)
+            ? characterFormat(logObj.title as string, palette)
             : undefined,
           style: logObj.style as BoxOpts["style"],
         },
+        (name) => getColor(name, palette),
       );
     }
 
     const date = this.formatDate(logObj.date, opts);
-    const coloredDate = date && colors.gray(date);
+    const coloredDate = date && palette.gray(date);
 
     const isBadge = (logObj.badge as boolean) ?? logObj.level < 2;
-    const type = this.formatType(logObj, isBadge, opts);
+    const type = this.formatType(logObj, isBadge, opts, palette);
 
-    const tag = logObj.tag ? colors.gray(logObj.tag) : "";
+    const tag = logObj.tag ? palette.gray(logObj.tag) : "";
 
     let line;
-    const left = this.filterAndJoin([type, characterFormat(message)]);
+    const left = this.filterAndJoin([type, characterFormat(message, palette)]);
     const right = this.filterAndJoin(opts.columns ? [tag, coloredDate] : [tag]);
     const space =
       (opts.columns || 0) - stringWidth(left) - stringWidth(right) - 2;
@@ -119,38 +167,39 @@ export class FancyReporter extends BasicReporter {
     line =
       space > 0 && (opts.columns || 0) >= 80
         ? left + " ".repeat(space) + right
-        : (right ? `${colors.gray(`[${right}]`)} ` : "") + left;
+        : (right ? `${palette.gray(`[${right}]`)} ` : "") + left;
 
     line += characterFormat(
       additional.length > 0 ? "\n" + additional.join("\n") : "",
+      palette,
     );
 
     if (logObj.type === "trace") {
       const _err = new Error("Trace: " + logObj.message);
-      line += this.formatStack(_err.stack || "", _err.message);
+      line += this.formatStack(_err.stack || "", _err.message, opts, palette);
     }
 
     return isBadge ? "\n" + line + "\n" : line;
   }
 }
 
-function characterFormat(str: string) {
+function characterFormat(str: string, palette = colors) {
   return (
     str
       // highlight backticks
-      .replace(/`([^`]+)`/gm, (_, m) => colors.cyan(m))
+      .replace(/`([^`]+)`/gm, (_, m) => palette.cyan(m))
       // underline underscores
-      .replace(/\s+_([^_]+)_\s+/gm, (_, m) => ` ${colors.underline(m)} `)
+      .replace(/\s+_([^_]+)_\s+/gm, (_, m) => ` ${palette.underline(m)} `)
   );
 }
 
-function getColor(color = "white") {
-  return (colors as any)[color] || colors.white;
+function getColor(color = "white", palette = colors) {
+  return (palette as any)[color] || palette.white;
 }
 
-function getBgColor(color = "bgWhite") {
+function getBgColor(color = "bgWhite", palette = colors) {
   return (
-    (colors as any)[`bg${color[0].toUpperCase()}${color.slice(1)}`] ||
-    colors.bgWhite
+    (palette as any)[`bg${color[0].toUpperCase()}${color.slice(1)}`] ||
+    palette.bgWhite
   );
 }
