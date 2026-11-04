@@ -414,6 +414,7 @@ export class Consola {
     };
 
     // Throttle
+    let isSameLog = false;
     clearTimeout(this._lastLog.timeout);
     const diffTime =
       this._lastLog.time && logObj.date
@@ -427,7 +428,7 @@ export class Consola {
           logObj.tag,
           logObj.args,
         ]);
-        const isSameLog = this._lastLog.serialized === serializedLog;
+        isSameLog = this._lastLog.serialized === serializedLog;
         this._lastLog.serialized = serializedLog;
         if (isSameLog) {
           this._lastLog.count = (this._lastLog.count || 0) + 1;
@@ -446,6 +447,9 @@ export class Consola {
     }
 
     resolveLog(true);
+    if (!isSameLog) {
+      this._lastLog.count = 0;
+    }
   }
 
   _log(logObj: LogObject) {
