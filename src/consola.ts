@@ -366,6 +366,7 @@ export class Consola {
     // Consume arguments
     if (!isRaw && args.length === 1 && isLogObj(args[0])) {
       Object.assign(logObj, args[0]);
+      logObj.args = [...logObj.args!];
     } else {
       logObj.args = [...args];
     }
