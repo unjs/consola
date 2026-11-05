@@ -391,6 +391,7 @@ export class Consola {
     logObj.tag = typeof logObj.tag === "string" ? logObj.tag : "";
 
     // Resolve log
+    let serializedLog: string | undefined;
     /**
      * @param newLog false if the throttle expired and
      *  we don't want to log a duplicate
@@ -402,8 +403,8 @@ export class Consola {
         if (repeated > 1) {
           args.push(`(repeated ${repeated} times)`);
         }
+        this._lastLog.count = Math.min(1, this.options.throttleMin);
         this._log({ ...this._lastLog.object, args });
-        this._lastLog.count = 1;
       }
 
       // Log
@@ -412,6 +413,9 @@ export class Consola {
           this._lastLog.count = 0;
         }
         this._lastLog.object = logObj as LogObject;
+        if (serializedLog !== undefined) {
+          this._lastLog.serialized = serializedLog;
+        }
         this._log(logObj as LogObject);
       }
     };
@@ -425,11 +429,7 @@ export class Consola {
         : 0;
     this._lastLog.time = logObj.date;
     try {
-      const serializedLog = JSON.stringify([
-        logObj.type,
-        logObj.tag,
-        logObj.args,
-      ]);
+      serializedLog = JSON.stringify([logObj.type, logObj.tag, logObj.args]);
       isSameLog =
         diffTime < this.options.throttle &&
         this._lastLog.serialized === serializedLog;
