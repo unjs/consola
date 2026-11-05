@@ -391,6 +391,7 @@ export class Consola {
     logObj.tag = typeof logObj.tag === "string" ? logObj.tag : "";
 
     // Resolve log
+    let serializedLog: string | undefined;
     /**
      * @param newLog false if the throttle expired and
      *  we don't want to log a duplicate
@@ -402,47 +403,47 @@ export class Consola {
         if (repeated > 1) {
           args.push(`(repeated ${repeated} times)`);
         }
+        this._lastLog.count = Math.min(1, this.options.throttleMin);
         this._log({ ...this._lastLog.object, args });
-        this._lastLog.count = 1;
       }
 
       // Log
       if (newLog) {
+        if (!isSameLog) {
+          this._lastLog.count = 0;
+        }
         this._lastLog.object = logObj as LogObject;
+        if (serializedLog !== undefined) {
+          this._lastLog.serialized = serializedLog;
+        }
         this._log(logObj as LogObject);
       }
     };
 
     // Throttle
+    let isSameLog = false;
     clearTimeout(this._lastLog.timeout);
     const diffTime =
       this._lastLog.time && logObj.date
         ? logObj.date.getTime() - this._lastLog.time.getTime()
         : 0;
     this._lastLog.time = logObj.date;
-    if (diffTime < this.options.throttle) {
-      try {
-        const serializedLog = JSON.stringify([
-          logObj.type,
-          logObj.tag,
-          logObj.args,
-        ]);
-        const isSameLog = this._lastLog.serialized === serializedLog;
-        this._lastLog.serialized = serializedLog;
-        if (isSameLog) {
-          this._lastLog.count = (this._lastLog.count || 0) + 1;
-          if (this._lastLog.count > this.options.throttleMin) {
-            // Auto-resolve when throttle is timed out
-            this._lastLog.timeout = setTimeout(
-              resolveLog,
-              this.options.throttle,
-            );
-            return; // SPAM!
-          }
+    try {
+      serializedLog = JSON.stringify([logObj.type, logObj.tag, logObj.args]);
+      isSameLog =
+        diffTime < this.options.throttle &&
+        this._lastLog.serialized === serializedLog;
+      this._lastLog.serialized = serializedLog;
+      if (isSameLog) {
+        this._lastLog.count = (this._lastLog.count || 0) + 1;
+        if (this._lastLog.count > this.options.throttleMin) {
+          // Auto-resolve when throttle is timed out
+          this._lastLog.timeout = setTimeout(resolveLog, this.options.throttle);
+          return; // SPAM!
         }
-      } catch {
-        // Circular References
       }
+    } catch {
+      // Circular References
     }
 
     resolveLog(true);
