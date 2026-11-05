@@ -3,6 +3,19 @@ import { createConsola } from "../src/core";
 import type { LogObject } from "../src/types";
 
 describe("log object arguments", () => {
+  test("normalizes explicitly undefined arguments before expanding aliases", () => {
+    const logs: LogObject[] = [];
+    const logger = createConsola({
+      reporters: [{ log: (log) => logs.push(log) }],
+      throttle: 0,
+    });
+    const input = { message: "message", args: undefined };
+
+    expect(() => logger.info(input)).not.toThrow();
+    expect(logs.map((log) => log.args)).toEqual([["message"]]);
+    expect(input.args).toBeUndefined();
+  });
+
   test("does not mutate a reusable input when expanding aliases", () => {
     const logs: LogObject[] = [];
     const logger = createConsola({
