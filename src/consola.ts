@@ -408,6 +408,9 @@ export class Consola {
 
       // Log
       if (newLog) {
+        if (!isSameLog) {
+          this._lastLog.count = 0;
+        }
         this._lastLog.object = logObj as LogObject;
         this._log(logObj as LogObject);
       }
@@ -421,35 +424,29 @@ export class Consola {
         ? logObj.date.getTime() - this._lastLog.time.getTime()
         : 0;
     this._lastLog.time = logObj.date;
-    if (diffTime < this.options.throttle) {
-      try {
-        const serializedLog = JSON.stringify([
-          logObj.type,
-          logObj.tag,
-          logObj.args,
-        ]);
-        isSameLog = this._lastLog.serialized === serializedLog;
-        this._lastLog.serialized = serializedLog;
-        if (isSameLog) {
-          this._lastLog.count = (this._lastLog.count || 0) + 1;
-          if (this._lastLog.count > this.options.throttleMin) {
-            // Auto-resolve when throttle is timed out
-            this._lastLog.timeout = setTimeout(
-              resolveLog,
-              this.options.throttle,
-            );
-            return; // SPAM!
-          }
+    try {
+      const serializedLog = JSON.stringify([
+        logObj.type,
+        logObj.tag,
+        logObj.args,
+      ]);
+      isSameLog =
+        diffTime < this.options.throttle &&
+        this._lastLog.serialized === serializedLog;
+      this._lastLog.serialized = serializedLog;
+      if (isSameLog) {
+        this._lastLog.count = (this._lastLog.count || 0) + 1;
+        if (this._lastLog.count > this.options.throttleMin) {
+          // Auto-resolve when throttle is timed out
+          this._lastLog.timeout = setTimeout(resolveLog, this.options.throttle);
+          return; // SPAM!
         }
-      } catch {
-        // Circular References
       }
+    } catch {
+      // Circular References
     }
 
     resolveLog(true);
-    if (!isSameLog) {
-      this._lastLog.count = 0;
-    }
   }
 
   _log(logObj: LogObject) {

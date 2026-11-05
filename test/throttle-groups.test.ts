@@ -6,6 +6,63 @@ describe("independent throttle groups", () => {
   beforeEach(() => vi.useFakeTimers());
   afterEach(() => vi.useRealTimers());
 
+  test("preserves repeat counts from reporter-triggered logging", () => {
+    const logs: LogObject[] = [];
+    const logger = createConsola({
+      reporters: [
+        {
+          log(log) {
+            logs.push(log);
+            if (log.args[0] === "outer") {
+              logger.info("nested");
+              logger.info("nested");
+            }
+          },
+        },
+      ],
+      throttle: 100,
+      throttleMin: 1,
+    });
+
+    logger.info("outer");
+    logger.info("nested");
+    expect(logs.map((log) => log.args)).toEqual([
+      ["outer"],
+      ["nested"],
+      ["nested"],
+    ]);
+    vi.runAllTimers();
+    expect(logs.map((log) => log.args)).toEqual([
+      ["outer"],
+      ["nested"],
+      ["nested"],
+      ["nested"],
+    ]);
+  });
+
+  test("tracks the new message after the throttle window expires", () => {
+    const logs: LogObject[] = [];
+    const logger = createConsola({
+      reporters: [{ log: (log) => logs.push(log) }],
+      throttle: 100,
+      throttleMin: 2,
+    });
+
+    logger.info("first");
+    vi.advanceTimersByTime(101);
+    logger.info("second");
+    for (let i = 0; i < 3; i++) logger.info("first");
+    expect(logs.map((log) => log.args)).toEqual([
+      ["first"],
+      ["second"],
+      ["first"],
+      ["first"],
+      ["first"],
+    ]);
+    vi.runAllTimers();
+    expect(logs).toHaveLength(5);
+  });
+
   test("does not carry repeat counts into a different message", () => {
     const logs: LogObject[] = [];
     const logger = createConsola({
