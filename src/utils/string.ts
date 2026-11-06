@@ -69,6 +69,9 @@ export function rightAlign(str: string, len: number, space = " ") {
  * @returns {string} The left-justified string.
  */
 export function leftAlign(str: string, len: number, space = " ") {
+  if (str.length >= len) {
+    return str;
+  }
   let _str = "";
   for (let i = 0; i < len; i++) {
     _str += i < str.length ? str[i] : space;
