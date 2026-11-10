@@ -14,6 +14,7 @@ describe("left alignment", () => {
   test("pads short strings with the requested character", () => {
     expect(leftAlign("hi", 5)).toBe("hi   ");
     expect(leftAlign("hi", 5, ".")).toBe("hi...");
+    expect(align("left", "hi", 5, ".")).toBe("hi...");
     expect(leftAlign("", 2)).toBe("  ");
   });
 });
