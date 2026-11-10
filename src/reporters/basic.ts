@@ -16,14 +16,19 @@ export class BasicReporter implements ConsolaReporter {
     return indent + parseStack(stack, message).join(`\n${indent}`);
   }
 
-  formatError(err: any, opts: FormatOptions): string {
+  formatError(err: any, opts: FormatOptions, seen = new Set<any>()): string {
+    const level = opts?.errorLevel || 0;
+    const causedPrefix = level > 0 ? `${"  ".repeat(level)}[cause]: ` : "";
+    if (seen.has(err)) {
+      return causedPrefix + "[Circular cause]";
+    }
+    seen.add(err);
     const message = err.message ?? formatWithOptions(opts, err);
     const stack = err.stack ? this.formatStack(err.stack, message, opts) : "";
 
-    const level = opts?.errorLevel || 0;
-    const causedPrefix = level > 0 ? `${"  ".repeat(level)}[cause]: ` : "";
     const causedError = err.cause
-      ? "\n\n" + this.formatError(err.cause, { ...opts, errorLevel: level + 1 })
+      ? "\n\n" +
+        this.formatError(err.cause, { ...opts, errorLevel: level + 1 }, seen)
       : "";
 
     return causedPrefix + message + "\n" + stack + causedError;
