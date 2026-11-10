@@ -22,8 +22,10 @@ describe.each([
     first.cause = second;
     const text = reporter.formatArgs([first], { colors: false });
     expect(text).toContain("first");
-    expect(text).toContain("[cause]: second");
-    expect(text.match(/\[Circular cause\]/g)).toHaveLength(1);
+    expect(text.match(/^ *\[cause\]: .*$/gm)).toEqual([
+      "  [cause]: second",
+      "    [cause]: [Circular cause]",
+    ]);
   });
 
   test("does not confuse repeated arguments or separate calls with cycles", () => {
