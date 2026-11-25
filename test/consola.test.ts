@@ -34,6 +34,25 @@ describe("consola", () => {
     expect(logs.length).toBe(0);
   });
 
+  test("exposes the first string argument as message", () => {
+    const logs: LogObject[] = [];
+    const TestReporter: ConsolaReporter = {
+      log(logObj) {
+        logs.push(logObj);
+      },
+    };
+
+    const consola = createConsola({
+      level: LogLevels.info,
+      reporters: [TestReporter],
+    });
+
+    consola.info("Test Message", { arg1: "value1" });
+
+    expect(logs[0]!.message).toBe("Test Message");
+    expect(logs[0]!.args).toEqual(["Test Message", { arg1: "value1" }]);
+  });
+
   test("can see spams without ending log", async () => {
     const logs: LogObject[] = [];
     const TestReporter: ConsolaReporter = {
